@@ -1,0 +1,28 @@
+﻿<Properties StartupConfiguration="{A41ED262-762A-4305-BCEF-1733318341B7}|Default">
+  <MonoDevelop.Ide.ItemProperties.AbetApi PreferredExecutionTarget="/Applications/Safari.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Properties/launchSettings.json">
+    <Files>
+      <File FileName="Program.cs" Line="1" Column="1" />
+      <File FileName="Startup.cs" />
+      <File FileName="Properties/launchSettings.json" Line="16" Column="22" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="AbetApi" expanded="True">
+            <Node name="AbetApi" expanded="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="appsettings.json" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
