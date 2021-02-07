@@ -360,3 +360,22 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+#ABET Specific
+AbetApi/.vs/AbetApi/xs/UserPrefs.xml
+AbetApi/.vs/AbetApi/xs/project-cache/AbetApi-Debug.json
+AbetApi/bin/Debug/netcoreapp3.1/AbetApi.dll
+AbetApi/bin/Debug/netcoreapp3.1/AbetApi.pdb
+AbetApi/bin/Debug/netcoreapp3.1/AbetApi.runtimeconfig.dev.json
+AbetApi/obj/AbetApi.csproj.nuget.dgspec.json
+AbetApi/obj/AbetApi.csproj.nuget.g.props
+AbetApi/obj/Debug/netcoreapp3.1/AbetApi.assets.cache
+AbetApi/obj/Debug/netcoreapp3.1/AbetApi.csproj.CoreCompileInputs.cache
+AbetApi/obj/Debug/netcoreapp3.1/AbetApi.csproj.FileListAbsolute.txt
+AbetApi/obj/Debug/netcoreapp3.1/AbetApi.csprojAssemblyReference.cache
+AbetApi/obj/Debug/netcoreapp3.1/AbetApi.dll
+AbetApi/obj/Debug/netcoreapp3.1/AbetApi.genruntimeconfig.cache
+AbetApi/obj/Debug/netcoreapp3.1/AbetApi.pdb
+AbetApi/obj/Debug/netcoreapp3.1/project.razor.json
+AbetApi/obj/project.assets.json
+AbetApi/obj/project.nuget.cache
