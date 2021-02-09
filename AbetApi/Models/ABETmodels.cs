@@ -175,6 +175,12 @@ namespace AbetApi.Models
             }
         }
 
+        public class FacultyList
+        {
+            public List<Info> Normal { get; set; } = new List<Info>();   //instructors, coordinators and admins
+            public List<Info> Adjuncts { get; set; } = new List<Info>(); //teaching adjuncts
+            public List<Info> Fellows { get; set; } = new List<Info>();  //teaching fellows
+        }
     }
 }
 
