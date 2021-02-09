@@ -18,5 +18,7 @@ namespace AbetApi.Data
         bool PostComment(Course course);
         bool PostSection(Section section);
         string GetRole(string userId);
+        List<List<Info>> GetFacultyList();
+        bool AddFacultyMember(Info info, string role);
     }
 }

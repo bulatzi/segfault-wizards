@@ -16,6 +16,8 @@ namespace AbetApi.Data
         public Section[] sections = new Section[6];
         public Form[] forms = new Form[5];
         public Admin[] admins = new Admin[3];
+        public Instructor[] instructors = new Instructor[4];
+        public Coordinator[] coordinators = new Coordinator[4];
 
         //Generate the fake data
         public MockAbetRepo()
@@ -139,6 +141,8 @@ namespace AbetApi.Data
             forms = new Form[] { instructorForm1, instructorForm2, instructorForm3, instructorForm4, instructorForm5 };
             sections = new Section[] { section6, section7, section8, section9, section10, section11 };
             admins = new Admin[] { admin1, admin2, admin3 };
+            instructors = new Instructor[] { instructor1, instructor4, instructor10, instructor11 };
+            coordinators = new Coordinator[] { coordinator1, coordinator2, coordinator4, coordinator11 };
         }
 
         public IEnumerable<AbetModels.Section> GetSectionsByUserId(string userId, int year, string semester)
@@ -237,6 +241,38 @@ namespace AbetApi.Data
         {
             //call to DB to get the role associated with the userId
             return "Admin";
+        }
+
+        public List<List<Info>> GetFacultyList()
+        {
+            //call to DB to get all entries in staff table
+            List<List<Info>> faculty = new List<List<Info>>();
+            List<Info> normal = new List<Info>();
+            List<Info> adjuncts = new List<Info>();
+            List<Info> fellows = new List<Info>();
+
+            //add all normal faculty, there are no adjuncts or teaching fellows for now
+            foreach (Instructor instructor in instructors)
+                normal.Add(instructor);
+            
+            foreach (Coordinator coordinator in coordinators)
+                if (!normal.Contains(coordinator))
+                    normal.Add(coordinator);
+
+            foreach (Admin admin in admins)
+                if (!normal.Contains(admin))
+                    normal.Add(admin);
+
+            faculty.Add(normal);   //faculty[0]
+            faculty.Add(adjuncts); //faculty[1]
+            faculty.Add(fellows);  //faculty[2]
+            return faculty;
+        }
+
+        public bool AddFacultyMember(Info info, string role)
+        {
+            //store member in DB
+            return true;
         }
     }
 }
