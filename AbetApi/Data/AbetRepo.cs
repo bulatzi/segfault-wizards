@@ -11,8 +11,9 @@ namespace AbetApi.Data
     public class AbetRepo : IAbetRepo
     {
         private string cs =
-            @"Server=TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True;User=abet_software;Password=RQmu>KBM(PC]$r9vM>s3=%nb(8F:PnR}";
+            @"Server=TEBA-D\ABETDATABASE;Database=abetdb;Trusted_Connection=True";
         // on VM, server=TEBA-D\ABETDATABASE
+        // on mine, server=TRICO-SCHOOL\SQLEXPRESS
         public AbetRepo()
         {
 
