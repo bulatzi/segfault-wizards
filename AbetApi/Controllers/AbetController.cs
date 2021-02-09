@@ -132,5 +132,23 @@ namespace AbetApi.Controller
             else
                 return BadRequest();
         }
+
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpPost("faculty/get-list")]
+        public ActionResult GetFacultyList()
+        {
+            List<List<Info>> faculty = mockAbetRepo.GetFacultyList();
+            return Ok(new { normal = faculty[0], adjuncts = faculty[1], fellows = faculty[2] });
+        }
+
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpPost("faculty/add-member")]
+        public ActionResult AddFacultyMember([FromBody] BodyParams body)
+        {
+            if (mockAbetRepo.AddFacultyMember(body.Info, body.Role))
+                return Ok();
+            else
+                return BadRequest();
+        }
     }
 }

@@ -98,6 +98,8 @@ namespace AbetApi.Models
             public Form Form { get; set; }
             public Section Section { get; set; }
             public Course Course { get; set; }
+            public Info Info { get; set; }
+            public string Role { get; set; }
         }
 
         public class Form
