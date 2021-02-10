@@ -135,10 +135,9 @@ namespace AbetApi.Controller
 
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("faculty/get-list")]
-        public ActionResult GetFacultyList()
+        public FacultyList GetFacultyList()
         {
-            List<List<Info>> faculty = mockAbetRepo.GetFacultyList();
-            return Ok(new { normal = faculty[0], adjuncts = faculty[1], fellows = faculty[2] });
+            return mockAbetRepo.GetFacultyList();
         }
 
         [Authorize(Roles = RoleTypes.Admin)]

@@ -243,30 +243,24 @@ namespace AbetApi.Data
             return "Admin";
         }
 
-        public List<List<Info>> GetFacultyList()
+        public FacultyList GetFacultyList()
         {
             //call to DB to get all entries in staff table
-            List<List<Info>> faculty = new List<List<Info>>();
-            List<Info> normal = new List<Info>();
-            List<Info> adjuncts = new List<Info>();
-            List<Info> fellows = new List<Info>();
+            FacultyList facultyList = new FacultyList();
 
             //add all normal faculty, there are no adjuncts or teaching fellows for now
             foreach (Instructor instructor in instructors)
-                normal.Add(instructor);
+                facultyList.Normal.Add(instructor);
             
             foreach (Coordinator coordinator in coordinators)
-                if (!normal.Contains(coordinator))
-                    normal.Add(coordinator);
+                if (!facultyList.Normal.Contains(coordinator))
+                    facultyList.Normal.Add(coordinator);
 
             foreach (Admin admin in admins)
-                if (!normal.Contains(admin))
-                    normal.Add(admin);
+                if (!facultyList.Normal.Contains(admin))
+                    facultyList.Normal.Add(admin);
 
-            faculty.Add(normal);   //faculty[0]
-            faculty.Add(adjuncts); //faculty[1]
-            faculty.Add(fellows);  //faculty[2]
-            return faculty;
+            return facultyList;
         }
 
         public bool AddFacultyMember(Info info, string role)
