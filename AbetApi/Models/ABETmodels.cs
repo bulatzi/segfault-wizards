@@ -100,17 +100,18 @@ namespace AbetApi.Models
             public Course Course { get; set; }
             public Info Info { get; set; }
             public string Role { get; set; }
+            public string Program { get; set; }
         }
 
         public class Form
         {
             public Section Section { get; set; }
-            public List<Outcomes> Outcomes { get; set; }  // array 
+            public List<Course_Outcomes> Outcomes { get; set; }  // array 
             public Grades ITGrades { get; set; }
             public Grades CSGrades { get; set; }
             public Grades CEGrades { get; set; }
 
-            public Form(Section section, List<Outcomes> outcome, Grades itgrade, Grades csgrade, Grades cegrade)
+            public Form(Section section, List<Course_Outcomes> outcome, Grades itgrade, Grades csgrade, Grades cegrade)
             {
                 this.Section = section;
                 this.Outcomes = outcome;
@@ -123,7 +124,7 @@ namespace AbetApi.Models
             { }
         }
 
-        public class Outcomes
+        public class Course_Outcomes
         {
             public string Outcome { get; set; }
             public int NumberOfIT { get; set; }
@@ -131,7 +132,7 @@ namespace AbetApi.Models
             public int NumberOfCE { get; set; }
             public List<StudentWorks> StudentWorks { get; set; }
 
-            public Outcomes(string outcome, int numberofIT, int numberofCS, int numberofCE, List<StudentWorks> studentworks)
+            public Course_Outcomes(string outcome, int numberofIT, int numberofCS, int numberofCE, List<StudentWorks> studentworks)
             {
                 this.Outcome = outcome;
                 this.NumberOfIT = numberofIT;
@@ -140,6 +141,69 @@ namespace AbetApi.Models
                 this.StudentWorks = studentworks;
             }
         }
+        
+
+        public class Student_Outcome
+        {
+            public int Order { get; set; }
+            public string Outcome { get; set; }
+            public Student_Outcome(int order, string outcome)
+            {
+                this.Order = order;
+                this.Outcome = outcome;
+            }
+            public Student_Outcome()
+            {
+
+            }
+        }
+        public class Program_Outcomes
+        {
+            public string Program { get; set; } //Ex: CSCE, CENG
+            public List<Course_Objectives> CourseObjectives { get; set; }
+            public List<Student_Outcome> StudentOutcomes { get; set; }
+            public Program_Outcomes(string program, List<Course_Objectives> course_Objectives, List<Student_Outcome> studentOutcomes)
+            {
+                this.Program = program;
+                this.StudentOutcomes = studentOutcomes;
+                this.CourseObjectives = course_Objectives;
+            }
+        }
+
+        public class Course_Objectives
+        {
+            public string CourseName { get; set; } //Ex: CSCE 2610 Assembly Language
+            public List<Course_Outcome> CourseOutcomes { get; set; }
+            public Course_Objectives(string courseName, List<Course_Outcome> courseOutcomes)
+            {
+                this.CourseName = courseName;
+                this.CourseOutcomes = courseOutcomes;
+            }
+            
+            public Course_Objectives()
+            {
+
+            }
+        }
+
+        public class Course_Outcome
+        {
+            public int Order { get; set; }
+            public string Outcome { get; set; } //Ex: Gather and refine user functional requirements and other...
+           // public List<int> MappedStudentOutcomes { get; set; } //Ex: 1, 0, 1, 1, 0, 0
+            public string Mapped { get; set; }
+            public Course_Outcome(int order, string outcome, string mapped)
+            {
+                this.Order = order;
+                this.Outcome = outcome;
+                this.Mapped = mapped;
+            }
+
+            public Course_Outcome()
+            { }
+
+        }
+
         public class StudentWorks
         {
             public string StudentWork { get; set; }

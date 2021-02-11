@@ -96,5 +96,73 @@ where (s.instructor_id = @euid or c.coordinator_id = @euid) and c.semester = @te
             conn.Close();
             return secList;
         }
+
+        public Program_Outcomes GetCourseObjectives(string program)
+        {
+            Program_Outcomes program_outcomes ;
+            Course_Objectives course_objectives = null;
+            Course_Outcome course_outcome;
+            Student_Outcome student_outcome;
+            List<Student_Outcome> student_Outcomes = new List<Student_Outcome>();
+            List<Course_Outcome> course_Outcomes = new List<Course_Outcome>();
+            List<Course_Objectives> courseObjectives = new List<Course_Objectives>();
+            string displayName = null;
+
+            string query1 = @"select co.num as 'order', co.course_outcome as outcome, cob.student_outcome_mapping, c.display_name from 
+course_outcomes as co join course_objective as cob on co.id = cob.course_outcome_id 
+join courses as c on c.id = co.course_id where c.department = 'csce'; ";
+            SqlConnection conn = GetConnection();
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(query1, conn);
+            cmd.Prepare();
+            using (SqlDataReader rd = cmd.ExecuteReader())
+            {
+                while (rd.Read())
+                {
+                    course_outcome = new Course_Outcome
+                    {
+                        Order = Convert.ToInt32(rd["order"]),
+                        Outcome = rd["outcome"].ToString(),
+                        Mapped = rd["student_outcome_mapping"].ToString()
+                    };
+                    if (displayName == null) displayName = rd["display_name"].ToString();
+                    else if (displayName != rd["display_name"].ToString())
+                    {
+                        course_objectives = new Course_Objectives(displayName, course_Outcomes);
+                        courseObjectives.Add(course_objectives);
+                        displayName = rd["display_name"].ToString();
+                        course_Outcomes = new List<Course_Outcome>();
+
+                    }
+                    course_Outcomes.Add(course_outcome);
+                }
+            }
+            
+            course_objectives = new Course_Objectives(displayName, course_Outcomes);
+            courseObjectives.Add(course_objectives);
+
+            query1 = @"select st.num, st.student_outcome, p.program from student_outcomes as 
+st join programs as p on p.id = st.program_id where p.program = @program";
+            cmd = new SqlCommand(query1, conn);
+            cmd.Parameters.Add(new SqlParameter("@program", SqlDbType.VarChar, 50)).Value = program;
+            cmd.Prepare();
+            using (SqlDataReader rd = cmd.ExecuteReader())
+            {
+                while (rd.Read())
+                {
+                    student_outcome = new Student_Outcome
+                    {
+                        Order = Convert.ToInt32(rd["num"]),
+                        Outcome = rd["student_outcome"].ToString()
+                    };
+                    student_Outcomes.Add(student_outcome);
+                }
+            }
+
+            program_outcomes = new Program_Outcomes(program, courseObjectives, student_Outcomes);
+
+            return program_outcomes;
+
+        }
     }
 }
