@@ -100,17 +100,18 @@ namespace AbetApi.Models
             public Course Course { get; set; }
             public Info Info { get; set; }
             public string Role { get; set; }
+            public string Program { get; set; }
         }
 
         public class Form
         {
             public Section Section { get; set; }
-            public List<Outcomes> Outcomes { get; set; }  // array 
+            public List<Course_Outcomes> Outcomes { get; set; }  // array 
             public Grades ITGrades { get; set; }
             public Grades CSGrades { get; set; }
             public Grades CEGrades { get; set; }
 
-            public Form(Section section, List<Outcomes> outcome, Grades itgrade, Grades csgrade, Grades cegrade)
+            public Form(Section section, List<Course_Outcomes> outcome, Grades itgrade, Grades csgrade, Grades cegrade)
             {
                 this.Section = section;
                 this.Outcomes = outcome;
@@ -123,7 +124,7 @@ namespace AbetApi.Models
             { }
         }
 
-        public class Outcomes
+        public class Course_Outcomes
         {
             public string Outcome { get; set; }
             public int NumberOfIT { get; set; }
@@ -131,7 +132,7 @@ namespace AbetApi.Models
             public int NumberOfCE { get; set; }
             public List<StudentWorks> StudentWorks { get; set; }
 
-            public Outcomes(string outcome, int numberofIT, int numberofCS, int numberofCE, List<StudentWorks> studentworks)
+            public Course_Outcomes(string outcome, int numberofIT, int numberofCS, int numberofCE, List<StudentWorks> studentworks)
             {
                 this.Outcome = outcome;
                 this.NumberOfIT = numberofIT;
@@ -139,6 +140,31 @@ namespace AbetApi.Models
                 this.NumberOfCE = numberofCE;
                 this.StudentWorks = studentworks;
             }
+        }
+
+        public class Student_Outcomes
+        {
+            public int Number { get; set; }
+            public string Outcome { get; set; }
+            public Student_Outcomes(int number, string outcome)
+            {
+                this.Number = number;
+                this.Outcome = outcome;
+            }
+        }
+
+        public class Course_Objective
+        {
+            public string Course_Name { get; set; }
+            public string Course_Outcome { get; set; }
+            public List<int> Student_Outcome_mapping { get; set; }
+        }
+
+        public class Course_Objectives
+        {
+            public string program { get; set; }
+            public List<Student_Outcomes> student_Outcomes;
+            public List<Course_Objective> course_Objectives;
         }
         public class StudentWorks
         {

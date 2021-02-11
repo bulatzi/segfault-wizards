@@ -10,5 +10,7 @@ namespace AbetApi.Data
     {
         string GetRole(string userId);
         IEnumerable<Section> GetSectionsByUserId(string userId, int year, string term);
+        Course_Objectives GetCourseObjectives(string program);
+
     }
 }

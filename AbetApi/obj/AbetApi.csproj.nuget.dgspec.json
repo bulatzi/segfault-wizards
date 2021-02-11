@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "/Users/armaandhanoa/Documents/Projects/ABET-Backend/ABET-Course-Assessment-Tool/AbetApi/AbetApi.csproj": {}
+    "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\AbetApi.csproj": {}
   },
   "projects": {
-    "/Users/armaandhanoa/Documents/Projects/ABET-Backend/ABET-Course-Assessment-Tool/AbetApi/AbetApi.csproj": {
+    "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\AbetApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/armaandhanoa/Documents/Projects/ABET-Backend/ABET-Course-Assessment-Tool/AbetApi/AbetApi.csproj",
+        "projectUniqueName": "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\AbetApi.csproj",
         "projectName": "AbetApi",
-        "projectPath": "/Users/armaandhanoa/Documents/Projects/ABET-Backend/ABET-Course-Assessment-Tool/AbetApi/AbetApi.csproj",
-        "packagesPath": "/Users/armaandhanoa/.nuget/packages/",
-        "outputPath": "/Users/armaandhanoa/Documents/Projects/ABET-Backend/ABET-Course-Assessment-Tool/AbetApi/obj/",
+        "projectPath": "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\AbetApi.csproj",
+        "packagesPath": "C:\\Users\\yafet\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/armaandhanoa/.config/NuGet/NuGet.Config"
+          "C:\\Users\\yafet\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -65,12 +67,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[3.1.8, 3.1.8]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -79,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.100/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -95,5 +95,34 @@ where (s.instructor_id = @euid or c.coordinator_id = @euid) and c.semester = @te
             conn.Close();
             return secList;
         }
+
+        public Course_Objectives GetCourseObjectives(string program)
+        {
+            Student_Outcomes student_Outcomes;
+
+            Course_Objectives co = new Course_Objectives();
+            string query1 = @"select st.num as num, st.student_outcome from student_outcomes as st join programs as p 
+on p.id = st.program_id where p.program = @program";
+            SqlConnection conn = GetConnection();
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(query1, conn);
+            cmd.Parameters.Add(new SqlParameter("@program", SqlDbType.VarChar, 50)).Value = program;
+            cmd.Prepare();
+            using SqlDataReader rd = cmd.ExecuteReader();
+            while (rd.Read())
+            {
+                student_Outcomes = new Student_Outcomes(Convert.ToInt32(rd["num"]), rd["student_outcome"].ToString()); 
+            }
+            query1 = @"select c.display_name, co.num, co.course_outcome from courses as c join course_outcomes as co on c.id = co.course_id";
+            cmd = new SqlCommand(query1, conn);
+            cmd.Prepare();
+            while (rd.Read())
+            {
+                student_Outcomes = new Student_Outcomes(Convert.ToInt32(rd["num"]), rd["student_outcome"].ToString());
+            }
+
+            return co;
+
+        }
     }
 }
