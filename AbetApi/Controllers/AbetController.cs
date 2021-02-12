@@ -150,14 +150,16 @@ namespace AbetApi.Controller
                 return BadRequest();
         }
 
-        /*
+        
         //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("outcomes/get-outcomes-by-program")]
         public Program_Outcomes GetCourseObjectives([FromBody] BodyParams body)
         {
-            return abetRepo.GetCourseObjectives(body.Program);
+            return mockAbetRepo.GetCourseObjectives(body.Program);
+            //return abetRepo.GetCourseObjectives(body.Program);
         }
         
+        /*
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("outcomes/post-outcomes")]
         public ActionResult PostCourseOutcomes()

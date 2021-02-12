@@ -20,5 +20,6 @@ namespace AbetApi.Data
         string GetRole(string userId);
         FacultyList GetFacultyList();
         bool AddFacultyMember(Info info, string role);
+        Program_Outcomes GetCourseObjectives(string program);
     }
 }

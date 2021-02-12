@@ -4091,19 +4091,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\yak0010\\.nuget\\packages\\": {}
+    "C:\\Users\\yafet\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\yak0010\\Documents\\AbetProject\\back-end\\AbetApi\\AbetApi.csproj",
+      "projectUniqueName": "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\AbetApi.csproj",
       "projectName": "AbetApi",
-      "projectPath": "C:\\Users\\yak0010\\Documents\\AbetProject\\back-end\\AbetApi\\AbetApi.csproj",
-      "packagesPath": "C:\\Users\\yak0010\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\yak0010\\Documents\\AbetProject\\back-end\\AbetApi\\obj\\",
+      "projectPath": "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\AbetApi.csproj",
+      "packagesPath": "C:\\Users\\yafet\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\yak0010\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\yafet\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4164,16 +4164,8 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\yak0010\\Documents\\AbetProject\\back-end\\AbetApi\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  }
 }

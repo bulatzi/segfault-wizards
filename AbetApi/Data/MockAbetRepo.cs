@@ -268,5 +268,47 @@ namespace AbetApi.Data
             //store member in DB
             return true;
         }
+
+        public Program_Outcomes GetCourseObjectives(string program)
+        {
+            int[] mapped1 = { 0, 0, 0, 0, 0, 0 };
+            int[] mapped2 = { 0, 0, 0, 0, 0, 0, 0 };
+            Course_Outcome outcome1 = new Course_Outcome(1, "Describe how a computer's CPU, Main Memory, Secondary Storage and " +
+                "I/O work together to execute a computer program.", mapped1);
+            Course_Outcome outcome2 = new Course_Outcome(2, "Make use of a computer system's hardware, editor(s), operating system, system " +
+                "software and network to build computer software and submit that software for grading.", mapped1);
+            Course_Outcome outcome3 = new Course_Outcome(3, "Describe algorithms to perform simple tasks such as numeric computation, " +
+                "searching and sorting, choosing among several options, string manipulation, and use of pseudo-random numbers in simulation " +
+                "of such tasks as rolling dice.", mapped1);
+            Course_Outcome outcome4 = new Course_Outcome(4, "Write readable, efficient and correct C/C++ programs that include " +
+                "programming structures such as assignment statements, selection statements, loops, arrays, pointers, " +
+                "console and file I/O, structures, command line arguments, both standard library and user-defined functions, " +
+                "and multiple header (.h) and code (.c) files.", mapped1);
+            Course_Outcome outcome5 = new Course_Outcome(5, "Use commonly accepted practices and tools to find and fix runtime " +
+                "and logical errors in software.", mapped1);
+            Course_Outcome outcome6 = new Course_Outcome(6, "Describe a software process model that can be used to develop significant " +
+                "applications composed of hundreds of functions.", mapped1);
+            Course_Outcome outcome7 = new Course_Outcome(7, "Perform the steps necessary to edit, compile, link and execute C/C++ programs.", mapped1);
+            List<Course_Outcome> outcomes = new List<Course_Outcome> { outcome1, outcome2, outcome3, outcome4, outcome5, outcome6, outcome7 };
+
+            Course_Objectives c_obj = new Course_Objectives("CSCE 1030 Computer Science I", outcomes);
+            List<Course_Objectives> c_objs = new List<Course_Objectives> { c_obj };
+
+            Student_Outcome s_outcome1 = new Student_Outcome(1, "Analyze a complex computing problem and to apply principles of computing " +
+                "and other relevant disciplines to identify solutions.");
+            Student_Outcome s_outcome2 = new Student_Outcome(2, "Design, implement, and evaluate a computing-based solution to meet a given set of " +
+                "computing requirements in the context of the program’s discipline.");
+            Student_Outcome s_outcome3 = new Student_Outcome(3, "Communicate effectively in a variety of professional contexts.");
+            Student_Outcome s_outcome4 = new Student_Outcome(4, "Recognize professional responsibilities and make informed judgements in " +
+                "computing practice based on legal and ethical principles.");
+            Student_Outcome s_outcome5 = new Student_Outcome(5, "Function effectively as a member or leader of a team engaged in " +
+                "activities appropriate to the program’s discipline.");
+            Student_Outcome s_outcome6 = new Student_Outcome(6, "Apply computer science theory and software development fundamentals to produce computing-based solutions.");
+            List<Student_Outcome> s_outcomes = new List<Student_Outcome> { s_outcome1, s_outcome2, s_outcome3, s_outcome4, s_outcome5, s_outcome6 };
+
+            Program_Outcomes p_outcome = new Program_Outcomes("Computer Science", c_objs, s_outcomes);
+
+            return p_outcome;
+        }
     }
 }
