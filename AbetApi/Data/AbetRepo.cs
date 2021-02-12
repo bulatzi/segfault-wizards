@@ -123,7 +123,7 @@ join courses as c on c.id = co.course_id where c.department = 'csce'; ";
                     {
                         Order = Convert.ToInt32(rd["order"]),
                         Outcome = rd["outcome"].ToString(),
-                        Mapped = rd["student_outcome_mapping"].ToString()
+                        MappedStudentOutcomes = (rd["student_outcome_mapping"].ToString()).Select(c => int.Parse(c.ToString())).ToArray()
                     };
                     if (displayName == null) displayName = rd["display_name"].ToString();
                     else if (displayName != rd["display_name"].ToString())

@@ -190,13 +190,13 @@ namespace AbetApi.Models
         {
             public int Order { get; set; }
             public string Outcome { get; set; } //Ex: Gather and refine user functional requirements and other...
-           // public List<int> MappedStudentOutcomes { get; set; } //Ex: 1, 0, 1, 1, 0, 0
-            public string Mapped { get; set; }
-            public Course_Outcome(int order, string outcome, string mapped)
+            public int[] MappedStudentOutcomes { get; set; } //Ex: 1, 0, 1, 1, 0, 0
+            //public string Mapped { get; set; }
+            public Course_Outcome(int order, string outcome, int[] mapped)
             {
                 this.Order = order;
                 this.Outcome = outcome;
-                this.Mapped = mapped;
+                this.MappedStudentOutcomes = mapped;
             }
 
             public Course_Outcome()
