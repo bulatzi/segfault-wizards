@@ -60,7 +60,7 @@ namespace AbetApi.Controller
         //INSTRUCTOR LEVEL FUNCTIONS
         [Authorize(Roles = RoleTypes.Instructor)]
         [HttpPost("sections/by-userid-semester-year")]
-        public IEnumerable<Section> GetSectionsByUserId([FromBody] BodyParams body)
+        public List<Section> GetSectionsByUserId([FromBody] BodyParams body)
         {
             return mockAbetRepo.GetSectionsByUserId(body.UserId, body.Year, body.Semester);
             //return abetRepo.GetSectionsByUserId(body.UserId, body.Year, body.Semester);
@@ -93,7 +93,7 @@ namespace AbetApi.Controller
         //COORDINATOR LEVEL FUNCTIONS
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpPost("forms/by-course")]
-        public IEnumerable<Form> GetFormsByCourse([FromBody] BodyParams body)
+        public List<Form> GetFormsByCourse([FromBody] BodyParams body)
         {
             return mockAbetRepo.GetFormsByCourse(body.Course);
         }
@@ -111,14 +111,14 @@ namespace AbetApi.Controller
         //ADMIN LEVEL FUNCTIONS
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("sections/by-semester-year")]
-        public IEnumerable<Section> GetAllSections([FromBody] BodyParams body)
+        public List<Section> GetAllSections([FromBody] BodyParams body)
         {
             return mockAbetRepo.GetSectionsByYearAndSemester(body.Year, body.Semester);
         }
 
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("forms/by-semester-year")]
-        public IEnumerable<Form> GetAllForms([FromBody] BodyParams body)
+        public List<Form> GetAllForms([FromBody] BodyParams body)
         {
             return mockAbetRepo.GetFormsByYearAndSemester(body.Year, body.Semester);
         }
@@ -150,22 +150,56 @@ namespace AbetApi.Controller
                 return BadRequest();
         }
 
-        
-        //[Authorize(Roles = RoleTypes.Admin)]
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("outcomes/get-outcomes-by-program")]
         public Program_Outcomes GetCourseObjectives([FromBody] BodyParams body)
         {
             return mockAbetRepo.GetCourseObjectives(body.Program);
             //return abetRepo.GetCourseObjectives(body.Program);
         }
-        
-        /*
-        [Authorize(Roles = RoleTypes.Admin)]
-        [HttpPost("outcomes/post-outcomes")]
-        public ActionResult PostCourseOutcomes()
-        {
 
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpPost("courses/get-by-department")]
+        public List<Course> GetCoursesByDepartment([FromBody] BodyParams body)
+        {
+            return mockAbetRepo.GetCoursesByDepartment(body.Department);
         }
-        */
+
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpPost("courses/add-course")]
+        public ActionResult AddCourse([FromBody] BodyParams body)
+        {
+            if (mockAbetRepo.AddCourse(body.Course))
+                return Ok();
+            else
+                return BadRequest();
+        }
+
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpPost("courses/remove-course")]
+        public ActionResult RemoveCourse([FromBody] BodyParams body)
+        {
+            if (mockAbetRepo.AddCourse(body.Course))
+                return Ok();
+            else
+                return BadRequest();
+        }
+
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpPost("course-outcomes/post-outcomes")]
+        public ActionResult PostCourseOutcomes([FromBody] BodyParams body)
+        {
+            if (mockAbetRepo.PostCourseOutcomes(body.CourseOutcomesList))
+                return Ok();
+            else
+                return BadRequest();
+        }
+
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpPost("course-outcomes/by-course")]
+        public List<Course_Outcome> GetCourseOutcomesByCourse([FromBody] BodyParams body)
+        {
+            return mockAbetRepo.GetCourseOutcomesByCourse(body.Course);
+        }
     }
 }

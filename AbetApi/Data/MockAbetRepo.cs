@@ -14,10 +14,14 @@ namespace AbetApi.Data
     public class MockAbetRepo : IMockAbetRepo
     {
         public Section[] sections = new Section[6];
+        public List<Course> courses = new List<Course>();
         public Form[] forms = new Form[5];
         public Admin[] admins = new Admin[3];
         public Instructor[] instructors = new Instructor[4];
         public Coordinator[] coordinators = new Coordinator[4];
+        public List<Course_Outcome> outcomes = new List<Course_Outcome>();
+        List<Course_Objectives> c_objs = new List<Course_Objectives>();
+        List<Student_Outcome> s_outcomes = new List<Student_Outcome>();
 
         //Generate the fake data
         public MockAbetRepo()
@@ -26,10 +30,12 @@ namespace AbetApi.Data
             Instructor instructor6 = new Instructor("Mark", "Thompson", "MT2020");
             Coordinator coordinator6 = new Coordinator("Mark", "Thompson", "MT2020");
             Section section6 = new Section(instructor6, coordinator6, false, 1, 49, 3600, "Intro to System Programming", false, "", "CSCE");
+            Course course1 = new Course(coordinator6, 3600, "Intro to System Programming", "Very good!", true, "CSCE", "Spring", 2020);
 
             Instructor instructor7 = new Instructor("Mark", "Thompson", "MT2020");
             Coordinator coordinator7 = new Coordinator("David", "Keathly", "DK2121");
             Section section7 = new Section(instructor7, coordinator7, false, 1, 90, 1030, "Computer Science I", false, "", "CSCE");
+            Course course2 = new Course(coordinator7, 1030, "Computer Science I", "Just terrible.", true, "CSCE", "Spring", 2020);
 
             Instructor instructor8 = new Instructor("Mark", "Thompson", "MT2020");
             Coordinator coordinator8 = new Coordinator("David", "Keathly", "DK2121");
@@ -38,6 +44,7 @@ namespace AbetApi.Data
             Instructor instructor9 = new Instructor("Yan", "Huang", "YH2221");
             Coordinator coordinator9 = new Coordinator("Krishna", "Kavi", "KK2521");
             Section section9 = new Section(instructor9, coordinator9, false, 1, 51, 2610, "Assembly Langauge And Computer Organization", true, "Just disgraceful.", "CSCE");
+            Course course3 = new Course(coordinator9, 2610, "Assembly Langauge And Computer Organization", "", false, "CSCE", "Spring", 2020);
 
             Instructor instructor10 = new Instructor("Wei", "Jin", "WJ2135");
             Coordinator coordinator10 = new Coordinator("Krishna", "Kavi", "KK2521");
@@ -127,6 +134,39 @@ namespace AbetApi.Data
             Admin admin2 = new Admin("Darth", "Vader", "DV1977");
             Admin admin3 = new Admin("Harry", "Potter", "HP2001");
 
+            //course and student outcome sample data
+            int[] mapped1 = { 0, 0, 0, 0, 0, 0 };
+            int[] mapped2 = { 0, 0, 0, 0, 0, 0, 0 };
+            Course_Outcome c_outcome1 = new Course_Outcome(1, "Describe how a computer's CPU, Main Memory, Secondary Storage and " +
+                "I/O work together to execute a computer program.", mapped1);
+            Course_Outcome c_outcome2 = new Course_Outcome(2, "Make use of a computer system's hardware, editor(s), operating system, system " +
+                "software and network to build computer software and submit that software for grading.", mapped1);
+            Course_Outcome c_outcome3 = new Course_Outcome(3, "Describe algorithms to perform simple tasks such as numeric computation, " +
+                "searching and sorting, choosing among several options, string manipulation, and use of pseudo-random numbers in simulation " +
+                "of such tasks as rolling dice.", mapped1);
+            Course_Outcome c_outcome4 = new Course_Outcome(4, "Write readable, efficient and correct C/C++ programs that include " +
+                "programming structures such as assignment statements, selection statements, loops, arrays, pointers, " +
+                "console and file I/O, structures, command line arguments, both standard library and user-defined functions, " +
+                "and multiple header (.h) and code (.c) files.", mapped1);
+            Course_Outcome c_outcome5 = new Course_Outcome(5, "Use commonly accepted practices and tools to find and fix runtime " +
+                "and logical errors in software.", mapped1);
+            Course_Outcome c_outcome6 = new Course_Outcome(6, "Describe a software process model that can be used to develop significant " +
+                "applications composed of hundreds of functions.", mapped1);
+            Course_Outcome c_outcome7 = new Course_Outcome(7, "Perform the steps necessary to edit, compile, link and execute C/C++ programs.", mapped1);
+
+            Course_Objectives c_obj = new Course_Objectives("CSCE 1030 Computer Science I", outcomes);
+
+            Student_Outcome s_outcome1 = new Student_Outcome(1, "Analyze a complex computing problem and to apply principles of computing " +
+                "and other relevant disciplines to identify solutions.");
+            Student_Outcome s_outcome2 = new Student_Outcome(2, "Design, implement, and evaluate a computing-based solution to meet a given set of " +
+                "computing requirements in the context of the program’s discipline.");
+            Student_Outcome s_outcome3 = new Student_Outcome(3, "Communicate effectively in a variety of professional contexts.");
+            Student_Outcome s_outcome4 = new Student_Outcome(4, "Recognize professional responsibilities and make informed judgements in " +
+                "computing practice based on legal and ethical principles.");
+            Student_Outcome s_outcome5 = new Student_Outcome(5, "Function effectively as a member or leader of a team engaged in " +
+                "activities appropriate to the program’s discipline.");
+            Student_Outcome s_outcome6 = new Student_Outcome(6, "Apply computer science theory and software development fundamentals to produce computing-based solutions.");
+
             section6.Year = 2020;
             section6.Semester = "fall";
             section7.Year = 2020;
@@ -143,9 +183,13 @@ namespace AbetApi.Data
             admins = new Admin[] { admin1, admin2, admin3 };
             instructors = new Instructor[] { instructor1, instructor4, instructor10, instructor11 };
             coordinators = new Coordinator[] { coordinator1, coordinator2, coordinator4, coordinator11 };
+            courses = new List<Course> { course1, course2, course3 };
+            outcomes = new List<Course_Outcome> { c_outcome1, c_outcome2, c_outcome3, c_outcome4, c_outcome5, c_outcome6, c_outcome7 };
+            s_outcomes = new List<Student_Outcome> { s_outcome1, s_outcome2, s_outcome3, s_outcome4, s_outcome5, s_outcome6 };
+            c_objs = new List<Course_Objectives> { c_obj };
         }
 
-        public IEnumerable<AbetModels.Section> GetSectionsByUserId(string userId, int year, string semester)
+        public List<AbetModels.Section> GetSectionsByUserId(string userId, int year, string semester)
         {
             List<Section> toReturn = new List<Section>();
 
@@ -157,7 +201,7 @@ namespace AbetApi.Data
             return toReturn;
         }
 
-        public IEnumerable<AbetModels.Section> GetSectionsByYearAndSemester(int year, string semester)
+        public List<AbetModels.Section> GetSectionsByYearAndSemester(int year, string semester)
         {
             List<Section> toReturn = new List<Section>();
 
@@ -180,7 +224,7 @@ namespace AbetApi.Data
             return null;
         }
 
-        public IEnumerable<Form> GetFormsByCourse(Course course)
+        public List<Form> GetFormsByCourse(Course course)
         {
             List<Form> toReturn = new List<Form>();
 
@@ -192,7 +236,7 @@ namespace AbetApi.Data
             return toReturn;
         }
 
-        public IEnumerable<Form> GetFormsByYearAndSemester(int year, string semester)
+        public List<Form> GetFormsByYearAndSemester(int year, string semester)
         {
             List<Form> toReturn = new List<Form>();
 
@@ -271,44 +315,46 @@ namespace AbetApi.Data
 
         public Program_Outcomes GetCourseObjectives(string program)
         {
-            int[] mapped1 = { 0, 0, 0, 0, 0, 0 };
-            int[] mapped2 = { 0, 0, 0, 0, 0, 0, 0 };
-            Course_Outcome outcome1 = new Course_Outcome(1, "Describe how a computer's CPU, Main Memory, Secondary Storage and " +
-                "I/O work together to execute a computer program.", mapped1);
-            Course_Outcome outcome2 = new Course_Outcome(2, "Make use of a computer system's hardware, editor(s), operating system, system " +
-                "software and network to build computer software and submit that software for grading.", mapped1);
-            Course_Outcome outcome3 = new Course_Outcome(3, "Describe algorithms to perform simple tasks such as numeric computation, " +
-                "searching and sorting, choosing among several options, string manipulation, and use of pseudo-random numbers in simulation " +
-                "of such tasks as rolling dice.", mapped1);
-            Course_Outcome outcome4 = new Course_Outcome(4, "Write readable, efficient and correct C/C++ programs that include " +
-                "programming structures such as assignment statements, selection statements, loops, arrays, pointers, " +
-                "console and file I/O, structures, command line arguments, both standard library and user-defined functions, " +
-                "and multiple header (.h) and code (.c) files.", mapped1);
-            Course_Outcome outcome5 = new Course_Outcome(5, "Use commonly accepted practices and tools to find and fix runtime " +
-                "and logical errors in software.", mapped1);
-            Course_Outcome outcome6 = new Course_Outcome(6, "Describe a software process model that can be used to develop significant " +
-                "applications composed of hundreds of functions.", mapped1);
-            Course_Outcome outcome7 = new Course_Outcome(7, "Perform the steps necessary to edit, compile, link and execute C/C++ programs.", mapped1);
-            List<Course_Outcome> outcomes = new List<Course_Outcome> { outcome1, outcome2, outcome3, outcome4, outcome5, outcome6, outcome7 };
-
-            Course_Objectives c_obj = new Course_Objectives("CSCE 1030 Computer Science I", outcomes);
-            List<Course_Objectives> c_objs = new List<Course_Objectives> { c_obj };
-
-            Student_Outcome s_outcome1 = new Student_Outcome(1, "Analyze a complex computing problem and to apply principles of computing " +
-                "and other relevant disciplines to identify solutions.");
-            Student_Outcome s_outcome2 = new Student_Outcome(2, "Design, implement, and evaluate a computing-based solution to meet a given set of " +
-                "computing requirements in the context of the program’s discipline.");
-            Student_Outcome s_outcome3 = new Student_Outcome(3, "Communicate effectively in a variety of professional contexts.");
-            Student_Outcome s_outcome4 = new Student_Outcome(4, "Recognize professional responsibilities and make informed judgements in " +
-                "computing practice based on legal and ethical principles.");
-            Student_Outcome s_outcome5 = new Student_Outcome(5, "Function effectively as a member or leader of a team engaged in " +
-                "activities appropriate to the program’s discipline.");
-            Student_Outcome s_outcome6 = new Student_Outcome(6, "Apply computer science theory and software development fundamentals to produce computing-based solutions.");
-            List<Student_Outcome> s_outcomes = new List<Student_Outcome> { s_outcome1, s_outcome2, s_outcome3, s_outcome4, s_outcome5, s_outcome6 };
-
             Program_Outcomes p_outcome = new Program_Outcomes("Computer Science", c_objs, s_outcomes);
 
             return p_outcome;
+        }
+
+        public List<Course> GetCoursesByDepartment(string department)
+        {
+            List<Course> courseList = new List<Course>();
+
+            foreach (Course course in courses)
+                if (course.Department == department && !courseList.Contains(course))
+                    courseList.Add(course);
+
+            return courseList;
+        }
+
+        public bool AddCourse(Course course)
+        {
+            courses.Add(course);
+            return true;
+        }
+
+        public bool RemoveCourse(Course course)
+        {
+            courses.Remove(course);
+            return true;
+        }
+
+        public bool PostCourseOutcomes(List<Course_Outcome> courseOutcomesList)
+        {
+            foreach (Course_Outcome outcome in courseOutcomesList)
+                System.Diagnostics.Debug.WriteLine(outcome.Outcome);
+                //outcomes.Add(outcome);
+
+            return true;
+        }
+
+        public List<Course_Outcome> GetCourseOutcomesByCourse(Course course)
+        {
+            return outcomes;
         }
     }
 }

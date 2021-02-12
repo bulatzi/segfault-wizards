@@ -8,11 +8,11 @@ namespace AbetApi.Data
 {
     public interface IMockAbetRepo
     {
-        IEnumerable<Section> GetSectionsByUserId(string userId, int year, string semester);
-        IEnumerable<Section> GetSectionsByYearAndSemester(int year, string semester);
+        List<Section> GetSectionsByUserId(string userId, int year, string semester);
+        List<Section> GetSectionsByYearAndSemester(int year, string semester);
         Form GetFormBySection(Section section);
-        IEnumerable<Form> GetFormsByCourse(Course course);
-        IEnumerable<Form> GetFormsByYearAndSemester(int year, string semester);
+        List<Form> GetFormsByCourse(Course course);
+        List<Form> GetFormsByYearAndSemester(int year, string semester);
         Form GetBlankForm();
         bool PostForm(Form form);
         bool PostComment(Course course);
@@ -21,5 +21,10 @@ namespace AbetApi.Data
         FacultyList GetFacultyList();
         bool AddFacultyMember(Info info, string role);
         Program_Outcomes GetCourseObjectives(string program);
+        List<Course> GetCoursesByDepartment(string department);
+        bool AddCourse(Course course);
+        bool RemoveCourse(Course course);
+        bool PostCourseOutcomes(List<Course_Outcome> courseOutcomesList);
+        List<Course_Outcome> GetCourseOutcomesByCourse(Course course);
     }
 }

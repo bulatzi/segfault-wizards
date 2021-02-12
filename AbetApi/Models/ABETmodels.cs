@@ -62,6 +62,21 @@ namespace AbetApi.Models
             public string Department { get; set; } //Ex. "CSCE"
             public string Semester { get; set; }
             public int Year { get; set; }
+
+            public Course(Coordinator coordinator, int courseNumber, string displayName, string coordinatorComment, bool isCourseCompleted, string department, string semester, int year)
+            {
+                this.Coordinator = coordinator;
+                this.CourseNumber = courseNumber;
+                this.DisplayName = displayName;
+                this.CoordinatorComment = coordinatorComment;
+                this.IsCourseCompleted = isCourseCompleted;
+                this.Department = department;
+                this.Semester = semester;
+                this.Year = year;
+            }
+
+            public Course()
+            { }
         }
 
         public class Section : Course
@@ -101,8 +116,10 @@ namespace AbetApi.Models
             public Info Info { get; set; }
             public string Role { get; set; }
             public string Program { get; set; }
+            public string Department { get; set; }
+            public List<Course_Outcome> CourseOutcomesList { get; set; }
         }
-
+        
         public class Form
         {
             public Section Section { get; set; }
