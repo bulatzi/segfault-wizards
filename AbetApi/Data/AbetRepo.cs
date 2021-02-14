@@ -10,6 +10,9 @@ namespace AbetApi.Data
 {
     public class AbetRepo : IAbetRepo
     {
+        int year = 2021;
+        string semester = "spring";
+
         private string cs =
             @"Server=TEBA-D\ABETDATABASE;Database=abetdb;Trusted_Connection=True";
         // on VM, server=TEBA-D\ABETDATABASE
@@ -163,6 +166,146 @@ st join programs as p on p.id = st.program_id where p.program = @program";
 
             return program_outcomes;
 
+        }
+
+        public List<Course> GetCoursesByDepartment(string department)
+        {
+            List<Course> coursesList = new List<Course>();
+            Course course;
+            string query = @"select c.course_number, st.first_name, st.last_name, st.euid, c.course_number, c.display_name, c.coordinator_comment, 
+c.completed as IsCourseCompleted, c.department from courses as c 
+left join staff as st on c.coordinator_id = st.euid
+where c.department = @department and c.year = @year and c.semester = @semester";
+
+            SqlConnection conn = GetConnection();
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(query, conn);
+            cmd.Parameters.Add(new SqlParameter("@department", SqlDbType.VarChar, 50)).Value = department;
+            cmd.Parameters.Add(new SqlParameter("@year", SqlDbType.Int)).Value = year;
+            cmd.Parameters.Add(new SqlParameter("@semester", SqlDbType.VarChar, 50)).Value = semester;
+            using (SqlDataReader rd = cmd.ExecuteReader())
+            {
+                while (rd.Read())
+                {
+                    course = new Course
+                    {
+                        Coordinator = new Coordinator(rd["first_name"].ToString(), rd["last_name"].ToString(), rd["euid"].ToString()),
+                        CourseNumber = Convert.ToInt32(rd["course_number"]),
+                        DisplayName = rd["display_name"].ToString(),
+                        CoordinatorComment = rd["coordinator_comment"].ToString(),
+                        IsCourseCompleted = Convert.ToBoolean(rd["IsCourseCompleted"]),
+                        Department = department,
+                        Year = year,
+                        Semester = semester
+                    };
+                    coursesList.Add(course);
+                }
+            }
+
+            return coursesList;
+        }
+
+        public bool AddCourse(Course course)
+        {
+            string insertQuery = @"insert into courses (year, semester, department, course_number, coordinator_id, display_name)
+values (@years,@semester, @department, @course_number, @coordinator_id, @display_name)";
+
+            SqlConnection conn = GetConnection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand(insertQuery, conn);
+            cmd.Parameters.Add(new SqlParameter("@years", SqlDbType.Int)).Value = course.Year;
+            cmd.Parameters.Add(new SqlParameter("@semester", SqlDbType.VarChar, 50)).Value = course.Semester;
+            cmd.Parameters.Add(new SqlParameter("@department", SqlDbType.VarChar, 50)).Value = course.Department;
+            cmd.Parameters.Add(new SqlParameter("@course_number", SqlDbType.VarChar, 50)).Value = course.CourseNumber;
+            cmd.Parameters.Add(new SqlParameter("@coordinator_id", SqlDbType.VarChar, 15)).Value = course.Coordinator.Id;
+            cmd.Parameters.Add(new SqlParameter("@display_name", SqlDbType.VarChar, 50)).Value = course.DisplayName;
+            cmd.Prepare();
+
+            return cmd.ExecuteNonQuery() > 0;
+        }
+
+        public bool RemoveCourse(Course course)
+        {
+            string removeQuery = @"delete from courses where year = @year and semester = @semester and 
+department = @department and course_number = @course_number";
+
+            SqlConnection conn = GetConnection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand(removeQuery, conn);
+            cmd.Parameters.Add(new SqlParameter("@year", SqlDbType.Int)).Value = course.Year;
+            cmd.Parameters.Add(new SqlParameter("@semester", SqlDbType.VarChar, 50)).Value = course.Semester;
+            cmd.Parameters.Add(new SqlParameter("@department", SqlDbType.VarChar, 50)).Value = course.Department;
+            cmd.Parameters.Add(new SqlParameter("@course_number", SqlDbType.VarChar, 50)).Value = course.CourseNumber;
+            cmd.Prepare();
+
+            return cmd.ExecuteNonQuery() > 0;
+        }
+
+        public FacultyList GetFacultyList()
+        {
+            FacultyList facultyList = new FacultyList();
+            Instructor instructor;
+            Info info = new Info();
+
+            string selectQuery = @"select st.euid as id, st.first_name, st.last_name, f.faculty_type 
+from staff as st join faculty_types as f 
+on st.faculty_type_id = f.id;";
+
+            SqlConnection conn = GetConnection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand(selectQuery, conn);
+            using (SqlDataReader rd = cmd.ExecuteReader())
+            {
+                while (rd.Read())
+                {
+                    instructor = new Instructor
+                    {
+                        FirstName = rd["first_name"].ToString(),
+                        LastName = rd["last_name"].ToString(),
+                        Id = rd["id"].ToString()
+                    };
+                    if (rd["faculty_type"].ToString() == "Full-time")
+                        facultyList.Normal.Add(instructor);
+                    /*else if (rd["faculty_type"].ToString() == "Adjuncts")
+                    {
+                        // add to facultyList.adjuncts(info);
+                    }
+                    else
+                    {
+                        // add to facultyList.fellow(info);
+                    }
+                    */
+
+                    //}
+
+                }
+            }
+            return facultyList;
+        }
+
+        public bool AddFacultyMember(Info info, string role)
+        {
+            //string selectQuery = @"select id from abetdb.dbo.faculty_types where faculty_type = 'Full-Time'";
+            string insertQuery = @"insert into abetdb.dbo.staff (euid, first_name, last_name, role, faculty_type_id) 
+values (@euid, @first_name, @last_name, @role, @faculty_type_id)";
+
+            SqlConnection conn = GetConnection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand(insertQuery, conn);
+            cmd.Parameters.Add(new SqlParameter("@euid", SqlDbType.VarChar, 20)).Value = "BB2020";
+            cmd.Parameters.Add(new SqlParameter("@first_name", SqlDbType.VarChar, 50)).Value = "Barrett";
+            cmd.Parameters.Add(new SqlParameter("@last_name", SqlDbType.VarChar, 50)).Value = "Bryant";
+            cmd.Parameters.Add(new SqlParameter("@role", SqlDbType.Int)).Value = 2;
+            cmd.Parameters.Add(new SqlParameter("@faculty_type_id", SqlDbType.Int)).Value = 1;
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            return true;
         }
     }
 }
