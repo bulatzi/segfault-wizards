@@ -10,11 +10,11 @@ namespace AbetApi.Data
 {
     public class AbetRepo : IAbetRepo
     {
-        int year = 2021;
-        string semester = "spring";
+        int currentYear = 2021;
+        string currentSemester = "spring";
 
         private string cs =
-            @"Server=TEBA-D\ABETDATABASE;Database=abetdb;Trusted_Connection=True";
+            @"Server=TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";
         // on VM, server=TEBA-D\ABETDATABASE
         // on mine, server=TRICO-SCHOOL\SQLEXPRESS
         public AbetRepo()
@@ -65,7 +65,7 @@ from sections s
 inner join courses c on s.course_id = c.id
 inner join staff st on s.instructor_id = st.euid
 inner join staff sts on c.coordinator_id = sts.euid
-where (s.instructor_id = @euid or c.coordinator_id = @euid) and c.semester = @term and c.year = @year";
+where (s.instructor_id = @euid or c.coordinator_id = @euid) and c.semester = @term and c.year = @year and c.status = 1";
             SqlConnection conn = GetConnection();
             conn.Open();
             SqlCommand cmd = new SqlCommand(query, conn);
@@ -83,14 +83,14 @@ where (s.instructor_id = @euid or c.coordinator_id = @euid) and c.semester = @te
                     Instructor = new Instructor(rd["i_firstname"].ToString(), rd["i_lastname"].ToString(),
                         rd["i_euid"].ToString()),
                     CoordinatorComment = rd["c_comment"].ToString(),
-                    CourseNumber = Convert.ToInt32(rd["courseNumber"]),
+                    CourseNumber = (rd["courseNumber"]).ToString(),
                     Department = rd["department"].ToString(),
                     DisplayName = rd["displayName"].ToString(),
                     IsCourseCompleted = Convert.ToBoolean(rd["courseComplete"]),
                     IsSectionCompleted = Convert.ToBoolean(rd["sectionCompleted"]),
                     //NumberOfStudents = Convert.ToInt32(rd["NumberOfStudents"]),
                     NumberOfStudents = rd["NumberOfStudents"] as int? ?? 0,
-                    SectionNumber = Convert.ToInt32(rd["sectionNumber"]),
+                    SectionNumber = (rd["sectionNumber"]).ToString(),
                     Year = year,
                     Semester = term
                 };
@@ -112,8 +112,8 @@ where (s.instructor_id = @euid or c.coordinator_id = @euid) and c.semester = @te
             string displayName = null;
 
             string query1 = @"select co.num as 'order', co.course_outcome as outcome, cob.student_outcome_mapping, c.display_name from 
-course_outcomes as co join course_objective as cob on co.id = cob.course_outcome_id 
-join courses as c on c.id = co.course_id where c.department = 'csce'; ";
+course_objectives as cob inner join course_outcomes as co on co.id = cob.course_outcome_id 
+inner join courses as c on c.id = cob.course_id where c.department = 'csce' and c.status = 1";
             SqlConnection conn = GetConnection();
             conn.Open();
             SqlCommand cmd = new SqlCommand(query1, conn);
@@ -172,17 +172,17 @@ st join programs as p on p.id = st.program_id where p.program = @program";
         {
             List<Course> coursesList = new List<Course>();
             Course course;
-            string query = @"select c.course_number, st.first_name, st.last_name, st.euid, c.course_number, c.display_name, c.coordinator_comment, 
+            string query = @"select c.course_number, f.first_name, f.last_name, f.euid, c.course_number, c.display_name, c.coordinator_comment, 
 c.completed as IsCourseCompleted, c.department from courses as c 
-left join staff as st on c.coordinator_id = st.euid
-where c.department = @department and c.year = @year and c.semester = @semester";
+left join faculties as f on c.coordinator_id = f.euid
+where c.department = @department and c.year = @year and c.semester = @semester and c.status = 1";
 
             SqlConnection conn = GetConnection();
             conn.Open();
             SqlCommand cmd = new SqlCommand(query, conn);
             cmd.Parameters.Add(new SqlParameter("@department", SqlDbType.VarChar, 50)).Value = department;
-            cmd.Parameters.Add(new SqlParameter("@year", SqlDbType.Int)).Value = year;
-            cmd.Parameters.Add(new SqlParameter("@semester", SqlDbType.VarChar, 50)).Value = semester;
+            cmd.Parameters.Add(new SqlParameter("@year", SqlDbType.Int)).Value = currentYear;
+            cmd.Parameters.Add(new SqlParameter("@semester", SqlDbType.VarChar, 50)).Value = currentSemester;
             using (SqlDataReader rd = cmd.ExecuteReader())
             {
                 while (rd.Read())
@@ -190,13 +190,13 @@ where c.department = @department and c.year = @year and c.semester = @semester";
                     course = new Course
                     {
                         Coordinator = new Coordinator(rd["first_name"].ToString(), rd["last_name"].ToString(), rd["euid"].ToString()),
-                        CourseNumber = Convert.ToInt32(rd["course_number"]),
+                        CourseNumber = (rd["course_number"]).ToString(),
                         DisplayName = rd["display_name"].ToString(),
                         CoordinatorComment = rd["coordinator_comment"].ToString(),
                         IsCourseCompleted = Convert.ToBoolean(rd["IsCourseCompleted"]),
                         Department = department,
-                        Year = year,
-                        Semester = semester
+                        Year = currentYear,
+                        Semester = currentSemester
                     };
                     coursesList.Add(course);
                 }
@@ -208,13 +208,13 @@ where c.department = @department and c.year = @year and c.semester = @semester";
         public bool AddCourse(Course course)
         {
             string insertQuery = @"insert into courses (year, semester, department, course_number, coordinator_id, display_name)
-values (@years,@semester, @department, @course_number, @coordinator_id, @display_name)";
+values (@year,@semester, @department, @course_number, @coordinator_id, @display_name)";
 
             SqlConnection conn = GetConnection();
             conn.Open();
 
             SqlCommand cmd = new SqlCommand(insertQuery, conn);
-            cmd.Parameters.Add(new SqlParameter("@years", SqlDbType.Int)).Value = course.Year;
+            cmd.Parameters.Add(new SqlParameter("@year", SqlDbType.Int)).Value = course.Year;
             cmd.Parameters.Add(new SqlParameter("@semester", SqlDbType.VarChar, 50)).Value = course.Semester;
             cmd.Parameters.Add(new SqlParameter("@department", SqlDbType.VarChar, 50)).Value = course.Department;
             cmd.Parameters.Add(new SqlParameter("@course_number", SqlDbType.VarChar, 50)).Value = course.CourseNumber;
@@ -227,13 +227,13 @@ values (@years,@semester, @department, @course_number, @coordinator_id, @display
 
         public bool RemoveCourse(Course course)
         {
-            string removeQuery = @"delete from courses where year = @year and semester = @semester and 
-department = @department and course_number = @course_number";
+            string updateQuery = @"update courses set status = 0 where year = @year and semester = @semester 
+and department = @department and course_number = @course_number";
 
             SqlConnection conn = GetConnection();
             conn.Open();
 
-            SqlCommand cmd = new SqlCommand(removeQuery, conn);
+            SqlCommand cmd = new SqlCommand(updateQuery, conn);
             cmd.Parameters.Add(new SqlParameter("@year", SqlDbType.Int)).Value = course.Year;
             cmd.Parameters.Add(new SqlParameter("@semester", SqlDbType.VarChar, 50)).Value = course.Semester;
             cmd.Parameters.Add(new SqlParameter("@department", SqlDbType.VarChar, 50)).Value = course.Department;
@@ -249,9 +249,7 @@ department = @department and course_number = @course_number";
             Instructor instructor;
             Info info = new Info();
 
-            string selectQuery = @"select st.euid as id, st.first_name, st.last_name, f.faculty_type 
-from staff as st join faculty_types as f 
-on st.faculty_type_id = f.id;";
+            string selectQuery = @"select euid as id, first_name, last_name, faculty_type from faculties";
 
             SqlConnection conn = GetConnection();
             conn.Open();
@@ -268,39 +266,35 @@ on st.faculty_type_id = f.id;";
                         Id = rd["id"].ToString()
                     };
                     if (rd["faculty_type"].ToString() == "Full-time")
-                        facultyList.Normal.Add(instructor);
-                    /*else if (rd["faculty_type"].ToString() == "Adjuncts")
+                        facultyList.FullTime.Add(instructor);
+                    else if (rd["faculty_type"].ToString() == "Adjunct")
                     {
-                        // add to facultyList.adjuncts(info);
+                        facultyList.Adjuncts.Add(instructor);
                     }
                     else
                     {
-                        // add to facultyList.fellow(info);
+                        facultyList.Fellows.Add(instructor);
                     }
-                    */
-
-                    //}
-
                 }
             }
             return facultyList;
         }
 
-        public bool AddFacultyMember(Info info, string role)
+        public bool AddFacultyMember(Info info, string facultyType)
         {
             //string selectQuery = @"select id from abetdb.dbo.faculty_types where faculty_type = 'Full-Time'";
-            string insertQuery = @"insert into abetdb.dbo.staff (euid, first_name, last_name, role, faculty_type_id) 
-values (@euid, @first_name, @last_name, @role, @faculty_type_id)";
+            string insertQuery = @"insert into abetdb.dbo.faculties (euid, first_name, last_name, role, faculty_type) 
+values (@euid, @first_name, @last_name, @role, @faculty_type)";
 
             SqlConnection conn = GetConnection();
             conn.Open();
 
             SqlCommand cmd = new SqlCommand(insertQuery, conn);
-            cmd.Parameters.Add(new SqlParameter("@euid", SqlDbType.VarChar, 20)).Value = "BB2020";
-            cmd.Parameters.Add(new SqlParameter("@first_name", SqlDbType.VarChar, 50)).Value = "Barrett";
-            cmd.Parameters.Add(new SqlParameter("@last_name", SqlDbType.VarChar, 50)).Value = "Bryant";
-            cmd.Parameters.Add(new SqlParameter("@role", SqlDbType.Int)).Value = 2;
-            cmd.Parameters.Add(new SqlParameter("@faculty_type_id", SqlDbType.Int)).Value = 1;
+            cmd.Parameters.Add(new SqlParameter("@euid", SqlDbType.VarChar, 20)).Value = info.Id;
+            cmd.Parameters.Add(new SqlParameter("@first_name", SqlDbType.VarChar, 50)).Value = info.FirstName;
+            cmd.Parameters.Add(new SqlParameter("@last_name", SqlDbType.VarChar, 50)).Value = info.LastName;
+            cmd.Parameters.Add(new SqlParameter("@role", SqlDbType.Int)).Value = 2; // 2 is instructor
+            cmd.Parameters.Add(new SqlParameter("@faculty_type", SqlDbType.VarChar, 50)).Value = facultyType;
             cmd.Prepare();
 
             cmd.ExecuteNonQuery();

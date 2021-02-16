@@ -137,16 +137,16 @@ namespace AbetApi.Controller
         [HttpPost("faculty/get-list")]
         public FacultyList GetFacultyList()
         {
-            //return mockAbetRepo.GetFacultyList();
-            return abetRepo.GetFacultyList();
+            return mockAbetRepo.GetFacultyList();
+            //return abetRepo.GetFacultyList();
         }
 
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("faculty/add-member")]
         public ActionResult AddFacultyMember([FromBody] BodyParams body)
         {
-            //if (abetRepo.AddFacultyMember(body.Info, body.Role))
-            if (mockAbetRepo.AddFacultyMember(body.Info, body.Role))
+            //if (abetRepo.AddFacultyMember(body.Info, body.FacultyType))
+            if (mockAbetRepo.AddFacultyMember(body.Info, body.FacultyType))
                 return Ok();
             else
                 return BadRequest();
@@ -173,7 +173,7 @@ namespace AbetApi.Controller
         public ActionResult AddCourse([FromBody] BodyParams body)
         {
             if (mockAbetRepo.AddCourse(body.Course))
-            //if (abetRepo.AddCourse(course))
+            //if (abetRepo.AddCourse(body.Course))
                 return Ok();
             else
                 return BadRequest();
@@ -184,7 +184,7 @@ namespace AbetApi.Controller
         public ActionResult RemoveCourse([FromBody] BodyParams body)
         {
             if (mockAbetRepo.AddCourse(body.Course))
-            //if (abetRepo.RemoveCourse(course))
+            //if (abetRepo.RemoveCourse(body.Course))
                 return Ok();
             else
                 return BadRequest();

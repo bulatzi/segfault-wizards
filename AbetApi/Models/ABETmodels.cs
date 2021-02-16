@@ -55,7 +55,7 @@ namespace AbetApi.Models
         public class Course
         {
             public Coordinator Coordinator { get; set; }
-            public int CourseNumber { get; set; } //Ex: 2100
+            public string CourseNumber { get; set; } //Ex: 2100
             public string DisplayName { get; set; } //Ex: "Assembly Langauge And Computer Organization"
             public string CoordinatorComment { get; set; }
             public bool IsCourseCompleted { get; set; }
@@ -63,7 +63,7 @@ namespace AbetApi.Models
             public string Semester { get; set; }
             public int Year { get; set; }
 
-            public Course(Coordinator coordinator, int courseNumber, string displayName, string coordinatorComment, bool isCourseCompleted, string department, string semester, int year)
+            public Course(Coordinator coordinator, string courseNumber, string displayName, string coordinatorComment, bool isCourseCompleted, string department, string semester, int year)
             {
                 this.Coordinator = coordinator;
                 this.CourseNumber = courseNumber;
@@ -83,10 +83,10 @@ namespace AbetApi.Models
         {
             public Instructor Instructor { get; set; }
             public bool IsSectionCompleted { get; set; }
-            public int SectionNumber { get; set; } //Ex: 1
+            public string SectionNumber { get; set; } //Ex: 1
             public int NumberOfStudents { get; set; }
 
-            public Section(Instructor instructor, Coordinator coordinator, bool sectionCompleted, int sectionNumber, int numberOfStudents, int courseNumber, string displayName, bool courseCompleted, string coordinatorComment, string department)
+            public Section(Instructor instructor, Coordinator coordinator, bool sectionCompleted, string sectionNumber, int numberOfStudents, string courseNumber, string displayName, bool courseCompleted, string coordinatorComment, string department)
             {
                 this.Instructor = instructor;
                 this.Coordinator = coordinator;
@@ -114,7 +114,7 @@ namespace AbetApi.Models
             public Section Section { get; set; }
             public Course Course { get; set; }
             public Info Info { get; set; }
-            public string Role { get; set; }
+            public string FacultyType { get; set; }
             public string Program { get; set; }
             public string Department { get; set; }
             public List<Course_Outcome> CourseOutcomesList { get; set; }
@@ -258,7 +258,7 @@ namespace AbetApi.Models
 
         public class FacultyList
         {
-            public List<Info> Normal { get; set; } = new List<Info>();   //instructors, coordinators and admins
+            public List<Info> FullTime { get; set; } = new List<Info>();   //instructors, coordinators and admins
             public List<Info> Adjuncts { get; set; } = new List<Info>(); //teaching adjuncts
             public List<Info> Fellows { get; set; } = new List<Info>();  //teaching fellows
         }

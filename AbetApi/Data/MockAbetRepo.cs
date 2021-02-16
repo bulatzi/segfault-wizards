@@ -29,35 +29,35 @@ namespace AbetApi.Data
             // ********* Fake Section Data *********
             Instructor instructor6 = new Instructor("Mark", "Thompson", "MT2020");
             Coordinator coordinator6 = new Coordinator("Mark", "Thompson", "MT2020");
-            Section section6 = new Section(instructor6, coordinator6, false, 1, 49, 3600, "Intro to System Programming", false, "", "CSCE");
-            Course course1 = new Course(coordinator6, 3600, "Intro to System Programming", "Very good!", true, "CSCE", "Spring", 2020);
+            Section section6 = new Section(instructor6, coordinator6, false, "001", 49, "3600", "Intro to System Programming", false, "", "CSCE");
+            Course course1 = new Course(coordinator6, "3600", "Intro to System Programming", "Very good!", true, "CSCE", "Spring", 2020);
 
             Instructor instructor7 = new Instructor("Mark", "Thompson", "MT2020");
             Coordinator coordinator7 = new Coordinator("David", "Keathly", "DK2121");
-            Section section7 = new Section(instructor7, coordinator7, false, 1, 90, 1030, "Computer Science I", false, "", "CSCE");
-            Course course2 = new Course(coordinator7, 1030, "Computer Science I", "Just terrible.", true, "CSCE", "Spring", 2020);
+            Section section7 = new Section(instructor7, coordinator7, false, "001", 90, "1030", "Computer Science I", false, "", "CSCE");
+            Course course2 = new Course(coordinator7, "1030", "Computer Science I", "Just terrible.", true, "CSCE", "Spring", 2020);
 
             Instructor instructor8 = new Instructor("Mark", "Thompson", "MT2020");
             Coordinator coordinator8 = new Coordinator("David", "Keathly", "DK2121");
-            Section section8 = new Section(instructor8, coordinator8, false, 2, 96, 1030, "Computer Science I", true, "Good work!", "CSCE");
+            Section section8 = new Section(instructor8, coordinator8, false, "002", 96, "1030", "Computer Science I", true, "Good work!", "CSCE");
 
             Instructor instructor9 = new Instructor("Yan", "Huang", "YH2221");
             Coordinator coordinator9 = new Coordinator("Krishna", "Kavi", "KK2521");
-            Section section9 = new Section(instructor9, coordinator9, false, 1, 51, 2610, "Assembly Langauge And Computer Organization", true, "Just disgraceful.", "CSCE");
-            Course course3 = new Course(coordinator9, 2610, "Assembly Langauge And Computer Organization", "", false, "CSCE", "Spring", 2020);
+            Section section9 = new Section(instructor9, coordinator9, false, "001", 51, "2610", "Assembly Langauge And Computer Organization", true, "Just disgraceful.", "CSCE");
+            Course course3 = new Course(coordinator9, "2610", "Assembly Langauge And Computer Organization", "", false, "CSCE", "Spring", 2020);
 
             Instructor instructor10 = new Instructor("Wei", "Jin", "WJ2135");
             Coordinator coordinator10 = new Coordinator("Krishna", "Kavi", "KK2521");
-            Section section10 = new Section(instructor10, coordinator10, false, 7, 37, 2610, "Assembly Langauge And Computer Organization", false, "", "CSCE");
+            Section section10 = new Section(instructor10, coordinator10, false, "007", 37, "2610", "Assembly Langauge And Computer Organization", false, "", "CSCE");
 
             Instructor instructor11 = new Instructor("Stephanie", "Ludi", "SL2121");
             Coordinator coordinator11 = new Coordinator("Stephanie", "Ludi", "SL2121");
-            Section section11 = new Section(instructor11, coordinator11, false, 1, 72, 4901, "Software Development Capstone", true, "Nice job!", "CSCE");
+            Section section11 = new Section(instructor11, coordinator11, false, "001", 72, "4901", "Software Development Capstone", true, "Nice job!", "CSCE");
 
             // ********* Fake Form Data *********
             Instructor instructor1 = new Instructor("Mark", "Thompson", "MT2020");
             Coordinator coordinator1 = new Coordinator("Mark", "Thompson", "MT2020");
-            Section section1 = new Section(instructor1, coordinator1, false, 1, 0, 3600, "Intro to System Programming", false, "", "CSCE");
+            Section section1 = new Section(instructor1, coordinator1, false, "001", 0, "3600", "Intro to System Programming", false, "", "CSCE");
             StudentWorks studentwork1 = new StudentWorks("StudentWork1", "file1");
             StudentWorks studentwork2 = new StudentWorks("StudentWork2", "file2");
             List<StudentWorks> listOfWorks1 = new List<StudentWorks>();
@@ -76,7 +76,7 @@ namespace AbetApi.Data
 
             Instructor instructor2 = new Instructor("Mark", "Thompson", "MT2020");
             Coordinator coordinator2 = new Coordinator("David", "Keathly", "DK2121");
-            Section section2 = new Section(instructor2, coordinator2, false, 1, 0, 1030, "Computer Science I", false, "", "CSCE");
+            Section section2 = new Section(instructor2, coordinator2, false, "001", 0, "1030", "Computer Science I", false, "", "CSCE");
             Grades gradeIT1 = new Grades(2, 5, 6, 7, 1, 1, 9, 31);
             Grades gradeCS1 = new Grades(2, 5, 6, 7, 1, 2, 9, 32);
             Grades gradeCE1 = new Grades(2, 5, 6, 7, 1, 3, 9, 33);
@@ -90,7 +90,7 @@ namespace AbetApi.Data
 
             Instructor instructor3 = new Instructor("Mark", "Thompson", "MT2020");
             Coordinator coordinator3 = new Coordinator("David", "Keathly", "DK2121");
-            Section section3 = new Section(instructor3, coordinator3, false, 2, 0, 1030, "Computer Science I", true, "Good work!", "CSCE");
+            Section section3 = new Section(instructor3, coordinator3, false, "002", 0, "1030", "Computer Science I", true, "Good work!", "CSCE");
             Grades gradeIT2 = new Grades(2, 5, 6, 7, 1, 1, 9, 31);
             Grades gradeCS2 = new Grades(2, 5, 6, 7, 1, 2, 9, 32);
             Grades gradeCE2 = new Grades(2, 5, 6, 7, 1, 3, 9, 33);
@@ -104,7 +104,7 @@ namespace AbetApi.Data
 
             Instructor instructor4 = new Instructor("Yan", "Huang", "YH2221");
             Coordinator coordinator4 = new Coordinator("Krishna", "Kavi", "KK2521");
-            Section section4 = new Section(instructor4, coordinator4, false, 1, 0, 2610, "Assembly Langauge And Computer Organization", true, "Just disgraceful.", "CSCE");
+            Section section4 = new Section(instructor4, coordinator4, false, "001", 0, "2610", "Assembly Langauge And Computer Organization", true, "Just disgraceful.", "CSCE");
             Grades gradeIT3 = new Grades(2, 5, 6, 7, 1, 1, 9, 31);
             Grades gradeCS3 = new Grades(2, 5, 6, 7, 1, 2, 9, 32);
             Grades gradeCE3 = new Grades(2, 5, 6, 7, 1, 3, 9, 33);
@@ -118,7 +118,7 @@ namespace AbetApi.Data
 
             Instructor instructor5 = new Instructor("Yan", "Huang", "YH2221");
             Coordinator coordinator5 = new Coordinator("Krishna", "Kavi", "KK2521");
-            Section section5 = new Section(instructor5, coordinator5, false, 1, 0, 2610, "Assembly Langauge And Computer Organization", true, "Just disgraceful.", "CSCE");
+            Section section5 = new Section(instructor5, coordinator5, false, "001", 0, "2610", "Assembly Langauge And Computer Organization", true, "Just disgraceful.", "CSCE");
             Grades gradeIT4 = new Grades(2, 5, 6, 7, 1, 1, 9, 31);
             Grades gradeCS4 = new Grades(2, 5, 6, 7, 1, 2, 9, 32);
             Grades gradeCE4 = new Grades(2, 5, 6, 7, 1, 3, 9, 33);
@@ -294,20 +294,20 @@ namespace AbetApi.Data
 
             //add all normal faculty, there are no adjuncts or teaching fellows for now
             foreach (Instructor instructor in instructors)
-                facultyList.Normal.Add(instructor);
+                facultyList.FullTime.Add(instructor);
             
             foreach (Coordinator coordinator in coordinators)
-                if (!facultyList.Normal.Contains(coordinator))
-                    facultyList.Normal.Add(coordinator);
+                if (!facultyList.FullTime.Contains(coordinator))
+                    facultyList.FullTime.Add(coordinator);
 
             foreach (Admin admin in admins)
-                if (!facultyList.Normal.Contains(admin))
-                    facultyList.Normal.Add(admin);
+                if (!facultyList.FullTime.Contains(admin))
+                    facultyList.FullTime.Add(admin);
 
             return facultyList;
         }
 
-        public bool AddFacultyMember(Info info, string role)
+        public bool AddFacultyMember(Info info, string facultyType)
         {
             //store member in DB
             return true;
