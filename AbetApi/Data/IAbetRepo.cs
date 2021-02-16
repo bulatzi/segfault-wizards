@@ -11,6 +11,11 @@ namespace AbetApi.Data
         string GetRole(string userId);
         IEnumerable<Section> GetSectionsByUserId(string userId, int year, string term);
         Program_Outcomes GetCourseObjectives(string program);
+        List<Course> GetCoursesByDepartment(string department);
+        bool AddCourse(Course course);
+        bool RemoveCourse(Course course);
+        FacultyList GetFacultyList();
+        bool AddFacultyMember(Info info, string facultyType);
 
     }
 }
