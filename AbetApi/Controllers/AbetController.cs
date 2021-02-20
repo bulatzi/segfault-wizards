@@ -126,10 +126,10 @@ namespace AbetApi.Controller
         }
 
         [Authorize(Roles = RoleTypes.Admin)]
-        [HttpPost("sections/post-section")]
-        public ActionResult PostSection([FromBody] BodyParams body)
+        [HttpPost("sections/add-section")]
+        public ActionResult AddSection([FromBody] BodyParams body)
         {
-            if (mockAbetRepo.PostSection(body.Section))
+            if (mockAbetRepo.AddSection(body.Section))
                 return Ok();
             else
                 return BadRequest();

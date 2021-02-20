@@ -275,7 +275,7 @@ namespace AbetApi.Data
             return true;
         }
 
-        public bool PostSection(Section section)
+        public bool AddSection(Section section)
         {
             //store section in database
             return true;

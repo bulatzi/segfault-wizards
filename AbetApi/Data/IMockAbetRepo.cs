@@ -16,10 +16,10 @@ namespace AbetApi.Data
         Form GetBlankForm();
         bool PostForm(Form form);
         bool PostComment(Course course);
-        bool PostSection(Section section);
+        bool AddSection(Section section);
         string GetRole(string userId);
         FacultyList GetFacultyList();
-        bool AddFacultyMember(Info info, string role);
+        bool AddFacultyMember(Info info, string facultyType);
         Program_Outcomes GetCourseObjectives(string program);
         List<Course> GetCoursesByDepartment(string department);
         bool AddCourse(Course course);
