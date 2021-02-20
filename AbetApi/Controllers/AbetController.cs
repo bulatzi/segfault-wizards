@@ -111,9 +111,11 @@ namespace AbetApi.Controller
         //ADMIN LEVEL FUNCTIONS
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("sections/by-semester-year")]
-        public List<Section> GetAllSections([FromBody] BodyParams body)
+        public ActionResult GetAllSections([FromBody] BodyParams body)
         {
-            return mockAbetRepo.GetSectionsByYearAndSemester(body.Year, body.Semester);
+            if (body.Year < 1) return BadRequest();
+            if (String.IsNullOrEmpty(body.Semester)) return BadRequest();
+            return Ok(mockAbetRepo.GetSectionsByYearAndSemester(body.Year, body.Semester));
         }
 
         [Authorize(Roles = RoleTypes.Admin)]
@@ -135,11 +137,20 @@ namespace AbetApi.Controller
 
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("faculty/get-list")]
+        //Old code
+        /*
         public FacultyList GetFacultyList()
         {
             return mockAbetRepo.GetFacultyList();
             //return abetRepo.GetFacultyList();
+        }*/
+        
+        //Refactored version
+        public ActionResult GetFacultyList()
+        {
+            return Ok(mockAbetRepo.GetFacultyList());
         }
+        
 
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("faculty/add-member")]
