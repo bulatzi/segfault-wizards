@@ -157,6 +157,9 @@ namespace AbetApi.Models
                 this.NumberOfCE = numberofCE;
                 this.StudentWorks = studentworks;
             }
+
+            public Course_Outcomes()
+            { }
         }
         
 
@@ -164,21 +167,22 @@ namespace AbetApi.Models
         {
             public int Order { get; set; }
             public string Outcome { get; set; }
+
             public Student_Outcome(int order, string outcome)
             {
                 this.Order = order;
                 this.Outcome = outcome;
             }
-            public Student_Outcome()
-            {
 
-            }
+            public Student_Outcome()
+            { }
         }
         public class Program_Outcomes
         {
             public string Program { get; set; } //Ex: CSCE, CENG
             public List<Course_Objectives> CourseObjectives { get; set; }
             public List<Student_Outcome> StudentOutcomes { get; set; }
+
             public Program_Outcomes(string program, List<Course_Objectives> course_Objectives, List<Student_Outcome> studentOutcomes)
             {
                 this.Program = program;
@@ -191,6 +195,7 @@ namespace AbetApi.Models
         {
             public string CourseName { get; set; } //Ex: CSCE 2610 Assembly Language
             public List<Course_Outcome> CourseOutcomes { get; set; }
+
             public Course_Objectives(string courseName, List<Course_Outcome> courseOutcomes)
             {
                 this.CourseName = courseName;
@@ -198,9 +203,7 @@ namespace AbetApi.Models
             }
             
             public Course_Objectives()
-            {
-
-            }
+            { }
         }
 
         public class Course_Outcome
@@ -208,6 +211,7 @@ namespace AbetApi.Models
             public int Order { get; set; }
             public string Outcome { get; set; } //Ex: Gather and refine user functional requirements and other...
             public int[] MappedStudentOutcomes { get; set; } //Ex: 1, 0, 1, 1, 0, 0
+
             //public string Mapped { get; set; }
             public Course_Outcome(int order, string outcome, int[] mapped)
             {
@@ -225,11 +229,15 @@ namespace AbetApi.Models
         {
             public string StudentWork { get; set; }
             public string FileUploaded { get; set; }
+
             public StudentWorks(string studentWork, string fileUploaded)
             {
                 this.StudentWork = studentWork;
                 this.FileUploaded = fileUploaded;
             }
+
+            public StudentWorks()
+            { }
         }
 
         public class Grades
@@ -254,6 +262,9 @@ namespace AbetApi.Models
                 this.I = i;
                 this.TotalStudents = totalStudents;
             }
+
+            public Grades()
+            { }
         }
 
         public class FacultyList
