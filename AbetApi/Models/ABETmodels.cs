@@ -6,6 +6,10 @@ namespace AbetApi.Models
 {
     public class AbetModels
     {
+        public class Identity
+        {
+            public int Id { get; set; }
+        }
         public class Info
         {
             public string FirstName { get; set; }
@@ -52,7 +56,7 @@ namespace AbetApi.Models
             { }
         }
 
-        public class Course
+        public class Course : Identity
         {
             public Coordinator Coordinator { get; set; }
             public string CourseNumber { get; set; } //Ex: 2100
@@ -61,7 +65,7 @@ namespace AbetApi.Models
             public bool IsCourseCompleted { get; set; }
             public string Department { get; set; } //Ex. "CSCE"
             public string Semester { get; set; }
-            public int Year { get; set; }
+            public int? Year { get; set; }
 
             public Course(Coordinator coordinator, string courseNumber, string displayName, string coordinatorComment, bool isCourseCompleted, string department, string semester, int year)
             {
@@ -81,6 +85,7 @@ namespace AbetApi.Models
 
         public class Section : Course
         {
+            public int? SectionId { get; set; }
             public Instructor Instructor { get; set; }
             public bool IsSectionCompleted { get; set; }
             public string SectionNumber { get; set; } //Ex: 1
@@ -123,12 +128,12 @@ namespace AbetApi.Models
         public class Form
         {
             public Section Section { get; set; }
-            public List<Course_Outcomes> Outcomes { get; set; }  // array 
+            public List<OutcomeObjective> Outcomes { get; set; }  // array 
             public Grades ITGrades { get; set; }
             public Grades CSGrades { get; set; }
             public Grades CEGrades { get; set; }
 
-            public Form(Section section, List<Course_Outcomes> outcome, Grades itgrade, Grades csgrade, Grades cegrade)
+            public Form(Section section, List<OutcomeObjective> outcome, Grades itgrade, Grades csgrade, Grades cegrade)
             {
                 this.Section = section;
                 this.Outcomes = outcome;
@@ -141,15 +146,17 @@ namespace AbetApi.Models
             { }
         }
 
-        public class Course_Outcomes
+        public class OutcomeObjective
         {
+            public int OrderOfOutcome { get; set; }
             public string Outcome { get; set; }
+            public int OutcomeId { get; set; }
             public int NumberOfIT { get; set; }
             public int NumberOfCS { get; set; }
             public int NumberOfCE { get; set; }
-            public List<StudentWorks> StudentWorks { get; set; }
+            public List<StudentWork> StudentWorks { get; set; }
 
-            public Course_Outcomes(string outcome, int numberofIT, int numberofCS, int numberofCE, List<StudentWorks> studentworks)
+            public OutcomeObjective(string outcome, int numberofIT, int numberofCS, int numberofCE, List<StudentWork> studentworks)
             {
                 this.Outcome = outcome;
                 this.NumberOfIT = numberofIT;
@@ -158,7 +165,7 @@ namespace AbetApi.Models
                 this.StudentWorks = studentworks;
             }
 
-            public Course_Outcomes()
+            public OutcomeObjective()
             { }
         }
         
@@ -180,10 +187,10 @@ namespace AbetApi.Models
         public class Program_Outcomes
         {
             public string Program { get; set; } //Ex: CSCE, CENG
-            public List<Course_Objectives> CourseObjectives { get; set; }
+            public List<Course_Objective> CourseObjectives { get; set; }
             public List<Student_Outcome> StudentOutcomes { get; set; }
 
-            public Program_Outcomes(string program, List<Course_Objectives> course_Objectives, List<Student_Outcome> studentOutcomes)
+            public Program_Outcomes(string program, List<Course_Objective> course_Objectives, List<Student_Outcome> studentOutcomes)
             {
                 this.Program = program;
                 this.StudentOutcomes = studentOutcomes;
@@ -191,18 +198,18 @@ namespace AbetApi.Models
             }
         }
 
-        public class Course_Objectives
+        public class Course_Objective
         {
             public string CourseName { get; set; } //Ex: CSCE 2610 Assembly Language
             public List<Course_Outcome> CourseOutcomes { get; set; }
 
-            public Course_Objectives(string courseName, List<Course_Outcome> courseOutcomes)
+            public Course_Objective(string courseName, List<Course_Outcome> courseOutcomes)
             {
                 this.CourseName = courseName;
                 this.CourseOutcomes = courseOutcomes;
             }
             
-            public Course_Objectives()
+            public Course_Objective()
             { }
         }
 
@@ -225,22 +232,22 @@ namespace AbetApi.Models
 
         }
 
-        public class StudentWorks
+        public class StudentWork : Identity
         {
-            public string StudentWork { get; set; }
+            public string FileName { get; set; }
             public string FileUploaded { get; set; }
 
-            public StudentWorks(string studentWork, string fileUploaded)
+            public StudentWork(string studentWork, string fileUploaded)
             {
-                this.StudentWork = studentWork;
+                this.FileName = studentWork;
                 this.FileUploaded = fileUploaded;
             }
 
-            public StudentWorks()
+            public StudentWork()
             { }
         }
 
-        public class Grades
+        public class Grades : Identity
         {
             public int A { get; set; }
             public int B { get; set; }
@@ -272,6 +279,16 @@ namespace AbetApi.Models
             public List<Info> FullTime { get; set; } = new List<Info>();   //instructors, coordinators and admins
             public List<Info> Adjuncts { get; set; } = new List<Info>(); //teaching adjuncts
             public List<Info> Fellows { get; set; } = new List<Info>();  //teaching fellows
+        }
+
+        public class SqlReturn
+        {
+            public string message { get; set; }
+            public int code { get; set; }
+            public SqlReturn()
+            {
+
+            }
         }
     }
 }

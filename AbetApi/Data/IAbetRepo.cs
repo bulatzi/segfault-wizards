@@ -16,6 +16,9 @@ namespace AbetApi.Data
         bool RemoveCourse(Course course);
         FacultyList GetFacultyList();
         bool AddFacultyMember(Info info, string facultyType);
+        Form GetBlankForm(Section section);
+        Form GetFormBySection(Section section);
+        SqlReturn PostForm(Form form);
 
     }
 }

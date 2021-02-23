@@ -4091,19 +4091,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\emman\\.nuget\\packages\\": {}
+    "C:\\Users\\yafet\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\emman\\Desktop\\Classes\\CSCE_4901_Software_Development_Capstone_I\\project_workspace\\Back-End\\AbetApi\\AbetApi.csproj",
+      "projectUniqueName": "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\AbetApi.csproj",
       "projectName": "AbetApi",
-      "projectPath": "C:\\Users\\emman\\Desktop\\Classes\\CSCE_4901_Software_Development_Capstone_I\\project_workspace\\Back-End\\AbetApi\\AbetApi.csproj",
-      "packagesPath": "C:\\Users\\emman\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\emman\\Desktop\\Classes\\CSCE_4901_Software_Development_Capstone_I\\project_workspace\\Back-End\\AbetApi\\obj\\",
+      "projectPath": "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\AbetApi.csproj",
+      "packagesPath": "C:\\Users\\yafet\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\emman\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\yafet\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4164,7 +4164,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
       }
     }
   }

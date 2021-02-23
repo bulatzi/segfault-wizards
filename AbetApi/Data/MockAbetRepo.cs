@@ -20,7 +20,7 @@ namespace AbetApi.Data
         public Instructor[] instructors = new Instructor[4];
         public Coordinator[] coordinators = new Coordinator[4];
         public List<Course_Outcome> outcomes = new List<Course_Outcome>();
-        List<Course_Objectives> c_objs = new List<Course_Objectives>();
+        List<Course_Objective> c_objs = new List<Course_Objective>();
         List<Student_Outcome> s_outcomes = new List<Student_Outcome>();
 
         //Generate the fake data
@@ -58,18 +58,18 @@ namespace AbetApi.Data
             Instructor instructor1 = new Instructor("Mark", "Thompson", "MT2020");
             Coordinator coordinator1 = new Coordinator("Mark", "Thompson", "MT2020");
             Section section1 = new Section(instructor1, coordinator1, false, "001", 0, "3600", "Intro to System Programming", false, "", "CSCE");
-            StudentWorks studentwork1 = new StudentWorks("StudentWork1", "file1");
-            StudentWorks studentwork2 = new StudentWorks("StudentWork2", "file2");
-            List<StudentWorks> listOfWorks1 = new List<StudentWorks>();
+            StudentWork studentwork1 = new StudentWork("StudentWork1", "file1");
+            StudentWork studentwork2 = new StudentWork("StudentWork2", "file2");
+            List<StudentWork> listOfWorks1 = new List<StudentWork>();
             listOfWorks1.Add(studentwork1);
             listOfWorks1.Add(studentwork2);
             Grades gradeIT = new Grades(2, 5, 6, 7, 1, 1, 9, 31);
             Grades gradeCS = new Grades(2, 5, 6, 7, 1, 2, 9, 32);
             Grades gradeCE = new Grades(2, 5, 6, 7, 1, 3, 9, 33);
             section1.NumberOfStudents = gradeIT.TotalStudents + gradeCS.TotalStudents + gradeCE.TotalStudents;
-            Course_Outcomes outcome1 = new Course_Outcomes("Outcome1: this is outcome 1", 20, 30, 40, listOfWorks1);
-            Course_Outcomes outcome11 = new Course_Outcomes("Outcome2: this is outcome 2", 10, 20, 10, listOfWorks1);
-            List<Course_Outcomes> outcomes1 = new List<Course_Outcomes> { outcome1, outcome11 };
+            OutcomeObjective outcome1 = new OutcomeObjective("Outcome1: this is outcome 1", 20, 30, 40, listOfWorks1);
+            OutcomeObjective outcome11 = new OutcomeObjective("Outcome2: this is outcome 2", 10, 20, 10, listOfWorks1);
+            List<OutcomeObjective> outcomes1 = new List<OutcomeObjective> { outcome1, outcome11 };
             section1.Year = 2020;
             section1.Semester = "fall";
             Form instructorForm1 = new Form(section1, outcomes1, gradeIT, gradeCS, gradeCE);
@@ -81,9 +81,9 @@ namespace AbetApi.Data
             Grades gradeCS1 = new Grades(2, 5, 6, 7, 1, 2, 9, 32);
             Grades gradeCE1 = new Grades(2, 5, 6, 7, 1, 3, 9, 33);
             section2.NumberOfStudents = gradeIT1.TotalStudents + gradeCS1.TotalStudents + gradeCE1.TotalStudents;
-            Course_Outcomes outcome2 = new Course_Outcomes("Outcome1: this is outcome 1", 20, 30, 40, listOfWorks1);
-            Course_Outcomes outcome22 = new Course_Outcomes("Outcome2: this is outcome 2", 10, 10, 40, listOfWorks1);
-            List<Course_Outcomes> outcomes2 = new List<Course_Outcomes> { outcome2, outcome22 };
+            OutcomeObjective outcome2 = new OutcomeObjective("Outcome1: this is outcome 1", 20, 30, 40, listOfWorks1);
+            OutcomeObjective outcome22 = new OutcomeObjective("Outcome2: this is outcome 2", 10, 10, 40, listOfWorks1);
+            List<OutcomeObjective> outcomes2 = new List<OutcomeObjective> { outcome2, outcome22 };
             section2.Year = 2020;
             section2.Semester = "fall";
             Form instructorForm2 = new Form(section2, outcomes2, gradeIT1, gradeCS1, gradeCE1);
@@ -95,9 +95,9 @@ namespace AbetApi.Data
             Grades gradeCS2 = new Grades(2, 5, 6, 7, 1, 2, 9, 32);
             Grades gradeCE2 = new Grades(2, 5, 6, 7, 1, 3, 9, 33);
             section3.NumberOfStudents = gradeIT2.TotalStudents + gradeCS2.TotalStudents + gradeCE2.TotalStudents;
-            Course_Outcomes outcome3 = new Course_Outcomes("Outcome1: this is outcome 1", 20, 30, 40, listOfWorks1);
-            Course_Outcomes outcome33 = new Course_Outcomes("Outcome2: this is outcome 2", 20, 30, 40, listOfWorks1);
-            List<Course_Outcomes> outcomes3 = new List<Course_Outcomes> { outcome3, outcome33 };
+            OutcomeObjective outcome3 = new OutcomeObjective("Outcome1: this is outcome 1", 20, 30, 40, listOfWorks1);
+            OutcomeObjective outcome33 = new OutcomeObjective("Outcome2: this is outcome 2", 20, 30, 40, listOfWorks1);
+            List<OutcomeObjective> outcomes3 = new List<OutcomeObjective> { outcome3, outcome33 };
             section3.Year = 2020;
             section3.Semester = "fall";
             Form instructorForm3 = new Form(section3, outcomes3, gradeIT2, gradeCS2, gradeCE2);
@@ -109,9 +109,9 @@ namespace AbetApi.Data
             Grades gradeCS3 = new Grades(2, 5, 6, 7, 1, 2, 9, 32);
             Grades gradeCE3 = new Grades(2, 5, 6, 7, 1, 3, 9, 33);
             section4.NumberOfStudents = gradeIT3.TotalStudents + gradeCS3.TotalStudents + gradeCE3.TotalStudents;
-            Course_Outcomes outcome4 = new Course_Outcomes("Outcome1: this is outcome 1", 20, 30, 40, listOfWorks1);
-            Course_Outcomes outcome44 = new Course_Outcomes("Outcome2: this is outcome 2", 10, 10, 40, listOfWorks1);
-            List<Course_Outcomes> outcomes4 = new List<Course_Outcomes> { outcome4, outcome44 };
+            OutcomeObjective outcome4 = new OutcomeObjective("Outcome1: this is outcome 1", 20, 30, 40, listOfWorks1);
+            OutcomeObjective outcome44 = new OutcomeObjective("Outcome2: this is outcome 2", 10, 10, 40, listOfWorks1);
+            List<OutcomeObjective> outcomes4 = new List<OutcomeObjective> { outcome4, outcome44 };
             section4.Year = 2020;
             section4.Semester = "fall";
             Form instructorForm4 = new Form(section4, outcomes4, gradeIT3, gradeCS3, gradeCE3);
@@ -123,9 +123,9 @@ namespace AbetApi.Data
             Grades gradeCS4 = new Grades(2, 5, 6, 7, 1, 2, 9, 32);
             Grades gradeCE4 = new Grades(2, 5, 6, 7, 1, 3, 9, 33);
             section5.NumberOfStudents = gradeIT4.TotalStudents + gradeCS4.TotalStudents + gradeCE4.TotalStudents;
-            Course_Outcomes outcome5 = new Course_Outcomes("Outcome1: this is outcome 1", 20, 30, 50, listOfWorks1);
-            Course_Outcomes outcome55 = new Course_Outcomes("Outcome2: this is outcome 2", 10, 10, 40, listOfWorks1);
-            List<Course_Outcomes> outcomes5 = new List<Course_Outcomes> { outcome5, outcome55 };
+            OutcomeObjective outcome5 = new OutcomeObjective("Outcome1: this is outcome 1", 20, 30, 50, listOfWorks1);
+            OutcomeObjective outcome55 = new OutcomeObjective("Outcome2: this is outcome 2", 10, 10, 40, listOfWorks1);
+            List<OutcomeObjective> outcomes5 = new List<OutcomeObjective> { outcome5, outcome55 };
             section5.Year = 2020;
             section5.Semester = "fall";
             Form instructorForm5 = new Form(section5, outcomes5, gradeIT4, gradeCS4, gradeCE4);
@@ -154,7 +154,7 @@ namespace AbetApi.Data
                 "applications composed of hundreds of functions.", mapped1);
             Course_Outcome c_outcome7 = new Course_Outcome(7, "Perform the steps necessary to edit, compile, link and execute C/C++ programs.", mapped1);
 
-            Course_Objectives c_obj = new Course_Objectives("CSCE 1030 Computer Science I", outcomes);
+            Course_Objective c_obj = new Course_Objective("CSCE 1030 Computer Science I", outcomes);
 
             Student_Outcome s_outcome1 = new Student_Outcome(1, "Analyze a complex computing problem and to apply principles of computing " +
                 "and other relevant disciplines to identify solutions.");
@@ -186,7 +186,7 @@ namespace AbetApi.Data
             courses = new List<Course> { course1, course2, course3 };
             outcomes = new List<Course_Outcome> { c_outcome1, c_outcome2, c_outcome3, c_outcome4, c_outcome5, c_outcome6, c_outcome7 };
             s_outcomes = new List<Student_Outcome> { s_outcome1, s_outcome2, s_outcome3, s_outcome4, s_outcome5, s_outcome6 };
-            c_objs = new List<Course_Objectives> { c_obj };
+            c_objs = new List<Course_Objective> { c_obj };
         }
 
         public List<AbetModels.Section> GetSectionsByUserId(string userId, int year, string semester)

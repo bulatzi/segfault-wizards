@@ -71,12 +71,14 @@ namespace AbetApi.Controller
         public Form GetFormBySection([FromBody] BodyParams body)
         {
             return mockAbetRepo.GetFormBySection(body.Section);
+            //return abetRepo.GetFormBySection(body.Section);
         }
 
         [Authorize(Roles = RoleTypes.Instructor)]
         [HttpPost("forms/new-blank")]
         public Form GetBlankForm([FromBody] BodyParams body)
         {
+            //return abetRepo.GetBlankForm(body.Section);
             return mockAbetRepo.GetBlankForm();
         }
 
@@ -84,10 +86,19 @@ namespace AbetApi.Controller
         [HttpPost("forms/post-form")]
         public ActionResult PostForm([FromBody] BodyParams body)
         {
+            
             if (mockAbetRepo.PostForm(body.Form))
                 return Ok();
             else
                 return BadRequest();
+            /*
+            SqlReturn sqlReturn = new SqlReturn();
+            sqlReturn = abetRepo.PostForm(body.Form);
+            if (sqlReturn.code == -1)
+                return BadRequest(new { sqlReturn.message });
+            else
+                return Ok();
+            */
         }
 
         //COORDINATOR LEVEL FUNCTIONS
@@ -149,6 +160,8 @@ namespace AbetApi.Controller
         public ActionResult GetFacultyList()
         {
             return Ok(mockAbetRepo.GetFacultyList());
+            //return Ok(abetRepo.GetFacultyList());
+
         }
         
 
