@@ -21,7 +21,7 @@ namespace AbetApi.Data
         public Coordinator[] coordinators = new Coordinator[4];
         public List<Course_Outcome> outcomes = new List<Course_Outcome>();
         List<Course_Objective> c_objs = new List<Course_Objective>();
-        List<Student_Outcome> s_outcomes = new List<Student_Outcome>();
+        List<Student_Outcome> s_outcomes = new List<Student_Outcome>();                                                                                                                                     
 
         //Generate the fake data
         public MockAbetRepo()
@@ -213,14 +213,21 @@ namespace AbetApi.Data
             return toReturn;
         }
 
-        public Form GetFormBySection(Section section)
+        public Form GetFormBySection(Section section)                                                                                                         
         {
-            foreach (Form i in forms)
+            try
             {
-                if (String.Equals(i.Section.CourseNumber, section.CourseNumber) && String.Equals(i.Section.SectionNumber, section.SectionNumber))
-                    return i;
+                foreach (Form i in forms)
+                {
+                    if (String.Equals(i.Section.CourseNumber, section.CourseNumber) && String.Equals(i.Section.SectionNumber, section.SectionNumber))
+                        return i;
+                }
             }
-
+            catch
+            {
+                return null;
+            }
+            
             return null;
         }
 
