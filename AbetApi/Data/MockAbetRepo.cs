@@ -353,8 +353,7 @@ namespace AbetApi.Data
         public bool PostCourseOutcomes(List<Course_Outcome> courseOutcomesList)
         {
             foreach (Course_Outcome outcome in courseOutcomesList)
-                System.Diagnostics.Debug.WriteLine(outcome.Outcome);
-                //outcomes.Add(outcome);
+                outcomes.Add(outcome);
 
             return true;
         }

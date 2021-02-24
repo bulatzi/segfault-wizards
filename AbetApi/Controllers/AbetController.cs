@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using static AbetApi.Models.AbetModels;
 using AbetApi.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using System.IO;
+using System.Net.Http.Headers;
 
 
 //This file handles the communication between the frontend and the API.
@@ -21,13 +23,15 @@ namespace AbetApi.Controller
         private readonly ILdap ldap;
         private readonly IAbetRepo abetRepo;
         private readonly ITokenGenerator tokenGenerator;
+        private readonly IUploadManager uploadManager;
 
-        public AbetController(IMockAbetRepo mockAbetRepo, ILdap ldap, ITokenGenerator tokenGenerator, IAbetRepo abetRepo)
+        public AbetController(IMockAbetRepo mockAbetRepo, ILdap ldap, ITokenGenerator tokenGenerator, IAbetRepo abetRepo, IUploadManager uploadManager)
         {
             this.mockAbetRepo = mockAbetRepo;
             this.ldap = ldap;
             this.tokenGenerator = tokenGenerator;
             this.abetRepo = abetRepo;
+            this.uploadManager = uploadManager;
         }
 
         [HttpPost("login")]
@@ -36,9 +40,13 @@ namespace AbetApi.Controller
             if (string.IsNullOrEmpty(body.UserId) || string.IsNullOrEmpty(body.Password))
                 return BadRequest();
 
-            //remove this part later, it is the login for the superuser to bypass ldap
+            //superuser logins, remove later
             if (body.UserId == "admin" && body.Password == "admin")
                 return Ok(new { token = tokenGenerator.GenerateToken(body.UserId, "Admin"), role = "Admin" });
+            else if (body.UserId == "instructor" && body.Password == "instructor")
+                return Ok(new { token = tokenGenerator.GenerateToken(body.UserId, "Instructor"), role = "Instructor" });
+            else if (body.UserId == "coordinator" && body.Password == "coordinator")
+                return Ok(new { token = tokenGenerator.GenerateToken(body.UserId, "Coordinator"), role = "Coordinator" });
 
             bool loginSuccessful = await Task.FromResult(ldap.ValidateCredentials(body.UserId, body.Password, out bool internalErrorOccurred));
             
@@ -229,6 +237,25 @@ namespace AbetApi.Controller
         public List<Course_Outcome> GetCourseOutcomesByCourse([FromBody] BodyParams body)
         {
             return mockAbetRepo.GetCourseOutcomesByCourse(body.Course);
+        }
+
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpPost("upload-access-db")]
+        [DisableRequestSizeLimit]
+        public async Task<ActionResult> UploadAccessDB()
+        {
+            string filePath = await uploadManager.ReceiveFile(Request);
+            
+            if (filePath == null)
+                return BadRequest(new { message = uploadManager.GetErrorMsg() });
+
+            System.Diagnostics.Debug.WriteLine(filePath);
+
+            //Do SQL operations on the Access file
+
+            //delete file?
+
+            return Ok();
         }
     }
 }

@@ -13,6 +13,7 @@ using AbetApi.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace AbetApi
 {
@@ -50,10 +51,16 @@ namespace AbetApi
                 });
             });
             services.AddControllers();
+            services.Configure<FormOptions>(o => {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+            });
             services.AddScoped<IMockAbetRepo, MockAbetRepo>();
             services.AddScoped<ILdap, Ldap>();
             services.AddScoped<IAbetRepo, AbetRepo>();
             services.AddScoped<ITokenGenerator, TokenGenerator>();
+            services.AddScoped<IUploadManager, UploadManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
