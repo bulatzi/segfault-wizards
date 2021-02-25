@@ -6,8 +6,11 @@ namespace AbetApi.Authentication
     public class Ldap : ILdap
     {
         private readonly string connectionUrl = "ldaps://ldap-auth.untsystem.edu:636";
+        public bool LoginSuccessful { get; set; } = false;
+        public bool InternalErrorOccurred { get; set; } = false;
+        public string ErrorMessage { get; set; }
 
-        public bool ValidateCredentials(string userId, string password, out bool internalErrorOccurred)
+        public void ValidateCredentials(string userId, string password)
         {
             using (LdapConnection ldapConn = new LdapConnection(connectionUrl))
             {
@@ -30,13 +33,11 @@ namespace AbetApi.Authentication
                     try
                     {
                         ldapConn.Bind();
-                        internalErrorOccurred = false;
-                        return true;
+                        LoginSuccessful = true;
                     }
                     catch
                     {
-                        internalErrorOccurred = false;
-                        return false;
+                        ErrorMessage = "Error: Username and password pair is incorrect.";
                     }
                     finally
                     {
@@ -45,8 +46,8 @@ namespace AbetApi.Authentication
                 }
                 catch
                 {
-                    internalErrorOccurred = true;
-                    return false;
+                    InternalErrorOccurred = true;
+                    ErrorMessage = "Internal Server Error: Please try again later.";
                 }
             }
         }

@@ -35,7 +35,7 @@ namespace AbetApi.Controller
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult> Login([FromBody] BodyParams body)
+        public ActionResult Login([FromBody] BodyParams body)
         {
             if (string.IsNullOrEmpty(body.UserId) || string.IsNullOrEmpty(body.Password))
                 return BadRequest();
@@ -48,21 +48,21 @@ namespace AbetApi.Controller
             else if (body.UserId == "coordinator" && body.Password == "coordinator")
                 return Ok(new { token = tokenGenerator.GenerateToken(body.UserId, "Coordinator"), role = "Coordinator" });
 
-            bool loginSuccessful = await Task.FromResult(ldap.ValidateCredentials(body.UserId, body.Password, out bool internalErrorOccurred));
-            
-            if (loginSuccessful && !internalErrorOccurred)
+            ldap.ValidateCredentials(body.UserId, body.Password);
+
+            if (ldap.LoginSuccessful && !ldap.InternalErrorOccurred)
             {
                 //find the role of the user and generate a JWT token and send the info to the frontend
                 string role = mockAbetRepo.GetRole(body.UserId);
                 //string role = abetRepo.GetRole(body.UserId);
-                string token = tokenGenerator.GenerateToken(body.UserId, role);             
+                string token = tokenGenerator.GenerateToken(body.UserId, role);
 
                 return Ok(new { token, role }); //user is logged in
             }
-            else if (!loginSuccessful && !internalErrorOccurred)
-                return Unauthorized(); //incorrect login credentials
+            else if (!ldap.LoginSuccessful && !ldap.InternalErrorOccurred)
+                return Unauthorized(new { message = ldap.ErrorMessage }); //incorrect login credentials
             else
-                return StatusCode(500); //internal server error
+                return StatusCode(500, new { message = ldap.ErrorMessage }); //internal server error
         }
 
         //INSTRUCTOR LEVEL FUNCTIONS
@@ -94,7 +94,7 @@ namespace AbetApi.Controller
         [HttpPost("forms/post-form")]
         public ActionResult PostForm([FromBody] BodyParams body)
         {
-            
+
             if (mockAbetRepo.PostForm(body.Form))
                 return Ok();
             else
@@ -163,7 +163,7 @@ namespace AbetApi.Controller
             return mockAbetRepo.GetFacultyList();
             //return abetRepo.GetFacultyList();
         }*/
-        
+
         //Refactored version
         public ActionResult GetFacultyList()
         {
@@ -171,7 +171,7 @@ namespace AbetApi.Controller
             //return Ok(abetRepo.GetFacultyList());
 
         }
-        
+
 
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("faculty/add-member")]
@@ -205,7 +205,7 @@ namespace AbetApi.Controller
         public ActionResult AddCourse([FromBody] BodyParams body)
         {
             if (mockAbetRepo.AddCourse(body.Course))
-            //if (abetRepo.AddCourse(body.Course))
+                //if (abetRepo.AddCourse(body.Course))
                 return Ok();
             else
                 return BadRequest();
@@ -216,7 +216,7 @@ namespace AbetApi.Controller
         public ActionResult RemoveCourse([FromBody] BodyParams body)
         {
             if (mockAbetRepo.AddCourse(body.Course))
-            //if (abetRepo.RemoveCourse(body.Course))
+                //if (abetRepo.RemoveCourse(body.Course))
                 return Ok();
             else
                 return BadRequest();
@@ -242,14 +242,14 @@ namespace AbetApi.Controller
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("upload-access-db")]
         [DisableRequestSizeLimit]
-        public async Task<ActionResult> UploadAccessDB()
+        public ActionResult UploadAccessDB()
         {
-            string filePath = await uploadManager.ReceiveFile(Request);
-            
-            if (filePath == null)
-                return BadRequest(new { message = uploadManager.GetErrorMsg() });
+            uploadManager.ReceiveFile(Request);
 
-            System.Diagnostics.Debug.WriteLine(filePath);
+            if (uploadManager.FilePath == null)
+                return BadRequest(new { message = uploadManager.ErrorMessage });
+
+            System.Diagnostics.Debug.WriteLine(uploadManager.FilePath);
 
             //Do SQL operations on the Access file
 

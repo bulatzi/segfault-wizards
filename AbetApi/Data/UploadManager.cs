@@ -10,10 +10,11 @@ namespace AbetApi.Data
 {
     public class UploadManager : IUploadManager
     {
-        private string errorMsg;
+        public string FilePath { get; set; } = null;
+        public string ErrorMessage { get; set; }
 
         //receives file from the request and stores it in the Uploads folder
-        public async Task<string> ReceiveFile(HttpRequest request)
+        public async void ReceiveFile(HttpRequest request)
         {
             try
             {
@@ -24,45 +25,35 @@ namespace AbetApi.Data
                 {
                     string fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                     string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
-                    string filePath;
 
                     //create Uploads folder if it does not exist
                     if (!Directory.Exists(folderPath))
                         Directory.CreateDirectory(folderPath);
 
-                    filePath = Path.Combine(folderPath, fileName);
+                    FilePath = Path.Combine(folderPath, fileName);
 
                     /* This will restrict the uploaded file type to only .accdb
-                    if (Path.GetExtension(path) != ".accdb")
+                    if (Path.GetExtension(FilePath) != ".accdb")
                     {
                         errorMsg = "Error: File is not an access database file (.accdb).";
-                        return null;
+                        return;
                     }
                     */
 
-                    using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                    using (FileStream stream = new FileStream(FilePath, FileMode.Create))
                     {
                         file.CopyTo(stream);
                     }
-
-                    return filePath;
                 }
                 else
                 {
-                    errorMsg = "Error: File contains no data.";
-                    return null;
+                    ErrorMessage = "Error: File contains no data.";
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                errorMsg = "Internal Error: " + ex.Message;
-                return null;
+                ErrorMessage = "Internal Server Error: Please try again later.";
             }
-        }
-
-        public string GetErrorMsg()
-        {
-            return errorMsg;
         }
     }
 }

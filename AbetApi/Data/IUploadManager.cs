@@ -9,7 +9,8 @@ namespace AbetApi.Data
 {
     public interface IUploadManager
     {
-        public Task<string> ReceiveFile(HttpRequest request);
-        public string GetErrorMsg();
+        public string FilePath { get; set; }
+        public string ErrorMessage { get; set; }
+        public void ReceiveFile(HttpRequest request);
     }
 }

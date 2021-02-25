@@ -4,6 +4,9 @@ namespace AbetApi.Authentication
 {
     public interface ILdap
     {
-        public bool ValidateCredentials(string userId, string password, out bool internalErrorOccurred);
+        public bool LoginSuccessful { get; set; }
+        public bool InternalErrorOccurred { get; set; }
+        public string ErrorMessage { get; set; }
+        public void ValidateCredentials(string userId, string password);
     }
 }
