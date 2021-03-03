@@ -380,12 +380,12 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
             }
 
             selectQuery = @"select ou.file_name, ou.fileupload, ou.id, oo.num_of_CE, oo.num_of_CS, num_of_IT, 
-co.course_outcome as outcome, co.num, co.outcome_id, s.section_number
-from abetdb.dbo.objective_uploads as ou 
-left join abetdb.dbo.outcome_objectives as oo on oo.id = ou.objective_id
-join abetdb.dbo.course_outcomes as co on co.id = oo.outcome_id
-join abetdb.dbo.courses as c on c.id = co.course_id
-join abetdb.dbo.sections as s on s.course_id = c.id
+co.course_outcome as outcome, co.num, co.id as outcome_id, s.section_number
+from objective_uploads as ou 
+left join outcome_objectives as oo on oo.id = ou.outcome_objective_id
+join course_outcomes as co on co.id = oo.outcome_id
+join courses as c on c.id = co.course_id
+join sections as s on s.course_id = c.id
 where c.year = @year and c.semester = @semester and c.course_number = @course_number and s.section_number = @section_number";
 
             form = new Form(section, outcomeObjectives, itGrade, csGrade, ceGrade);
@@ -654,7 +654,67 @@ where NOT EXISTS (select file_name, fileupload, outcome_objective_id from object
 
             conn.Close();
             return sqlReturn;
+        }
+        public List<Form> GetFormsByCourse(Course course)
+        {
+            List<Form> forms = new List<Form>();
+            if (course.CourseNumber == null || course.Department == null || course.Year == null || course.Department == null) return forms;
 
+            SqlConnection conn = GetConnection();
+            conn.Open();
+            string query = @"select c.id as c_id, fa.first_name as c_first_name, fa.last_name as c_last_name, fa.euid as c_euid,
+c.course_number, c.display_name, c.coordinator_comment, c.completed as c_completed, c.department, c.year, c.semester,
+s.id as s_id, f.first_name as i_first_name, f.last_name as i_last_name, f.euid as i_euid, s.completed as s_completed, s.section_number,
+s.num_of_students 
+from abetdb.dbo.sections as s join abetdb.dbo.courses as c on s.course_id = c.id
+join abetdb.dbo.faculties as f on s.instructor_id = f.euid 
+join abetdb.dbo.faculties as fa on c.coordinator_id = fa.euid
+where c.year = @year and c.semester = @semester and c.course_number = @course_number and c.department = @department and c.status = 1";
+            SqlCommand cmd = new SqlCommand(query, conn);
+            cmd.Parameters.Add(new SqlParameter("@course_number", SqlDbType.VarChar, 11)).Value = course.CourseNumber;
+            cmd.Parameters.Add(new SqlParameter("@semester", SqlDbType.VarChar, 11)).Value = course.Semester;
+            cmd.Parameters.Add(new SqlParameter("@year", SqlDbType.Int)).Value = course.Year;
+            cmd.Parameters.Add(new SqlParameter("@department", SqlDbType.VarChar, 11)).Value = course.Department;
+
+            Form form = new Form(); // section, list<outcomeobjective> , grades IT, CS, CE 
+            List<Section> sections = new List<Section>();
+            using (SqlDataReader rd = cmd.ExecuteReader())
+            {
+                while (rd.Read())
+                {
+                    Section section = new Section
+                    {
+                        Coordinator = new Coordinator(rd["c_first_name"].ToString(), rd["c_last_name"].ToString(),
+                        rd["c_euid"].ToString()),
+                        Instructor = new Instructor(rd["i_first_name"].ToString(), rd["i_last_name"].ToString(),
+                        rd["i_euid"].ToString()),
+                        SectionId = Convert.ToInt32(rd["s_id"]),
+                        Id = Convert.ToInt32(rd["c_id"]),
+                        CoordinatorComment = rd["coordinator_comment"].ToString(),
+                        CourseNumber = (rd["course_number"]).ToString(),
+                        Department = rd["department"].ToString(),
+                        DisplayName = rd["display_name"].ToString(),
+                        IsCourseCompleted = Convert.ToBoolean(rd["c_completed"]),
+                        IsSectionCompleted = Convert.ToBoolean(rd["s_completed"]),
+                        NumberOfStudents = rd["num_of_students"] as int? ?? 0,
+                        SectionNumber = (rd["section_number"]).ToString(),
+                        Year = course.Year,
+                        Semester = course.Semester
+                    };
+                    sections.Add(section);
+                }
+            }
+            // check if empty
+            if (sections.Count == 0) return forms;
+
+            foreach (Section s in sections)
+            {
+                form = GetFormBySection(s);
+                forms.Add(form);
+            }
+
+            conn.Close();
+            return forms;
         }
     }
 }

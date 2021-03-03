@@ -19,6 +19,7 @@ namespace AbetApi.Data
         Form GetBlankForm(Section section);
         Form GetFormBySection(Section section);
         SqlReturn PostForm(Form form);
+        List<Form> GetFormsByCourse(Course course);
 
     }
 }
