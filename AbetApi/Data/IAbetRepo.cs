@@ -21,5 +21,7 @@ namespace AbetApi.Data
         SqlReturn PostForm(Form form);
         List<Form> GetFormsByCourse(Course course);
         List<Section> GetSectionsByYearAndSemester(int year, string semester);
+        List<Course> GetCoursesByYear(int year, string semester);
+
     }
 }
