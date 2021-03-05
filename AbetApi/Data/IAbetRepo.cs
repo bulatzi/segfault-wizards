@@ -9,7 +9,7 @@ namespace AbetApi.Data
     public interface IAbetRepo
     {
         string GetRole(string userId);
-        IEnumerable<Section> GetSectionsByUserId(string userId, int year, string term);
+        List<Section> GetSectionsByUserId(string userId, int year, string term);
         Program_Outcomes GetCourseObjectives(string program);
         List<Course> GetCoursesByDepartment(string department);
         bool AddCourse(Course course);

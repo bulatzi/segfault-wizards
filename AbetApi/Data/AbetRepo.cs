@@ -14,7 +14,8 @@ namespace AbetApi.Data
         string currentSemester = "spring";
 
         private string cs =
-            @"Server=TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";
+            //@"Server=TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";
+            @"Server=DESKTOP-5BU0BPP;Database=abetdb;Trusted_Connection=True";                  // <-- Rafael's DB for testing
         // on VM, server=TEBA-D\ABETDATABASE
         // on mine, server=TRICO-SCHOOL\SQLEXPRESS
         public AbetRepo()
@@ -51,20 +52,20 @@ namespace AbetApi.Data
             //select role_name from abetdb.dbo.staff as s join abetdb.dbo.roles as r on s.role = r.id where s.euid = 'DK2121';
         }
 
-        public IEnumerable<Section> GetSectionsByUserId(string userId, int year, string term)
+        public List<Section> GetSectionsByUserId(string userId, int year, string term)
         {
             List<Section> secList = new List<Section>();
 
             string query =
-                @"select distinct st.first_name as 'i_firstname', st.last_name as 'i_lastname', st.euid as 'i_euid',
-		sts.first_name as 'c_firstname', sts.last_name as 'c_lastname', sts.euid as 'c_euid',
+                @"select distinct f.first_name as 'i_firstname', f.last_name as 'i_lastname', f.euid as 'i_euid',
+		fa.first_name as 'c_firstname', fa.last_name as 'c_lastname', fa.euid as 'c_euid',
 		s.completed as 'sectionCompleted', s.num_of_students as 'NumberOfStudents', s.section_number as 'sectionNumber',
 		c.display_name as 'displayName', c.course_number as 'courseNumber', c.completed as 'courseComplete', c.coordinator_comment as 'c_comment',
 		c.department as 'department',c.id as id, s.id as section_id
 from sections s
 inner join courses c on s.course_id = c.id
-inner join staff st on s.instructor_id = st.euid
-inner join staff sts on c.coordinator_id = sts.euid
+inner join faculties f on s.instructor_id = f.euid
+inner join faculties fa on c.coordinator_id = fa.euid
 where (s.instructor_id = @euid or c.coordinator_id = @euid) and c.semester = @term and c.year = @year and c.status = 1";
             SqlConnection conn = GetConnection();
             conn.Open();
