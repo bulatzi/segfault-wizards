@@ -16,7 +16,7 @@ namespace AbetApi.Data
         private string cs =
             //@"Server=TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";
             @"Server=DESKTOP-5BU0BPP;Database=abetdb;Trusted_Connection=True";                  // <-- Rafael's DB for testing
-        // on VM, server=TEBA-D\ABETDATABASE
+        // on VM, server=TEBA-D\ABETDATABASE            <-- Server for RemoteDesktop
         // on mine, server=TRICO-SCHOOL\SQLEXPRESS
         public AbetRepo()
         {
@@ -716,6 +716,56 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
 
             conn.Close();
             return forms;
+        }
+
+        public List<Section> GetSectionsByYearAndSemester(int year, string semester)
+        {
+            List<Section> sectionList = new List<Section>();   // Return variable
+
+            /* Establish and open connection */
+            SqlConnection conn = GetConnection();           // Establish the connection
+            conn.Open();                                    // Open the connection
+            string query = @"SELECT c.id AS c_id, fa.first_name AS c_first_name, fa.last_name AS c_last_name, fa.euid AS c_euid, c.course_number, c.display_name, c.coordinator_comment, c.completed AS c_completed, c.department, c.year, c.semester, s.id AS s_id, f.first_name AS i_first_name, f.last_name AS i_last_name, f.euid AS i_euid, s.completed AS s_completed, s.section_number, s.num_of_students FROM abetdb.dbo.sections AS s JOIN abetdb.dbo.courses AS c ON s.course_id = c.id JOIN abetdb.dbo.faculties AS f ON s.instructor_id = f.euid JOIN abetdb.dbo.faculties AS fa ON c.coordinator_id = fa.euid WHERE c.year = @year AND c.semester = @semester AND c.status = 1";
+               /* ^^ NOTES ^^
+                        - "abetdb.dbo." removed from table names here because the database won't need to be specified with UNT's server.
+                        - c.year = 2021 AND c.semester = 'spring'  ==> c.year = @year AND c.semester = @semester  | The '@' at the beginning of the string allows '@year' and '@semester' to pass in the parameters 'year' and 'semester' passed in through the function call.           
+               */
+            
+            SqlCommand cmd = new SqlCommand(query, conn);                                               // Create SQL Command
+            cmd.Parameters.Add(new SqlParameter("@year", SqlDbType.Int)).Value = year;                  // Add the 'year' parameter for GetSectionsByYearAndSemester() as a parameter for the SQL Command as '@year' and specified at an 'int' type
+            cmd.Parameters.Add(new SqlParameter("@semester", SqlDbType.VarChar, 11)).Value = semester;  // Add the 'semester' parameter for GetSectionsByYearAndSemester() as a parameter for the SQL Command as '@semester', specified at a 'varchar' type, of size 11 (size based on 'semester' row of 'courses' table)
+            cmd.Prepare();                                                                              // Prepare the command to be run
+
+            /* Read in incoming data */
+            using (SqlDataReader rd = cmd.ExecuteReader())  // Reads data coming in
+            {       
+                /* Loops through one row at a time */
+                while (rd.Read())
+                {
+                    /* Assign Section-specific data */
+                    var section = new Section()                                                                                                 // Create new Section object
+                    {
+                        SectionId = Convert.ToInt32(rd["s_id"]),                                                                                // Convert and add incoming section id
+                        Coordinator = new Coordinator(rd["c_first_name"].ToString(), rd["c_last_name"].ToString(), rd["c_euid"].ToString()),    // Convert and add incoming Coordinator information
+                        Instructor = new Instructor(rd["i_first_name"].ToString(), rd["i_last_name"].ToString(), rd["i_euid"].ToString()),      // Convert and add incoming Instructor information
+                        CourseNumber = rd["course_number"].ToString(),                                                                          // Convert and add the incoming course number
+                        Id = Convert.ToInt32(rd["c_id"]),                                                                                       // Convert and add incoming Identity id
+                        CoordinatorComment = rd["coordinator_comment"].ToString(),                                                              // Convert and add incoming coordinator comment
+                        Department = rd["department"].ToString(),                                                                                // Convert and add incoming department
+                        DisplayName = rd["display_name"].ToString(),                                                                            // Convert and add incoming display name
+                        IsCourseCompleted = Convert.ToBoolean(rd["c_completed"]),                                                               // Convert and add incoming boolean for IsCourseCompleted
+                        IsSectionCompleted = Convert.ToBoolean(rd["s_completed"]),                                                              // Convert and add incoming boolean for IsSectionCompleted
+                        NumberOfStudents = Convert.ToInt32(rd["num_of_students"]),                                                              // Convert and add incoming number of students for the section
+                        SectionNumber = rd["section_number"].ToString(),                                                                        // Convert and add incoming section number
+                        Year = year,                                                                                                            // Assign 'year' parameter from GetSectionsByYearAndSemester() for Year
+                        Semester = semester                                                                                                     // Assign 'semester' parameter from GetSectionsByYearAndSemester() for Semester
+                    };
+                    sectionList.Add(section);                                                                                                   // Add the retrieved object to the collection
+                }
+            }
+
+            conn.Close();           // Close the connection
+            return sectionList;     // Return the section list
         }
     }
 }

@@ -20,6 +20,6 @@ namespace AbetApi.Data
         Form GetFormBySection(Section section);
         SqlReturn PostForm(Form form);
         List<Form> GetFormsByCourse(Course course);
-
+        List<Section> GetSectionsByYearAndSemester(int year, string semester);
     }
 }

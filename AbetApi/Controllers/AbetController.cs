@@ -24,6 +24,8 @@ namespace AbetApi.Controller
         private readonly IAbetRepo abetRepo;
         private readonly ITokenGenerator tokenGenerator;
         private readonly IUploadManager uploadManager;
+        private const int BAD_REQUEST = 400;            // HTTPS response for bad_request
+        private const int NOT_FOUND = 404;              // HTTPS response for not_found
 
         public AbetController(IMockAbetRepo mockAbetRepo, ILdap ldap, ITokenGenerator tokenGenerator, IAbetRepo abetRepo, IUploadManager uploadManager)
         {
@@ -78,8 +80,8 @@ namespace AbetApi.Controller
         [HttpPost("forms/by-section")]
         public Form GetFormBySection([FromBody] BodyParams body)
         {
-            return mockAbetRepo.GetFormBySection(body.Section);
-            //return abetRepo.GetFormBySection(body.Section);
+            //return mockAbetRepo.GetFormBySection(body.Section);
+            return abetRepo.GetFormBySection(body.Section);
         }
 
         [Authorize(Roles = RoleTypes.Instructor)]
@@ -131,11 +133,38 @@ namespace AbetApi.Controller
         //ADMIN LEVEL FUNCTIONS
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("sections/by-semester-year")]
-        public ActionResult GetAllSections([FromBody] BodyParams body)
+        public List<Section> GetAllSections([FromBody] BodyParams body)
         {
-            if (body.Year < 1) return BadRequest();
-            if (String.IsNullOrEmpty(body.Semester)) return BadRequest();
-            return Ok(mockAbetRepo.GetSectionsByYearAndSemester(body.Year, body.Semester));
+            List<Section> sections = new List<Section>();   // Return variable
+            
+            if (body.Year < 1890) { Response.StatusCode = BAD_REQUEST; return null; }                                                                               // Parameter Check: Valid years
+            if ( (body.Semester != "fall") && (body.Semester != "spring") && (body.Semester != "summer") ) { Response.StatusCode = BAD_REQUEST; return null; }      // Parameter Check: Valid semesters
+
+            sections = mockAbetRepo.GetSectionsByYearAndSemester(body.Year, body.Semester);
+            if (sections.Count() < 1)       // No results
+            {
+                Response.StatusCode = NOT_FOUND;
+                return null;
+            }
+            else                            // Results found
+            {
+                return sections;
+            }
+
+            /*
+            sections = abetRepo.GetSectionsByYearAndSemester(body.Year, body.Semester);
+            if (sections.Count() < 1)      // No results
+            {
+                Response.StatusCode = NOT_FOUND;
+                return null;
+            }
+            else                           // Results found
+            {
+                return sections;
+            }
+            */
+
+
         }
 
         [Authorize(Roles = RoleTypes.Admin)]
@@ -157,21 +186,19 @@ namespace AbetApi.Controller
 
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("faculty/get-list")]
-        //Old code
-        /*
-        public FacultyList GetFacultyList()
+        public FacultyList GetFacultyList()                     // Original implementation
         {
-            return mockAbetRepo.GetFacultyList();
+           return mockAbetRepo.GetFacultyList();
             //return abetRepo.GetFacultyList();
-        }*/
+        }
 
         //Refactored version
-        public ActionResult GetFacultyList()
-        {
-            return Ok(mockAbetRepo.GetFacultyList());
-            //return Ok(abetRepo.GetFacultyList());
+        //public ActionResult GetFacultyList()
+        //{
+        //    return Ok(mockAbetRepo.GetFacultyList());
+        //    //return Ok(abetRepo.GetFacultyList());
 
-        }
+        //}
 
 
         [Authorize(Roles = RoleTypes.Admin)]
