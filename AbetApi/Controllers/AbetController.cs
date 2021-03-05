@@ -202,6 +202,15 @@ namespace AbetApi.Controller
         }
 
         [Authorize(Roles = RoleTypes.Admin)]
+        [HttpPost("courses/get-by-year-semester")]
+        public List<Course> GetCoursesByYear([FromBody] BodyParams body)
+        {
+            // return 0 for course_id but we dont need ID anymore
+            //return abetRepo.GetCoursesByYear(body.Year, body.Semester);
+            return mockAbetRepo.GetCoursesByYear(body.Year, body.Semester);
+        }
+
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("courses/add-course")]
         public ActionResult AddCourse([FromBody] BodyParams body)
         {

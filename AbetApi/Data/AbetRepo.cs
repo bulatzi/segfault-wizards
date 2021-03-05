@@ -716,5 +716,45 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
             conn.Close();
             return forms;
         }
+
+        public List<Course> GetCoursesByYear(int year, string semester)
+        {
+            List<Course> courses = new List<Course>();
+            if (year < 0 || semester == null) return courses;
+
+            SqlConnection conn = GetConnection();
+            conn.Open();
+            string query = @"select c.department, c.course_number, c.coordinator_comment, c.completed, c.display_name, 
+f.first_name, f.last_name, f.euid
+from courses as c 
+join faculties as f on c.coordinator_id = f.euid
+where c.year = @year and c.semester = @semester and c.status = 1";
+            SqlCommand cmd = new SqlCommand(query, conn);
+            cmd.Parameters.Add(new SqlParameter("@year", SqlDbType.Int)).Value = year;
+            cmd.Parameters.Add(new SqlParameter("@semester", SqlDbType.VarChar, 11)).Value = semester;
+
+            using (SqlDataReader rd = cmd.ExecuteReader())
+            {
+                while (rd.Read())
+                {
+                    Course course = new Course
+                    {
+                        Coordinator = new Coordinator(rd["first_name"].ToString(), rd["last_name"].ToString(),
+                        rd["euid"].ToString()),
+                        CourseNumber = rd["course_number"].ToString(),
+                        DisplayName = rd["display_name"].ToString(),
+                        Department = rd["department"].ToString(),
+                        CoordinatorComment = rd["coordinator_comment"].ToString(),
+                        IsCourseCompleted = Convert.ToBoolean(rd["completed"]),
+                        Year = year,
+                        Semester = semester,
+                    };
+                    courses.Add(course);
+                }
+            }
+
+            conn.Close();
+            return courses;
+        }
     }
 }

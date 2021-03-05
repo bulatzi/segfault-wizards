@@ -362,5 +362,16 @@ namespace AbetApi.Data
         {
             return outcomes;
         }
+
+        public List<Course> GetCoursesByYear(int year, string semester)
+        {
+            List<Course> courseList = new List<Course>();
+
+            foreach (Course course in courses)
+                if (course.Year == year && course.Semester == semester && !courseList.Contains(course))
+                    courseList.Add(course);
+
+            return courseList;
+        }
     }
 }
