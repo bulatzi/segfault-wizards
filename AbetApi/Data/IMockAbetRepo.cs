@@ -26,5 +26,6 @@ namespace AbetApi.Data
         bool RemoveCourse(Course course);
         bool PostCourseOutcomes(List<Course_Outcome> courseOutcomesList);
         List<Course_Outcome> GetCourseOutcomesByCourse(Course course);
+        List<Course> GetCoursesByYear(int year, string semester);
     }
 }
