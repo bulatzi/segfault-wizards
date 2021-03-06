@@ -365,11 +365,14 @@ namespace AbetApi.Data
 
         public List<Course> GetCoursesByYear(int year, string semester)
         {
-            List<Course> courseList = new List<Course>();
 
-            foreach (Course course in courses)
-                if (course.Year == year && course.Semester == semester && !courseList.Contains(course))
-                    courseList.Add(course);
+            Coordinator coordinator11 = new Coordinator("Mark", "Thompson", "MT2020");
+            Coordinator coordinator12 = new Coordinator("David", "Keathly", "DK2121");
+
+            Course course11 = new Course(coordinator11, "1030", "Computer Science I", "Just Terrible!", true, "CSCE", semester, year);
+            Course course12 = new Course(coordinator12, "3600", "Intro to System Programming", "Very good!", true, "CSCE", semester, year);
+
+            List<Course> courseList = new List<Course> { course11, course12};
 
             return courseList;
         }
