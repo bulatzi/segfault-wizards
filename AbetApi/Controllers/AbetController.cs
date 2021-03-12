@@ -72,8 +72,8 @@ namespace AbetApi.Controller
         [HttpPost("sections/by-userid-semester-year")]
         public List<Section> GetSectionsByUserId([FromBody] BodyParams body)
         {
-            return mockAbetRepo.GetSectionsByUserId(body.UserId, body.Year, body.Semester);
-            //return abetRepo.GetSectionsByUserId(body.UserId, body.Year, body.Semester);
+            //return mockAbetRepo.GetSectionsByUserId(body.UserId, body.Year, body.Semester);
+            return abetRepo.GetSectionsByUserId(body.UserId, body.Year, body.Semester);
         }
 
         [Authorize(Roles = RoleTypes.Instructor)]
@@ -274,6 +274,7 @@ namespace AbetApi.Controller
         public List<Course_Outcome> GetCourseOutcomesByCourse([FromBody] BodyParams body)
         {
             return mockAbetRepo.GetCourseOutcomesByCourse(body.Course);
+            //return abetRepo.GetCourseOutcomesByCourse(body.Course);
         }
 
         [Authorize(Roles = RoleTypes.Admin)]

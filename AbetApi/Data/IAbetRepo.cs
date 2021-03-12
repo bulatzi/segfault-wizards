@@ -22,6 +22,7 @@ namespace AbetApi.Data
         List<Form> GetFormsByCourse(Course course);
         List<Section> GetSectionsByYearAndSemester(int year, string semester);
         List<Course> GetCoursesByYear(int year, string semester);
+        List<Course_Outcome> GetCourseOutcomesByCourse(Course course);
 
     }
 }

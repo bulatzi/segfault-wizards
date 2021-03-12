@@ -15,9 +15,10 @@ namespace AbetApi.Data
 
         private string cs =
             //@"Server=TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";
-            @"Server=DESKTOP-5BU0BPP;Database=abetdb;Trusted_Connection=True";                  // <-- Rafael's DB for testing
-        // on VM, server=TEBA-D\ABETDATABASE            <-- Server for RemoteDesktop
-        // on mine, server=TRICO-SCHOOL\SQLEXPRESS
+            //@"Server=DESKTOP-5BU0BPP;Database=abetdb;Trusted_Connection=True";                  // <-- Rafael's DB for testing
+            //@"Server=LAPTOP-838TO9CN\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";      // <-- Emmanuelli's local DB
+            // on VM, server=TEBA-D\ABETDATABASE            <-- Server for RemoteDesktop
+            // on mine, server=TRICO-SCHOOL\SQLEXPRESS
         public AbetRepo()
         {
 
@@ -805,6 +806,35 @@ where c.year = @year and c.semester = @semester and c.status = 1";
 
             conn.Close();
             return courses;
+        }
+        
+        public List<Course_Outcome> GetCourseOutcomesByCourse(Course course)
+        {
+            
+            List<Course_Outcome> result = new List<Course_Outcome>();
+            SqlConnection conn = GetConnection();
+            conn.Open();
+
+            string query = @"SELECT co.num, co.course_outcome, c.display_name " +
+                "from course_outcomes as co join courses as c on co.course_id = c.id where c.display_name LIKE @course;";
+            SqlCommand cmd = new SqlCommand(query, conn);
+            cmd.Parameters.Add(new SqlParameter("@course", SqlDbType.VarChar, 20)).Value = course.DisplayName;
+
+            using (SqlDataReader rd = cmd.ExecuteReader())
+            {
+                while (rd.Read())
+                {
+                    Course_Outcome db_result = new Course_Outcome
+                    {
+                        Outcome = rd["course_outcome"].ToString(),
+                        Order = Int32.Parse(rd["num"].ToString()),
+                    };
+                result.Add(db_result);
+                }
+            }
+
+            conn.Close();
+            return result;
         }
     }
 }
