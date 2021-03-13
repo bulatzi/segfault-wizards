@@ -15,7 +15,7 @@ namespace AbetApi.Data
 
         private string cs =
             //@"Server=TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";
-            //@"Server=DESKTOP-5BU0BPP;Database=abetdb;Trusted_Connection=True";                  // <-- Rafael's DB for testing
+            @"Server=DESKTOP-5BU0BPP;Database=abetdb;Trusted_Connection=True";                  // <-- Rafael's DB for testing
             //@"Server=LAPTOP-838TO9CN\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";      // <-- Emmanuelli's local DB
             // on VM, server=TEBA-D\ABETDATABASE            <-- Server for RemoteDesktop
             // on mine, server=TRICO-SCHOOL\SQLEXPRESS

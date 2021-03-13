@@ -26,6 +26,7 @@ namespace AbetApi.Controller
         private readonly IUploadManager uploadManager;
         private const int BAD_REQUEST = 400;            // HTTPS response for bad_request
         private const int NOT_FOUND = 404;              // HTTPS response for not_found
+        private const int SERVER_ERROR = 500;           // HTTPS response for internal_server_error
 
         public AbetController(IMockAbetRepo mockAbetRepo, ILdap ldap, ITokenGenerator tokenGenerator, IAbetRepo abetRepo, IUploadManager uploadManager)
         {
@@ -62,9 +63,9 @@ namespace AbetApi.Controller
                 return Ok(new { token, role }); //user is logged in
             }
             else if (!ldap.LoginSuccessful && !ldap.InternalErrorOccurred)
-                return Unauthorized(new { message = ldap.ErrorMessage }); //incorrect login credentials
+                return BadRequest(new { message = ldap.ErrorMessage }); //incorrect login credentials
             else
-                return StatusCode(500, new { message = ldap.ErrorMessage }); //internal server error
+                return StatusCode(SERVER_ERROR, new { message = ldap.ErrorMessage }); //internal server error
         }
 
         //INSTRUCTOR LEVEL FUNCTIONS
