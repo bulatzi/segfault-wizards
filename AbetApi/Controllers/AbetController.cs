@@ -8,9 +8,6 @@ using Microsoft.AspNetCore.Http;
 using static AbetApi.Models.AbetModels;
 using AbetApi.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using System.IO;
-using System.Net.Http.Headers;
-
 
 //This file handles the communication between the frontend and the API.
 namespace AbetApi.Controller
@@ -277,13 +274,12 @@ namespace AbetApi.Controller
             return mockAbetRepo.GetCourseOutcomesByCourse(body.Course);
             //return abetRepo.GetCourseOutcomesByCourse(body.Course);
         }
-
+        
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("upload-access-db")]
-        [DisableRequestSizeLimit]
-        public ActionResult UploadAccessDB()
+        public ActionResult UploadAccessDB([FromForm] IFormFile file)
         {
-            uploadManager.ReceiveFile(Request);
+            uploadManager.StoreFile(file, new List<string>() { ".accdb" });
 
             if (uploadManager.FilePath == null)
                 return BadRequest(new { message = uploadManager.ErrorMessage });
@@ -293,7 +289,7 @@ namespace AbetApi.Controller
             //Do SQL operations on the Access file
 
             //delete file?
-
+            
             return Ok();
         }
     }
