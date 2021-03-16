@@ -23,6 +23,7 @@ namespace AbetApi.Data
         List<Section> GetSectionsByYearAndSemester(int year, string semester);
         List<Course> GetCoursesByYear(int year, string semester);
         bool PostSection(Section section);
+        List<Course_Outcome> GetCourseOutcomesByCourse(Course course);
 
     }
 }

@@ -8,9 +8,6 @@ using Microsoft.AspNetCore.Http;
 using static AbetApi.Models.AbetModels;
 using AbetApi.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using System.IO;
-using System.Net.Http.Headers;
-
 
 //This file handles the communication between the frontend and the API.
 namespace AbetApi.Controller
@@ -26,6 +23,7 @@ namespace AbetApi.Controller
         private readonly IUploadManager uploadManager;
         private const int BAD_REQUEST = 400;            // HTTPS response for bad_request
         private const int NOT_FOUND = 404;              // HTTPS response for not_found
+        private const int SERVER_ERROR = 500;           // HTTPS response for internal_server_error
 
         public AbetController(IMockAbetRepo mockAbetRepo, ILdap ldap, ITokenGenerator tokenGenerator, IAbetRepo abetRepo, IUploadManager uploadManager)
         {
@@ -62,9 +60,9 @@ namespace AbetApi.Controller
                 return Ok(new { token, role }); //user is logged in
             }
             else if (!ldap.LoginSuccessful && !ldap.InternalErrorOccurred)
-                return Unauthorized(new { message = ldap.ErrorMessage }); //incorrect login credentials
+                return BadRequest(new { message = ldap.ErrorMessage }); //incorrect login credentials
             else
-                return StatusCode(500, new { message = ldap.ErrorMessage }); //internal server error
+                return StatusCode(SERVER_ERROR, new { message = ldap.ErrorMessage }); //internal server error
         }
 
         //INSTRUCTOR LEVEL FUNCTIONS
@@ -72,8 +70,8 @@ namespace AbetApi.Controller
         [HttpPost("sections/by-userid-semester-year")]
         public List<Section> GetSectionsByUserId([FromBody] BodyParams body)
         {
-            return mockAbetRepo.GetSectionsByUserId(body.UserId, body.Year, body.Semester);
-            //return abetRepo.GetSectionsByUserId(body.UserId, body.Year, body.Semester);
+            //return mockAbetRepo.GetSectionsByUserId(body.UserId, body.Year, body.Semester);
+            return abetRepo.GetSectionsByUserId(body.UserId, body.Year, body.Semester);
         }
 
         [Authorize(Roles = RoleTypes.Instructor)]
@@ -118,11 +116,14 @@ namespace AbetApi.Controller
             /*
                 Maybe add some error checking to make sure required data is being passed in.
              */
+             
             /* Add the section to the DB */
+            /*
             if (abetRepo.PostSection(body.Section))
                 return Ok();
             else
                 return BadRequest();
+            */
         }
 
 
@@ -289,14 +290,14 @@ namespace AbetApi.Controller
         public List<Course_Outcome> GetCourseOutcomesByCourse([FromBody] BodyParams body)
         {
             return mockAbetRepo.GetCourseOutcomesByCourse(body.Course);
+            //return abetRepo.GetCourseOutcomesByCourse(body.Course);
         }
-
+        
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("upload-access-db")]
-        [DisableRequestSizeLimit]
-        public ActionResult UploadAccessDB()
+        public ActionResult UploadAccessDB([FromForm] IFormFile file)
         {
-            uploadManager.ReceiveFile(Request);
+            uploadManager.StoreFile(file, new List<string>() { ".accdb" });
 
             if (uploadManager.FilePath == null)
                 return BadRequest(new { message = uploadManager.ErrorMessage });
@@ -306,7 +307,7 @@ namespace AbetApi.Controller
             //Do SQL operations on the Access file
 
             //delete file?
-
+            
             return Ok();
         }
 
