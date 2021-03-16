@@ -806,5 +806,60 @@ where c.year = @year and c.semester = @semester and c.status = 1";
             conn.Close();
             return courses;
         }
+
+        /* Allows instructors to add a new section. */
+        public bool PostSection(Section section)
+        {
+            /* 0 == false | 1 == true */
+            int sectionCompletion;          // Used to determine the value to which section.IsSectionCompleted associates with
+            if (section.IsSectionCompleted) 
+            { 
+                sectionCompletion = 1; 
+            }
+            else
+            {
+                sectionCompletion = 0;
+            }
+
+            /* Query for getting the courseID based on the department, course number, semester, and year */
+            string courseId_Query = @"SELECT id FROM [abetdb].[dbo].[courses] WHERE department = @department AND course_number = @course_number AND semester = @semester AND year = @year;";
+            
+            SqlConnection conn = GetConnection();               // Establish connection with the DB
+            conn.Open();                                        // Open the connection
+            
+            /* Create the command and add values to parameters */
+            SqlCommand id_cmd = new SqlCommand(courseId_Query, conn);
+            id_cmd.Parameters.Add(new SqlParameter("@department", SqlDbType.VarChar, 11)).Value = section.Department;
+            id_cmd.Parameters.Add(new SqlParameter("@course_number", SqlDbType.VarChar, 11)).Value = section.CourseNumber;
+            id_cmd.Parameters.Add(new SqlParameter("@semester", SqlDbType.VarChar, 11)).Value = section.Semester;
+            id_cmd.Parameters.Add(new SqlParameter("@year", SqlDbType.Int)).Value = section.Year;
+            id_cmd.Prepare();
+
+            Int32 courseId = (Int32)id_cmd.ExecuteScalar();     // Execute command for the courseID
+
+            /* Query for creating/inserting a new section */
+            string query = @"INSERT INTO [abetdb].[dbo].[sections] (course_id, section_number, instructor_id, num_of_students, completed) VALUES (@courseID, @sectionNum, @instructorID, @numStudents, @completion);";
+
+            /* Create the command and add values to parameters */
+            SqlCommand cmd = new SqlCommand(query, conn);
+            cmd.Parameters.Add(new SqlParameter("@courseID", SqlDbType.VarChar, 10)).Value = courseId.ToString();
+            cmd.Parameters.Add(new SqlParameter("@sectionNum", SqlDbType.VarChar, 11)).Value = section.SectionNumber;
+            cmd.Parameters.Add(new SqlParameter("@instructorID", SqlDbType.VarChar, 11)).Value = section.Instructor.Id;
+            cmd.Parameters.Add(new SqlParameter("@numStudents", SqlDbType.Int)).Value = section.NumberOfStudents;
+            cmd.Parameters.Add(new SqlParameter("@completion", SqlDbType.SmallInt)).Value = sectionCompletion;
+            cmd.Prepare();
+
+            /* Excute the query and return the status */
+            if (cmd.ExecuteNonQuery() > 0)
+            {
+                conn.Close();
+                return true;
+            }
+            else
+            {
+                conn.Close();
+                return false;
+            }
+        }
     }
 }

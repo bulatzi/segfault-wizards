@@ -111,6 +111,21 @@ namespace AbetApi.Controller
             */
         }
 
+        [Authorize(Roles = RoleTypes.Instructor)]
+        [HttpPost("sections/post-section")]
+        public ActionResult postSection([FromBody] BodyParams body)
+        {
+            /*
+                Maybe add some error checking to make sure required data is being passed in.
+             */
+            /* Add the section to the DB */
+            if (abetRepo.PostSection(body.Section))
+                return Ok();
+            else
+                return BadRequest();
+        }
+
+
         //COORDINATOR LEVEL FUNCTIONS
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpPost("forms/by-course")]
@@ -294,5 +309,6 @@ namespace AbetApi.Controller
 
             return Ok();
         }
+
     }
 }
