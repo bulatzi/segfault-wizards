@@ -113,17 +113,22 @@ namespace AbetApi.Controller
         [HttpPost("sections/post-section")]
         public ActionResult postSection([FromBody] BodyParams body)
         {
-            /*
-                Maybe add some error checking to make sure required data is being passed in.
-             */
-             
-            /* Add the section to the DB */
-            /*
-            if (abetRepo.PostSection(body.Section))
+            /* Error Checking -- Need, at least, the year, department, course number, and semester */
+            if ((body.Section.Year < 1890) || ((body.Section.Semester != "fall") && (body.Section.Semester != "Fall") && (body.Section.Semester != "spring") && (body.Section.Semester != "Spring") && (body.Section.Semester != "summer") && (body.Section.Semester != "Summer")) || (String.IsNullOrEmpty(body.Section.Department)) || (String.IsNullOrEmpty(body.Section.CourseNumber)))
+                return BadRequest();
+
+            if (mockAbetRepo.PostSection(body.Section))
                 return Ok();
             else
                 return BadRequest();
-            */
+
+            /* Add the section to the DB */
+
+            //if (abetRepo.PostSection(body.Section))
+            //    return Ok();
+            //else
+            //    return BadRequest();
+
         }
 
 

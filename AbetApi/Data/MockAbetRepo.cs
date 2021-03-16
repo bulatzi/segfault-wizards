@@ -376,5 +376,10 @@ namespace AbetApi.Data
 
             return courseList;
         }
+
+        public bool PostSection(Section section)
+        {
+            return true;
+        }
     }
 }
