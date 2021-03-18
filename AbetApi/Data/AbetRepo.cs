@@ -489,14 +489,30 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
             // configure connection
             SqlConnection conn = GetConnection();
             conn.Open();
-
+            
             // test for variables
-            //if (form.Section.Year == null || form.Section.Semester == null || form.Section.CourseNumber == null|| form.Section.SectionNumber == null)
-            if (form.Section.SectionId == null)
+            if ( (form == null) || (form.Section == null) || (form.Outcomes == null) )
             {
                 sqlReturn.code = -1;
-                sqlReturn.message = "SectionId is missing";
+                sqlReturn.message = "Form and/or Section are missing. Both must be provided";
                 return sqlReturn;
+            }
+            else if (String.IsNullOrEmpty(form.Section.SectionNumber))
+            {
+                sqlReturn.code = -1;
+                sqlReturn.message = "SectionNumber is missing";
+                return sqlReturn;
+            }
+
+            /*Check that StudentWorks were included with outcomes */
+            foreach (OutcomeObjective workCheck in form.Outcomes)
+            {
+                if (workCheck.StudentWorks == null)
+                {
+                    sqlReturn.code = -1;
+                    sqlReturn.message = "Missing StudentWorks.";
+                    return sqlReturn;
+                }
             }
 
             // confirm section exists
@@ -559,7 +575,7 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
                     query = @"insert into grades (a, b, c, d, f, w, i, section_objective_id) 
 VALUES (@a, @b, @c, @d, @f, @w, @i, @section_objective_id); SELECT SCOPE_IDENTITY()";
                     cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.Add(new SqlParameter("@a", SqlDbType.Int)).Value = grades[i].A;
+                    cmd.Parameters.Add(new SqlParameter("@a", SqlDbType.Int)).Value = grades[i].A;                  
                     cmd.Parameters.Add(new SqlParameter("@b", SqlDbType.Int)).Value = grades[i].B;
                     cmd.Parameters.Add(new SqlParameter("@c", SqlDbType.Int)).Value = grades[i].C;
                     cmd.Parameters.Add(new SqlParameter("@d", SqlDbType.Int)).Value = grades[i].D;
