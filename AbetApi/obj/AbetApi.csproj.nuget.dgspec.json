@@ -48,6 +48,10 @@
               "target": "Package",
               "version": "[3.0.0, )"
             },
+            "System.Data.OleDb": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
             "System.Data.SqlClient": {
               "target": "Package",
               "version": "[4.8.2, )"
