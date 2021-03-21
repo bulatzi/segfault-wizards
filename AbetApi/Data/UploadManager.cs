@@ -115,7 +115,7 @@ values
 SELECT SCOPE_IDENTITY()";
             string query2 = @"insert into course_outcomes (num, course_outcome, course_id)
 values (@num, @course_outcome, @course_id)";
-            string query3 = @"insert into course_obj (course_id, student_course_mapping, program, student_outcome_order) 
+            string query3 = @"insert into course_objectives (course_id, student_course_mapping, program, student_outcome_order) 
 VALUES (@course_id, @mapping, @program, @order)";
             SqlConnection conn1 = GetConnection();
             SqlCommand cmd1;
