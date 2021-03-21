@@ -15,7 +15,7 @@ namespace AbetApi.Data
 {
     public class UploadManager : IUploadManager
     {
-        private string cs = @"Server = TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";
+        private string cs = @"Server=TEBA-D\ABETDATABASE;Database=abetdb11;Trusted_Connection=True";
         //@"Server=TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";    <-- Yafet Server
         //@"Server=DESKTOP-5BU0BPP;Database=abetdb;Trusted_Connection=True";            <-- Rafael Server
         //@"Server=LAPTOP-838TO9CN\SQLEXPRESS;Database=abetdb;Trusted_Connection=True"; <-- Emmanuelli's local DB
@@ -108,7 +108,7 @@ namespace AbetApi.Data
             OleDbCommand cmd = new OleDbCommand(query, conn);
 
             // sql server connection
-            string query1 = @"insert into courses_new (year, semester, department, course_number, coordinator_name, 
+            string query1 = @"insert into courses (year, semester, department, course_number, coordinator_name, 
 display_name, group_ce, group_cs, group_it, status)
 values 
 (@year, @semester, @department, @course_number, @coordinator_name, @display_name, @group_ce, @group_cs, @group_it, @status); 
