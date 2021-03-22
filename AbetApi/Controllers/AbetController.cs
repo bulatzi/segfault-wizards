@@ -220,23 +220,15 @@ namespace AbetApi.Controller
         [HttpPost("faculty/get-list")]
         public FacultyList GetFacultyList()                     // Original implementation
         {
-           return mockAbetRepo.GetFacultyList();
+            return mockAbetRepo.GetFacultyList();
             //return abetRepo.GetFacultyList();
         }
-
-        //Refactored version
-        //public ActionResult GetFacultyList()
-        //{
-        //    return Ok(mockAbetRepo.GetFacultyList());
-        //    //return Ok(abetRepo.GetFacultyList());
-
-        //}
-
 
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("faculty/add-member")]
         public ActionResult AddFacultyMember([FromBody] BodyParams body)
         {
+            if (body.Info == null || body.FacultyType == null) return BadRequest();
             //if (abetRepo.AddFacultyMember(body.Info, body.FacultyType))
             if (mockAbetRepo.AddFacultyMember(body.Info, body.FacultyType))
                 return Ok();

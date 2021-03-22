@@ -248,61 +248,70 @@ and department = @department and course_number = @course_number";
 
         public FacultyList GetFacultyList()
         {
-            FacultyList facultyList = new FacultyList();
-            Instructor instructor;
-            Info info = new Info();
-
-            string selectQuery = @"select euid as id, first_name, last_name, faculty_type from faculties";
-
-            SqlConnection conn = GetConnection();
-            conn.Open();
-
-            SqlCommand cmd = new SqlCommand(selectQuery, conn);
-            using (SqlDataReader rd = cmd.ExecuteReader())
+            using (SqlConnection conn = GetConnection())
             {
-                while (rd.Read())
+                FacultyList facultyList = new FacultyList();
+                Instructor instructor;
+                Info info = new Info();
+
+                string selectQuery = @"select euid as id, first_name, last_name, faculty_type from faculties";
+                SqlCommand cmd = new SqlCommand(selectQuery, conn);
+                cmd.Connection.Open();
+                try
                 {
-                    instructor = new Instructor
+                    using (SqlDataReader rd = cmd.ExecuteReader())
                     {
-                        FirstName = rd["first_name"].ToString(),
-                        LastName = rd["last_name"].ToString(),
-                        Id = rd["id"].ToString()
-                    };
-                    if (rd["faculty_type"].ToString() == "Full-time")
-                        facultyList.FullTime.Add(instructor);
-                    else if (rd["faculty_type"].ToString() == "Adjunct")
-                    {
-                        facultyList.Adjuncts.Add(instructor);
+                        while (rd.Read())
+                        {
+                            instructor = new Instructor
+                            {
+                                FirstName = rd["first_name"].ToString(),
+                                LastName = rd["last_name"].ToString(),
+                                Id = rd["id"].ToString()
+                            };
+                            if (rd["faculty_type"].ToString() == "Full-time")
+                                facultyList.FullTime.Add(instructor);
+                            else if (rd["faculty_type"].ToString() == "Adjunct")
+                            {
+                                facultyList.Adjuncts.Add(instructor);
+                            }
+                            else
+                            {
+                                facultyList.Fellows.Add(instructor);
+                            }
+                        }
                     }
-                    else
-                    {
-                        facultyList.Fellows.Add(instructor);
-                    }
+                    return facultyList;
                 }
-            }
-            return facultyList;
+                catch
+                {
+                    return null;
+                }
+            }  
         }
 
         public bool AddFacultyMember(Info info, string facultyType)
         {
-            //string selectQuery = @"select id from abetdb.dbo.faculty_types where faculty_type = 'Full-Time'";
-            string insertQuery = @"insert into abetdb.dbo.faculties (euid, first_name, last_name, role, faculty_type) 
+            using (SqlConnection conn = GetConnection())
+            {
+                string insertQuery = @"insert into abetdb.dbo.faculties (euid, first_name, last_name, role, faculty_type) 
 values (@euid, @first_name, @last_name, @role, @faculty_type)";
-
-            SqlConnection conn = GetConnection();
-            conn.Open();
-
-            SqlCommand cmd = new SqlCommand(insertQuery, conn);
-            cmd.Parameters.Add(new SqlParameter("@euid", SqlDbType.VarChar, 20)).Value = info.Id;
-            cmd.Parameters.Add(new SqlParameter("@first_name", SqlDbType.VarChar, 50)).Value = info.FirstName;
-            cmd.Parameters.Add(new SqlParameter("@last_name", SqlDbType.VarChar, 50)).Value = info.LastName;
-            cmd.Parameters.Add(new SqlParameter("@role", SqlDbType.Int)).Value = 2; // 2 is instructor
-            cmd.Parameters.Add(new SqlParameter("@faculty_type", SqlDbType.VarChar, 50)).Value = facultyType;
-            cmd.Prepare();
-
-            cmd.ExecuteNonQuery();
-
-            return true;
+                SqlCommand cmd = new SqlCommand(insertQuery, conn);
+                cmd.Parameters.Add(new SqlParameter("@euid", SqlDbType.VarChar, 20)).Value = info.Id;
+                cmd.Parameters.Add(new SqlParameter("@first_name", SqlDbType.VarChar, 50)).Value = info.FirstName;
+                cmd.Parameters.Add(new SqlParameter("@last_name", SqlDbType.VarChar, 50)).Value = info.LastName;
+                cmd.Parameters.Add(new SqlParameter("@role", SqlDbType.Int)).Value = 2; // 2 is instructor
+                cmd.Parameters.Add(new SqlParameter("@faculty_type", SqlDbType.VarChar, 50)).Value = facultyType;
+                cmd.Connection.Open();
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                    return true;
+                } catch
+                {
+                    return false;
+                }
+            }
         }
 
         public Form GetFormBySection(Section section)
