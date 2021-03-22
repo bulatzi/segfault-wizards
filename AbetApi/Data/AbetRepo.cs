@@ -14,12 +14,11 @@ namespace AbetApi.Data
         string currentSemester = "spring";
 
         private string cs = 
-            //@"Server=TEBA-D\ABETDATABASE;Database=abetdb11;Trusted_Connection=True";
-            //@"Server=TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";
-            @"Server=DESKTOP-5BU0BPP;Database=abetdb;Trusted_Connection=True";                  // <-- Rafael's DB for testing
-            //@"Server=LAPTOP-838TO9CN\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";     // <-- Emmanuelli's local DB
-            //@"Server=TEBA-D\ABETDATABASE;Database=abetdb;Trusted_Connection=True";            // <-- Server for RemoteDesktop
-            // on mine, server=TRICO-SCHOOL\SQLEXPRESS
+        //@"Server=TEBA-D\ABETDATABASE;Database=abetdb11;Trusted_Connection=True";              // <-- Server for RemoteDesktop
+        //@"Server=TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";              // <-- Yafet's local DB
+        @"Server=DESKTOP-5BU0BPP;Database=abetdb;Trusted_Connection=True";                    // <-- Rafael's DB for testing
+        //@"Server=LAPTOP-838TO9CN\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";         // <-- Emmanuelli's local DB
+
         public AbetRepo()
         {
 
@@ -895,6 +894,33 @@ where c.year = @year and c.semester = @semester and c.status = 1";
 
             conn.Close();
             return result;
+        }
+
+        public bool PostComment(Course course)
+        {
+            if (course == null || course.CoordinatorComment == null || course.Year < 2000 || course.Semester == null || course.CourseNumber == null) return false;
+
+            using (SqlConnection conn = GetConnection())
+            {
+                string query = @"UPDATE courses 
+SET coordinator_comment = @coordinator_comment
+WHERE year = @year and semester = @semester and course_number = @course_number and status = 1";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.Add(new SqlParameter("@coordinator_comment", SqlDbType.VarChar, -1)).Value = course.CoordinatorComment;
+                cmd.Parameters.Add(new SqlParameter("@year", SqlDbType.Int)).Value = course.Year;
+                cmd.Parameters.Add(new SqlParameter("@semester", SqlDbType.VarChar, 11)).Value = course.Semester;
+                cmd.Parameters.Add(new SqlParameter("@course_number", SqlDbType.VarChar, 11)).Value = course.CourseNumber;
+                cmd.Connection.Open();
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
         }
     }
 }

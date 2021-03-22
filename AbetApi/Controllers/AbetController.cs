@@ -156,6 +156,7 @@ namespace AbetApi.Controller
         public ActionResult PostComment([FromBody] BodyParams body)
         {
             if (mockAbetRepo.PostComment(body.Course))
+            //if (abetRepo.PostComment(body.Course))
                 return Ok();
             else
                 return BadRequest();
@@ -308,7 +309,7 @@ namespace AbetApi.Controller
             //return abetRepo.GetCourseOutcomesByCourse(body.Course);
         }
         
-        //[Authorize(Roles = RoleTypes.Admin)]
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("upload-access-db")]
         public ActionResult UploadAccessDB([FromForm] IFormFile file)
         {

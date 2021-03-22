@@ -15,11 +15,11 @@ namespace AbetApi.Data
 {
     public class UploadManager : IUploadManager
     {
-        private string cs = @"Server=TEBA-D\ABETDATABASE;Database=abetdb11;Trusted_Connection=True";
-        //@"Server=TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";    <-- Yafet Server
-        //@"Server=DESKTOP-5BU0BPP;Database=abetdb;Trusted_Connection=True";            <-- Rafael Server
-        //@"Server=LAPTOP-838TO9CN\SQLEXPRESS;Database=abetdb;Trusted_Connection=True"; <-- Emmanuelli's local DB
-        //@"Server=TEBA-D\ABETDATABASE;Database=abetdb;Trusted_Connection=True          <-- Server for RemoteDesktop
+        private string cs = //@"Server=TEBA-D\ABETDATABASE;Database=abetdb11;Trusted_Connection=True";
+        //@"Server=TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";    //<-- Yafet Server
+        @"Server=DESKTOP-5BU0BPP;Database=abetdb;Trusted_Connection=True";              //<-- Rafael Server
+        //@"Server=LAPTOP-838TO9CN\SQLEXPRESS;Database=abetdb;Trusted_Connection=True"; //<-- Emmanuelli's local DB
+        //@"Server=TEBA-D\ABETDATABASE;Database=abetdb;Trusted_Connection=True          //<-- Server for RemoteDesktop
 
         private SqlConnection GetConnection()
         {
@@ -186,9 +186,9 @@ VALUES (@course_id, @mapping, @program, @order)";
                 return sqlReturn;
             }
 
-
+            conn.Close();
+            conn1.Close();
             return sqlReturn;
-            throw new NotImplementedException();
         }
     }
 }
