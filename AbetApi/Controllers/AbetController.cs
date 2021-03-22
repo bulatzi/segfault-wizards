@@ -86,6 +86,12 @@ namespace AbetApi.Controller
         [HttpPost("forms/new-blank")]
         public Form GetBlankForm([FromBody] BodyParams body)
         {
+            /* Check that section object was passed in */
+            if (body.Section == null)
+            {
+                Response.StatusCode = BAD_REQUEST; 
+                return null;
+            }
             //return abetRepo.GetBlankForm(body.Section);
             return mockAbetRepo.GetBlankForm();
         }

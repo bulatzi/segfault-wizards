@@ -16,8 +16,8 @@ namespace AbetApi.Data
         private string cs =
             //@"Server=TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";
             @"Server=DESKTOP-5BU0BPP;Database=abetdb;Trusted_Connection=True";                  // <-- Rafael's DB for testing
-            //@"Server=LAPTOP-838TO9CN\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";      // <-- Emmanuelli's local DB
-            // on VM, server=TEBA-D\ABETDATABASE            <-- Server for RemoteDesktop
+            //@"Server=LAPTOP-838TO9CN\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";     // <-- Emmanuelli's local DB
+            //@"Server=TEBA-D\ABETDATABASE;Database=abetdb;Trusted_Connection=True";            // <-- Server for RemoteDesktop
             // on mine, server=TRICO-SCHOOL\SQLEXPRESS
         public AbetRepo()
         {
@@ -502,17 +502,6 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
                 sqlReturn.code = -1;
                 sqlReturn.message = "SectionNumber is missing";
                 return sqlReturn;
-            }
-
-            /*Check that StudentWorks were included with outcomes */
-            foreach (OutcomeObjective workCheck in form.Outcomes)
-            {
-                if (workCheck.StudentWorks == null)
-                {
-                    sqlReturn.code = -1;
-                    sqlReturn.message = "Missing StudentWorks.";
-                    return sqlReturn;
-                }
             }
 
             // confirm section exists
