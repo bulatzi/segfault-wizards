@@ -15,8 +15,8 @@ namespace AbetApi.Data
 
         private string cs = 
         //@"Server=TEBA-D\ABETDATABASE;Database=abetdb11;Trusted_Connection=True";              // <-- Server for RemoteDesktop
-        //@"Server=TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";              // <-- Yafet's local DB
-        @"Server=DESKTOP-5BU0BPP;Database=abetdb;Trusted_Connection=True";                    // <-- Rafael's DB for testing
+        @"Server=TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";              // <-- Yafet's local DB
+        //@"Server=DESKTOP-5BU0BPP;Database=abetdb;Trusted_Connection=True";                    // <-- Rafael's DB for testing
         //@"Server=LAPTOP-838TO9CN\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";         // <-- Emmanuelli's local DB
 
         public AbetRepo()
@@ -29,28 +29,27 @@ namespace AbetApi.Data
             return new SqlConnection(cs);
         }
 
-        public string GetRole(string userId)
+        public string GetRole(string name)  // change name to userid later
         {
-            string myString = "";
-            //string euid = "DK2121";
-            string query =
-                @"select role_name from staff as s join roles as r on s.role = r.id where s.euid = @userId";
-
-            SqlConnection conn = GetConnection();
-            conn.Open();
-            SqlCommand cmd = new SqlCommand(query, conn);
-            cmd.Parameters.Add(new SqlParameter("@userId", SqlDbType.VarChar)).Value = userId;
-
-            using SqlDataReader rd = cmd.ExecuteReader();
-            while (rd.Read())
+            if (name == null) return "";
+            using (SqlConnection conn = GetConnection())
             {
-                myString = rd.GetString(0);
+                conn.Open();
+                string[] roles = { "Instructor", "Coordinator", "Admin" };
+                string query = @"select role from faculty where name = @name";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.Add(new SqlParameter("@name", SqlDbType.VarChar, 50)).Value = name;
+                try
+                {
+                    int obj = Convert.ToInt32(cmd.ExecuteScalar());
+                    if (obj != 0) return roles[obj - 1];
+                    return "";
+                }
+                catch
+                {
+                    return "";
+                }
             }
-            conn.Close();
-
-            return myString;
-
-            //select role_name from abetdb.dbo.staff as s join abetdb.dbo.roles as r on s.role = r.id where s.euid = 'DK2121';
         }
 
         public List<Section> GetSectionsByUserId(string userId, int year, string term)
@@ -294,7 +293,7 @@ and department = @department and course_number = @course_number";
         {
             using (SqlConnection conn = GetConnection())
             {
-                string insertQuery = @"insert into abetdb.dbo.faculties (euid, first_name, last_name, role, faculty_type) 
+                string insertQuery = @"insert into faculties (euid, first_name, last_name, role, faculty_type) 
 values (@euid, @first_name, @last_name, @role, @faculty_type)";
                 SqlCommand cmd = new SqlCommand(insertQuery, conn);
                 cmd.Parameters.Add(new SqlParameter("@euid", SqlDbType.VarChar, 20)).Value = info.Id;

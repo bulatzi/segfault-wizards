@@ -54,7 +54,8 @@ namespace AbetApi.Controller
             {
                 //find the role of the user and generate a JWT token and send the info to the frontend
                 string role = mockAbetRepo.GetRole(body.UserId);
-                //string role = abetRepo.GetRole(body.UserId);
+                //string role = abetRepo.GetRole(name);  // change name to userid later
+                                                        // role might return blank
                 string token = tokenGenerator.GenerateToken(body.UserId, role);
 
                 return Ok(new { token, role }); //user is logged in
@@ -70,16 +71,16 @@ namespace AbetApi.Controller
         [HttpPost("sections/by-userid-semester-year")]
         public List<Section> GetSectionsByUserId([FromBody] BodyParams body)
         {
-            //return mockAbetRepo.GetSectionsByUserId(body.UserId, body.Year, body.Semester);
-            return abetRepo.GetSectionsByUserId(body.UserId, body.Year, body.Semester);
+            return mockAbetRepo.GetSectionsByUserId(body.UserId, body.Year, body.Semester);
+            //return abetRepo.GetSectionsByUserId(body.UserId, body.Year, body.Semester);
         }
 
         [Authorize(Roles = RoleTypes.Instructor)]
         [HttpPost("forms/by-section")]
         public Form GetFormBySection([FromBody] BodyParams body)
         {
-            //return mockAbetRepo.GetFormBySection(body.Section);
-            return abetRepo.GetFormBySection(body.Section);
+            return mockAbetRepo.GetFormBySection(body.Section);
+            //return abetRepo.GetFormBySection(body.Section);
         }
 
         [Authorize(Roles = RoleTypes.Instructor)]
