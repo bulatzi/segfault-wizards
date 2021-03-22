@@ -13,7 +13,8 @@ namespace AbetApi.Data
         int currentYear = 2021;
         string currentSemester = "spring";
 
-        private string cs =
+        private string cs = 
+            //@"Server=TEBA-D\ABETDATABASE;Database=abetdb11;Trusted_Connection=True";
             //@"Server=TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";
             @"Server=DESKTOP-5BU0BPP;Database=abetdb;Trusted_Connection=True";                  // <-- Rafael's DB for testing
             //@"Server=LAPTOP-838TO9CN\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";     // <-- Emmanuelli's local DB

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static AbetApi.Models.AbetModels;
 
 namespace AbetApi.Data
 {
@@ -11,5 +12,6 @@ namespace AbetApi.Data
         public string FilePath { get; set; }
         public string ErrorMessage { get; set; }
         public void StoreFile(IFormFile file, List<string> acceptableTypes);
+        SqlReturn InsertAccess2SQLserver();
     }
 }

@@ -141,6 +141,8 @@ namespace AbetApi.Controller
 
 
         //COORDINATOR LEVEL FUNCTIONS
+        
+        //Function has been tested and errors have been added to the documentation. Currently testing using SQL server.
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpPost("forms/by-course")]
         public List<Form> GetFormsByCourse([FromBody] BodyParams body)
@@ -306,7 +308,7 @@ namespace AbetApi.Controller
             //return abetRepo.GetCourseOutcomesByCourse(body.Course);
         }
         
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("upload-access-db")]
         public ActionResult UploadAccessDB([FromForm] IFormFile file)
         {
@@ -315,13 +317,14 @@ namespace AbetApi.Controller
             if (uploadManager.FilePath == null)
                 return BadRequest(new { message = uploadManager.ErrorMessage });
 
-            System.Diagnostics.Debug.WriteLine(uploadManager.FilePath);
+            //System.Diagnostics.Debug.WriteLine(uploadManager.FilePath);
 
             //Do SQL operations on the Access file
-
-            //delete file?
+            SqlReturn sqlReturn = uploadManager.InsertAccess2SQLserver();
+            if (sqlReturn.code != -1) return Ok();
+            else return BadRequest(new { sqlReturn.message});
             
-            return Ok();
+            //delete file?
         }
 
     }
