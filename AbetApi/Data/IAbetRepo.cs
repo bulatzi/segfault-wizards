@@ -24,6 +24,9 @@ namespace AbetApi.Data
         List<Course> GetCoursesByYear(int year, string semester);
         bool PostSection(Section section);
         List<Course_Outcome> GetCourseOutcomesByCourse(Course course);
+        bool PostComment(Course course);
+
+        // catogorize by instructor, coordinator and admin functions
 
     }
 }

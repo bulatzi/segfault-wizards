@@ -86,6 +86,12 @@ namespace AbetApi.Controller
         [HttpPost("forms/new-blank")]
         public Form GetBlankForm([FromBody] BodyParams body)
         {
+            /* Check that section object was passed in */
+            if (body.Section == null)
+            {
+                Response.StatusCode = BAD_REQUEST; 
+                return null;
+            }
             //return abetRepo.GetBlankForm(body.Section);
             return mockAbetRepo.GetBlankForm();
         }
@@ -150,6 +156,7 @@ namespace AbetApi.Controller
         public ActionResult PostComment([FromBody] BodyParams body)
         {
             if (mockAbetRepo.PostComment(body.Course))
+            //if (abetRepo.PostComment(body.Course))
                 return Ok();
             else
                 return BadRequest();
@@ -213,23 +220,15 @@ namespace AbetApi.Controller
         [HttpPost("faculty/get-list")]
         public FacultyList GetFacultyList()                     // Original implementation
         {
-           return mockAbetRepo.GetFacultyList();
+            return mockAbetRepo.GetFacultyList();
             //return abetRepo.GetFacultyList();
         }
-
-        //Refactored version
-        //public ActionResult GetFacultyList()
-        //{
-        //    return Ok(mockAbetRepo.GetFacultyList());
-        //    //return Ok(abetRepo.GetFacultyList());
-
-        //}
-
 
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("faculty/add-member")]
         public ActionResult AddFacultyMember([FromBody] BodyParams body)
         {
+            if (body.Info == null || body.FacultyType == null) return BadRequest();
             //if (abetRepo.AddFacultyMember(body.Info, body.FacultyType))
             if (mockAbetRepo.AddFacultyMember(body.Info, body.FacultyType))
                 return Ok();
@@ -302,7 +301,7 @@ namespace AbetApi.Controller
             //return abetRepo.GetCourseOutcomesByCourse(body.Course);
         }
         
-        //[Authorize(Roles = RoleTypes.Admin)]
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("upload-access-db")]
         public ActionResult UploadAccessDB([FromForm] IFormFile file)
         {
