@@ -4493,11 +4493,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ty\\Desktop\\ABET_backend\\AbetApi\\AbetApi.csproj",
+      "projectUniqueName": "C:\\Users\\Ty\\Desktop\\ABET_backend - Copy\\AbetApi\\AbetApi.csproj",
       "projectName": "AbetApi",
-      "projectPath": "C:\\Users\\Ty\\Desktop\\ABET_backend\\AbetApi\\AbetApi.csproj",
+      "projectPath": "C:\\Users\\Ty\\Desktop\\ABET_backend - Copy\\AbetApi\\AbetApi.csproj",
       "packagesPath": "C:\\Users\\Ty\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ty\\Desktop\\ABET_backend\\AbetApi\\obj\\",
+      "outputPath": "C:\\Users\\Ty\\Desktop\\ABET_backend - Copy\\AbetApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
