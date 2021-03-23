@@ -78,6 +78,19 @@ namespace AbetApi.Controller
         [HttpPost("forms/by-section")]
         public Form GetFormBySection([FromBody] BodyParams body)
         {
+            /* Error-Checking | All parameters required */
+            if ( (body.Section == null)                             ||
+                 (String.IsNullOrEmpty(body.Section.CourseNumber))  || 
+                 (String.IsNullOrEmpty(body.Section.Semester))      || 
+                 (String.IsNullOrEmpty(body.Section.SectionNumber)) || 
+                 (String.IsNullOrEmpty(body.Section.Department))    || 
+                 (body.Section.Year < 1890)                         ||
+                 (String.IsNullOrEmpty(body.Section.Instructor.Id))
+               )
+            { 
+                Response.StatusCode = BAD_REQUEST;
+                return new Form();
+            }
             //return mockAbetRepo.GetFormBySection(body.Section);
             return abetRepo.GetFormBySection(body.Section);
         }
