@@ -25,6 +25,8 @@ namespace AbetApi.Data
         bool PostSection(Section section);
         List<Course_Outcome> GetCourseOutcomesByCourse(Course course);
         bool PostComment(Course course);
+        SqlReturn PostAccessDbData(string filePath);
+        SqlReturn PostAttachmentInfo(string filePath, string originalFileName, int outcomeId);
 
         // catogorize by instructor, coordinator and admin functions
 

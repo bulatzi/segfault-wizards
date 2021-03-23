@@ -11,7 +11,9 @@ namespace AbetApi.Data
     {
         public string FilePath { get; set; }
         public string ErrorMessage { get; set; }
-        public void StoreFile(IFormFile file, List<string> acceptableTypes);
-        SqlReturn InsertAccess2SQLserver();
+        public string OriginalFileName { get; set; }
+        public bool StoreFile(IFormFile file, List<string> acceptableTypes);
+        public bool DeleteCurrentFile();
+        public bool DeleteFile(string filePath);
     }
 }

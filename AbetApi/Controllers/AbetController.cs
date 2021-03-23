@@ -65,7 +65,8 @@ namespace AbetApi.Controller
                 return StatusCode(SERVER_ERROR, new { message = ldap.ErrorMessage }); //internal server error
         }
 
-        //INSTRUCTOR LEVEL FUNCTIONS
+        //---------------INSTRUCTOR LEVEL FUNCTIONS---------------
+
         [Authorize(Roles = RoleTypes.Instructor)]
         [HttpPost("sections/by-userid-semester-year")]
         public List<Section> GetSectionsByUserId([FromBody] BodyParams body)
@@ -119,7 +120,7 @@ namespace AbetApi.Controller
 
         [Authorize(Roles = RoleTypes.Instructor)]
         [HttpPost("sections/post-section")]
-        public ActionResult postSection([FromBody] BodyParams body)
+        public ActionResult PostSection([FromBody] BodyParams body)
         {
             /* Error Checking -- Need, at least, the year, department, course number, and semester */
             if ((body.Section.Year < 1890) || ((body.Section.Semester != "fall") && (body.Section.Semester != "Fall") && (body.Section.Semester != "spring") && (body.Section.Semester != "Spring") && (body.Section.Semester != "summer") && (body.Section.Semester != "Summer")) || (String.IsNullOrEmpty(body.Section.Department)) || (String.IsNullOrEmpty(body.Section.CourseNumber)))
@@ -139,9 +140,29 @@ namespace AbetApi.Controller
 
         }
 
+        [Authorize(Roles = RoleTypes.Instructor)]
+        [HttpPost("upload-form-attachment")]
+        public ActionResult UploadAttachment([FromForm] IFormFile file, [FromForm] int? outcomeId)
+        {
+            if (file == null || !outcomeId.HasValue)
+                return BadRequest();
 
-        //COORDINATOR LEVEL FUNCTIONS
-        
+            uploadManager.StoreFile(file, new List<string>() { ".pdf" });
+
+            if (uploadManager.FilePath == null)
+                return BadRequest(new { message = uploadManager.ErrorMessage });
+
+            //Store info associated with the attachment in the DB
+            SqlReturn sqlReturn = abetRepo.PostAttachmentInfo(uploadManager.FilePath, uploadManager.OriginalFileName, outcomeId.Value);
+
+            if (sqlReturn.code != -1)
+                return Ok();
+            else
+                return BadRequest(new { sqlReturn.message });
+        }
+
+        //---------------COORDINATOR LEVEL FUNCTIONS---------------
+
         //Function has been tested and errors have been added to the documentation. Currently testing using SQL server.
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpPost("forms/by-course")]
@@ -162,29 +183,34 @@ namespace AbetApi.Controller
                 return BadRequest();
         }
 
-        //ADMIN LEVEL FUNCTIONS
+        //---------------ADMIN LEVEL FUNCTIONS---------------
+
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("sections/by-semester-year")]
         public List<Section> GetAllSections([FromBody] BodyParams body)
         {
             List<Section> sections = new List<Section>();   // Return variable
-            
-            if (body.Year < 1890) { Response.StatusCode = BAD_REQUEST; return null; }                                                                               // Parameter Check: Valid years
-            if ( (body.Semester != "fall") && (body.Semester != "spring") && (body.Semester != "summer") ) { Response.StatusCode = BAD_REQUEST; return null; }      // Parameter Check: Valid semesters
+
+            // Parameter Check: Valid years and semesters
+            if (body.Year < 1890 || (body.Semester != "fall" && body.Semester != "spring" && body.Semester != "summer"))
+            {
+                Response.StatusCode = BAD_REQUEST;
+                return null;
+            }                                                                               
 
             sections = mockAbetRepo.GetSectionsByYearAndSemester(body.Year, body.Semester);
+
             if (sections.Count() < 1)       // No results
             {
                 Response.StatusCode = NOT_FOUND;
                 return null;
             }
             else                            // Results found
-            {
                 return sections;
-            }
 
             /*
             sections = abetRepo.GetSectionsByYearAndSemester(body.Year, body.Semester);
+
             if (sections.Count() < 1)      // No results
             {
                 Response.StatusCode = NOT_FOUND;
@@ -195,8 +221,6 @@ namespace AbetApi.Controller
                 return sections;
             }
             */
-
-
         }
 
         [Authorize(Roles = RoleTypes.Admin)]
@@ -218,7 +242,7 @@ namespace AbetApi.Controller
 
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("faculty/get-list")]
-        public FacultyList GetFacultyList()                     // Original implementation
+        public FacultyList GetFacultyList()
         {
             return mockAbetRepo.GetFacultyList();
             //return abetRepo.GetFacultyList();
@@ -228,7 +252,9 @@ namespace AbetApi.Controller
         [HttpPost("faculty/add-member")]
         public ActionResult AddFacultyMember([FromBody] BodyParams body)
         {
-            if (body.Info == null || body.FacultyType == null) return BadRequest();
+            if (body.Info == null || body.FacultyType == null)
+                return BadRequest();
+
             //if (abetRepo.AddFacultyMember(body.Info, body.FacultyType))
             if (mockAbetRepo.AddFacultyMember(body.Info, body.FacultyType))
                 return Ok();
@@ -266,7 +292,7 @@ namespace AbetApi.Controller
         public ActionResult AddCourse([FromBody] BodyParams body)
         {
             if (mockAbetRepo.AddCourse(body.Course))
-                //if (abetRepo.AddCourse(body.Course))
+            //if (abetRepo.AddCourse(body.Course))
                 return Ok();
             else
                 return BadRequest();
@@ -305,20 +331,25 @@ namespace AbetApi.Controller
         [HttpPost("upload-access-db")]
         public ActionResult UploadAccessDB([FromForm] IFormFile file)
         {
+            if (file == null)
+                return BadRequest();
+
             uploadManager.StoreFile(file, new List<string>() { ".accdb" });
 
             if (uploadManager.FilePath == null)
                 return BadRequest(new { message = uploadManager.ErrorMessage });
 
-            //System.Diagnostics.Debug.WriteLine(uploadManager.FilePath);
+            System.Diagnostics.Debug.WriteLine(uploadManager.FilePath);
 
             //Do SQL operations on the Access file
-            SqlReturn sqlReturn = uploadManager.InsertAccess2SQLserver();
-            if (sqlReturn.code != -1) return Ok();
-            else return BadRequest(new { sqlReturn.message});
-            
-            //delete file?
-        }
+            SqlReturn sqlReturn = abetRepo.PostAccessDbData(uploadManager.FilePath);
 
+            uploadManager.DeleteCurrentFile(); //delete the Access file from the Uploads folder
+
+            if (sqlReturn.code != -1)
+                return Ok();
+            else
+                return BadRequest(new { sqlReturn.message });
+        }
     }
 }
