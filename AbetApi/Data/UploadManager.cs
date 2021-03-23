@@ -15,11 +15,11 @@ namespace AbetApi.Data
 {
     public class UploadManager : IUploadManager
     {
-        private string cs = @"Server=TEBA-D\ABETDATABASE;Database=abetdb11;Trusted_Connection=True";
-        //@"Server=TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";    <-- Yafet Server
-        //@"Server=DESKTOP-5BU0BPP;Database=abetdb;Trusted_Connection=True";            <-- Rafael Server
-        //@"Server=LAPTOP-838TO9CN\SQLEXPRESS;Database=abetdb;Trusted_Connection=True"; <-- Emmanuelli's local DB
-        //@"Server=TEBA-D\ABETDATABASE;Database=abetdb;Trusted_Connection=True          <-- Server for RemoteDesktop
+        private string cs = //@"Server=TEBA-D\ABETDATABASE;Database=abetdb11;Trusted_Connection=True";
+        @"Server=TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";    //<-- Yafet Server
+        //@"Server=DESKTOP-5BU0BPP;Database=abetdb;Trusted_Connection=True";              //<-- Rafael Server
+        //@"Server=LAPTOP-838TO9CN\SQLEXPRESS;Database=abetdb;Trusted_Connection=True"; //<-- Emmanuelli's local DB
+        //@"Server=TEBA-D\ABETDATABASE;Database=abetdb;Trusted_Connection=True          //<-- Server for RemoteDesktop
 
         private SqlConnection GetConnection()
         {
@@ -70,28 +70,12 @@ namespace AbetApi.Data
 
         public SqlReturn InsertAccess2SQLserver()
         {
-            // unless specified, current year and semester will be calculated using current date
-            int current_year = DateTime.Now.Year;
-            string current_department = "csce";
-            string current_semester;
-            int month = DateTime.Now.Month;
-            if (month > 1 && month < 5) current_semester = "spring";
-            else if (month > 8 && month < 1) current_semester = "fall";
-            else current_semester = "summer";
-            
-            //variable declaration
-            int ce, cs, it, status;
-            int i, j, result;
-            string outcome;
-            string student_outcome;
-            string[] p = { "CE - ", "CS - ", "IT - " };   // add "CYBR - " later
-            string[] programs = { "ce", "cs", "it" };     // add "cybr" later
-            SqlReturn sqlReturn = new SqlReturn();
-            sqlReturn.code = 1;
-
             // access database connection
             string dsn = @"Provider=Microsoft.ACE.OLEDB.12.0; Data Source = " + FilePath;
-            string query = @"SELECT [Course Number] as course_number, [Name of Course] as course_name, Coordinator, 
+
+            using (OleDbConnection conn = new OleDbConnection(dsn))
+            {
+                string query = @"SELECT [Course Number] as course_number, [Name of Course] as course_name, Coordinator, 
             [Group CE] as group_ce, [Group CS] as group_cs, [Group IT] as group_it, 
             Outcome1, Outcome2, Outcome3, Outcome4, Outcome5, Outcome6, Outcome7, Outcome8, Outcome9,
             [CE - StudentOutcomes1], [CE - StudentOutcomes2], [CE - StudentOutcomes3], [CE - StudentOutcomes4], [CE - StudentOutcomes5], [CE - StudentOutcomes6], 
@@ -104,91 +88,112 @@ namespace AbetApi.Data
             [IT - StudentOutcomes7], [IT - StudentOutcomes8], [IT - StudentOutcomes9], [IT - StudentOutcomes10], [IT - StudentOutcomes11],  [IT - StudentOutcomes12], 
             [IT - StudentOutcomes13], [IT - StudentOutcomes14]
             FROM Sheet1";
-            OleDbConnection conn = new OleDbConnection(dsn);
-            OleDbCommand cmd = new OleDbCommand(query, conn);
 
-            // sql server connection
-            string query1 = @"insert into courses (year, semester, department, course_number, coordinator_name, 
+                using (SqlConnection conn1 = GetConnection())
+                {
+                    // unless specified, current year and semester will be calculated using current date
+                    int current_year = DateTime.Now.Year;
+                    string current_department = "csce";
+                    string current_semester;
+                    int month = DateTime.Now.Month;
+                    if (month > 1 && month < 5) current_semester = "spring";
+                    else if (month > 8 && month < 1) current_semester = "fall";
+                    else current_semester = "summer";
+
+                    //variable declaration
+                    int ce, cs, it, status;
+                    int i, j, result;
+                    string outcome;
+                    string student_outcome;
+                    string[] p = { "CE - ", "CS - ", "IT - " };   // add "CYBR - " later
+                    string[] programs = { "ce", "cs", "it" };     // add "cybr" later
+                    SqlReturn sqlReturn = new SqlReturn();
+                    sqlReturn.code = 1;
+
+                    // sql server connection
+                    string query1 = @"INSERT INTO faculty (name, role, faculty_type)
+SELECT @name, @role, @faculty_type
+WHERE NOT EXISTS (SELECT * FROM faculty WHERE name = @name); insert into courses (year, semester, department, course_number, coordinator_name, 
 display_name, group_ce, group_cs, group_it, status)
 values 
 (@year, @semester, @department, @course_number, @coordinator_name, @display_name, @group_ce, @group_cs, @group_it, @status); 
 SELECT SCOPE_IDENTITY()";
-            string query2 = @"insert into course_outcomes (num, course_outcome, course_id)
+                    string query2 = @"insert into course_outcomes (num, course_outcome, course_id)
 values (@num, @course_outcome, @course_id)";
-            string query3 = @"insert into course_objectives (course_id, student_course_mapping, program, student_outcome_order) 
+                    string query3 = @"insert into course_objectives (course_id, student_course_mapping, program, student_outcome_order) 
 VALUES (@course_id, @mapping, @program, @order)";
-            SqlConnection conn1 = GetConnection();
-            SqlCommand cmd1;
 
-            try
-            {
-                conn.Open();
-                conn1.Open();
-                using (OleDbDataReader rd = cmd.ExecuteReader())
-                {
-                    while (rd.Read())
+                    SqlCommand cmd1;
+                    try
                     {
-                        status = 1;
-                        ce = rd["group_ce"].ToString().Length == 0 ? 0 : 1;
-                        cs = rd["group_cs"].ToString().Length == 0 ? 0 : 1;
-                        it = rd["group_it"].ToString().Length == 0 ? 0 : 1;
-                        if (rd["course_name"].ToString().Contains("*")) status = 0;
-
-                        cmd1 = new SqlCommand(query1, conn1);
-                        cmd1.Parameters.Add(new SqlParameter("@year", SqlDbType.Int)).Value = current_year;
-                        cmd1.Parameters.Add(new SqlParameter("@semester", SqlDbType.VarChar, 11)).Value = current_semester;
-                        cmd1.Parameters.Add(new SqlParameter("@department", SqlDbType.VarChar, 11)).Value = current_department;
-                        cmd1.Parameters.Add(new SqlParameter("@course_number", SqlDbType.VarChar, 11)).Value = rd["course_number"].ToString();
-                        cmd1.Parameters.Add(new SqlParameter("@coordinator_name", SqlDbType.VarChar, 50)).Value = rd["Coordinator"].ToString();
-                        cmd1.Parameters.Add(new SqlParameter("@display_name", SqlDbType.VarChar, 100)).Value = rd["course_name"].ToString();
-                        cmd1.Parameters.Add(new SqlParameter("@group_ce", SqlDbType.TinyInt)).Value = ce;
-                        cmd1.Parameters.Add(new SqlParameter("@group_cs", SqlDbType.TinyInt)).Value = cs;
-                        cmd1.Parameters.Add(new SqlParameter("@group_it", SqlDbType.TinyInt)).Value = it;
-                        cmd1.Parameters.Add(new SqlParameter("@status", SqlDbType.TinyInt)).Value = status;
-                        result = Convert.ToInt32(cmd1.ExecuteScalar());
-                        Console.WriteLine(result);
-
-                        for (i = 1; i <= 9; i++)
+                        OleDbCommand cmd = new OleDbCommand(query, conn);
+                        cmd.Connection.Open();
+                        conn1.Open();
+                        using (OleDbDataReader rd = cmd.ExecuteReader())
                         {
-                            outcome = String.Concat("Outcome", i);
-                            if (rd[outcome].ToString().Length != 0)
+                            while (rd.Read())
                             {
-                                cmd1 = new SqlCommand(query2, conn1);
-                                cmd1.Parameters.Add(new SqlParameter("@num", SqlDbType.Int)).Value = i;
-                                cmd1.Parameters.Add(new SqlParameter("@course_outcome", SqlDbType.VarChar, -1)).Value = rd[outcome].ToString();
-                                cmd1.Parameters.Add(new SqlParameter("@course_id", SqlDbType.Int)).Value = result;
-                                cmd1.ExecuteScalar();
+                                status = 1;
+                                ce = rd["group_ce"].ToString().Length == 0 ? 0 : 1;
+                                cs = rd["group_cs"].ToString().Length == 0 ? 0 : 1;
+                                it = rd["group_it"].ToString().Length == 0 ? 0 : 1;
+                                if (rd["course_name"].ToString().Contains("*")) status = 0;
+
+                                cmd1 = new SqlCommand(query1, conn1);
+                                cmd1.Parameters.Add(new SqlParameter("@year", SqlDbType.Int)).Value = current_year;
+                                cmd1.Parameters.Add(new SqlParameter("@semester", SqlDbType.VarChar, 11)).Value = current_semester;
+                                cmd1.Parameters.Add(new SqlParameter("@department", SqlDbType.VarChar, 11)).Value = current_department;
+                                cmd1.Parameters.Add(new SqlParameter("@course_number", SqlDbType.VarChar, 11)).Value = rd["course_number"].ToString();
+                                cmd1.Parameters.Add(new SqlParameter("@coordinator_name", SqlDbType.VarChar, 50)).Value = rd["Coordinator"].ToString();
+                                cmd1.Parameters.Add(new SqlParameter("@display_name", SqlDbType.VarChar, 100)).Value = rd["course_name"].ToString();
+                                cmd1.Parameters.Add(new SqlParameter("@group_ce", SqlDbType.TinyInt)).Value = ce;
+                                cmd1.Parameters.Add(new SqlParameter("@group_cs", SqlDbType.TinyInt)).Value = cs;
+                                cmd1.Parameters.Add(new SqlParameter("@group_it", SqlDbType.TinyInt)).Value = it;
+                                cmd1.Parameters.Add(new SqlParameter("@status", SqlDbType.TinyInt)).Value = status;
+                                cmd1.Parameters.Add(new SqlParameter("@name", SqlDbType.VarChar, 50)).Value = rd["Coordinator"].ToString();
+                                cmd1.Parameters.Add(new SqlParameter("@role", SqlDbType.Int)).Value = 2;    // 2 for coordinator
+                                cmd1.Parameters.Add(new SqlParameter("@faculty_type", SqlDbType.VarChar, 11)).Value = "Full-Time";  // full-time unless specified
+                                result = Convert.ToInt32(cmd1.ExecuteScalar());
+                                Console.WriteLine(result);
+
+                                for (i = 1; i <= 9; i++)
+                                {
+                                    outcome = String.Concat("Outcome", i);
+                                    if (rd[outcome].ToString().Length != 0)
+                                    {
+                                        cmd1 = new SqlCommand(query2, conn1);
+                                        cmd1.Parameters.Add(new SqlParameter("@num", SqlDbType.Int)).Value = i;
+                                        cmd1.Parameters.Add(new SqlParameter("@course_outcome", SqlDbType.VarChar, -1)).Value = rd[outcome].ToString();
+                                        cmd1.Parameters.Add(new SqlParameter("@course_id", SqlDbType.Int)).Value = result;
+                                        cmd1.ExecuteNonQuery();
+                                    }
+                                }
+
+                                for (i = 0; i < 3; i++)
+                                {
+                                    for (j = 1; j <= 14; j++)
+                                    {
+                                        student_outcome = p[i] + "StudentOutcomes" + j;
+                                        cmd1 = new SqlCommand(query3, conn1);
+                                        cmd1.Parameters.Add(new SqlParameter("@course_id", SqlDbType.Int)).Value = result;
+                                        cmd1.Parameters.Add(new SqlParameter("@mapping", SqlDbType.VarChar, 50)).Value = rd[student_outcome].ToString();
+                                        cmd1.Parameters.Add(new SqlParameter("@program", SqlDbType.VarChar, 10)).Value = programs[i];
+                                        cmd1.Parameters.Add(new SqlParameter("@order", SqlDbType.Int)).Value = j;
+                                        cmd1.ExecuteNonQuery();
+                                    }
+                                }
                             }
                         }
-
-                        for (i = 0; i < 3; i++)
-                        {
-                            for (j = 1; j <= 14; j++)
-                            {
-                                student_outcome = p[i] + "StudentOutcomes" + j;
-                                cmd1 = new SqlCommand(query3, conn1);
-                                cmd1.Parameters.Add(new SqlParameter("@course_id", SqlDbType.Int)).Value = result;
-                                cmd1.Parameters.Add(new SqlParameter("@mapping", SqlDbType.VarChar, 50)).Value = rd[student_outcome].ToString();
-                                cmd1.Parameters.Add(new SqlParameter("@program", SqlDbType.VarChar, 10)).Value = programs[i];
-                                cmd1.Parameters.Add(new SqlParameter("@order", SqlDbType.Int)).Value = j;
-                                cmd1.ExecuteScalar();
-                            }
-                        }
+                        return sqlReturn;
+                    }
+                    catch (Exception ex)
+                    {
+                        sqlReturn.message = ex.Message;
+                        sqlReturn.code = -1;
+                        return sqlReturn;
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                sqlReturn.message = ex.Message;
-                sqlReturn.code = -1;
-                conn.Close();
-                conn1.Close();
-                return sqlReturn;
-            }
-
-
-            return sqlReturn;
-            throw new NotImplementedException();
         }
     }
 }

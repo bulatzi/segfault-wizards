@@ -54,7 +54,8 @@ namespace AbetApi.Controller
             {
                 //find the role of the user and generate a JWT token and send the info to the frontend
                 string role = mockAbetRepo.GetRole(body.UserId);
-                //string role = abetRepo.GetRole(body.UserId);
+                //string role = abetRepo.GetRole(name);  // change name to userid later
+                                                        // role might return blank
                 string token = tokenGenerator.GenerateToken(body.UserId, role);
 
                 return Ok(new { token, role }); //user is logged in
@@ -70,8 +71,8 @@ namespace AbetApi.Controller
         [HttpPost("sections/by-userid-semester-year")]
         public List<Section> GetSectionsByUserId([FromBody] BodyParams body)
         {
-            //return mockAbetRepo.GetSectionsByUserId(body.UserId, body.Year, body.Semester);
-            return abetRepo.GetSectionsByUserId(body.UserId, body.Year, body.Semester);
+            return mockAbetRepo.GetSectionsByUserId(body.UserId, body.Year, body.Semester);
+            //return abetRepo.GetSectionsByUserId(body.UserId, body.Year, body.Semester);
         }
 
         [Authorize(Roles = RoleTypes.Instructor)]
@@ -91,8 +92,9 @@ namespace AbetApi.Controller
                 Response.StatusCode = BAD_REQUEST;
                 return new Form();
             }
-            //return mockAbetRepo.GetFormBySection(body.Section);
-            return abetRepo.GetFormBySection(body.Section);
+            
+            return mockAbetRepo.GetFormBySection(body.Section);
+            //return abetRepo.GetFormBySection(body.Section);
         }
 
         [Authorize(Roles = RoleTypes.Instructor)]
@@ -169,6 +171,7 @@ namespace AbetApi.Controller
         public ActionResult PostComment([FromBody] BodyParams body)
         {
             if (mockAbetRepo.PostComment(body.Course))
+            //if (abetRepo.PostComment(body.Course))
                 return Ok();
             else
                 return BadRequest();
@@ -232,23 +235,15 @@ namespace AbetApi.Controller
         [HttpPost("faculty/get-list")]
         public FacultyList GetFacultyList()                     // Original implementation
         {
-           return mockAbetRepo.GetFacultyList();
+            return mockAbetRepo.GetFacultyList();
             //return abetRepo.GetFacultyList();
         }
-
-        //Refactored version
-        //public ActionResult GetFacultyList()
-        //{
-        //    return Ok(mockAbetRepo.GetFacultyList());
-        //    //return Ok(abetRepo.GetFacultyList());
-
-        //}
-
 
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("faculty/add-member")]
         public ActionResult AddFacultyMember([FromBody] BodyParams body)
         {
+            if (body.Info == null || body.FacultyType == null) return BadRequest();
             //if (abetRepo.AddFacultyMember(body.Info, body.FacultyType))
             if (mockAbetRepo.AddFacultyMember(body.Info, body.FacultyType))
                 return Ok();
@@ -321,7 +316,7 @@ namespace AbetApi.Controller
             //return abetRepo.GetCourseOutcomesByCourse(body.Course);
         }
         
-        //[Authorize(Roles = RoleTypes.Admin)]
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("upload-access-db")]
         public ActionResult UploadAccessDB([FromForm] IFormFile file)
         {
