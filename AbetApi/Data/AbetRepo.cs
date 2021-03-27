@@ -300,7 +300,7 @@ values (@euid, @first_name, @last_name, @role, @faculty_type)";
                 cmd.Parameters.Add(new SqlParameter("@euid", SqlDbType.VarChar, 20)).Value = info.Id;
                 cmd.Parameters.Add(new SqlParameter("@first_name", SqlDbType.VarChar, 50)).Value = info.FirstName;
                 cmd.Parameters.Add(new SqlParameter("@last_name", SqlDbType.VarChar, 50)).Value = info.LastName;
-                cmd.Parameters.Add(new SqlParameter("@role", SqlDbType.Int)).Value = 2; // 2 is instructor
+                cmd.Parameters.Add(new SqlParameter("@role", SqlDbType.Int)).Value = 1; // 1 is instructor
                 cmd.Parameters.Add(new SqlParameter("@faculty_type", SqlDbType.VarChar, 50)).Value = facultyType;
                 cmd.Connection.Open();
                 try
@@ -939,7 +939,7 @@ WHERE year = @year and semester = @semester and course_number = @course_number a
 
             using (OleDbConnection conn = new OleDbConnection(dsn))
             {
-                string query = @"SELECT [Course Number] as course_number, [Name of Course] as course_name, Coordinator, 
+                string query = @"SELECT [Course Number] as course_number, [Name of Course] as course_name, Coordinator, Coordinator_ID, 
             [Group CE] as group_ce, [Group CS] as group_cs, [Group IT] as group_it, 
             Outcome1, Outcome2, Outcome3, Outcome4, Outcome5, Outcome6, Outcome7, Outcome8, Outcome9,
             [CE - StudentOutcomes1], [CE - StudentOutcomes2], [CE - StudentOutcomes3], [CE - StudentOutcomes4], [CE - StudentOutcomes5], [CE - StudentOutcomes6], 
@@ -971,16 +971,17 @@ WHERE year = @year and semester = @semester and course_number = @course_number a
                     string student_outcome;
                     string[] p = { "CE - ", "CS - ", "IT - " };   // add "CYBR - " later
                     string[] programs = { "ce", "cs", "it" };     // add "cybr" later
+                    string[] names = null;
                     SqlReturn sqlReturn = new SqlReturn();
                     sqlReturn.code = 1;
 
                     // sql server connection
-                    string query1 = @"INSERT INTO faculty (name, role, faculty_type)
-SELECT @name, @role, @faculty_type
-WHERE NOT EXISTS (SELECT * FROM faculty WHERE name = @name); insert into courses (year, semester, department, course_number, coordinator_name, 
-display_name, group_ce, group_cs, group_it, status)
+                    string query1 = @"INSERT INTO faculties (first_name, last_name, euid, role, faculty_type)
+SELECT @first_name, @last_name, @euid, @role, @faculty_type
+WHERE NOT EXISTS (SELECT * FROM faculties WHERE euid = @euid); insert into courses (year, semester, department, course_number, coordinator_name, 
+coordinator_id, display_name, group_ce, group_cs, group_it, status)
 values 
-(@year, @semester, @department, @course_number, @coordinator_name, @display_name, @group_ce, @group_cs, @group_it, @status); 
+(@year, @semester, @department, @course_number, @coordinator_name, @coordinator_id, @display_name, @group_ce, @group_cs, @group_it, @status); 
 SELECT SCOPE_IDENTITY()";
                     string query2 = @"insert into course_outcomes (num, course_outcome, course_id)
 values (@num, @course_outcome, @course_id)";
@@ -1002,6 +1003,10 @@ VALUES (@course_id, @mapping, @program, @order)";
                                 cs = rd["group_cs"].ToString().Length == 0 ? 0 : 1;
                                 it = rd["group_it"].ToString().Length == 0 ? 0 : 1;
                                 if (rd["course_name"].ToString().Contains("*")) status = 0;
+                                if (rd["Coordinator"].ToString().Length > 0)
+                                {
+                                    names = rd["Coordinator"].ToString().Split(' ');
+                                }
 
                                 cmd1 = new SqlCommand(query1, conn1);
                                 cmd1.Parameters.Add(new SqlParameter("@year", SqlDbType.Int)).Value = current_year;
@@ -1009,12 +1014,15 @@ VALUES (@course_id, @mapping, @program, @order)";
                                 cmd1.Parameters.Add(new SqlParameter("@department", SqlDbType.VarChar, 11)).Value = current_department;
                                 cmd1.Parameters.Add(new SqlParameter("@course_number", SqlDbType.VarChar, 11)).Value = rd["course_number"].ToString();
                                 cmd1.Parameters.Add(new SqlParameter("@coordinator_name", SqlDbType.VarChar, 50)).Value = rd["Coordinator"].ToString();
+                                cmd1.Parameters.Add(new SqlParameter("@coordinator_id", SqlDbType.VarChar, 50)).Value = rd["Coordinator_ID"].ToString();
                                 cmd1.Parameters.Add(new SqlParameter("@display_name", SqlDbType.VarChar, 100)).Value = rd["course_name"].ToString();
                                 cmd1.Parameters.Add(new SqlParameter("@group_ce", SqlDbType.TinyInt)).Value = ce;
                                 cmd1.Parameters.Add(new SqlParameter("@group_cs", SqlDbType.TinyInt)).Value = cs;
                                 cmd1.Parameters.Add(new SqlParameter("@group_it", SqlDbType.TinyInt)).Value = it;
                                 cmd1.Parameters.Add(new SqlParameter("@status", SqlDbType.TinyInt)).Value = status;
-                                cmd1.Parameters.Add(new SqlParameter("@name", SqlDbType.VarChar, 50)).Value = rd["Coordinator"].ToString();
+                                cmd1.Parameters.Add(new SqlParameter("@first_name", SqlDbType.VarChar, 50)).Value = names[0];
+                                cmd1.Parameters.Add(new SqlParameter("@last_name", SqlDbType.VarChar, 50)).Value = names[1];
+                                cmd1.Parameters.Add(new SqlParameter("@euid", SqlDbType.VarChar, 50)).Value = rd["Coordinator_ID"].ToString();
                                 cmd1.Parameters.Add(new SqlParameter("@role", SqlDbType.Int)).Value = 2;    // 2 for coordinator
                                 cmd1.Parameters.Add(new SqlParameter("@faculty_type", SqlDbType.VarChar, 11)).Value = "Full-Time";  // full-time unless specified
                                 result = Convert.ToInt32(cmd1.ExecuteScalar());

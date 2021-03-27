@@ -318,10 +318,10 @@ namespace AbetApi.Controller
         public ActionResult RemoveCourse([FromBody] BodyParams body)
         {
             if (mockAbetRepo.AddCourse(body.Course))
-                //if (abetRepo.RemoveCourse(body.Course))
-                return Ok();
+            //if (abetRepo.RemoveCourse(body.Course))
+               return Ok();
             else
-                return BadRequest();
+               return BadRequest();
         }
 
         [Authorize(Roles = RoleTypes.Admin)]
