@@ -27,6 +27,7 @@ namespace AbetApi.Data
         bool PostComment(Course course);
         SqlReturn PostAccessDbData(string filePath);
         SqlReturn PostAttachmentInfo(string filePath, string originalFileName, int outcomeId);
+        bool AddProgram(string Program);
 
         // catogorize by instructor, coordinator and admin functions
 

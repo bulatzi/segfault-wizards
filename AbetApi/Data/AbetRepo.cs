@@ -1075,5 +1075,10 @@ VALUES (@course_id, @mapping, @program, @order)";
             sqlReturn.code = 1;
             return sqlReturn;
         }
+
+        public bool AddProgram(string Program)
+        {
+            return true;
+        }
     }
 }

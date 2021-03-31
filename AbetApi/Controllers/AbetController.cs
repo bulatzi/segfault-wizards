@@ -82,12 +82,12 @@ namespace AbetApi.Controller
         {
             /* Error-Checking | All parameters required */
             if ( (body.Section == null)                             ||
-                 (String.IsNullOrEmpty(body.Section.CourseNumber))  || 
-                 (String.IsNullOrEmpty(body.Section.Semester))      || 
-                 (String.IsNullOrEmpty(body.Section.SectionNumber)) || 
-                 (String.IsNullOrEmpty(body.Section.Department))    || 
+                 (string.IsNullOrEmpty(body.Section.CourseNumber))  || 
+                 (string.IsNullOrEmpty(body.Section.Semester))      || 
+                 (string.IsNullOrEmpty(body.Section.SectionNumber)) || 
+                 (string.IsNullOrEmpty(body.Section.Department))    || 
                  (body.Section.Year < 1890)                         ||
-                 (String.IsNullOrEmpty(body.Section.Instructor.Id))
+                 (string.IsNullOrEmpty(body.Section.Instructor.Id))
                )
             { 
                 Response.StatusCode = BAD_REQUEST;
@@ -138,7 +138,7 @@ namespace AbetApi.Controller
         public ActionResult PostSection([FromBody] BodyParams body)
         {
             /* Error Checking -- Need, at least, the year, department, course number, and semester */
-            if ((body.Section.Year < 1890) || ((body.Section.Semester != "fall") && (body.Section.Semester != "Fall") && (body.Section.Semester != "spring") && (body.Section.Semester != "Spring") && (body.Section.Semester != "summer") && (body.Section.Semester != "Summer")) || (String.IsNullOrEmpty(body.Section.Department)) || (String.IsNullOrEmpty(body.Section.CourseNumber)))
+            if ((body.Section.Year < 1890) || ((body.Section.Semester != "fall") && (body.Section.Semester != "Fall") && (body.Section.Semester != "spring") && (body.Section.Semester != "Spring") && (body.Section.Semester != "summer") && (body.Section.Semester != "Summer")) || (string.IsNullOrEmpty(body.Section.Department)) || (string.IsNullOrEmpty(body.Section.CourseNumber)))
                 return BadRequest();
 
             if (mockAbetRepo.PostSection(body.Section))
@@ -365,6 +365,19 @@ namespace AbetApi.Controller
                 return Ok();
             else
                 return BadRequest(new { sqlReturn.message });
+        }
+
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpPost("programs/add-program")]
+        public ActionResult AddProgram([FromBody] BodyParams body)
+        {
+            if (string.IsNullOrEmpty(body.Program))
+                return BadRequest();
+
+            if (abetRepo.AddProgram(body.Program))
+                return Ok();
+            else
+                return BadRequest();
         }
     }
 }
