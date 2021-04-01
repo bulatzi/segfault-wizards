@@ -23,7 +23,7 @@ namespace AbetApi.Data
         List<Section> GetSectionsByYearAndSemester(int year, string semester);
         List<Course> GetCoursesByYear(int year, string semester);
         bool PostSection(Section section);
-        List<Course_Outcome> GetCourseOutcomesByCourse(Course course);
+        List<CourseMapping> GetCourseOutcomesByCourse(Course course);
         bool PostComment(Course course);
         SqlReturn PostAccessDbData(string filePath);
         SqlReturn PostAttachmentInfo(string filePath, string originalFileName, int outcomeId);

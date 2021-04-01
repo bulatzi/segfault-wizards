@@ -24,8 +24,8 @@ namespace AbetApi.Data
         List<Course> GetCoursesByDepartment(string department);
         bool AddCourse(Course course);
         bool RemoveCourse(Course course);
-        bool PostCourseOutcomes(List<Course_Outcome> courseOutcomesList);
-        List<Course_Outcome> GetCourseOutcomesByCourse(Course course);
+        bool PostCourseOutcomes(List<CourseOutcome> courseOutcomesList);
+        List<CourseMapping> GetCourseOutcomesByCourse(Course course);
         List<Course> GetCoursesByYear(int year, string semester);
         bool PostSection(Section section);
     }

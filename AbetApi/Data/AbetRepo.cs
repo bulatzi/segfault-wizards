@@ -85,7 +85,7 @@ where (s.instructor_id = @euid or c.coordinator_id = @euid) and c.semester = @te
                     Instructor = new Instructor(rd["i_firstname"].ToString(), rd["i_lastname"].ToString(),
                         rd["i_euid"].ToString()),
                     SectionId = Convert.ToInt32(rd["section_id"]),
-                    Id = Convert.ToInt32(rd["id"]),
+                    //Id = Convert.ToInt32(rd["id"]),   delete id from query
                     CoordinatorComment = rd["c_comment"].ToString(),
                     CourseNumber = (rd["courseNumber"]).ToString(),
                     Department = rd["department"].ToString(),
@@ -108,10 +108,10 @@ where (s.instructor_id = @euid or c.coordinator_id = @euid) and c.semester = @te
         {
             Program_Outcomes program_outcomes;
             Course_Objective course_objectives = null;
-            Course_Outcome course_outcome;
+            CourseMapping course_outcome;
             Student_Outcome student_outcome;
             List<Student_Outcome> student_Outcomes = new List<Student_Outcome>();
-            List<Course_Outcome> course_Outcomes = new List<Course_Outcome>();
+            List<CourseMapping> course_Outcomes = new List<CourseMapping>();
             List<Course_Objective> courseObjectives = new List<Course_Objective>();
             string displayName = null;
 
@@ -126,7 +126,7 @@ inner join courses as c on c.id = cob.course_id where c.department = 'csce' and 
             {
                 while (rd.Read())
                 {
-                    course_outcome = new Course_Outcome
+                    course_outcome = new CourseMapping
                     {
                         Order = Convert.ToInt32(rd["order"]),
                         Outcome = rd["outcome"].ToString(),
@@ -138,7 +138,7 @@ inner join courses as c on c.id = cob.course_id where c.department = 'csce' and 
                         course_objectives = new Course_Objective(displayName, course_Outcomes);
                         courseObjectives.Add(course_objectives);
                         displayName = rd["display_name"].ToString();
-                        course_Outcomes = new List<Course_Outcome>();
+                        course_Outcomes = new List<CourseMapping>();
 
                     }
                     course_Outcomes.Add(course_outcome);
@@ -194,7 +194,7 @@ where c.department = @department and c.year = @year and c.semester = @semester a
                         Coordinator = new Coordinator(rd["first_name"].ToString(), rd["last_name"].ToString(), rd["euid"].ToString()),
                         CourseNumber = (rd["course_number"]).ToString(),
                         DisplayName = rd["display_name"].ToString(),
-                        Id = Convert.ToInt32(rd["id"]),
+                        //Id = Convert.ToInt32(rd["id"]),   // REMOVE ID FROM QUERY
                         CoordinatorComment = rd["coordinator_comment"].ToString(),
                         IsCourseCompleted = Convert.ToBoolean(rd["IsCourseCompleted"]),
                         Department = department,
@@ -412,7 +412,7 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
                 {
                     studentWork = new StudentWork
                     {
-                        Id = Convert.ToInt32(rd["id"]),
+                        //Id = Convert.ToInt32(rd["id"]),   REMOVE ID FROM QUERY
                         FileName = rd["file_name"].ToString(),
                         FileUploaded = rd["fileupload"].ToString()
                     };
@@ -429,7 +429,7 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
                         {
                             Outcome = rd["outcome"].ToString(),
                             OrderOfOutcome = Convert.ToInt32(rd["num"]),
-                            OutcomeId = Convert.ToInt32(rd["outcome_id"]),
+                            //OutcomeId = Convert.ToInt32(rd["outcome_id"]),    REMOVE ID FROM QUERY
                             NumberOfCE = Convert.ToInt32(rd["num_of_CE"]),
                             NumberOfCS = Convert.ToInt32(rd["num_of_CS"]),
                             NumberOfIT = Convert.ToInt32(rd["num_of_IT"]),
@@ -446,19 +446,18 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
             // if form doesnt exist, get blank form
             return form;
         }
-
+        // WORK ON  THIS ONE . MAKE IT SEARUCH USING COURSE INFO
         public Form GetBlankForm(Section section)
         {
             Form toReturn = new Form();
             List<OutcomeObjective> outcomeObjectives = new List<OutcomeObjective>();
             List<StudentWork> studentWorks = new List<StudentWork>();
-            if (section.Id == 0) return toReturn;
 
             string query = @"select num, course_outcome, id from course_outcomes where course_id = @course_id";
             SqlConnection conn = GetConnection();
             conn.Open();
             SqlCommand cmd = new SqlCommand(query, conn);
-            cmd.Parameters.Add(new SqlParameter("@course_id", SqlDbType.Int)).Value = section.Id;
+            //cmd.Parameters.Add(new SqlParameter("@course_id", SqlDbType.Int)).Value = section.Id;
 
             using (SqlDataReader rd = cmd.ExecuteReader())
             {
@@ -468,7 +467,7 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
                     {
                         OrderOfOutcome = Convert.ToInt32(rd["num"]),
                         Outcome = rd["course_outcome"].ToString(),
-                        OutcomeId = Convert.ToInt32(rd["id"]),
+                        //OutcomeId = Convert.ToInt32(rd["id"]),
                         StudentWorks = studentWorks,
                         NumberOfIT = 0,
                         NumberOfCE = 0,
@@ -646,7 +645,7 @@ values (@outcome_id, @num_of_CE, @num_of_CS, @num_of_IT, @section_id); SELECT SC
 select @file_name, @fileupload, @outcome_objective_id
 where NOT EXISTS (select file_name, fileupload, outcome_objective_id from objective_uploads where id = @id); SELECT SCOPE_IDENTITY()";
                     cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int)).Value = studentWork.Id;
+                    cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int)).Value = studentWork.id;
                     cmd.Parameters.Add(new SqlParameter("@outcome_objective_id", SqlDbType.Int)).Value = out_obj;
                     cmd.Parameters.Add(new SqlParameter("@file_name", SqlDbType.VarChar, 100)).Value = studentWork.FileName;
                     cmd.Parameters.Add(new SqlParameter("@fileupload", SqlDbType.VarChar, 20)).Value = studentWork.FileUploaded;
@@ -656,7 +655,7 @@ where NOT EXISTS (select file_name, fileupload, outcome_objective_id from object
                         if (!(obj is DBNull))
                         {
                             uploadID = Convert.ToInt32(obj);
-                            studentWork.Id = uploadID;
+                            studentWork.id = uploadID;
                         }
                     }
                     catch (Exception ex)
@@ -705,7 +704,7 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
                         Instructor = new Instructor(rd["i_first_name"].ToString(), rd["i_last_name"].ToString(),
                         rd["i_euid"].ToString()),
                         SectionId = Convert.ToInt32(rd["s_id"]),
-                        Id = Convert.ToInt32(rd["c_id"]),
+                        //Id = Convert.ToInt32(rd["c_id"]), REMOVE ID FROM QUERY
                         CoordinatorComment = rd["coordinator_comment"].ToString(),
                         CourseNumber = (rd["course_number"]).ToString(),
                         Department = rd["department"].ToString(),
@@ -764,7 +763,7 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
                         Coordinator = new Coordinator(rd["c_first_name"].ToString(), rd["c_last_name"].ToString(), rd["c_euid"].ToString()),    // Convert and add incoming Coordinator information
                         Instructor = new Instructor(rd["i_first_name"].ToString(), rd["i_last_name"].ToString(), rd["i_euid"].ToString()),      // Convert and add incoming Instructor information
                         CourseNumber = rd["course_number"].ToString(),                                                                          // Convert and add the incoming course number
-                        Id = Convert.ToInt32(rd["c_id"]),                                                                                       // Convert and add incoming Identity id
+                        //Id = Convert.ToInt32(rd["c_id"]), REMOVE ID FROM QUERY                                                                // Convert and add incoming Identity id
                         CoordinatorComment = rd["coordinator_comment"].ToString(),                                                              // Convert and add incoming coordinator comment
                         Department = rd["department"].ToString(),                                                                                // Convert and add incoming department
                         DisplayName = rd["display_name"].ToString(),                                                                            // Convert and add incoming display name
@@ -876,10 +875,10 @@ where c.year = @year and c.semester = @semester and c.status = 1";
                 return false;
             }
         }
-        public List<Course_Outcome> GetCourseOutcomesByCourse(Course course)
+        public List<CourseMapping> GetCourseOutcomesByCourse(Course course)
         {
             
-            List<Course_Outcome> result = new List<Course_Outcome>();
+            List<CourseMapping> result = new List<CourseMapping>();
             SqlConnection conn = GetConnection();
             conn.Open();
 
@@ -892,7 +891,7 @@ where c.year = @year and c.semester = @semester and c.status = 1";
             {
                 while (rd.Read())
                 {
-                    Course_Outcome db_result = new Course_Outcome
+                    CourseMapping db_result = new CourseMapping
                     {
                         Outcome = rd["course_outcome"].ToString(),
                         Order = Int32.Parse(rd["num"].ToString()),
@@ -966,7 +965,7 @@ WHERE year = @year and semester = @semester and course_number = @course_number a
 
                     //variable declaration
                     int ce, cs, it, status;
-                    int i, j, result;
+                    int i, j, k, t, result;
                     string outcome;
                     string student_outcome;
                     string[] p = { "CE - ", "CS - ", "IT - " };   // add "CYBR - " later
@@ -985,8 +984,8 @@ values
 SELECT SCOPE_IDENTITY()";
                     string query2 = @"insert into course_outcomes (num, course_outcome, course_id)
 values (@num, @course_outcome, @course_id)";
-                    string query3 = @"insert into course_objectives (course_id, student_course_mapping, program, student_outcome_order) 
-VALUES (@course_id, @mapping, @program, @order)";
+                    string query3 = @"insert into course_objective (course_id, program, student_outcome_order, course_outcome_order) 
+VALUES (@course_id, @program, @student_outcome_order, @course_outcome_order)";
 
                     SqlCommand cmd1;
                     try
@@ -1026,7 +1025,6 @@ VALUES (@course_id, @mapping, @program, @order)";
                                 cmd1.Parameters.Add(new SqlParameter("@role", SqlDbType.Int)).Value = 2;    // 2 for coordinator
                                 cmd1.Parameters.Add(new SqlParameter("@faculty_type", SqlDbType.VarChar, 11)).Value = "Full-Time";  // full-time unless specified
                                 result = Convert.ToInt32(cmd1.ExecuteScalar());
-                                Console.WriteLine(result);
 
                                 for (i = 1; i <= 9; i++)
                                 {
@@ -1040,18 +1038,27 @@ VALUES (@course_id, @mapping, @program, @order)";
                                         cmd1.ExecuteNonQuery();
                                     }
                                 }
-
                                 for (i = 0; i < 3; i++)
                                 {
                                     for (j = 1; j <= 14; j++)
                                     {
                                         student_outcome = p[i] + "StudentOutcomes" + j;
-                                        cmd1 = new SqlCommand(query3, conn1);
-                                        cmd1.Parameters.Add(new SqlParameter("@course_id", SqlDbType.Int)).Value = result;
-                                        cmd1.Parameters.Add(new SqlParameter("@mapping", SqlDbType.VarChar, 50)).Value = rd[student_outcome].ToString();
-                                        cmd1.Parameters.Add(new SqlParameter("@program", SqlDbType.VarChar, 10)).Value = programs[i];
-                                        cmd1.Parameters.Add(new SqlParameter("@order", SqlDbType.Int)).Value = j;
-                                        cmd1.ExecuteNonQuery();
+                                        if (rd[student_outcome].ToString().Length > 0)
+                                        {
+                                            string word = rd[student_outcome].ToString();
+                                            string[] words = word.Split(", ");
+                                            if (!int.TryParse(words[0], out _)) break;
+                                            for (k = 0; k < words.Length; k++)
+                                            {
+                                                t = Convert.ToInt32(words[k]);
+                                                cmd1 = new SqlCommand(query3, conn1);
+                                                cmd1.Parameters.Add(new SqlParameter("@course_id", SqlDbType.Int)).Value = result;
+                                                cmd1.Parameters.Add(new SqlParameter("@program", SqlDbType.VarChar, 10)).Value = programs[i];
+                                                cmd1.Parameters.Add(new SqlParameter("@student_outcome_order", SqlDbType.Int)).Value = j;
+                                                cmd1.Parameters.Add(new SqlParameter("@course_outcome_order", SqlDbType.Int)).Value = t;
+                                                cmd1.ExecuteNonQuery();
+                                            }
+                                        }
                                     }
                                 }
                             }

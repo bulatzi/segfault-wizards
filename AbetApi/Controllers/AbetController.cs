@@ -336,7 +336,7 @@ namespace AbetApi.Controller
 
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("course-outcomes/by-course")]
-        public List<Course_Outcome> GetCourseOutcomesByCourse([FromBody] BodyParams body)
+        public List<CourseMapping> GetCourseOutcomesByCourse([FromBody] BodyParams body)
         {
             return mockAbetRepo.GetCourseOutcomesByCourse(body.Course);
             //return abetRepo.GetCourseOutcomesByCourse(body.Course);

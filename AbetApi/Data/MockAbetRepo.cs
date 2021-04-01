@@ -19,7 +19,7 @@ namespace AbetApi.Data
         public Admin[] admins = new Admin[3];
         public Instructor[] instructors = new Instructor[4];
         public Coordinator[] coordinators = new Coordinator[4];
-        public List<Course_Outcome> outcomes = new List<Course_Outcome>();
+        public List<CourseMapping> outcomes = new List<CourseMapping>();
         List<Course_Objective> c_objs = new List<Course_Objective>();
         List<Student_Outcome> s_outcomes = new List<Student_Outcome>();                                                                                                                                     
 
@@ -137,22 +137,22 @@ namespace AbetApi.Data
             //course and student outcome sample data
             int[] mapped1 = { 0, 0, 0, 0, 0, 0 };
             int[] mapped2 = { 0, 0, 0, 0, 0, 0, 0 };
-            Course_Outcome c_outcome1 = new Course_Outcome(1, "Describe how a computer's CPU, Main Memory, Secondary Storage and " +
+            CourseMapping c_outcome1 = new CourseMapping(1, "Describe how a computer's CPU, Main Memory, Secondary Storage and " +
                 "I/O work together to execute a computer program.", mapped1);
-            Course_Outcome c_outcome2 = new Course_Outcome(2, "Make use of a computer system's hardware, editor(s), operating system, system " +
+            CourseMapping c_outcome2 = new CourseMapping(2, "Make use of a computer system's hardware, editor(s), operating system, system " +
                 "software and network to build computer software and submit that software for grading.", mapped1);
-            Course_Outcome c_outcome3 = new Course_Outcome(3, "Describe algorithms to perform simple tasks such as numeric computation, " +
+            CourseMapping c_outcome3 = new CourseMapping(3, "Describe algorithms to perform simple tasks such as numeric computation, " +
                 "searching and sorting, choosing among several options, string manipulation, and use of pseudo-random numbers in simulation " +
                 "of such tasks as rolling dice.", mapped1);
-            Course_Outcome c_outcome4 = new Course_Outcome(4, "Write readable, efficient and correct C/C++ programs that include " +
+            CourseMapping c_outcome4 = new CourseMapping(4, "Write readable, efficient and correct C/C++ programs that include " +
                 "programming structures such as assignment statements, selection statements, loops, arrays, pointers, " +
                 "console and file I/O, structures, command line arguments, both standard library and user-defined functions, " +
                 "and multiple header (.h) and code (.c) files.", mapped1);
-            Course_Outcome c_outcome5 = new Course_Outcome(5, "Use commonly accepted practices and tools to find and fix runtime " +
+            CourseMapping c_outcome5 = new CourseMapping(5, "Use commonly accepted practices and tools to find and fix runtime " +
                 "and logical errors in software.", mapped1);
-            Course_Outcome c_outcome6 = new Course_Outcome(6, "Describe a software process model that can be used to develop significant " +
+            CourseMapping c_outcome6 = new CourseMapping(6, "Describe a software process model that can be used to develop significant " +
                 "applications composed of hundreds of functions.", mapped1);
-            Course_Outcome c_outcome7 = new Course_Outcome(7, "Perform the steps necessary to edit, compile, link and execute C/C++ programs.", mapped1);
+            CourseMapping c_outcome7 = new CourseMapping(7, "Perform the steps necessary to edit, compile, link and execute C/C++ programs.", mapped1);
 
             Course_Objective c_obj = new Course_Objective("CSCE 1030 Computer Science I", outcomes);
 
@@ -184,7 +184,7 @@ namespace AbetApi.Data
             instructors = new Instructor[] { instructor1, instructor4, instructor10, instructor11 };
             coordinators = new Coordinator[] { coordinator1, coordinator2, coordinator4, coordinator11 };
             courses = new List<Course> { course1, course2, course3 };
-            outcomes = new List<Course_Outcome> { c_outcome1, c_outcome2, c_outcome3, c_outcome4, c_outcome5, c_outcome6, c_outcome7 };
+            outcomes = new List<CourseMapping> { c_outcome1, c_outcome2, c_outcome3, c_outcome4, c_outcome5, c_outcome6, c_outcome7 };
             s_outcomes = new List<Student_Outcome> { s_outcome1, s_outcome2, s_outcome3, s_outcome4, s_outcome5, s_outcome6 };
             c_objs = new List<Course_Objective> { c_obj };
         }
@@ -350,15 +350,15 @@ namespace AbetApi.Data
             return true;
         }
 
-        public bool PostCourseOutcomes(List<Course_Outcome> courseOutcomesList)
+        public bool PostCourseOutcomes(List<CourseOutcome> courseOutcomesList)
         {
-            foreach (Course_Outcome outcome in courseOutcomesList)
-                outcomes.Add(outcome);
+            //foreach (CourseMapping outcome in courseOutcomesList)
+              //  outcomes.Add(outcome);
 
             return true;
         }
 
-        public List<Course_Outcome> GetCourseOutcomesByCourse(Course course)
+        public List<CourseMapping> GetCourseOutcomesByCourse(Course course)
         {
             return outcomes;
         }
