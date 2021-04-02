@@ -9,6 +9,7 @@ namespace AbetApi.Data
 {
     public interface IUploadManager
     {
+        public string FileId { get; set; }
         public string FilePath { get; set; }
         public string ErrorMessage { get; set; }
         public string OriginalFileName { get; set; }

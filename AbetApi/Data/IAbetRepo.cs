@@ -26,7 +26,8 @@ namespace AbetApi.Data
         List<CourseMapping> GetCourseOutcomesByCourse(Course course);
         bool PostComment(Course course);
         SqlReturn PostAccessDbData(string filePath);
-        SqlReturn PostAttachmentInfo(string filePath, string originalFileName, int outcomeId);
+        SqlReturn PostStudentWorkInfo(StudentWork studentWork, Section section);
+        StudentWork GetStudentWorkInfo(string fileId);
         bool AddProgram(string Program);
 
         // catogorize by instructor, coordinator and admin functions

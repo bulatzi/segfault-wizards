@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using static AbetApi.Models.AbetModels;
 using AbetApi.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using System.IO;
 
 //This file handles the communication between the frontend and the API.
 namespace AbetApi.Controller
@@ -91,7 +92,7 @@ namespace AbetApi.Controller
                )
             { 
                 Response.StatusCode = BAD_REQUEST;
-                return new Form();
+                return null;
             }
             
             return mockAbetRepo.GetFormBySection(body.Section);
@@ -156,10 +157,10 @@ namespace AbetApi.Controller
         }
 
         [Authorize(Roles = RoleTypes.Instructor)]
-        [HttpPost("upload-form-attachment")]
-        public ActionResult UploadAttachment([FromForm] IFormFile file, [FromForm] int? outcomeId)
+        [HttpPost("student-work/upload")]
+        public ActionResult UploadStudentWork([FromForm] IFormFile file, [FromForm] int? outcomeId, [FromForm] string courseNumber, [FromForm] string sectionNumber, [FromForm] string semester, [FromForm] int? year)
         {
-            if (file == null || !outcomeId.HasValue)
+            if (file == null || !outcomeId.HasValue || string.IsNullOrEmpty(courseNumber) || string.IsNullOrEmpty(sectionNumber) || string.IsNullOrEmpty(semester) || !year.HasValue)
                 return BadRequest();
 
             uploadManager.StoreFile(file, new List<string>() { ".pdf" });
@@ -167,13 +168,42 @@ namespace AbetApi.Controller
             if (uploadManager.FilePath == null)
                 return BadRequest(new { message = uploadManager.ErrorMessage });
 
-            //Store info associated with the attachment in the DB
-            SqlReturn sqlReturn = abetRepo.PostAttachmentInfo(uploadManager.FilePath, uploadManager.OriginalFileName, outcomeId.Value);
+            StudentWork studentWork = new StudentWork() { FileId = uploadManager.FileId, FilePath = uploadManager.FilePath, OutcomeId = outcomeId.Value, FileName = uploadManager.OriginalFileName };
+            Section section = new Section() { CourseNumber = courseNumber, SectionNumber = sectionNumber, Semester = semester, Year = year.Value };
+
+            //Store info associated with the student work file attachment in the DB
+            SqlReturn sqlReturn = abetRepo.PostStudentWorkInfo(studentWork, section);
 
             if (sqlReturn.code != -1)
                 return Ok();
             else
                 return BadRequest(new { sqlReturn.message });
+        }
+
+        [Authorize(Roles = RoleTypes.Instructor)]
+        [HttpPost("student-work/download")]
+        public ActionResult DownloadStudentWork([FromBody] BodyParams body)
+        {
+            if (string.IsNullOrEmpty(body.FileId))
+                return BadRequest();
+
+            StudentWork studentWork = abetRepo.GetStudentWorkInfo(body.FileId);
+
+            if (System.IO.File.Exists(studentWork.FilePath))
+            {
+                try
+                {
+                    FileStream file = System.IO.File.OpenRead(studentWork.FilePath);
+
+                    return File(file, "application/octet-stream");
+                }
+                catch
+                {
+                    return StatusCode(SERVER_ERROR, new { message = "Internal Server Error: Error reading the file." });
+                }
+            }
+            else
+                return NotFound(new { message = "Error: File not found." });
         }
 
         //---------------COORDINATOR LEVEL FUNCTIONS---------------

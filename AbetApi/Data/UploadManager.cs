@@ -15,6 +15,7 @@ namespace AbetApi.Data
 {
     public class UploadManager : IUploadManager
     {
+        public string FileId { get; set; }
         public string FilePath { get; set; } = null;
         public string ErrorMessage { get; set; }
         public string OriginalFileName { get; set; }
@@ -38,8 +39,9 @@ namespace AbetApi.Data
                     if (!Directory.Exists(FOLDER_PATH))
                         Directory.CreateDirectory(FOLDER_PATH);
 
-                    FilePath = Path.Combine(FOLDER_PATH, GenerateFileName() + Path.GetExtension(file.FileName));
-                    OriginalFileName = Path.GetFileNameWithoutExtension(file.FileName);
+                    OriginalFileName = Path.GetFileName(file.FileName);
+                    FileId = GenerateFileName(); //generate a unique file name
+                    FilePath = Path.Combine(FOLDER_PATH, FileId + Path.GetExtension(file.FileName));
 
                     using (FileStream stream = new FileStream(FilePath, FileMode.Create))
                     {

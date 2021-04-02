@@ -123,6 +123,7 @@ namespace AbetApi.Models
             public string Program { get; set; }
             public string Department { get; set; }
             public List<CourseOutcome> CourseOutcomesList { get; set; }
+            public string FileId { get; set; }
             //public List<CourseOutcome> CourseOutcomeList { get; set; }
         }
         
@@ -248,13 +249,15 @@ namespace AbetApi.Models
         public class StudentWork
         {
             public int id { get; set; }
-            public string FileName { get; set; }
-            public string FileUploaded { get; set; }
+            public int OutcomeId { get; set; } //outcome that the attachment corresponds to
+            public string FileId { get; set; } //unique file name
+            public string FileName { get; set; } //original file name
+            public string FilePath { get; set; }
 
-            public StudentWork(string studentWork, string fileUploaded)
+            public StudentWork(string fileId, string fileName)
             {
-                this.FileName = studentWork;
-                this.FileUploaded = fileUploaded;
+                this.FileId = fileId;
+                this.FileName = fileName;
             }
 
             public StudentWork()

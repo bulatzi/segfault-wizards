@@ -414,7 +414,7 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
                     {
                         //Id = Convert.ToInt32(rd["id"]),   REMOVE ID FROM QUERY
                         FileName = rd["file_name"].ToString(),
-                        FileUploaded = rd["fileupload"].ToString()
+                        FileId = rd["fileupload"].ToString()
                     };
                     if (tempID != Convert.ToInt32(rd["num"]))
                     {
@@ -648,7 +648,7 @@ where NOT EXISTS (select file_name, fileupload, outcome_objective_id from object
                     cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int)).Value = studentWork.id;
                     cmd.Parameters.Add(new SqlParameter("@outcome_objective_id", SqlDbType.Int)).Value = out_obj;
                     cmd.Parameters.Add(new SqlParameter("@file_name", SqlDbType.VarChar, 100)).Value = studentWork.FileName;
-                    cmd.Parameters.Add(new SqlParameter("@fileupload", SqlDbType.VarChar, 20)).Value = studentWork.FileUploaded;
+                    cmd.Parameters.Add(new SqlParameter("@fileupload", SqlDbType.VarChar, 20)).Value = studentWork.FileId;
                     try
                     {
                         Object obj = cmd.ExecuteScalar();
@@ -1075,12 +1075,19 @@ VALUES (@course_id, @program, @student_outcome_order, @course_outcome_order)";
             }
         }
 
-        public SqlReturn PostAttachmentInfo(string filePath, string originalFileName, int outcomeId)
+        public SqlReturn PostStudentWorkInfo(StudentWork studentWork, Section section)
         {
             SqlReturn sqlReturn = new SqlReturn();
 
             sqlReturn.code = 1;
             return sqlReturn;
+        }
+
+        public StudentWork GetStudentWorkInfo(string fileId)
+        {
+            StudentWork studentWork = new StudentWork() { FilePath = "C:\\Users\\Ty\\Desktop\\ABET_backend\\AbetApi\\Uploads\\" + fileId + ".pdf" };
+
+            return studentWork;
         }
 
         public bool AddProgram(string Program)
