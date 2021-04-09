@@ -11,6 +11,7 @@ namespace AbetApi.Data
         string GetRole(string userId);
         List<Section> GetSectionsByUserId(string userId, int year, string term);
         Program_Outcomes GetCourseObjectives(string program);
+        //SqlReturn GetCourseObjectives(string program);
         List<Course> GetCoursesByDepartment(string department);
         bool AddCourse(Course course);
         bool RemoveCourse(Course course);

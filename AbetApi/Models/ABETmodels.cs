@@ -56,7 +56,7 @@ namespace AbetApi.Models
             { }
         }
 
-        public class Course 
+        public class Course : Identity
         {
             public Coordinator Coordinator { get; set; }
             public string CourseNumber { get; set; } //Ex: 2100
@@ -199,6 +199,9 @@ namespace AbetApi.Models
                 this.StudentOutcomes = studentOutcomes;
                 this.CourseObjectives = course_Objectives;
             }
+
+            public Program_Outcomes()
+            { }
         }
         
         public class Course_Objective

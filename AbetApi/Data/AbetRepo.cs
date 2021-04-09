@@ -15,7 +15,7 @@ namespace AbetApi.Data
         string currentSemester = "spring";
 
         private string cs = 
-        //@"Server=TEBA-D\ABETDATABASE;Database=abetdb11;Trusted_Connection=True";              // <-- Server for RemoteDesktop
+        //@"Server=TEBA-D\ABETDATABASE;Database=abetdb;Trusted_Connection=True";              // <-- Server for RemoteDesktop
         @"Server=TRICO-SCHOOL\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";              // <-- Yafet's local DB
         //@"Server=DESKTOP-5BU0BPP;Database=abetdb;Trusted_Connection=True";                    // <-- Rafael's DB for testing
         //@"Server=LAPTOP-838TO9CN\SQLEXPRESS;Database=abetdb;Trusted_Connection=True";         // <-- Emmanuelli's local DB
@@ -106,70 +106,122 @@ where (s.instructor_id = @euid or c.coordinator_id = @euid) and c.semester = @te
 
         public Program_Outcomes GetCourseObjectives(string program)
         {
-            Program_Outcomes program_outcomes;
-            Course_Objective course_objectives = null;
-            CourseMapping course_outcome;
-            Student_Outcome student_outcome;
-            List<Student_Outcome> student_Outcomes = new List<Student_Outcome>();
-            List<CourseMapping> course_Outcomes = new List<CourseMapping>();
-            List<Course_Objective> courseObjectives = new List<Course_Objective>();
-            string displayName = null;
-
-            string query1 = @"select co.num as 'order', co.course_outcome as outcome, cob.student_outcome_mapping, c.display_name from 
-course_objectives as cob inner join course_outcomes as co on co.id = cob.course_outcome_id 
-inner join courses as c on c.id = cob.course_id where c.department = 'csce' and c.status = 1";
-            SqlConnection conn = GetConnection();
-            conn.Open();
-            SqlCommand cmd = new SqlCommand(query1, conn);
-            cmd.Prepare();
-            using (SqlDataReader rd = cmd.ExecuteReader())
+            //SqlReturn sql = new SqlReturn();
+            Program_Outcomes programOutcome = new Program_Outcomes();   // programname, arr(courseobj), arr(studentoutcome)
+            using (SqlConnection conn = GetConnection())
             {
-                while (rd.Read())
+                Course_Objective course_objectives = null;  // coursename, arr(coursemapping)
+                CourseMapping course_mapping;   // order, outcome, mappstudentOutcomes
+                Student_Outcome student_outcome;    // order, outcome
+                List<Student_Outcome> student_Outcomes = new List<Student_Outcome>();
+                List<CourseMapping> course_Outcomes = new List<CourseMapping>();
+                List<Course_Objective> courseObjectives = new List<Course_Objective>();
+                string course_num = null;
+                int course_outcome_order = 0;
+                int counter = 0;
+                string temp = null;
+                int[] nums = new int[14];
+                string outcome = null;
+                var dict = new Dictionary<string, string>()
                 {
-                    course_outcome = new CourseMapping
-                    {
-                        Order = Convert.ToInt32(rd["order"]),
-                        Outcome = rd["outcome"].ToString(),
-                        MappedStudentOutcomes = (rd["student_outcome_mapping"].ToString()).Select(c => int.Parse(c.ToString())).ToArray()
-                    };
-                    if (displayName == null) displayName = rd["display_name"].ToString();
-                    else if (displayName != rd["display_name"].ToString())
-                    {
-                        course_objectives = new Course_Objective(displayName, course_Outcomes);
-                        courseObjectives.Add(course_objectives);
-                        displayName = rd["display_name"].ToString();
-                        course_Outcomes = new List<CourseMapping>();
+                    {"Computer Science","cs" },
+                    {"Computer Engineering","ce" },
+                    {"Information Technology", "it" }
+                };
+                var dict2 = new Dictionary<string, string>()
+                {
+                    {"Computer Science","c.group_cs" },
+                    {"Computer Engineering","c.group_ce" },
+                    {"Information Technology", "c.group_it" }
+                };
 
+                string query1 = @"select so.num, so.student_outcome from student_outcomes as so join programs as p
+on so.program_id = p.id where p.program = @program";
+                string query2 = $@"select c.department, c.course_number, c.display_name, co.course_outcome, ISNULL(obj.course_outcome_order, 0) as course_outcome_order, 
+ISNULL(obj.student_outcome_order, 0) as student_outcome_order, obj.program  
+from courses as c
+inner join course_outcomes as co on c.id = co.course_id
+left join course_objective as obj on c.id = obj.course_id and obj.course_outcome_order = co.num
+where obj.program = @program or obj.program is NULL and {dict2[program]} = 1 and co.status = 1 and c.status = 1
+order by c.course_number";
+
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query1, conn);
+                cmd.Parameters.Add(new SqlParameter("@program", SqlDbType.VarChar, 10)).Value = program;
+                try
+                {
+                    using (SqlDataReader rd = cmd.ExecuteReader())
+                    {
+                        while (rd.Read())
+                        {
+                            student_outcome = new Student_Outcome(Convert.ToInt32(rd["num"]), rd["student_outcome"].ToString());
+                            student_Outcomes.Add(student_outcome);
+                        }
                     }
-                    course_Outcomes.Add(course_outcome);
-                }
-            }
-            course_objectives = new Course_Objective(displayName, course_Outcomes);
-            courseObjectives.Add(course_objectives);
 
-            query1 = @"select st.num, st.student_outcome, p.program from student_outcomes as 
-st join programs as p on p.id = st.program_id where p.program = @program";
-            cmd = new SqlCommand(query1, conn);
-            cmd.Parameters.Add(new SqlParameter("@program", SqlDbType.VarChar, 50)).Value = program;
-            cmd.Prepare();
-            using (SqlDataReader rd = cmd.ExecuteReader())
-            {
-                while (rd.Read())
-                {
-                    student_outcome = new Student_Outcome
+                    cmd = new SqlCommand(query2, conn);
+                    cmd.Parameters.Add(new SqlParameter("@program", SqlDbType.VarChar, 10)).Value = dict[program];
+                    using (SqlDataReader rd = cmd.ExecuteReader())
                     {
-                        Order = Convert.ToInt32(rd["num"]),
-                        Outcome = rd["student_outcome"].ToString()
-                    };
-                    student_Outcomes.Add(student_outcome);
+                        while(rd.Read())
+                        {
+                            counter++;
+                            if (course_outcome_order == 0)
+                            {
+                                course_num = rd["course_number"].ToString();
+                                temp = rd["department"].ToString().ToUpper() + " " + course_num + " " + rd["display_name"].ToString();
+                                course_outcome_order = Convert.ToInt32(rd["course_outcome_order"]) == 0 ? counter : Convert.ToInt32(rd["course_outcome_order"]);
+                                outcome = rd["course_outcome"].ToString();
+                                if (Convert.ToInt32(rd["student_outcome_order"]) != 0) nums[Convert.ToInt32(rd["student_outcome_order"]) - 1] = 1;
+                                continue;
+                            }
+
+                            if (!course_num.Equals(rd["course_number"].ToString()))
+                            {
+                                course_objectives = new Course_Objective(temp, course_Outcomes);
+                                courseObjectives.Add(course_objectives);
+                                course_Outcomes = new List<CourseMapping>();
+                                course_num = rd["course_number"].ToString();
+                                temp = rd["department"].ToString().ToUpper() + " " + course_num + " " + rd["display_name"].ToString();
+                                counter = 1;
+                                course_outcome_order = Convert.ToInt32(rd["course_outcome_order"]) == 0 ? counter : Convert.ToInt32(rd["course_outcome_order"]);
+                                outcome = rd["course_outcome"].ToString();
+                                nums = new int[14];
+                                if (Convert.ToInt32(rd["student_outcome_order"]) != 0) nums[Convert.ToInt32(rd["student_outcome_order"]) - 1] = 1;
+                            }
+
+                            else if (Convert.ToInt32(rd["course_outcome_order"]) == course_outcome_order)
+                            {
+                                nums[Convert.ToInt32(rd["student_outcome_order"]) - 1] = 1;
+                                outcome = rd["course_outcome"].ToString();
+                                continue;
+                            }
+
+                            course_mapping = new CourseMapping(course_outcome_order, outcome, nums);
+                            course_Outcomes.Add(course_mapping);
+                            nums = new int[14];
+                            if (Convert.ToInt32(rd["student_outcome_order"]) != 0) nums[Convert.ToInt32(rd["student_outcome_order"]) - 1] = 1;
+
+                            course_outcome_order = Convert.ToInt32(rd["course_outcome_order"]) == 0 ? counter : Convert.ToInt32(rd["course_outcome_order"]);
+                            //course_num = rd["course_number"].ToString();
+                            outcome = rd["course_outcome"].ToString();
+                        }
+                    }
+                    course_mapping = new CourseMapping(course_outcome_order, outcome, nums);
+                    course_Outcomes.Add(course_mapping);
+                    course_objectives = new Course_Objective(temp, course_Outcomes);
+                    courseObjectives.Add(course_objectives);
+                    programOutcome = new Program_Outcomes(program, courseObjectives, student_Outcomes);
+
+                } catch
+                {
+                    return programOutcome;
                 }
+
             }
-
-            conn.Close();
-            program_outcomes = new Program_Outcomes(program, courseObjectives, student_Outcomes);
-            return program_outcomes;
+            return programOutcome;
         }
-
+            
         public List<Course> GetCoursesByDepartment(string department)
         {
             List<Course> coursesList = new List<Course>();
@@ -391,7 +443,7 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
             }
 
             selectQuery = @"select ou.file_name, ou.fileupload, ou.id, oo.num_of_CE, oo.num_of_CS, num_of_IT, 
-co.course_outcome as outcome, co.num, co.id as outcome_id, s.section_number
+co.course_mapping as outcome, co.num, co.id as outcome_id, s.section_number
 from objective_uploads as ou 
 left join outcome_objectives as oo on oo.id = ou.outcome_objective_id
 join course_outcomes as co on co.id = oo.outcome_id
@@ -453,7 +505,7 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
             List<OutcomeObjective> outcomeObjectives = new List<OutcomeObjective>();
             List<StudentWork> studentWorks = new List<StudentWork>();
 
-            string query = @"select num, course_outcome, id from course_outcomes where course_id = @course_id";
+            string query = @"select num, course_mapping, id from course_outcomes where course_id = @course_id";
             SqlConnection conn = GetConnection();
             conn.Open();
             SqlCommand cmd = new SqlCommand(query, conn);
@@ -466,7 +518,7 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
                     OutcomeObjective outcomeObjective = new OutcomeObjective
                     {
                         OrderOfOutcome = Convert.ToInt32(rd["num"]),
-                        Outcome = rd["course_outcome"].ToString(),
+                        Outcome = rd["course_mapping"].ToString(),
                         //OutcomeId = Convert.ToInt32(rd["id"]),
                         StudentWorks = studentWorks,
                         NumberOfIT = 0,
@@ -882,7 +934,7 @@ where c.year = @year and c.semester = @semester and c.status = 1";
             SqlConnection conn = GetConnection();
             conn.Open();
 
-            string query = @"SELECT co.num, co.course_outcome, c.display_name " +
+            string query = @"SELECT co.num, co.course_mapping, c.display_name " +
                 "from course_outcomes as co join courses as c on co.course_id = c.id where c.display_name LIKE @course;";
             SqlCommand cmd = new SqlCommand(query, conn);
             cmd.Parameters.Add(new SqlParameter("@course", SqlDbType.VarChar, 20)).Value = course.DisplayName;
@@ -893,7 +945,7 @@ where c.year = @year and c.semester = @semester and c.status = 1";
                 {
                     CourseMapping db_result = new CourseMapping
                     {
-                        Outcome = rd["course_outcome"].ToString(),
+                        Outcome = rd["course_mapping"].ToString(),
                         Order = Int32.Parse(rd["num"].ToString()),
                     };
                 result.Add(db_result);
@@ -982,8 +1034,8 @@ coordinator_id, display_name, group_ce, group_cs, group_it, status)
 values 
 (@year, @semester, @department, @course_number, @coordinator_name, @coordinator_id, @display_name, @group_ce, @group_cs, @group_it, @status); 
 SELECT SCOPE_IDENTITY()";
-                    string query2 = @"insert into course_outcomes (num, course_outcome, course_id)
-values (@num, @course_outcome, @course_id)";
+                    string query2 = @"insert into course_outcomes (num, course_mapping, course_id)
+values (@num, @course_mapping, @course_id)";
                     string query3 = @"insert into course_objective (course_id, program, student_outcome_order, course_outcome_order) 
 VALUES (@course_id, @program, @student_outcome_order, @course_outcome_order)";
 
@@ -1033,7 +1085,7 @@ VALUES (@course_id, @program, @student_outcome_order, @course_outcome_order)";
                                     {
                                         cmd1 = new SqlCommand(query2, conn1);
                                         cmd1.Parameters.Add(new SqlParameter("@num", SqlDbType.Int)).Value = i;
-                                        cmd1.Parameters.Add(new SqlParameter("@course_outcome", SqlDbType.VarChar, -1)).Value = rd[outcome].ToString();
+                                        cmd1.Parameters.Add(new SqlParameter("@course_mapping", SqlDbType.VarChar, -1)).Value = rd[outcome].ToString();
                                         cmd1.Parameters.Add(new SqlParameter("@course_id", SqlDbType.Int)).Value = result;
                                         cmd1.ExecuteNonQuery();
                                     }

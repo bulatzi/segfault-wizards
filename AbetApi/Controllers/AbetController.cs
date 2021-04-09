@@ -309,10 +309,12 @@ namespace AbetApi.Controller
 
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("outcomes/get-outcomes-by-program")]
-        public Program_Outcomes GetCourseObjectives([FromBody] BodyParams body)
+        //public Program_Outcomes GetCourseObjectives([FromBody] BodyParams body)
+        public ActionResult GetCourseObjectives([FromBody] BodyParams body)
         {
-            return mockAbetRepo.GetCourseObjectives(body.Program);
-            //return abetRepo.GetCourseObjectives(body.Program);
+            if (body == null && body.Program == null) return BadRequest();
+            return Ok(mockAbetRepo.GetCourseObjectives(body.Program));
+            //return Ok(abetRepo.GetCourseObjectives(body.Program));
         }
 
         [Authorize(Roles = RoleTypes.Admin)]
