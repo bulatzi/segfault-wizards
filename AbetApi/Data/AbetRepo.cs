@@ -108,6 +108,7 @@ where (s.instructor_id = @euid or c.coordinator_id = @euid) and c.semester = @te
         {
             //SqlReturn sql = new SqlReturn();
             Program_Outcomes programOutcome = new Program_Outcomes();   // programname, arr(courseobj), arr(studentoutcome)
+            if (program != "Computer Science" && program != "Computer Engineering" && program != "Information Technology") return programOutcome;
             using (SqlConnection conn = GetConnection())
             {
                 Course_Objective course_objectives = null;  // coursename, arr(coursemapping)
@@ -147,7 +148,7 @@ order by c.course_number";
 
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(query1, conn);
-                cmd.Parameters.Add(new SqlParameter("@program", SqlDbType.VarChar, 10)).Value = program;
+                cmd.Parameters.Add(new SqlParameter("@program", SqlDbType.VarChar, 30)).Value = program;
                 try
                 {
                     using (SqlDataReader rd = cmd.ExecuteReader())
@@ -213,11 +214,10 @@ order by c.course_number";
                     courseObjectives.Add(course_objectives);
                     programOutcome = new Program_Outcomes(program, courseObjectives, student_Outcomes);
 
-                } catch
+                } catch 
                 {
                     return programOutcome;
                 }
-
             }
             return programOutcome;
         }
@@ -791,7 +791,10 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
             /* Establish and open connection */
             SqlConnection conn = GetConnection();           // Establish the connection
             conn.Open();                                    // Open the connection
-            string query = @"SELECT c.id AS c_id, fa.first_name AS c_first_name, fa.last_name AS c_last_name, fa.euid AS c_euid, c.course_number, c.display_name, c.coordinator_comment, c.completed AS c_completed, c.department, c.year, c.semester, s.id AS s_id, f.first_name AS i_first_name, f.last_name AS i_last_name, f.euid AS i_euid, s.completed AS s_completed, s.section_number, s.num_of_students FROM abetdb.dbo.sections AS s JOIN abetdb.dbo.courses AS c ON s.course_id = c.id JOIN abetdb.dbo.faculties AS f ON s.instructor_id = f.euid JOIN abetdb.dbo.faculties AS fa ON c.coordinator_id = fa.euid WHERE c.year = @year AND c.semester = @semester AND c.status = 1";
+            string query = @"SELECT c.id AS c_id, fa.first_name AS c_first_name, fa.last_name AS c_last_name, fa.euid AS c_euid, c.course_number, c.display_name, c.coordinator_comment, 
+c.completed AS c_completed, c.department, c.year, c.semester, s.id AS s_id, f.first_name AS i_first_name, f.last_name AS i_last_name, f.euid AS i_euid, s.completed AS s_completed, 
+s.section_number, s.num_of_students FROM abetdb.dbo.sections AS s JOIN abetdb.dbo.courses AS c ON s.course_id = c.id JOIN abetdb.dbo.faculties AS f ON s.instructor_id = f.euid JOIN abetdb.dbo.faculties AS fa ON c.coordinator_id = fa.euid 
+WHERE c.year = @year AND c.semester = @semester AND c.status = 1";
                /* ^^ NOTES ^^
                         - "abetdb.dbo." removed from table names here because the database won't need to be specified with UNT's server.
                         - c.year = 2021 AND c.semester = 'spring'  ==> c.year = @year AND c.semester = @semester  | The '@' at the beginning of the string allows '@year' and '@semester' to pass in the parameters 'year' and 'semester' passed in through the function call.           
