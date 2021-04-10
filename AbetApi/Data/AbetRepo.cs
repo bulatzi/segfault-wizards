@@ -1149,5 +1149,26 @@ VALUES (@course_id, @program, @student_outcome_order, @course_outcome_order)";
         {
             return true;
         }
+
+        public List<Program> getPrograms()
+        {
+            List<Program> programList = new List<Program>();
+            string query = @"select id, program from programs";
+
+            SqlConnection conn = GetConnection();
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(query, conn);
+            
+            using (SqlDataReader rd = cmd.ExecuteReader())
+            {
+                while (rd.Read())
+                {
+                    Program program = new Program(rd["id"].ToInt32(), rd["program"].ToString());
+                    programList.Add(program);
+                }
+            }
+
+            return programList;
+        }
     }
 }

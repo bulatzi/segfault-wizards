@@ -310,6 +310,17 @@ namespace AbetApi.Models
 
             }
         }
+
+        public class Program
+        {
+            public int id {get; set;}
+            public String program {get; set;}
+            public Program(int id, String program)
+            {
+                this.id = id;
+                this.program = program;
+            }
+        }
     }
 }
 
