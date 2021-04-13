@@ -951,7 +951,6 @@ C:\Users\Ty\Desktop\ABET_backend\AbetApi\bin\Debug\netcoreapp3.1\AbetApi.runtime
 C:\Users\Ty\Desktop\ABET_backend\AbetApi\bin\Debug\netcoreapp3.1\AbetApi.runtimeconfig.dev.json
 C:\Users\Ty\Desktop\ABET_backend\AbetApi\bin\Debug\netcoreapp3.1\AbetApi.dll
 C:\Users\Ty\Desktop\ABET_backend\AbetApi\bin\Debug\netcoreapp3.1\AbetApi.pdb
-C:\Users\Ty\Desktop\ABET_backend\AbetApi\bin\Debug\netcoreapp3.1\Dapper.dll
 C:\Users\Ty\Desktop\ABET_backend\AbetApi\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\Ty\Desktop\ABET_backend\AbetApi\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\Users\Ty\Desktop\ABET_backend\AbetApi\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll

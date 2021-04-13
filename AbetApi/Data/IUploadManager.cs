@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using static AbetApi.Models.AbetModels;
 
 namespace AbetApi.Data
 {
@@ -13,8 +13,10 @@ namespace AbetApi.Data
         public string FilePath { get; set; }
         public string ErrorMessage { get; set; }
         public string OriginalFileName { get; set; }
+        public bool FileNotFound { get; set; }
         public bool StoreFile(IFormFile file, List<string> acceptableTypes);
         public bool DeleteCurrentFile();
         public bool DeleteFile(string filePath);
+        public FileStream GetFile(string filePath);
     }
 }

@@ -1150,8 +1150,9 @@ VALUES (@course_id, @program, @student_outcome_order, @course_outcome_order)";
             return true;
         }
 
-        public List<Program> getPrograms()
+        public List<string> GetProgramNames()
         {
+            /*
             List<Program> programList = new List<Program>();
             string query = @"select id, program from programs";
 
@@ -1167,8 +1168,15 @@ VALUES (@course_id, @program, @student_outcome_order, @course_outcome_order)";
                     programList.Add(program);
                 }
             }
+            */
 
-            return programList;
+            //return hard coded for now
+            return new List<string>() { "Computer Science", "Computer Engineering", "Information Technology", "Cybersecurity" };
+        }
+
+        public bool PostStudentSurvey(StudentSurvey studentSurvey)
+        {
+            return true;
         }
     }
 }

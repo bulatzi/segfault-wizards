@@ -116,6 +116,7 @@ namespace AbetApi.Models
             public int Year { get; set; }
             public string Semester { get; set; }
             public Form Form { get; set; }
+            public StudentSurvey StudentSurvey { get; set; }
             public Section Section { get; set; }
             public Course Course { get; set; }
             public Info Info { get; set; }
@@ -145,6 +146,34 @@ namespace AbetApi.Models
             }
 
             public Form()
+            { }
+        }
+
+        public class StudentSurvey
+        {
+            public string StudentId { get; set; }
+            public Section Section { get; set; }
+            public string Program { get; set; } //CS, CE, IT
+            public string Classification { get; set; } //freshman, sophomore, etc.
+            public string AnticipatedGrade { get; set; } //A+, B, etc.
+            public List<int> OutcomeRatings { get; set; } //list of 1-5
+            public List<int> TaRatings { get; set; } //list of 1-5
+            public string TaComment { get; set; }
+            public string CourseComment { get; set; }
+
+            public StudentSurvey(Section section, string program, string classification, string anticipatedGrade, List<int> outcomeRatings, List<int> taRatings, string taComment, string courseComment)
+            {
+                Section = section;
+                Program = program;
+                Classification = classification;
+                AnticipatedGrade = anticipatedGrade;
+                OutcomeRatings = outcomeRatings;
+                TaRatings = taRatings;
+                TaComment = taComment;
+                CourseComment = courseComment;
+            }
+
+            public StudentSurvey()
             { }
         }
 

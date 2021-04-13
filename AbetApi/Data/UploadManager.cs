@@ -19,6 +19,7 @@ namespace AbetApi.Data
         public string FilePath { get; set; } = null;
         public string ErrorMessage { get; set; }
         public string OriginalFileName { get; set; }
+        public bool FileNotFound { get; set; } = false;
         private readonly string FOLDER_PATH = Path.Combine(Directory.GetCurrentDirectory(), "Uploads"); //Path to the Uploads folder
 
         //stores a received file in the Uploads folder
@@ -85,6 +86,30 @@ namespace AbetApi.Data
             {
                 File.Delete(filePath);
                 return true;
+            }
+        }
+
+        public FileStream GetFile(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    FileStream file = File.OpenRead(filePath);
+
+                    return file;
+                }
+                catch
+                {
+                    ErrorMessage = "Internal Server Error: Error reading the file.";
+                    return null;
+                }
+            }
+            else
+            {
+                ErrorMessage = "Error: File not found.";
+                FileNotFound = true;
+                return null;
             }
         }
 

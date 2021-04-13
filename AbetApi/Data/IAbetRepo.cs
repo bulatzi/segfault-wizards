@@ -30,7 +30,8 @@ namespace AbetApi.Data
         SqlReturn PostStudentWorkInfo(StudentWork studentWork, Section section);
         StudentWork GetStudentWorkInfo(string fileId);
         bool AddProgram(string Program);
-
+        List<string> GetProgramNames();
+        bool PostStudentSurvey(StudentSurvey studentSurvey);
         // catogorize by instructor, coordinator and admin functions
 
     }

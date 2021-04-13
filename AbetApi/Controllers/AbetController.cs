@@ -48,6 +48,8 @@ namespace AbetApi.Controller
                 return Ok(new { token = tokenGenerator.GenerateToken(body.UserId, "Instructor"), role = "Instructor" });
             else if (body.UserId == "coordinator" && body.Password == "coordinator")
                 return Ok(new { token = tokenGenerator.GenerateToken(body.UserId, "Coordinator"), role = "Coordinator" });
+            else if (body.UserId == "student" && body.Password == "student")
+                return Ok(new { token = tokenGenerator.GenerateToken(body.UserId, "Student"), role = "Student" });
 
             ldap.ValidateCredentials(body.UserId, body.Password);
 
@@ -188,22 +190,17 @@ namespace AbetApi.Controller
                 return BadRequest();
 
             StudentWork studentWork = abetRepo.GetStudentWorkInfo(body.FileId);
+            FileStream file = uploadManager.GetFile(studentWork.FilePath);
 
-            if (System.IO.File.Exists(studentWork.FilePath))
+            if (file == null)
             {
-                try
-                {
-                    FileStream file = System.IO.File.OpenRead(studentWork.FilePath);
-
-                    return File(file, "application/octet-stream");
-                }
-                catch
-                {
-                    return StatusCode(SERVER_ERROR, new { message = "Internal Server Error: Error reading the file." });
-                }
+                if (uploadManager.FileNotFound)
+                    return NotFound(new { message = uploadManager.ErrorMessage });
+                else
+                    return StatusCode(SERVER_ERROR, new { message = uploadManager.ErrorMessage });
             }
             else
-                return NotFound(new { message = "Error: File not found." });
+                return File(file, "application/octet-stream");
         }
 
         //---------------COORDINATOR LEVEL FUNCTIONS---------------
@@ -232,7 +229,7 @@ namespace AbetApi.Controller
 
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("sections/by-semester-year")]
-        public List<Section> GetAllSections([FromBody] BodyParams body)
+        public List<Section> GetSectionsByYearAndSemester([FromBody] BodyParams body)
         {
             List<Section> sections = new List<Section>();   // Return variable
 
@@ -270,7 +267,7 @@ namespace AbetApi.Controller
 
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("forms/by-semester-year")]
-        public List<Form> GetAllForms([FromBody] BodyParams body)
+        public List<Form> GetFormsByYearAndSemester([FromBody] BodyParams body)
         {
             return mockAbetRepo.GetFormsByYearAndSemester(body.Year, body.Semester);
         }
@@ -386,8 +383,6 @@ namespace AbetApi.Controller
             if (uploadManager.FilePath == null)
                 return BadRequest(new { message = uploadManager.ErrorMessage });
 
-            System.Diagnostics.Debug.WriteLine(uploadManager.FilePath);
-
             //Do SQL operations on the Access file
             SqlReturn sqlReturn = abetRepo.PostAccessDbData(uploadManager.FilePath);
 
@@ -407,6 +402,28 @@ namespace AbetApi.Controller
                 return BadRequest();
 
             if (abetRepo.AddProgram(body.Program))
+                return Ok();
+            else
+                return BadRequest();
+        }
+
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpPost("programs/get-program-names")]
+        public List<string> GetProgramNames([FromBody] BodyParams body)
+        {
+            return abetRepo.GetProgramNames();
+        }
+
+        //---------------STUDENT LEVEL FUNCTIONS---------------
+
+        [Authorize(Roles = RoleTypes.Student)]
+        [HttpPost("student-surveys/post-survey")]
+        public ActionResult PostStudentForm([FromBody] BodyParams body)
+        {
+            if (body.StudentSurvey == null || string.IsNullOrEmpty(body.StudentSurvey.StudentId) || body.StudentSurvey.Section == null || string.IsNullOrEmpty(body.StudentSurvey.Section.CourseNumber) || string.IsNullOrEmpty(body.StudentSurvey.Section.SectionNumber) || string.IsNullOrEmpty(body.StudentSurvey.Section.Semester) || body.StudentSurvey.Section.Year < 1890 || body.StudentSurvey.OutcomeRatings == null || body.StudentSurvey.TaRatings == null || body.StudentSurvey.OutcomeRatings.Count == 0 || body.StudentSurvey.TaRatings.Count == 0 || string.IsNullOrEmpty(body.StudentSurvey.Program) || string.IsNullOrEmpty(body.StudentSurvey.Classification) || string.IsNullOrEmpty(body.StudentSurvey.AnticipatedGrade))
+                return BadRequest();
+
+            if (abetRepo.PostStudentSurvey(body.StudentSurvey))
                 return Ok();
             else
                 return BadRequest();

@@ -11,5 +11,6 @@ namespace AbetApi.Authentication
         public const string Admin = "Admin"; //All admins are coordinators and instructors
         public const string Coordinator = "Coordinator, Admin"; //All coordinators are instructors
         public const string Instructor = "Instructor, Coordinator, Admin";
+        public const string Student = "Student";
     }
 }
