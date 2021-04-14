@@ -1,10 +1,9 @@
 {
   "version": 2,
-  "dgSpecHash": "EHkkY5Iw85zK2pGH2fr5oUy4dikBnEPEyTGj+WtP6yj8mchEo8w6oiVo9irXSkOG1oBxXMXaup4rRPVQsSQKBw==",
+  "dgSpecHash": "PWg7ggYoBnz8gJMmuXWlbTlY2ms1nTVcwjL/t/Ml0zSQbVpHriOHh608xypRa0f3IIV5HBVXcQb7bfd8MTo2gA==",
   "success": true,
   "projectFilePath": "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\AbetApi.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\yafet\\.nuget\\packages\\dapper\\2.0.35\\dapper.2.0.35.nupkg.sha512",
     "C:\\Users\\yafet\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.0.0\\microsoft.aspnetcore.authentication.jwtbearer.3.0.0.nupkg.sha512",
     "C:\\Users\\yafet\\.nuget\\packages\\microsoft.csharp\\4.3.0\\microsoft.csharp.4.3.0.nupkg.sha512",
     "C:\\Users\\yafet\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\5.5.0\\microsoft.identitymodel.jsonwebtokens.5.5.0.nupkg.sha512",
@@ -48,7 +47,7 @@
     "C:\\Users\\yafet\\.nuget\\packages\\system.reflection\\4.3.0\\system.reflection.4.3.0.nupkg.sha512",
     "C:\\Users\\yafet\\.nuget\\packages\\system.reflection.emit\\4.3.0\\system.reflection.emit.4.3.0.nupkg.sha512",
     "C:\\Users\\yafet\\.nuget\\packages\\system.reflection.emit.ilgeneration\\4.3.0\\system.reflection.emit.ilgeneration.4.3.0.nupkg.sha512",
-    "C:\\Users\\yafet\\.nuget\\packages\\system.reflection.emit.lightweight\\4.7.0\\system.reflection.emit.lightweight.4.7.0.nupkg.sha512",
+    "C:\\Users\\yafet\\.nuget\\packages\\system.reflection.emit.lightweight\\4.3.0\\system.reflection.emit.lightweight.4.3.0.nupkg.sha512",
     "C:\\Users\\yafet\\.nuget\\packages\\system.reflection.extensions\\4.3.0\\system.reflection.extensions.4.3.0.nupkg.sha512",
     "C:\\Users\\yafet\\.nuget\\packages\\system.reflection.primitives\\4.3.0\\system.reflection.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\yafet\\.nuget\\packages\\system.reflection.typeextensions\\4.3.0\\system.reflection.typeextensions.4.3.0.nupkg.sha512",

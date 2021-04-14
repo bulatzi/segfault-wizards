@@ -339,32 +339,15 @@ namespace AbetApi.Models
 
             }
         }
-
-        public class Program
+        public class UntPrograms
         {
-            public int id {get; set;}
-            public String program {get; set;}
-            public Program(int id, String program)
+            public String ProgramName {get; set;}
+            public UntPrograms(string program_name)
             {
-                this.id = id;
-                this.program = program;
+                this.ProgramName = program_name;
             }
+            public UntPrograms()
+            { }
         }
     }
 }
-
-/*
- *  public class Section
-    {
-        public string Department { get; set; }
-        public string Course_Name { get; set; }
-        public int Course_Number { get; set; }
-        public int Section_Number { get; set; }
-        public string Instructor_Name { get; set; }
-        public string Coordinator_Name { get; set; }
-        public int Number_Of_Students { get; set; }
-    }
- * 
- * 
- * //public Dictionary<string,string> CourseOutcomes { get; set; }
- */

@@ -108,7 +108,7 @@ where (s.instructor_id = @euid or c.coordinator_id = @euid) and c.semester = @te
         {
             //SqlReturn sql = new SqlReturn();
             Program_Outcomes programOutcome = new Program_Outcomes();   // programname, arr(courseobj), arr(studentoutcome)
-            if (program != "Computer Science" && program != "Computer Engineering" && program != "Information Technology") return programOutcome;
+            if (program != "Computer Science" && program != "Computer Engineering" && program != "Information Technology") return programOutcome; 
             using (SqlConnection conn = GetConnection())
             {
                 Course_Objective course_objectives = null;  // coursename, arr(coursemapping)
@@ -1145,33 +1145,73 @@ VALUES (@course_id, @program, @student_outcome_order, @course_outcome_order)";
             return studentWork;
         }
 
-        public bool AddProgram(string Program)
+        public bool AddProgram(string program)
         {
-            return true;
-        }
-
-        public List<string> GetProgramNames()
-        {
-            /*
-            List<Program> programList = new List<Program>();
-            string query = @"select id, program from programs";
-
-            SqlConnection conn = GetConnection();
-            conn.Open();
-            SqlCommand cmd = new SqlCommand(query, conn);
-            
-            using (SqlDataReader rd = cmd.ExecuteReader())
+            using (SqlConnection conn = GetConnection())
             {
-                while (rd.Read())
+                string query = @"insert into programs (program) values (@program)";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.Add(new SqlParameter("@program", SqlDbType.VarChar, 50)).Value = program;
+                cmd.Connection.Open();
+                try
                 {
-                    Program program = new Program(rd["id"].ToInt32(), rd["program"].ToString());
-                    programList.Add(program);
+                    cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch
+                {
+                    return false;
                 }
             }
-            */
+        }
 
-            //return hard coded for now
-            return new List<string>() { "Computer Science", "Computer Engineering", "Information Technology", "Cybersecurity" };
+        public bool DeleteProgram(string program)
+        {
+            using (SqlConnection conn = GetConnection())
+            {
+                string query = @"update programs set status = 0 where program = @program";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.Add(new SqlParameter("@program", SqlDbType.VarChar, 50)).Value = program;
+                cmd.Connection.Open();
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        public List<UntPrograms> GetAllPrograms()
+        {
+            List<UntPrograms> programList = new List<UntPrograms>();
+            UntPrograms program;
+
+            using (SqlConnection conn = GetConnection())
+            {
+                string query = @"select program from programs where status = 1";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Connection.Open();
+                try
+                {
+                    using (SqlDataReader rd = cmd.ExecuteReader())
+                    {
+                        while(rd.Read())
+                        {
+                            program = new UntPrograms(rd["program"].ToString());
+                            programList.Add(program);
+                        }
+                        return programList;
+                    }
+                }
+                catch
+                {
+                    return null;
+                }
+            }
         }
 
         public bool PostStudentSurvey(StudentSurvey studentSurvey)

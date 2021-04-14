@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ty\\Desktop\\ABET_backend\\AbetApi\\AbetApi.csproj": {}
+    "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\AbetApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ty\\Desktop\\ABET_backend\\AbetApi\\AbetApi.csproj": {
+    "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\AbetApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ty\\Desktop\\ABET_backend\\AbetApi\\AbetApi.csproj",
+        "projectUniqueName": "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\AbetApi.csproj",
         "projectName": "AbetApi",
-        "projectPath": "C:\\Users\\Ty\\Desktop\\ABET_backend\\AbetApi\\AbetApi.csproj",
-        "packagesPath": "C:\\Users\\Ty\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ty\\Desktop\\ABET_backend\\AbetApi\\obj\\",
+        "projectPath": "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\AbetApi.csproj",
+        "packagesPath": "C:\\Users\\yafet\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Ty\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\yafet\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,6 +26,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -40,6 +38,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
@@ -76,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.113\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -400,18 +400,43 @@ namespace AbetApi.Controller
         {
             if (string.IsNullOrEmpty(body.Program))
                 return BadRequest();
-
+            /*
             if (abetRepo.AddProgram(body.Program))
                 return Ok();
             else
                 return BadRequest();
+            */
+            return Ok();
         }
 
         [Authorize(Roles = RoleTypes.Admin)]
-        [HttpPost("programs/get-program-names")]
-        public List<string> GetProgramNames([FromBody] BodyParams body)
+        [HttpPost("programs/delete-program")]
+        public ActionResult DeleteProgram([FromBody] BodyParams body)
         {
-            return abetRepo.GetProgramNames();
+            if (string.IsNullOrEmpty(body.Program))
+                return BadRequest();
+            /*
+            if (abetRepo.DeleteProgram(body.Program))
+                return Ok();
+            else
+                return BadRequest();
+            */
+            return Ok();
+        }
+
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpPost("programs/get-programs")]
+        public List<UntPrograms> GetAllPrograms()
+        {
+            //return abetRepo.GetAllPrograms();
+            List<UntPrograms> programlists = new List<UntPrograms>()
+            {
+                new UntPrograms("Computer Science"),
+                new UntPrograms("Information Technology"),
+                new UntPrograms("Computer Engineering")
+            };
+
+            return programlists;
         }
 
         //---------------STUDENT LEVEL FUNCTIONS---------------

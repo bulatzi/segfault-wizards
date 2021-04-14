@@ -29,8 +29,9 @@ namespace AbetApi.Data
         SqlReturn PostAccessDbData(string filePath);
         SqlReturn PostStudentWorkInfo(StudentWork studentWork, Section section);
         StudentWork GetStudentWorkInfo(string fileId);
-        bool AddProgram(string Program);
-        List<string> GetProgramNames();
+        bool AddProgram(string program);
+        bool DeleteProgram(string program);
+        List<UntPrograms> GetAllPrograms();
         bool PostStudentSurvey(StudentSurvey studentSurvey);
         // catogorize by instructor, coordinator and admin functions
 
