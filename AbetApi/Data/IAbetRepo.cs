@@ -32,7 +32,8 @@ namespace AbetApi.Data
         bool AddProgram(string program);
         bool DeleteProgram(string program);
         List<UntPrograms> GetAllPrograms();
-        bool PostStudentSurvey(StudentSurvey studentSurvey);
+        //bool PostStudentSurvey(StudentSurvey studentSurvey);
+        SqlReturn PostStudentSurvey(StudentSurvey studentSurvey);
         // catogorize by instructor, coordinator and admin functions
 
     }

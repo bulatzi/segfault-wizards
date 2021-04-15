@@ -1214,9 +1214,120 @@ VALUES (@course_id, @program, @student_outcome_order, @course_outcome_order)";
             }
         }
 
-        public bool PostStudentSurvey(StudentSurvey studentSurvey)
+        //public bool PostStudentSurvey(StudentSurvey studentSurvey)
+        public SqlReturn PostStudentSurvey(StudentSurvey studentSurvey)
         {
-            return true;
+            SqlReturn sql = new SqlReturn();
+
+            // first query the section based on parameter
+            string selectQuery = @"select s.id from sections as s join courses as c on c.id = s.course_id
+where c.department = 'csce' and c.year = @year and c. semester = @semester and 
+c.course_number = @course_number and s.section_number = @section_number
+and c.status = 1";
+            using (SqlConnection conn = GetConnection())
+            {
+                int id, i;
+                SqlCommand cmd = new SqlCommand(selectQuery, conn);
+                cmd.Parameters.Add(new SqlParameter("@year", SqlDbType.Int)).Value = studentSurvey.Section.Year;
+                cmd.Parameters.Add(new SqlParameter("@semester", SqlDbType.VarChar, 11)).Value = studentSurvey.Section.Semester;
+                cmd.Parameters.Add(new SqlParameter("@course_number", SqlDbType.VarChar, 11)).Value = studentSurvey.Section.CourseNumber;
+                cmd.Parameters.Add(new SqlParameter("@section_number", SqlDbType.VarChar, 11)).Value = studentSurvey.Section.SectionNumber;
+                cmd.Connection.Open();
+                try
+                {
+                    Object obj = cmd.ExecuteScalar();
+                    if (!(obj is DBNull))
+                    {
+                        id = Convert.ToInt32(obj);
+                    }
+                    else
+                    {
+                        //return false;
+                        sql.message = "section does not exist";
+                        sql.code = -1;
+                        return sql;
+                    }
+
+                    string insertQuery1 = @"insert into student_surveys (section_id, program, classification, anticipated_grade, ta_comment, course_comment)
+values (@section_id, @program, @classification, @anticipated_grade, @ta_comment, @course_comment); SELECT SCOPE_IDENTITY()";
+                    cmd = new SqlCommand(insertQuery1, conn);
+                    cmd.Parameters.Add(new SqlParameter("@section_id", SqlDbType.Int)).Value = id;
+                    cmd.Parameters.Add(new SqlParameter("@program", SqlDbType.VarChar, 30)).Value = studentSurvey.Program;
+                    cmd.Parameters.Add(new SqlParameter("@classification", SqlDbType.VarChar, 30)).Value = studentSurvey.Classification;
+                    cmd.Parameters.Add(new SqlParameter("@anticipated_grade", SqlDbType.VarChar, 3)).Value = studentSurvey.AnticipatedGrade;
+                    cmd.Parameters.Add(new SqlParameter("@ta_comment", SqlDbType.VarChar, -1)).Value = studentSurvey.TaComment;
+                    cmd.Parameters.Add(new SqlParameter("@course_comment", SqlDbType.VarChar, -1)).Value = studentSurvey.CourseComment;
+                    obj = cmd.ExecuteScalar();
+                    if (!(obj is DBNull))
+                    {
+                        id = Convert.ToInt32(obj);
+                    }
+                    else
+                    {
+                        sql.message = "nothing was returned from insert 1";
+                        sql.code = -1;
+                        return sql;
+                    }
+
+                    // insert the outcome comments
+                    DataTable tbl = new DataTable();
+                    tbl.Columns.Add(new DataColumn("student_survey_id", typeof(Int32)));
+                    tbl.Columns.Add(new DataColumn("outcome_num", typeof(Int32)));
+                    tbl.Columns.Add(new DataColumn("outcome_rating", typeof(Int32))); 
+
+                    for (i = 0; i < studentSurvey.OutcomeRatings.Count; i++)
+                    {
+                        DataRow dr = tbl.NewRow();
+                        dr["student_survey_id"] = id;
+                        dr["outcome_num"] = i+1;
+                        dr["outcome_rating"] = studentSurvey.OutcomeRatings[i];
+                        tbl.Rows.Add(dr);
+                    }
+                    cmd.Connection.Close();
+                    SqlBulkCopy objbulk = new SqlBulkCopy(conn);
+                    objbulk.DestinationTableName = "outcome_ratings";
+
+                    objbulk.ColumnMappings.Add("student_survey_id", "student_survey_id");
+                    objbulk.ColumnMappings.Add("outcome_num", "outcome_num");
+                    objbulk.ColumnMappings.Add("outcome_rating", "outcome_rating");
+                    conn.Open();
+                    objbulk.WriteToServer(tbl);
+
+
+                    // insert the ta comment
+                    tbl = new DataTable();
+
+                    tbl.Columns.Add(new DataColumn("student_survey_id", typeof(Int32)));
+                    tbl.Columns.Add(new DataColumn("ta_id", typeof(Int32)));
+                    tbl.Columns.Add(new DataColumn("ta_rating", typeof(Int32)));
+
+                    for (i = 0; i < studentSurvey.TaRatings.Count; i++)
+                    {
+                        DataRow dr = tbl.NewRow();
+                        dr["student_survey_id"] = id;
+                        dr["ta_id"] = i + 1;
+                        dr["ta_rating"] = studentSurvey.TaRatings[i];
+                        tbl.Rows.Add(dr);
+                    }
+                    objbulk = new SqlBulkCopy(conn);
+                    objbulk.DestinationTableName = "ta_ratings";
+
+                    objbulk.ColumnMappings.Add("student_survey_id", "student_survey_id");
+                    objbulk.ColumnMappings.Add("ta_id", "ta_id");
+                    objbulk.ColumnMappings.Add("ta_rating", "ta_rating");
+
+                    objbulk.WriteToServer(tbl);
+                }
+                catch (Exception ex)
+                {
+                    sql.message = ex.Message;   // currently commented out on controller 
+                    sql.code = -1;
+                    return sql;
+                }
+            }
+
+            sql.code = 1;
+            return sql;
         }
     }
 }
