@@ -142,7 +142,7 @@ on so.program_id = p.id where p.program = @program";
 ISNULL(obj.student_outcome_order, 0) as student_outcome_order, obj.program  
 from courses as c
 inner join course_outcomes as co on c.id = co.course_id
-left join course_objective as obj on c.id = obj.course_id and obj.course_outcome_order = co.num
+left join course_objectives as obj on c.id = obj.course_id and obj.course_outcome_order = co.num
 where obj.program = @program or obj.program is NULL and {dict2[program]} = 1 and co.status = 1 and c.status = 1
 order by c.course_number";
 
@@ -996,15 +996,15 @@ WHERE year = @year and semester = @semester and course_number = @course_number a
                 string query = @"SELECT [Course Number] as course_number, [Name of Course] as course_name, Coordinator, Coordinator_ID, 
             [Group CE] as group_ce, [Group CS] as group_cs, [Group IT] as group_it, 
             Outcome1, Outcome2, Outcome3, Outcome4, Outcome5, Outcome6, Outcome7, Outcome8, Outcome9,
-            [CE - StudentOutcomes1], [CE - StudentOutcomes2], [CE - StudentOutcomes3], [CE - StudentOutcomes4], [CE - StudentOutcomes5], [CE - StudentOutcomes6], 
-            [CE - StudentOutcomes7], [CE - StudentOutcomes8], [CE - StudentOutcomes9], [CE - StudentOutcomes10], [CE - StudentOutcomes11],  [CE - StudentOutcomes12], 
-            [CE - StudentOutcomes13], [CE - StudentOutcomes14],
-            [CS - StudentOutcomes1], [CS - StudentOutcomes2], [CS - StudentOutcomes3], [CS - StudentOutcomes4], [CS - StudentOutcomes5], [CS - StudentOutcomes6], 
-            [CS - StudentOutcomes7], [CS - StudentOutcomes8], [CS - StudentOutcomes9], [CS - StudentOutcomes10], [CS - StudentOutcomes11],  [CS - StudentOutcomes12], 
-            [CS - StudentOutcomes13], [CS - StudentOutcomes14],
-            [IT - StudentOutcomes1], [IT - StudentOutcomes2], [IT - StudentOutcomes3], [IT - StudentOutcomes4], [IT - StudentOutcomes5], [IT - StudentOutcomes6], 
-            [IT - StudentOutcomes7], [IT - StudentOutcomes8], [IT - StudentOutcomes9], [IT - StudentOutcomes10], [IT - StudentOutcomes11],  [IT - StudentOutcomes12], 
-            [IT - StudentOutcomes13], [IT - StudentOutcomes14]
+            [CE - StudentOutcome1], [CE - StudentOutcome2], [CE - StudentOutcome3], [CE - StudentOutcome4], [CE - StudentOutcome5], [CE - StudentOutcome6], 
+            [CE - StudentOutcome7], [CE - StudentOutcome8], [CE - StudentOutcome9], [CE - StudentOutcome10], [CE - StudentOutcome11],  [CE - StudentOutcome12], 
+            [CE - StudentOutcome13], [CE - StudentOutcome14],
+            [CS - StudentOutcome1], [CS - StudentOutcome2], [CS - StudentOutcome3], [CS - StudentOutcome4], [CS - StudentOutcome5], [CS - StudentOutcome6], 
+            [CS - StudentOutcome7], [CS - StudentOutcome8], [CS - StudentOutcome9], [CS - StudentOutcome10], [CS - StudentOutcome11],  [CS - StudentOutcome12], 
+            [CS - StudentOutcome13], [CS - StudentOutcome14],
+            [IT - StudentOutcome1], [IT - StudentOutcome2], [IT - StudentOutcome3], [IT - StudentOutcome4], [IT - StudentOutcome5], [IT - StudentOutcome6], 
+            [IT - StudentOutcome7], [IT - StudentOutcome8], [IT - StudentOutcome9], [IT - StudentOutcome10], [IT - StudentOutcome11],  [IT - StudentOutcome12], 
+            [IT - StudentOutcome13], [IT - StudentOutcome14]
             FROM Sheet1";
 
                 using (SqlConnection conn1 = GetConnection())
@@ -1037,9 +1037,9 @@ coordinator_id, display_name, group_ce, group_cs, group_it, status)
 values 
 (@year, @semester, @department, @course_number, @coordinator_name, @coordinator_id, @display_name, @group_ce, @group_cs, @group_it, @status); 
 SELECT SCOPE_IDENTITY()";
-                    string query2 = @"insert into course_outcomes (num, course_mapping, course_id)
-values (@num, @course_mapping, @course_id)";
-                    string query3 = @"insert into course_objective (course_id, program, student_outcome_order, course_outcome_order) 
+                    string query2 = @"insert into course_outcomes (num, course_outcome, course_id)
+values (@num, @course_outcome, @course_id)";
+                    string query3 = @"insert into course_objectives (course_id, program, student_outcome_order, course_outcome_order) 
 VALUES (@course_id, @program, @student_outcome_order, @course_outcome_order)";
 
                     SqlCommand cmd1;
@@ -1088,7 +1088,7 @@ VALUES (@course_id, @program, @student_outcome_order, @course_outcome_order)";
                                     {
                                         cmd1 = new SqlCommand(query2, conn1);
                                         cmd1.Parameters.Add(new SqlParameter("@num", SqlDbType.Int)).Value = i;
-                                        cmd1.Parameters.Add(new SqlParameter("@course_mapping", SqlDbType.VarChar, -1)).Value = rd[outcome].ToString();
+                                        cmd1.Parameters.Add(new SqlParameter("@course_outcome", SqlDbType.VarChar, -1)).Value = rd[outcome].ToString();
                                         cmd1.Parameters.Add(new SqlParameter("@course_id", SqlDbType.Int)).Value = result;
                                         cmd1.ExecuteNonQuery();
                                     }
@@ -1097,7 +1097,7 @@ VALUES (@course_id, @program, @student_outcome_order, @course_outcome_order)";
                                 {
                                     for (j = 1; j <= 14; j++)
                                     {
-                                        student_outcome = p[i] + "StudentOutcomes" + j;
+                                        student_outcome = p[i] + "StudentOutcome" + j;
                                         if (rd[student_outcome].ToString().Length > 0)
                                         {
                                             string word = rd[student_outcome].ToString();
