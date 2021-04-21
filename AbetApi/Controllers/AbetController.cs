@@ -445,7 +445,7 @@ namespace AbetApi.Controller
         [HttpPost("student-surveys/post-survey")]
         public ActionResult PostStudentForm([FromBody] BodyParams body)
         {
-            if (body.StudentSurvey == null || string.IsNullOrEmpty(body.StudentSurvey.StudentId) || body.StudentSurvey.Section == null || string.IsNullOrEmpty(body.StudentSurvey.Section.CourseNumber) || string.IsNullOrEmpty(body.StudentSurvey.Section.SectionNumber) || string.IsNullOrEmpty(body.StudentSurvey.Section.Semester) || body.StudentSurvey.Section.Year < 1890 || body.StudentSurvey.OutcomeRatings == null || body.StudentSurvey.TaRatings == null || body.StudentSurvey.OutcomeRatings.Count == 0 || body.StudentSurvey.TaRatings.Count == 0 || string.IsNullOrEmpty(body.StudentSurvey.Program) || string.IsNullOrEmpty(body.StudentSurvey.Classification) || string.IsNullOrEmpty(body.StudentSurvey.AnticipatedGrade))
+            if (body.StudentSurvey == null || body.StudentSurvey.Section == null || string.IsNullOrEmpty(body.StudentSurvey.Section.CourseNumber) || string.IsNullOrEmpty(body.StudentSurvey.Section.SectionNumber) || string.IsNullOrEmpty(body.StudentSurvey.Section.Semester) || body.StudentSurvey.Section.Year < 1890 || body.StudentSurvey.OutcomeRatings == null || body.StudentSurvey.TaRatings == null || body.StudentSurvey.OutcomeRatings.Count == 0 || body.StudentSurvey.TaRatings.Count == 0 || string.IsNullOrEmpty(body.StudentSurvey.Program) || string.IsNullOrEmpty(body.StudentSurvey.Classification) || string.IsNullOrEmpty(body.StudentSurvey.AnticipatedGrade))
                 return BadRequest();
 
             //if (abetRepo.PostStudentSurvey(body.StudentSurvey))

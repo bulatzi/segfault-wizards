@@ -151,7 +151,6 @@ namespace AbetApi.Models
 
         public class StudentSurvey
         {
-            public string StudentId { get; set; }
             public Section Section { get; set; }
             public string Program { get; set; } //CS, CE, IT
             public string Classification { get; set; } //freshman, sophomore, etc.
