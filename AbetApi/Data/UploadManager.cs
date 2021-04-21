@@ -69,7 +69,11 @@ namespace AbetApi.Data
         public bool DeleteCurrentFile()
         {
             if (!Directory.Exists(FOLDER_PATH) || FilePath == null || !File.Exists(FilePath))
+            {
+                ErrorMessage = "Error: File not found.";
+                FileNotFound = true;
                 return false;
+            }
             else
             {
                 File.Delete(FilePath);
@@ -81,7 +85,11 @@ namespace AbetApi.Data
         public bool DeleteFile(string filePath)
         {
             if (!Directory.Exists(FOLDER_PATH) || !File.Exists(filePath))
+            {
+                ErrorMessage = "Error: File not found.";
+                FileNotFound = true;
                 return false;
+            }
             else
             {
                 File.Delete(filePath);
