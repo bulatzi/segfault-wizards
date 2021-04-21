@@ -203,6 +203,21 @@ namespace AbetApi.Controller
                 return File(file, "application/octet-stream");
         }
 
+        [Authorize(Roles = RoleTypes.Instructor)]
+        [HttpPost("student-work/delete")]
+        public ActionResult DeleteStudentWork([FromBody] BodyParams body)
+        {
+            if (string.IsNullOrEmpty(body.FileId))
+                return BadRequest();
+
+            StudentWork studentWork = abetRepo.GetStudentWorkInfo(body.FileId);
+
+            if (uploadManager.DeleteFile(studentWork.FilePath))
+                return Ok();
+            else
+                return NotFound(new { message = uploadManager.ErrorMessage });
+        }
+
         //---------------COORDINATOR LEVEL FUNCTIONS---------------
 
         //Function has been tested and errors have been added to the documentation. Currently testing using SQL server.
