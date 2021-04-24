@@ -8,6 +8,7 @@ namespace AbetApi.Data
 {
     public interface IAbetRepo
     {
+        //Function that retrieves teh role for a specified user
         string GetRole(string userId);
         List<Section> GetSectionsByUserId(string userId, int year, string term);
         Program_Outcomes GetCourseObjectives(string program);
