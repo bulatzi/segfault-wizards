@@ -1,2 +1,4 @@
 *.json
 *.cache
+*.txt
+AbetApi/obj/Debug/
