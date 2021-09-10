@@ -1,20 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\AbetApi.csproj": {}
+    "C:\\Users\\Bryan\\Desktop\\Fall 2020\\ABET tool\\ABET-Tool\\src\\back-end\\AbetApi\\AbetApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\AbetApi.csproj": {
+    "C:\\Users\\Bryan\\Desktop\\Fall 2020\\ABET tool\\ABET-Tool\\src\\back-end\\AbetApi\\AbetApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\AbetApi.csproj",
+        "projectUniqueName": "C:\\Users\\Bryan\\Desktop\\Fall 2020\\ABET tool\\ABET-Tool\\src\\back-end\\AbetApi\\AbetApi.csproj",
         "projectName": "AbetApi",
-        "projectPath": "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\AbetApi.csproj",
-        "packagesPath": "C:\\Users\\yafet\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\yafet\\Documents\\sp21\\csce4902\\back-end\\AbetApi\\obj\\",
+        "projectPath": "C:\\Users\\Bryan\\Desktop\\Fall 2020\\ABET tool\\ABET-Tool\\src\\back-end\\AbetApi\\AbetApi.csproj",
+        "packagesPath": "C:\\Users\\Bryan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Bryan\\Desktop\\Fall 2020\\ABET tool\\ABET-Tool\\src\\back-end\\AbetApi\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\yafet\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Bryan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
