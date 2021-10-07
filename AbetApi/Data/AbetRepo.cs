@@ -372,6 +372,7 @@ values (@euid, @first_name, @last_name, @role, @faculty_type)";
             Grades csGrade = null;
             Grades ceGrade = null;
             Grades itGrade = null;
+            Grades cGrade = null;
             StudentWork studentWork;
             List<StudentWork> studentWorks = new List<StudentWork>();
             OutcomeObjective outcomeObjective = null;
@@ -385,10 +386,13 @@ cs.a as cs_a, cs.b as cs_b, cs.c as cs_c, cs.d as cs_d, cs.f as cs_f, cs.w as cs
 (cs.a + cs.b + cs.c + cs.d + cs.f + cs.w + cs.i) as cs_total, 
 ce.a as ce_a, ce.b as ce_b, ce.c as ce_c, ce.d as ce_d, ce.f as ce_f, ce.w as ce_w, ce.i as ce_i, 
 (ce.a + ce.b + ce.c + ce.d + ce.f + ce.w + ce.i) as ce_total
+csec.a as csec_a, csec.b as csec_b, csec.c as csec_c, csec.d as csec_d, csec.f as csec_f, csec.w as csec_w, csec.i as csec_i, 
+(csec.a + csec.b + csec.c + csec.d + csec.f + csec.w + csec.i) as csec_total
 from section_objectives as so join sections as s on s.id = so.section_id
 join grades as it on so.IT_grade_id = it.id
 join grades as cs on so.CS_grade_id = cs.id
 join grades as ce on so.CE_grade_id = ce.id
+join grades as csec on so.C_grade_id = csec.id
 join courses as c on c.id = s.course_id
 where c.year = @year and c.semester = @semester and c.course_number = @course_number and s.section_number = @section_number";
 
@@ -434,6 +438,16 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
                         Convert.ToInt32(rd["ce_i"]),
                         Convert.ToInt32(rd["ce_total"])
                         );
+                    cGrade = new Grades(
+                        Convert.ToInt32(rd["csec_a"]),
+                        Convert.ToInt32(rd["csec_b"]),
+                        Convert.ToInt32(rd["csec_c"]),
+                        Convert.ToInt32(rd["csec_d"]),
+                        Convert.ToInt32(rd["csec_f"]),
+                        Convert.ToInt32(rd["csec_w"]),
+                        Convert.ToInt32(rd["csec_i"]),
+                        Convert.ToInt32(rd["csec_total"])
+                        );
                     section.SectionId = Convert.ToInt32(rd["section_id"]);
                 }
                 else
@@ -442,7 +456,7 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
                 }
             }
 
-            selectQuery = @"select ou.file_name, ou.fileupload, ou.id, oo.num_of_CE, oo.num_of_CS, num_of_IT, 
+            selectQuery = @"select ou.file_name, ou.fileupload, ou.id, oo.num_of_CE, oo.num_of_CS, num_of_IT, num_of_C,
 co.course_mapping as outcome, co.num, co.id as outcome_id, s.section_number
 from objective_uploads as ou 
 left join outcome_objectives as oo on oo.id = ou.outcome_objective_id
@@ -451,7 +465,7 @@ join courses as c on c.id = co.course_id
 join sections as s on s.course_id = c.id
 where c.year = @year and c.semester = @semester and c.course_number = @course_number and s.section_number = @section_number";
 
-            form = new Form(section, outcomeObjectives, itGrade, csGrade, ceGrade);
+            form = new Form(section, outcomeObjectives, itGrade, csGrade, ceGrade, cGrade);
             cmd = new SqlCommand(selectQuery, conn);
             cmd.Parameters.Add(new SqlParameter("@year", SqlDbType.Int)).Value = section.Year;
             cmd.Parameters.Add(new SqlParameter("@semester", SqlDbType.VarChar, 20)).Value = section.Semester;
@@ -485,6 +499,7 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
                             NumberOfCE = Convert.ToInt32(rd["num_of_CE"]),
                             NumberOfCS = Convert.ToInt32(rd["num_of_CS"]),
                             NumberOfIT = Convert.ToInt32(rd["num_of_IT"]),
+                            NumberOfC = Convert.ToInt32(rd["num_of_C"]),
                             StudentWorks = studentWorks
                         };
                         tempID = Convert.ToInt32(rd["num"]);
@@ -494,7 +509,7 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
                 outcomeObjective.StudentWorks = studentWorks;
                 outcomeObjectives.Add(outcomeObjective);
             }
-            form = new Form(section, outcomeObjectives, itGrade, csGrade, ceGrade);
+            form = new Form(section, outcomeObjectives, itGrade, csGrade, ceGrade, cGrade);
             // if form doesnt exist, get blank form
             return form;
         }
@@ -523,7 +538,8 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
                         StudentWorks = studentWorks,
                         NumberOfIT = 0,
                         NumberOfCE = 0,
-                        NumberOfCS = 0
+                        NumberOfCS = 0,
+                        NumberOfC = 0
                     };
                     outcomeObjectives.Add(outcomeObjective);
                 }
@@ -532,6 +548,7 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
             toReturn.CEGrades = new Grades(0, 0, 0, 0, 0, 0, 0, 0);
             toReturn.CSGrades = new Grades(0, 0, 0, 0, 0, 0, 0, 0);
             toReturn.ITGrades = new Grades(0, 0, 0, 0, 0, 0, 0, 0);
+            toReturn.CGrades = new Grades(0, 0, 0, 0, 0, 0, 0, 0);
             toReturn.Outcomes = outcomeObjectives;
             toReturn.Section = section;
 
@@ -612,8 +629,8 @@ where c.year = @year and c.semester = @semester and c.course_number = @course_nu
 
             // insert grades
             //List<Grades> grades = new List<Grades> { form.CEGrades, form.CSGrades, form.ITGrades };
-            Grades[] grades = { form.CEGrades, form.CSGrades, form.ITGrades };
-            string[] arr = { "CE_grade_id", "CS_grade_id", "IT_grade_id" };
+            Grades[] grades = { form.CEGrades, form.CSGrades, form.ITGrades, form.CGrades };
+            string[] arr = { "CE_grade_id", "CS_grade_id", "IT_grade_id", "C_grade_id" };
             for (i = 0; i < 3; i++)
             {
                 query = $"select {arr[i]} from section_objectives where section_id = {form.Section.SectionId}";
@@ -672,13 +689,14 @@ VALUES (@a, @b, @c, @d, @f, @w, @i, @section_objective_id); SELECT SCOPE_IDENTIT
                 out_obj = Convert.ToInt32(cmd.ExecuteScalar());
                 if (out_obj == 0)
                 {
-                    query = @"insert into outcome_objectives (outcome_id, num_of_CE, num_of_CS, num_of_IT, section_id)
-values (@outcome_id, @num_of_CE, @num_of_CS, @num_of_IT, @section_id); SELECT SCOPE_IDENTITY()";
+                    query = @"insert into outcome_objectives (outcome_id, num_of_CE, num_of_CS, num_of_IT, num_of_C, section_id)
+values (@outcome_id, @num_of_CE, @num_of_CS, @num_of_IT, @num_of_C, @section_id); SELECT SCOPE_IDENTITY()";
                     cmd = new SqlCommand(query, conn);
                     cmd.Parameters.Add(new SqlParameter("@outcome_id", SqlDbType.Int)).Value = outcomeObjective.OutcomeId;
                     cmd.Parameters.Add(new SqlParameter("@num_of_CE", SqlDbType.Int)).Value = outcomeObjective.NumberOfCE;
                     cmd.Parameters.Add(new SqlParameter("@num_of_CS", SqlDbType.Int)).Value = outcomeObjective.NumberOfCS;
                     cmd.Parameters.Add(new SqlParameter("@num_of_IT", SqlDbType.Int)).Value = outcomeObjective.NumberOfIT;
+                    cmd.Parameters.Add(new SqlParameter("@num_of_C", SqlDbType.Int)).Value = outcomeObjective.NumberOfC;
                     cmd.Parameters.Add(new SqlParameter("@section_id", SqlDbType.Int)).Value = form.Section.SectionId;
                     try
                     {

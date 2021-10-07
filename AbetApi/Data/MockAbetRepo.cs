@@ -66,13 +66,15 @@ namespace AbetApi.Data
             Grades gradeIT = new Grades(2, 5, 6, 7, 1, 1, 9, 31);
             Grades gradeCS = new Grades(2, 5, 6, 7, 1, 2, 9, 32);
             Grades gradeCE = new Grades(2, 5, 6, 7, 1, 3, 9, 33);
-            section1.NumberOfStudents = gradeIT.TotalStudents + gradeCS.TotalStudents + gradeCE.TotalStudents;
-            OutcomeObjective outcome1 = new OutcomeObjective("Outcome1: this is outcome 1", 20, 30, 40, listOfWorks1);
-            OutcomeObjective outcome11 = new OutcomeObjective("Outcome2: this is outcome 2", 10, 20, 10, listOfWorks1);
-            List<OutcomeObjective> outcomes1 = new List<OutcomeObjective> { outcome1, outcome11 };
+            Grades gradeC = new Grades(2, 5, 6, 7, 1, 3, 5, 29);
+            section1.NumberOfStudents = gradeIT.TotalStudents + gradeCS.TotalStudents + gradeCE.TotalStudents + gradeC.TotalStudents;
+            OutcomeObjective outcome1 = new OutcomeObjective("Outcome1: this is outcome 1", 20, 30, 40, 10, listOfWorks1);
+            OutcomeObjective outcome11 = new OutcomeObjective("Outcome2: this is outcome 2", 10, 20, 10, 20, listOfWorks1);
+            OutcomeObjective outcome111 = new OutcomeObjective("Outcome3: this is outcome 3", 0, 0, 0, 0, listOfWorks1);
+            List<OutcomeObjective> outcomes1 = new List<OutcomeObjective> { outcome1, outcome11, outcome111 };
             section1.Year = 2020;
             section1.Semester = "fall";
-            Form instructorForm1 = new Form(section1, outcomes1, gradeIT, gradeCS, gradeCE);
+            Form instructorForm1 = new Form(section1, outcomes1, gradeIT, gradeCS, gradeCE, gradeC);
 
             Instructor instructor2 = new Instructor("Mark", "Thompson", "MT2020");
             Coordinator coordinator2 = new Coordinator("David", "Keathly", "DK2121");
@@ -80,13 +82,15 @@ namespace AbetApi.Data
             Grades gradeIT1 = new Grades(2, 5, 6, 7, 1, 1, 9, 31);
             Grades gradeCS1 = new Grades(2, 5, 6, 7, 1, 2, 9, 32);
             Grades gradeCE1 = new Grades(2, 5, 6, 7, 1, 3, 9, 33);
-            section2.NumberOfStudents = gradeIT1.TotalStudents + gradeCS1.TotalStudents + gradeCE1.TotalStudents;
-            OutcomeObjective outcome2 = new OutcomeObjective("Outcome1: this is outcome 1", 20, 30, 40, listOfWorks1);
-            OutcomeObjective outcome22 = new OutcomeObjective("Outcome2: this is outcome 2", 10, 10, 40, listOfWorks1);
-            List<OutcomeObjective> outcomes2 = new List<OutcomeObjective> { outcome2, outcome22 };
+            Grades gradeC1 = new Grades(2, 5, 6, 7, 1, 3, 5, 29);
+            section2.NumberOfStudents = gradeIT1.TotalStudents + gradeCS1.TotalStudents + gradeCE1.TotalStudents + gradeC1.TotalStudents;
+            OutcomeObjective outcome2 = new OutcomeObjective("Outcome1: this is outcome 1", 20, 30, 40, 10, listOfWorks1);
+            OutcomeObjective outcome22 = new OutcomeObjective("Outcome2: this is outcome 2", 10, 10, 40, 20, listOfWorks1);
+            OutcomeObjective outcome222 = new OutcomeObjective("Outcome3: this is outcome 3", 0, 0, 0, 0, listOfWorks1);
+            List<OutcomeObjective> outcomes2 = new List<OutcomeObjective> { outcome2, outcome22, outcome222 };
             section2.Year = 2020;
             section2.Semester = "fall";
-            Form instructorForm2 = new Form(section2, outcomes2, gradeIT1, gradeCS1, gradeCE1);
+            Form instructorForm2 = new Form(section2, outcomes2, gradeIT1, gradeCS1, gradeCE1, gradeC1);
 
             Instructor instructor3 = new Instructor("Mark", "Thompson", "MT2020");
             Coordinator coordinator3 = new Coordinator("David", "Keathly", "DK2121");
@@ -94,13 +98,15 @@ namespace AbetApi.Data
             Grades gradeIT2 = new Grades(2, 5, 6, 7, 1, 1, 9, 31);
             Grades gradeCS2 = new Grades(2, 5, 6, 7, 1, 2, 9, 32);
             Grades gradeCE2 = new Grades(2, 5, 6, 7, 1, 3, 9, 33);
-            section3.NumberOfStudents = gradeIT2.TotalStudents + gradeCS2.TotalStudents + gradeCE2.TotalStudents;
-            OutcomeObjective outcome3 = new OutcomeObjective("Outcome1: this is outcome 1", 20, 30, 40, listOfWorks1);
-            OutcomeObjective outcome33 = new OutcomeObjective("Outcome2: this is outcome 2", 20, 30, 40, listOfWorks1);
-            List<OutcomeObjective> outcomes3 = new List<OutcomeObjective> { outcome3, outcome33 };
+            Grades gradeC2 = new Grades(2, 5, 6, 7, 1, 3, 5, 29);
+            section3.NumberOfStudents = gradeIT2.TotalStudents + gradeCS2.TotalStudents + gradeCE2.TotalStudents + gradeC2.TotalStudents;
+            OutcomeObjective outcome3 = new OutcomeObjective("Outcome1: this is outcome 1", 20, 30, 40, 10, listOfWorks1);
+            OutcomeObjective outcome33 = new OutcomeObjective("Outcome2: this is outcome 2", 20, 30, 40, 20, listOfWorks1);
+            OutcomeObjective outcome333 = new OutcomeObjective("Outcome3: this is outcome 3", 0, 0, 0, 0, listOfWorks1);
+            List<OutcomeObjective> outcomes3 = new List<OutcomeObjective> { outcome3, outcome33, outcome333 };
             section3.Year = 2020;
             section3.Semester = "fall";
-            Form instructorForm3 = new Form(section3, outcomes3, gradeIT2, gradeCS2, gradeCE2);
+            Form instructorForm3 = new Form(section3, outcomes3, gradeIT2, gradeCS2, gradeCE2, gradeC2);
 
             Instructor instructor4 = new Instructor("Yan", "Huang", "YH2221");
             Coordinator coordinator4 = new Coordinator("Krishna", "Kavi", "KK2521");
@@ -108,13 +114,15 @@ namespace AbetApi.Data
             Grades gradeIT3 = new Grades(2, 5, 6, 7, 1, 1, 9, 31);
             Grades gradeCS3 = new Grades(2, 5, 6, 7, 1, 2, 9, 32);
             Grades gradeCE3 = new Grades(2, 5, 6, 7, 1, 3, 9, 33);
-            section4.NumberOfStudents = gradeIT3.TotalStudents + gradeCS3.TotalStudents + gradeCE3.TotalStudents;
-            OutcomeObjective outcome4 = new OutcomeObjective("Outcome1: this is outcome 1", 20, 30, 40, listOfWorks1);
-            OutcomeObjective outcome44 = new OutcomeObjective("Outcome2: this is outcome 2", 10, 10, 40, listOfWorks1);
-            List<OutcomeObjective> outcomes4 = new List<OutcomeObjective> { outcome4, outcome44 };
+            Grades gradeC3 = new Grades(2, 5, 6, 7, 1, 3, 5, 29);
+            section4.NumberOfStudents = gradeIT3.TotalStudents + gradeCS3.TotalStudents + gradeCE3.TotalStudents + gradeC3.TotalStudents;
+            OutcomeObjective outcome4 = new OutcomeObjective("Outcome1: this is outcome 1", 20, 30, 40, 10, listOfWorks1);
+            OutcomeObjective outcome44 = new OutcomeObjective("Outcome2: this is outcome 2", 10, 10, 40, 20, listOfWorks1);
+            OutcomeObjective outcome444 = new OutcomeObjective("Outcome3: this is outcome 3", 0, 0, 0, 0, listOfWorks1);
+            List<OutcomeObjective> outcomes4 = new List<OutcomeObjective> { outcome4, outcome44, outcome444 };
             section4.Year = 2020;
             section4.Semester = "fall";
-            Form instructorForm4 = new Form(section4, outcomes4, gradeIT3, gradeCS3, gradeCE3);
+            Form instructorForm4 = new Form(section4, outcomes4, gradeIT3, gradeCS3, gradeCE3, gradeC3);
 
             Instructor instructor5 = new Instructor("Yan", "Huang", "YH2221");
             Coordinator coordinator5 = new Coordinator("Krishna", "Kavi", "KK2521");
@@ -122,13 +130,15 @@ namespace AbetApi.Data
             Grades gradeIT4 = new Grades(2, 5, 6, 7, 1, 1, 9, 31);
             Grades gradeCS4 = new Grades(2, 5, 6, 7, 1, 2, 9, 32);
             Grades gradeCE4 = new Grades(2, 5, 6, 7, 1, 3, 9, 33);
-            section5.NumberOfStudents = gradeIT4.TotalStudents + gradeCS4.TotalStudents + gradeCE4.TotalStudents;
-            OutcomeObjective outcome5 = new OutcomeObjective("Outcome1: this is outcome 1", 20, 30, 50, listOfWorks1);
-            OutcomeObjective outcome55 = new OutcomeObjective("Outcome2: this is outcome 2", 10, 10, 40, listOfWorks1);
-            List<OutcomeObjective> outcomes5 = new List<OutcomeObjective> { outcome5, outcome55 };
+            Grades gradeC4 = new Grades(2, 5, 6, 7, 1, 3, 5, 29);
+            section5.NumberOfStudents = gradeIT4.TotalStudents + gradeCS4.TotalStudents + gradeCE4.TotalStudents + gradeC4.TotalStudents;
+            OutcomeObjective outcome5 = new OutcomeObjective("Outcome1: this is outcome 1", 20, 30, 50, 10, listOfWorks1);
+            OutcomeObjective outcome55 = new OutcomeObjective("Outcome2: this is outcome 2", 10, 10, 40, 20, listOfWorks1);
+            OutcomeObjective outcome555 = new OutcomeObjective("Outcome3: this is outcome 3", 0, 0, 0, 0, listOfWorks1);
+            List<OutcomeObjective> outcomes5 = new List<OutcomeObjective> { outcome5, outcome55, outcome555 };
             section5.Year = 2020;
             section5.Semester = "fall";
-            Form instructorForm5 = new Form(section5, outcomes5, gradeIT4, gradeCS4, gradeCE4);
+            Form instructorForm5 = new Form(section5, outcomes5, gradeIT4, gradeCS4, gradeCE4, gradeC4);
 
             Admin admin1 = new Admin("Indiana", "Jones", "IJ1981");
             Admin admin2 = new Admin("Darth", "Vader", "DV1977");
@@ -262,6 +272,7 @@ namespace AbetApi.Data
             toReturn.CEGrades = new Grades(0, 0, 0, 0, 0, 0, 0, 0);
             toReturn.CSGrades = new Grades(0, 0, 0, 0, 0, 0, 0, 0);
             toReturn.ITGrades = new Grades(0, 0, 0, 0, 0, 0, 0, 0);
+            toReturn.CGrades = new Grades(0, 0, 0, 0, 0, 0, 0, 0);
             toReturn.Section.Instructor = new Instructor();
             toReturn.Section.Coordinator = new Coordinator();
 
