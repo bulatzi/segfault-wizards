@@ -135,14 +135,16 @@ namespace AbetApi.Models
             public Grades ITGrades { get; set; }
             public Grades CSGrades { get; set; }
             public Grades CEGrades { get; set; }
+            public Grades CGrades { get; set; }
 
-            public Form(Section section, List<OutcomeObjective> outcome, Grades itgrade, Grades csgrade, Grades cegrade)
+            public Form(Section section, List<OutcomeObjective> outcome, Grades itgrade, Grades csgrade, Grades cegrade, Grades cgrade)
             {
                 this.Section = section;
                 this.Outcomes = outcome;
                 this.ITGrades = itgrade;
                 this.CSGrades = csgrade;
                 this.CEGrades = cegrade;
+                this.CGrades = cgrade;
             }
 
             public Form()
@@ -184,14 +186,16 @@ namespace AbetApi.Models
             public int NumberOfIT { get; set; }
             public int NumberOfCS { get; set; }
             public int NumberOfCE { get; set; }
+            public int NumberOfC { get; set; }
             public List<StudentWork> StudentWorks { get; set; }
 
-            public OutcomeObjective(string outcome, int numberofIT, int numberofCS, int numberofCE, List<StudentWork> studentworks)
+            public OutcomeObjective(string outcome, int numberofIT, int numberofCS, int numberofCE, int numberofC, List<StudentWork> studentworks)
             {
                 this.Outcome = outcome;
                 this.NumberOfIT = numberofIT;
                 this.NumberOfCS = numberofCS;
                 this.NumberOfCE = numberofCE;
+                this.NumberOfC = numberofC;
                 this.StudentWorks = studentworks;
             }
 
