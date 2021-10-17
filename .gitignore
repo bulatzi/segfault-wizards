@@ -379,3 +379,5 @@ AbetApi/obj/Debug/netcoreapp3.1/AbetApi.pdb
 AbetApi/obj/Debug/netcoreapp3.1/project.razor.json
 AbetApi/obj/project.assets.json
 AbetApi/obj/project.nuget.cache
+AbetApi/obj/
+AbetApi/bin/
