@@ -31,6 +31,14 @@ namespace AbetApi.Data
             }
         }
 
+        public async void DropDatabase()
+        {
+            await using (var context = new ABETDBContext())
+            {
+                context.Database.EnsureDeleted();
+            }
+        }
+
         // This function is here to run arbitrary code from the database class
         // Currently, it's being used to test creating/editing data in the database
         public void DoStuff()

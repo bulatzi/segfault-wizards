@@ -25,7 +25,7 @@ namespace AbetApi.Data
         // This function is used to select a connection string for your database.
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL("server=localhost;database=frameworktest;user=root;password=1234");
+            optionsBuilder.UseMySQL("server=localhost;database=abetrepo;user=root;password=1234");
         }
 
         // This function is used to add database constraints to data in tables
