@@ -1,19 +1,16 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using AbetApi.Data;
 using AbetApi.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.OpenApi.Models;
 
 namespace AbetApi
 {
@@ -61,6 +58,12 @@ namespace AbetApi
             services.AddScoped<IAbetRepo, AbetRepo>();
             services.AddScoped<ITokenGenerator, TokenGenerator>();
             services.AddScoped<IUploadManager, UploadManager>();
+
+            //Adds swagger
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AbetApi", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +72,11 @@ namespace AbetApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                //Adds Swagger
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AbetApi"));
+
             }
 
             app.UseDefaultFiles();
