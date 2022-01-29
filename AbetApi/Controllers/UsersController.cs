@@ -56,5 +56,17 @@ namespace AbetApi.Controllers
         {
             EFModels.User.EditUser(user);
         }
+
+        // This function creates a user with the provided information.
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpPost("AddUserWithRoles")]
+        public void AddUserWithRoles(AbetApi.Models.UserWithRoles userWithRoles)
+        {
+            EFModels.User.AddUser(userWithRoles.user);
+            foreach (var role in userWithRoles.roles)
+            {
+                EFModels.Role.AddRoleToUser(userWithRoles.user.EUID, role);
+            }
+        }
     }
 }
