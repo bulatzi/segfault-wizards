@@ -97,6 +97,8 @@ namespace AbetApi.EFModels
             {
                 // Finds the user
                 var user = context.Users.FirstOrDefault(u => u.EUID == EUID);
+                if (user == null)
+                    return null;
 
                 //This uses explicit loading to tell the database we want Roles loaded
                 context.Entry(user).Collection(user => user.Roles).Load();

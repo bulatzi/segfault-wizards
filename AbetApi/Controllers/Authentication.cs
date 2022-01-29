@@ -55,10 +55,19 @@ namespace AbetApi.Controllers
             //If the login worked, get all of the roles that user has, build a token, and return the token
             if (ldap.LoginSuccessful && !ldap.InternalErrorOccurred)
             {
-                var test = EFModels.User.GetRolesByUser(EUID).Result;
-                foreach(var itr in test)
+                var roles = EFModels.User.GetRolesByUser(EUID).Result;
+
+                //All users are at least a student
+                if (roles == null || roles.Count == 0)
                 {
-                    rolesToAdd.Add(itr.Name);
+                    rolesToAdd.Add("Student");
+                }
+                else if(roles.Count > 0)
+                {
+                    foreach (var itr in roles)
+                    {
+                        rolesToAdd.Add(itr.Name);
+                    }
                 }
 
                 string token = tokenGenerator.GenerateToken(EUID, rolesToAdd);

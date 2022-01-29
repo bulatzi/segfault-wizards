@@ -62,6 +62,7 @@ namespace AbetApi.Data
             Role.CreateRole("Fellow");
             Role.CreateRole("FullTime");
             Role.CreateRole("Adjunct");
+            Role.CreateRole("Student");
 
             //Gives admin access to:
             /*
@@ -165,8 +166,6 @@ namespace AbetApi.Data
             //CourseOutcome.RemoveMajorOutcome("Fall", 2022, "CSCE", "1040", "CS", "2");
 
             System.Console.WriteLine(""); //This is a placeholder for a debugger break point
-
-
         }
     }
 }
