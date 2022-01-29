@@ -64,7 +64,7 @@ namespace AbetApi.EFModels
 
                 // Converts the users of that role in to a list and returns the list.
                 var output = role.Users.ToList();
-                return output;                
+                return output;
             }
         }
 

@@ -22,6 +22,25 @@ namespace AbetApi.Controllers
             return temp;
         }
 
+        // This function returns a list of all users with the Admin/Instructor/Coordinator roles
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpGet("GetFaculty")]
+        public async Task<AbetApi.Models.Faculty> GetFaculty()
+        {
+            List<User> admins = new List<User>();
+            List<User> instructors = new List<User>();
+            List<User> coordinators = new List<User>();
+
+            AbetApi.Models.Faculty temp = new AbetApi.Models.Faculty
+            {
+                Admins = await Role.GetUsersByRole("Admin"),
+                Instructors = await Role.GetUsersByRole("Instructor"),
+                Coordinators = await Role.GetUsersByRole("Coordinator")
+            };
+
+            return temp;
+        }
+
         // This function creates a role with a given role name
         // Role name can include any characters. Any function calls for a role will be case sensitive.
         [Authorize(Roles = RoleTypes.Admin)]

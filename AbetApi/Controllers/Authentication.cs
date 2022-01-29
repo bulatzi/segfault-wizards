@@ -30,6 +30,8 @@ namespace AbetApi.Controllers
             List<string> rolesToAdd = new List<string>();
 
             //DELETEME - Development Bypass for login credentials //////////////////////////////////////////
+            //For user, type the role in all lowercase
+            //For password, just type something. It could be anything.
             switch (EUID)
             {
                 case "admin":
