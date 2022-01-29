@@ -35,39 +35,39 @@ namespace AbetApi.Controller
             this.uploadManager = uploadManager;
         }
 
-        [HttpPost("login")]
-        public ActionResult Login([FromBody] BodyParams body)
-        {
-            if (string.IsNullOrEmpty(body.UserId) || string.IsNullOrEmpty(body.Password))
-                return BadRequest();
+        //[HttpPost("login")]
+        //public ActionResult Login([FromBody] BodyParams body)
+        //{
+        //    if (string.IsNullOrEmpty(body.UserId) || string.IsNullOrEmpty(body.Password))
+        //        return BadRequest();
 
-            //superuser logins, remove later
-            if (body.UserId == "admin" && body.Password == "admin")
-                return Ok(new { token = tokenGenerator.GenerateToken(body.UserId, "Admin"), role = "Admin" });
-            else if (body.UserId == "instructor" && body.Password == "instructor")
-                return Ok(new { token = tokenGenerator.GenerateToken(body.UserId, "Instructor"), role = "Instructor" });
-            else if (body.UserId == "coordinator" && body.Password == "coordinator")
-                return Ok(new { token = tokenGenerator.GenerateToken(body.UserId, "Coordinator"), role = "Coordinator" });
-            else if (body.UserId == "student" && body.Password == "student")
-                return Ok(new { token = tokenGenerator.GenerateToken(body.UserId, "Student"), role = "Student" });
+        //    //superuser logins, remove later
+        //    if (body.UserId == "admin" && body.Password == "admin")
+        //        return Ok(new { token = tokenGenerator.GenerateToken(body.UserId, "Admin"), role = "Admin" });
+        //    else if (body.UserId == "instructor" && body.Password == "instructor")
+        //        return Ok(new { token = tokenGenerator.GenerateToken(body.UserId, "Instructor"), role = "Instructor" });
+        //    else if (body.UserId == "coordinator" && body.Password == "coordinator")
+        //        return Ok(new { token = tokenGenerator.GenerateToken(body.UserId, "Coordinator"), role = "Coordinator" });
+        //    else if (body.UserId == "student" && body.Password == "student")
+        //        return Ok(new { token = tokenGenerator.GenerateToken(body.UserId, "Student"), role = "Student" });
 
-            ldap.ValidateCredentials(body.UserId, body.Password);
+        //    ldap.ValidateCredentials(body.UserId, body.Password);
 
-            if (ldap.LoginSuccessful && !ldap.InternalErrorOccurred)
-            {
-                //find the role of the user and generate a JWT token and send the info to the frontend
-                string role = mockAbetRepo.GetRole(body.UserId);
-                //string role = abetRepo.GetRole(name);  // change name to userid later
-                                                        // role might return blank
-                string token = tokenGenerator.GenerateToken(body.UserId, role);
+        //    if (ldap.LoginSuccessful && !ldap.InternalErrorOccurred)
+        //    {
+        //        //find the role of the user and generate a JWT token and send the info to the frontend
+        //        string role = mockAbetRepo.GetRole(body.UserId);
+        //        //string role = abetRepo.GetRole(name);  // change name to userid later
+        //                                                // role might return blank
+        //        string token = tokenGenerator.GenerateToken(body.UserId, role);
 
-                return Ok(new { token, role }); //user is logged in
-            }
-            else if (!ldap.LoginSuccessful && !ldap.InternalErrorOccurred)
-                return BadRequest(new { message = ldap.ErrorMessage }); //incorrect login credentials
-            else
-                return StatusCode(SERVER_ERROR, new { message = ldap.ErrorMessage }); //internal server error
-        }
+        //        return Ok(new { token, role }); //user is logged in
+        //    }
+        //    else if (!ldap.LoginSuccessful && !ldap.InternalErrorOccurred)
+        //        return BadRequest(new { message = ldap.ErrorMessage }); //incorrect login credentials
+        //    else
+        //        return StatusCode(SERVER_ERROR, new { message = ldap.ErrorMessage }); //internal server error
+        //}
 
         //---------------INSTRUCTOR LEVEL FUNCTIONS---------------
 
