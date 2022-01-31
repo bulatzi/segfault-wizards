@@ -13,10 +13,20 @@ namespace AbetApi.Controllers
     [Route("[controller]")]
     public class SemesterController : ControllerBase
     {
-        //[Authorize(Roles = RoleTypes.Admin)]
+        //This function gets all semesters from the Semesters table in the database.
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpGet("GetSemesters")]
         public List<Semester> GetSemesters()
         {
             return Semester.GetSemesters();
         }
+
+        //This function adds a semester with the provided information to the database.
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpPost("AddSemester")]
+        public void AddSemester(Semester semester)
+        {
+            EFModels.Semester.AddSemester(semester);
+        }
+    }
 }
