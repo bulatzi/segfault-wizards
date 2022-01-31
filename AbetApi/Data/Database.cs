@@ -99,6 +99,11 @@ namespace AbetApi.Data
             /////////////////////////////////////////////////////////////////////////////////
             //Create
             Semester.AddSemester(new Semester("Spring", 2022));
+            Semester.AddSemester(new Semester("Fall", 2022));
+            Semester.AddSemester(new Semester("Summer", 2022));
+            Semester.AddSemester(new Semester("Spring", 2023));
+            Semester.AddSemester(new Semester("Fall", 2023));
+            Semester.AddSemester(new Semester("Summer", 2023));
             //Read
             var springSemester = Semester.GetSemester("Spring", 2022);
             var fallSemester = Semester.GetSemester("Fall", 2022); // This won't work. It returns null when it can't find something
