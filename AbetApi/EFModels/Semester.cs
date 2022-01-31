@@ -55,6 +55,15 @@ namespace AbetApi.EFModels
             }
         }
 
+        //This function returns all semesters in the Semester table from the database.
+        public static List<Semester> GetSemesters()
+        {
+            using (var context = new ABETDBContext())
+            {
+                return context.Semesters.ToList();
+            }
+        }
+
         // This function finds a semester by term and year, and updates the semester to the values of the provided semester object.
         // Note: This function may need to also include editing courses and majors in the future, but it's not here currently that data will need to have its own dedicated functions for editing.
         public async static void EditSemester(string term, int year, Semester NewValue) { 
