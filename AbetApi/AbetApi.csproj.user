@@ -4,6 +4,9 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
+	<LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
     <ActiveDebugProfile>IIS Express</ActiveDebugProfile>
     <NameOfLastUsedPublishProfile>AbetApi</NameOfLastUsedPublishProfile>
   </PropertyGroup>
