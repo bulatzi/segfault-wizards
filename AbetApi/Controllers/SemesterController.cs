@@ -28,5 +28,13 @@ namespace AbetApi.Controllers
         {
             EFModels.Semester.AddSemester(semester);
         }
+
+        //This function deletes a semester from the database with the provided information.
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpDelete("DeleteSemester")]
+        public void DeleteSemester(Semester semester)
+        {
+            EFModels.Semester.DeleteSemester(semester.Term, semester.Year);
+        }
     }
 }
