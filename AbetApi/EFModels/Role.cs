@@ -54,7 +54,7 @@ namespace AbetApi.EFModels
         // Gets a list of users with the selected role
         public static async Task<List<User>> GetUsersByRole(string roleName)
         {
-            using (var context = new ABETDBContext())
+            await using (var context = new ABETDBContext())
             {
                 // Finds the role
                 var role = context.Roles.FirstOrDefault(r => r.Name == roleName);
