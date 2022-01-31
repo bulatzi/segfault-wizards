@@ -48,13 +48,12 @@ namespace AbetApi.Controllers
 
         // This function updates a user with the provided information
         // User is selected via the given EUID
-        // EUID can't be edited.
-        // Other information provided is used to replace the existing information
+        // information provided in NewUserInfo is used to replace the existing information
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPatch("EditUser")]
-        public void EditUser(User user)
+        public void EditUser(string EUID,User NewUserInfo)
         {
-            EFModels.User.EditUser(user);
+            EFModels.User.EditUser(EUID, NewUserInfo);
         }
 
         // This function creates a user with the provided information.

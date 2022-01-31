@@ -53,7 +53,7 @@ namespace AbetApi.Data
             User.AddUser(new User("Alex", "Lambert", "apl0075"));
             User.AddUser(new User("Chet", "Lockwood", "cgl0021"));
 
-            User.EditUser(new User("Scrappy", "Eagle", "cgl0021"));
+            User.EditUser("cgl0021", new User("Scrappy", "Eagle", "cgl0021"));
 
             User.DeleteUser("scb0231");
 
