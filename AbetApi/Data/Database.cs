@@ -31,6 +31,14 @@ namespace AbetApi.Data
             }
         }
 
+        public async void DropDatabase()
+        {
+            await using (var context = new ABETDBContext())
+            {
+                context.Database.EnsureDeleted();
+            }
+        }
+
         // This function is here to run arbitrary code from the database class
         // Currently, it's being used to test creating/editing data in the database
         public void DoStuff()
@@ -45,7 +53,7 @@ namespace AbetApi.Data
             User.AddUser(new User("Alex", "Lambert", "apl0075"));
             User.AddUser(new User("Chet", "Lockwood", "cgl0021"));
 
-            User.EditUser(new User("Scrappy", "Eagle", "cgl0021"));
+            User.EditUser("cgl0021", new User("Scrappy", "Eagle", "cgl0021"));
 
             User.DeleteUser("scb0231");
 
@@ -62,6 +70,7 @@ namespace AbetApi.Data
             Role.CreateRole("Fellow");
             Role.CreateRole("FullTime");
             Role.CreateRole("Adjunct");
+            Role.CreateRole("Student");
 
             //Gives admin access to:
             /*
@@ -90,6 +99,11 @@ namespace AbetApi.Data
             /////////////////////////////////////////////////////////////////////////////////
             //Create
             Semester.AddSemester(new Semester("Spring", 2022));
+            Semester.AddSemester(new Semester("Fall", 2022));
+            Semester.AddSemester(new Semester("Summer", 2022));
+            Semester.AddSemester(new Semester("Spring", 2023));
+            Semester.AddSemester(new Semester("Fall", 2023));
+            Semester.AddSemester(new Semester("Summer", 2023));
             //Read
             var springSemester = Semester.GetSemester("Spring", 2022);
             var fallSemester = Semester.GetSemester("Fall", 2022); // This won't work. It returns null when it can't find something
@@ -165,8 +179,6 @@ namespace AbetApi.Data
             //CourseOutcome.RemoveMajorOutcome("Fall", 2022, "CSCE", "1040", "CS", "2");
 
             System.Console.WriteLine(""); //This is a placeholder for a debugger break point
-
-
         }
     }
 }

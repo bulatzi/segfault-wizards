@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AbetApi.Data;
 using AbetApi.EFModels;
+using AbetApi.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AbetApi.Controllers
 {
@@ -13,6 +15,7 @@ namespace AbetApi.Controllers
     public class UsersController : ControllerBase
     {
         // This function takes an EUID and returns the user information for that EUID.
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpGet("GetUser")]
         public User GetUser(string EUID)
         {
@@ -27,6 +30,7 @@ namespace AbetApi.Controllers
         }
 
         // This function creates a user with the provided information.
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("AddUser")]
         public void AddUser(User user)
         {
@@ -35,6 +39,7 @@ namespace AbetApi.Controllers
 
         // This function deletes a user's profile from the databse.
         // This does not delete a user from the UNT system. It only removes their roles to this system.
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpDelete("DeleteUser")]
         public void DeleteUser(string EUID)
         {
@@ -43,12 +48,24 @@ namespace AbetApi.Controllers
 
         // This function updates a user with the provided information
         // User is selected via the given EUID
-        // EUID can't be edited.
-        // Other information provided is used to replace the existing information
+        // information provided in NewUserInfo is used to replace the existing information
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpPatch("EditUser")]
-        public void EditUser(User user)
+        public void EditUser(string EUID,User NewUserInfo)
         {
-            EFModels.User.EditUser(user);
+            EFModels.User.EditUser(EUID, NewUserInfo);
+        }
+
+        // This function creates a user with the provided information.
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpPost("AddUserWithRoles")]
+        public void AddUserWithRoles(AbetApi.Models.UserWithRoles userWithRoles)
+        {
+            EFModels.User.AddUser(userWithRoles.user);
+            foreach (var role in userWithRoles.roles)
+            {
+                EFModels.Role.AddRoleToUser(userWithRoles.user.EUID, role);
+            }
         }
     }
 }

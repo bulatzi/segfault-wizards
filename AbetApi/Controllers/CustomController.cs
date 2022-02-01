@@ -21,5 +21,26 @@ namespace AbetApi.Controllers
             database.DoStuff();
             return "Done";
         }
+
+        // This function empties database tables defined in ABETDBContext
+        [HttpGet("WipeDBTables")]
+        public string WipeDatabaseTables()
+        {
+            Database database = new Database();
+            database.WipeTables();
+            return "Database tables are empty";
+        }
+
+        // This function drops the whole database, as described.
+        // This should be used when you make a schema change, and you want the database to be rebuilt with the new schema
+        // Drop the table, then run the program again. A database will be built during program startup
+        [HttpGet("DropDatabase")]
+        public string DropDatabase()
+        {
+            Database database = new Database();
+            database.DropDatabase();
+            return "The database is dropped";
+        }
+
     }
 }

@@ -38,21 +38,22 @@ namespace AbetApi.EFModels
             }
         }
 
-        //This function finds the user with the EUID of the input argument, and updates their other information
-        public async static void EditUser(User User)
+        //This function finds the user with the EUID of the first input argument,
+        //and updates their information with NewUserInfo
+        public async static void EditUser(string EUID, User NewUserInfo)
         {
             //Sets the user ID to 0, to allow the database to auto increment the UserId value
-            User.UserId = 0;
+            NewUserInfo.UserId = 0;
 
             await using (var context = new ABETDBContext())
             {
                 //find the user with a matching EUID
-                var user = context.Users.FirstOrDefault(p => p.EUID == User.EUID);
+                var user = context.Users.FirstOrDefault(p => p.EUID == EUID);
 
                 //Copy new values of user over to the user that's being edited
-                user.FirstName = User.FirstName;
-                user.LastName = User.LastName;
-                user.EUID = User.EUID;
+                user.FirstName = NewUserInfo.FirstName;
+                user.LastName = NewUserInfo.LastName;
+                user.EUID = NewUserInfo.EUID;
                 context.SaveChanges();
             }
         }
@@ -97,6 +98,8 @@ namespace AbetApi.EFModels
             {
                 // Finds the user
                 var user = context.Users.FirstOrDefault(u => u.EUID == EUID);
+                if (user == null)
+                    return null;
 
                 //This uses explicit loading to tell the database we want Roles loaded
                 context.Entry(user).Collection(user => user.Roles).Load();

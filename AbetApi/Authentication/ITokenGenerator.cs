@@ -7,6 +7,6 @@ namespace AbetApi.Authentication
 {
     public interface ITokenGenerator
     {
-        public string GenerateToken(string userId, string role);
+        public string GenerateToken(string userId, List<string> role);
     }
 }
