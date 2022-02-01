@@ -7,7 +7,7 @@ namespace AbetApi.EFModels
 {
     public class Major
     {
-        [JsonIgnore]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int MajorId { get; set; }
         public string Name { get; set; } // e.g. CS, CE, etc...
         [JsonIgnore]

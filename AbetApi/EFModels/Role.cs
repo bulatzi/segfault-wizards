@@ -9,7 +9,7 @@ namespace AbetApi.EFModels
 {
     public class Role
     {
-        [JsonIgnore]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int RoleId { get; set; }
         public String Name { get; set; }
         [JsonIgnore]

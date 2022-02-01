@@ -10,7 +10,7 @@ namespace AbetApi.EFModels
 {
     public class User
     {
-        [JsonIgnore]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

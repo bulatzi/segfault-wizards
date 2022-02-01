@@ -26,8 +26,7 @@ namespace AbetApi.Controllers
         [HttpGet("WipeDBTables")]
         public string WipeDatabaseTables()
         {
-            Database database = new Database();
-            database.WipeTables();
+            Database.WipeTables();
             return "Database tables are empty";
         }
 

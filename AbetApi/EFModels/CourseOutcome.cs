@@ -10,7 +10,7 @@ namespace AbetApi.EFModels
     //      a course outcome object, which maps the major to its accomplished outcomes.
     public class CourseOutcome
     {
-        [JsonIgnore]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int CourseOutcomeId { get; set; }
         public string Major { get; set; } //Searching for the major WILL BE case sensitive
         //public List<string> Outcomes; // This will store designators for major objectives, such as 1/2/etc...

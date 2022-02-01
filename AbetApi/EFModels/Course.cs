@@ -9,7 +9,7 @@ namespace AbetApi.EFModels
 {
     public class Course
     {
-        [JsonIgnore]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int CourseId { get; set; }
         public string CoordinatorEUID { get; set; }
         public string CourseNumber { get; set; } //Ex: 2100

@@ -9,7 +9,7 @@ namespace AbetApi.EFModels
 {
     public class MajorOutcome
     {
-        [JsonIgnore]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int MajorOutcomeId { get; set; }
         public string Name { get; set; } //e.g. 1, 2, 3, etc... The outcome designation.
         public string Description { get; set; }

@@ -8,7 +8,6 @@ namespace AbetApi.EFModels
 {
     public class Grade
     {
-        [JsonIgnore]
         public int GradeId { get; set; }
         public string Major { get; set; }
 

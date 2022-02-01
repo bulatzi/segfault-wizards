@@ -9,7 +9,7 @@ namespace AbetApi.EFModels
 {
     public class Section
     {
-        [JsonIgnore]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int SectionId { get; set; }
         public string InstructorEUID { get; set; }
         public bool IsSectionCompleted { get; set; }

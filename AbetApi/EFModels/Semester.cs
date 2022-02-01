@@ -9,7 +9,7 @@ namespace AbetApi.EFModels
 {
     public class Semester
     {
-        [JsonIgnore]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int SemesterId { get; set; }
         public int Year { get; set; }
         public string Term { get; set; }
