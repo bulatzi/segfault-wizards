@@ -63,11 +63,15 @@ namespace AbetApi.EFModels
             }
         }
 
-       public static List<Major> GetAllMajors()
+       public static List<Major> GetAllMajors(string term, int year)
         {
             using (var context = new ABETDBContext())
             {
-                return context.Majors.ToList();
+                Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+
+                context.Entry(semester).Collection(semester => semester.Majors).Load();
+
+                return semester.Majors.ToList();
             }
         }
 

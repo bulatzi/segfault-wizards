@@ -15,9 +15,11 @@ namespace AbetApi.Controllers
     {
         //[Authorize(Roles = RoleTypes.Admin)]
         [HttpGet("GetAllMajors")]
-        public List<Major> GetAllMajors()
+        public List<Major> GetAllMajors(string term, int year)
         {
-            return Major.GetAllMajors();
+            return Major.GetAllMajors(term, year);
         }
+
+
     }
 }
