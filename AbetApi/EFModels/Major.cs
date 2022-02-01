@@ -63,6 +63,14 @@ namespace AbetApi.EFModels
             }
         }
 
+        public static List<Major> GetAllMajors()
+        {
+            using (var context = new ABETDBContext())
+            {
+                return context.Majors.ToList();
+            }
+        }
+
         public static void EditMajor(string term, int year, string name, Major NewValue)
         {
             using (var context = new ABETDBContext())
