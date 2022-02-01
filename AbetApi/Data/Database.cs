@@ -14,7 +14,7 @@ namespace AbetApi.Data
     {
         //This helper function clears all tables
         // If new tables are added, ensure they are made in to DbSet containers in the context object, and then add them to this function.
-        public async void WipeTables()
+        public async static void WipeTables()
         {
             await using (var context = new ABETDBContext())
             {
