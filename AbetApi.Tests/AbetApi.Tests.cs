@@ -27,5 +27,20 @@ namespace AbetApi.Tests
             Assert.AreEqual(__user.FirstName, __expectedresult.FirstName);
             Assert.AreEqual(__user.LastName, __expectedresult.LastName);
         }
+
+        [TestMethod]
+        public void TestDeleteUser()
+        {
+            // Delete a user we know exists
+            // Need to handle case where we delete a user who doesn't exist in DB
+            // This test case going to fail until we flesh out method a little more
+            var __user = new User("John", "Connor", "terminator");
+            User.AddUser(__user); 
+            var __euidtodelete = "terminator";
+            User.DeleteUser(__euidtodelete);
+            var __expectedresult = User.GetUser("terminator");
+            Assert.AreEqual(__expectedresult.Result, null);
+        }
+
     }
 }
