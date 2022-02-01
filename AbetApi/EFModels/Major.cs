@@ -32,12 +32,12 @@ namespace AbetApi.EFModels
         }
 
         // FIXME - Majors are required to have a semester that they're a part of.
-        public static void AddMajor(string term, int year, Major major)
+        public async static void AddMajor(string term, int year, Major major)
         {
             //Sets the user ID to 0, to allow the database to auto increment the UserId value
             major.MajorId = 0;
 
-            using (var context = new ABETDBContext())
+            await using (var context = new ABETDBContext())
             {
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
 
@@ -63,7 +63,7 @@ namespace AbetApi.EFModels
             }
         }
 
-        public static List<Major> GetAllMajors()
+       public static List<Major> GetAllMajors()
         {
             using (var context = new ABETDBContext())
             {
@@ -71,9 +71,9 @@ namespace AbetApi.EFModels
             }
         }
 
-        public static void EditMajor(string term, int year, string name, Major NewValue)
+        public async static void EditMajor(string term, int year, string name, Major NewValue)
         {
-            using (var context = new ABETDBContext())
+            await using (var context = new ABETDBContext())
             {
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
                 context.Entry(semester).Collection(semester => semester.Majors).Load();
@@ -90,9 +90,9 @@ namespace AbetApi.EFModels
             }
         }
 
-        public static void DeleteMajor(string term, int year, string name)
+        public async static void DeleteMajor(string term, int year, string name)
         {
-            using (var context = new ABETDBContext())
+            await using (var context = new ABETDBContext())
             {
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
                 context.Entry(semester).Collection(semester => semester.Majors).Load();
