@@ -32,14 +32,14 @@ namespace AbetApi.EFModels
         }
 
         // FIXME - Majors are required to have a semester that they're a part of.
-        public async static void AddMajor(string term, int year, Major major)
+        public async static void AddMajor(string term, int year, string name)
         {
-            //Sets the user ID to 0, to allow the database to auto increment the UserId value
-            major.MajorId = 0;
 
             await using (var context = new ABETDBContext())
             {
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+
+                Major major = new Major(name);
 
                 context.Majors.Add(major);
                 semester.Majors.Add(major);
@@ -63,7 +63,9 @@ namespace AbetApi.EFModels
             }
         }
 
-       public static List<Major> GetAllMajors(string term, int year)
+       //This function takes a term and a year to identify a semester, since every major must be a child of a semester.
+       //Once a semester is identified, every major under that semester is returned in a list.
+       public static List<Major> GetMajors(string term, int year)
         {
             using (var context = new ABETDBContext())
             {

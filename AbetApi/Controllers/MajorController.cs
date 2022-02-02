@@ -15,17 +15,18 @@ namespace AbetApi.Controllers
     {
         //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("AddMajor")]
-        public void AddMajor(string term, int year, Major major)
+        public void AddMajor(string term, int year, string name)
         {
-            Major.AddMajor(term, year, major);
+            Major.AddMajor(term, year, name);
         }
 
         //[Authorize(Roles = RoleTypes.Admin)]
-        [HttpGet("GetAllMajors")]
-        public List<Major> GetAllMajors(string term, int year)
+        [HttpGet("GetMajors")]
+        public List<Major> GetMajors(string term, int year)
         {
-            return Major.GetAllMajors(term, year);
+            return Major.GetMajors(term, year);
         }
+
 
         //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPatch("EditMajor")]

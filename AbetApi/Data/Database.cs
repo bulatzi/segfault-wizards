@@ -118,7 +118,7 @@ namespace AbetApi.Data
 
             //Major class testing
             /////////////////////////////////////////////////////////////////////////////////
-            Major.AddMajor("Fall", 2022, new Major("CS"));
+            Major.AddMajor("Fall", 2022, "CS");
             //var temp = Major.GetMajor("Fall", 2022, "CS");
             //temp = Major.GetMajor("Fall", 2022, "CSE"); // return null
             //Major.EditMajor("Fall", 2022, "CS", new Major("IT"));
