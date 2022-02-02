@@ -34,5 +34,12 @@ namespace AbetApi.Controllers
         {
             Major.EditMajor(term, year, name, NewValue);
         }
+
+        //[Authorize(Roles = RoleTypes.Admin)]
+        [HttpDelete("DeleteMajor")]
+        public void DeleteMajor(string term, int year, string name)
+        {
+            Major.DeleteMajor(term, year, name);
+        }
     }
 }
