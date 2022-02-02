@@ -75,7 +75,7 @@ namespace AbetApi.EFModels
             }
         }
 
-        public async static void EditMajor(string term, int year, string name, Major NewValue)
+        public async static void EditMajor(string term, int year, string name, string NewValue)
         {
             await using (var context = new ABETDBContext())
             {
@@ -86,7 +86,7 @@ namespace AbetApi.EFModels
                 {
                     if (major.Name == name)
                     {
-                        major.Name = NewValue.Name;
+                        major.Name = NewValue;
                         context.SaveChanges();
                         return;
                     }

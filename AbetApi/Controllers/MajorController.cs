@@ -14,12 +14,24 @@ namespace AbetApi.Controllers
     public class MajorController : ControllerBase
     {
         //[Authorize(Roles = RoleTypes.Admin)]
+        [HttpPost("AddMajor")]
+        public void AddMajor(string term, int year, Major major)
+        {
+            Major.AddMajor(term, year, major);
+        }
+
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpGet("GetAllMajors")]
         public List<Major> GetAllMajors(string term, int year)
         {
             return Major.GetAllMajors(term, year);
         }
 
-
+        //[Authorize(Roles = RoleTypes.Admin)]
+        [HttpPatch("EditMajor")]
+        public void EditMajor(string term, int year, string name, string NewValue)
+        {
+            Major.EditMajor(term, year, name, NewValue);
+        }
     }
 }
