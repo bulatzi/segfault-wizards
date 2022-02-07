@@ -12,62 +12,113 @@ namespace AbetApi.Tests
     [TestClass]
     public class AbetApiTests
     {
-        /* Test(s) for the User methods */
+        /*
+         * General Note(s):
+         * Once error handling is implemented, additional and enhanced testing
+         * will be included. But until then, this is a basis for checking basic
+         * functionality as it exists currently. 
+         * Test(s) for the User methods 
+         */
 
-        public void AddUserHelper(User __user)
+        
+        public void AddUserHelper(User user)
         {
-            User.AddUser(__user);
+            User.AddUser(user);
         }
 
-        public void RemoveUserHelper(string __euid)
+        public void RemoveUserHelper(string euid)
         {
-            User.DeleteUser(__euid);
+            User.DeleteUser(euid);
         }
 
-        public void EditUserHelper(string __euid, User __newuserinfo)
+        public void EditUserHelper(string euid, User newuserinfo)
         {
-            User.EditUser(__euid, __newuserinfo);
+            User.EditUser(euid, newuserinfo);
         }
 
-        public User GetUserHelper(string __euid)
+        public User GetUserHelper(string euid)
         {
-            return User.GetUser(__euid).Result;
+            return User.GetUser(euid).Result;
         }
 
         [TestMethod]
         public void TestAddUser()
         {
-            var __user = new User("Gandalf", "Grey", "gtg001");
-            AddUserHelper(__user);
-            var __expectedresult = GetUserHelper(__user.EUID);
-            Assert.AreEqual(__user.EUID, __expectedresult.EUID);
-            Assert.AreEqual(__user.FirstName, __expectedresult.FirstName);
-            Assert.AreEqual(__user.LastName, __expectedresult.LastName);
+            var user = new User("Gandalf", "Grey", "gtg001");
+            AddUserHelper(user);
+            var expectedresult = GetUserHelper(user.EUID);
+            Assert.AreEqual(user.EUID, expectedresult.EUID);
+            Assert.AreEqual(user.FirstName, expectedresult.FirstName);
+            Assert.AreEqual(user.LastName, expectedresult.LastName);
         }
 
         [TestMethod]
         public void TestDeleteUser()
         {
-            var __user = new User("Samwise", "Gamgee", "ssg001");
-            User.AddUser(__user);
-            var __euidtodelete = "ssg001";
-            RemoveUserHelper(__euidtodelete);
-            var __expectedresult = GetUserHelper(__user.EUID);
-            Assert.AreEqual(__expectedresult, null);
+            var user = new User("Samwise", "Gamgee", "ssg001");
+            User.AddUser(user);
+            var euidtodelete = "ssg001";
+            RemoveUserHelper(euidtodelete);
+            var expectedresult = GetUserHelper(user.EUID);
+            Assert.AreEqual(expectedresult, null);
         }
 
         [TestMethod]
         public void TestEditUser()
         {
-            var __euidtoedit = "ssg001";
-            var __user = new User("Frodo", "Baggins", "fb0001");
-            AddUserHelper(__user);
-            EditUserHelper(__euidtoedit, __user);
-            var __expectedresult = GetUserHelper(__user.EUID);
-            Assert.AreEqual(__user.FirstName, __expectedresult.FirstName);
-            Assert.AreEqual(__user.LastName, __expectedresult.LastName);
-            Assert.AreEqual(__user.EUID, __expectedresult.EUID);
+            var euidtoedit = "ssg001";
+            var user = new User("Frodo", "Baggins", "fb0001");
+            AddUserHelper(user);
+            EditUserHelper(euidtoedit, user);
+            var expectedresult = GetUserHelper(user.EUID);
+            Assert.AreEqual(user.FirstName, expectedresult.FirstName);
+            Assert.AreEqual(user.LastName, expectedresult.LastName);
+            Assert.AreEqual(user.EUID, expectedresult.EUID);
             RemoveUserHelper("TestID");
         }
+
+        /* Test(s) for the Role methods 
+         * Need to implement remove role, but waiting on error handling
+         * implementation.
+         */
+
+        public void CreateRoleHelper(string newrole)
+        {
+            Role.CreateRole(newrole);
+        }
+
+        public void AddRolesToUserHelper(string newrole, List<string> euids)
+        {
+            CreateRoleHelper(newrole);
+            foreach (string euid in euids)
+            {
+                Role.AddRoleToUser(euid, newrole);
+            }
+        }
+
+        [TestMethod]
+        public void TestGetUsersByRole()
+        {
+            string newrole = "AdminTest";
+            List<string> euids = new List<string>() { "fb0001", "gtg001" };
+            AddRolesToUserHelper(newrole, euids);
+            var results = Role.GetUsersByRole(newrole).Result;
+            foreach(var result in results)
+            {
+                Assert.AreEqual(1, result.Roles.Count); // Each user's .Count should be 1
+            }
+        }
+        
+        [TestMethod]
+        public void TestRemoveRoleFromUser()
+        {
+            string removerole = "AdminTest";
+            string euid = "fb0001";
+            Role.RemoveRoleFromUser(euid, removerole);
+            var results = Role.GetUsersByRole(removerole).Result;
+            Assert.AreEqual(1, results.Count);
+        }
+
+
     }
 }
