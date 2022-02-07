@@ -94,7 +94,7 @@ namespace AbetApi.EFModels
         // Gets a list of roles from the selected user
         public static async Task<List<Role>> GetRolesByUser(string EUID)
         {
-            using (var context = new ABETDBContext())
+            await using (var context = new ABETDBContext())
             {
                 // Finds the user
                 var user = context.Users.FirstOrDefault(u => u.EUID == EUID);
