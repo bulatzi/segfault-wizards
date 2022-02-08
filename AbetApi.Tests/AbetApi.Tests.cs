@@ -143,7 +143,7 @@ namespace AbetApi.Tests
             var numsemesters = GetSemesterHelper();
             Semester.DeleteSemester(semester.Term, semester.Year);
             var results = GetSemesterHelper();
-            Assert.IsTrue(results - numsemesters == 1);
+            Assert.IsTrue(numsemesters - results == 1);
         }
 
     }
