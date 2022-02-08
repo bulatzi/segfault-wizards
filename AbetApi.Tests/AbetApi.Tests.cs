@@ -119,6 +119,32 @@ namespace AbetApi.Tests
             Assert.AreEqual(1, results.Count);
         }
 
+        /* Test(s) for the Semester methods */
+
+        public int GetSemesterHelper()
+        {
+            return Semester.GetSemesters().Count;
+        }
+
+        [TestMethod]
+        public void TestAddSemester()
+        {
+            var numsemesters = GetSemesterHelper();
+            Semester semester = new Semester("Spring", 3030);
+            Semester.AddSemester(semester);
+            var results = GetSemesterHelper();
+            Assert.IsTrue(results - numsemesters ==  1); // Will want to fix this in the future
+        }
+
+        [TestMethod]
+        public void TestDeleteSemester()
+        {
+            Semester semester = new Semester("Spring", 3030);
+            var numsemesters = GetSemesterHelper();
+            Semester.DeleteSemester(semester.Term, semester.Year);
+            var results = GetSemesterHelper();
+            Assert.IsTrue(results - numsemesters == 1);
+        }
 
     }
 }
