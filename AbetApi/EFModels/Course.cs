@@ -81,7 +81,7 @@ namespace AbetApi.EFModels
 
         public async static void EditCourse(string term, int year, string department, string courseNumber, Course NewValue)
         {
-            await using(var context = new ABETDBContext())
+            await using (var context = new ABETDBContext())
             {
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
@@ -127,7 +127,7 @@ namespace AbetApi.EFModels
         {
             List<Section> list = new List<Section>();
 
-            await using(var context = new ABETDBContext())
+            await using (var context = new ABETDBContext())
             {
                 //FIXME - Add null checking
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
@@ -137,14 +137,39 @@ namespace AbetApi.EFModels
                     if (course.Department == department && course.CourseNumber == courseNumber)
                     {
                         context.Entry(course).Collection(course => course.Sections).Load();
-                        foreach(var section in course.Sections)
+                        foreach (var section in course.Sections)
                         {
                             list.Add(section);
                         }
-                        return list;
+                        
                     }
                 }
-                return null;
+                return list;
+            }
+        }
+
+        public static async Task<List<string>> getMajorsThatRequireCourse(string term, int year, string department, string courseNumber)
+        {
+            List<string> list = new List<string>();
+
+            await using (var context = new ABETDBContext())
+            {
+                //FIXME - Add null checking
+                Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+                context.Entry(semester).Collection(semester => semester.Courses).Load();
+                foreach (var course in semester.Courses)
+                {
+                    if (course.Department == department && course.CourseNumber == courseNumber)
+                    {
+                        context.Entry(course).Collection(course => course.CourseOutcomes).Load();
+                        foreach (var courseOutcomes in course.CourseOutcomes)
+                        {
+                            list.Add(courseOutcomes.Major);
+                        }
+                        
+                    }
+                }
+                return list;
             }
         }
     }
