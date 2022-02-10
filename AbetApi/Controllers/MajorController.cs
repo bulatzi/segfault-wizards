@@ -40,5 +40,15 @@ namespace AbetApi.Controllers
         {
             Major.DeleteMajor(term, year, name);
         }
+
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpGet("GetCoursesByMajor")]
+        public List<Course> GetCoursesByMajor(string term, int year, string name)
+        {
+            var taskResult = EFModels.Major.GetCoursesByMajor(term, year, name);
+
+            var result = taskResult.Result;
+            return result;
+        }
     }
 }
