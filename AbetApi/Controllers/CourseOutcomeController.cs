@@ -17,28 +17,28 @@ namespace AbetApi.Controllers
         [HttpPost("addCourseOutcome")]
         public void CreateCourseOutcome(string term, int year, string classDepartment, string courseNumber,CourseOutcome courseOutcome)
         {
-            CourseOutcome.CreateCourseOutcome(term, year, classDepartment, courseNumber, courseOutcome);
+            EFModels.CourseOutcome.CreateCourseOutcome(term, year, classDepartment, courseNumber, courseOutcome);
         }
 
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpDelete("DeleteCourseOutcome")]
         public void DeleteCourseOutcome(string term, int year, string classDepartment, string courseNumber, string majorName)
         {
-            CourseOutcome.DeleteCourseOutcome(term, year, classDepartment, courseNumber, majorName);
+            EFModels.CourseOutcome.DeleteCourseOutcome(term, year, classDepartment, courseNumber, majorName);
         }
 
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpPost("AddMajorOutcome")]
         public void AddMajorOutcome(string term, int year, string classDepartment, string courseNumber, string majorName, string outcomeName)
         {
-            CourseOutcome.AddMajorOutcome(term, year, classDepartment,courseNumber, majorName, outcomeName);
+            EFModels.CourseOutcome.AddMajorOutcome(term, year, classDepartment,courseNumber, majorName, outcomeName);
         }
 
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpDelete("DeleteMajorOutcome")]
         public void RemoveMajorOutcome(string term, int year, string classDepartment, string courseNumber, string majorName, string outcomeName)
         {
-            CourseOutcome.RemoveMajorOutcome(term,year, classDepartment, courseNumber,majorName, outcomeName);
+            EFModels.CourseOutcome.RemoveMajorOutcome(term,year, classDepartment, courseNumber,majorName, outcomeName);
         }
     }
 }
