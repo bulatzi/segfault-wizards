@@ -14,12 +14,14 @@ namespace AbetApi.Controllers
     [Route("[controller]")]
     public class MajorOutcomeController : ControllerBase
     {
+        [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpPost("AddMajorOutcome")]
         public void AddMajorOutcome(string term, int year, string majorName, MajorOutcome majorOutcome)
         {
             EFModels.MajorOutcome.AddMajorOutcome(term, year, majorName, majorOutcome);
         }
 
+        [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpGet("GetMajorOutcome")]
         public MajorOutcome GetMajorOutcome(string term, int year, string majorName, string outcomeName)
         {
@@ -29,12 +31,14 @@ namespace AbetApi.Controllers
             return result;
         }
 
+        [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpPatch("EditMajorOutcome")]
         public void EditMajorOutcome(string term, int year, string majorName, string outcomeName, MajorOutcome NewValue)
         {
             EFModels.MajorOutcome.EditMajorOutcome(term, year, majorName,outcomeName,NewValue);
         }
 
+        [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpDelete("DeleteMajorOutcome")]
         public void DeleteMajorOutcome(string term, int year, string majorName, string outcomeName)
         {
