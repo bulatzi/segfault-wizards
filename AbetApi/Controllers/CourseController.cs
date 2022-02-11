@@ -78,5 +78,16 @@ namespace AbetApi.Controllers
 
             return result;
         }
+
+        [Authorize(Roles = RoleTypes.Coordinator)]
+        [HttpGet("GetCourseNamesByDepartment")]
+        public List<string> GetCourseNamesByDepartment(string term, int year, string department)
+        {
+            var taskResult = EFModels.Course.GetCourseNamesByDepartment(term, year, department);
+
+            var result = taskResult.Result;
+
+            return result;
+        }
     }
 }
