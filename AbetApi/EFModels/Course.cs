@@ -211,5 +211,22 @@ namespace AbetApi.EFModels
             }
             return list;
         }
+
+        //this function returns a list of all departments that have courses for a given semester
+        public static async Task<List<string>> GetDepartments(string term, int year)
+        {
+            HashSet<string> list = new HashSet<string>();
+            await using (var context = new ABETDBContext())
+            {
+                Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+                context.Entry(semester).Collection(semester => semester.Courses).Load();
+                foreach (var courses in semester.Courses)
+                {
+                    list.Add(courses.Department);
+                    
+                }
+                return list.ToList();
+            }
+        }
     }
 }
