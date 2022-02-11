@@ -56,9 +56,9 @@ namespace AbetApi.EFModels
             }
         }
 
-        public static Section GetSection(string term, int year, string department, string courseNumber, string sectionNumber)
+        public static async Task<Section> GetSection(string term, int year, string department, string courseNumber, string sectionNumber)
         {
-            using (var context = new ABETDBContext())
+            await using (var context = new ABETDBContext())
             {
                 //FIXME - Add null checking
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
