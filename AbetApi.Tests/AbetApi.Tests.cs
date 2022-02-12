@@ -147,6 +147,30 @@ namespace AbetApi.Tests
             Assert.IsTrue(numsemesters - results == 1);
         }
 
+        /* Test(s) for the Major methods */
+
+        public void AddMajorHelper(string name, string term, int year)
+        {
+            Major.AddMajor(term, year, new Major(name));
+        }
+
+        [TestMethod]
+        public void TestAddMajor()
+        {
+            string name = "FTSY";
+            string term = "Spring";
+            int year = 3030;
+            var semester = new Semester(term, year);
+            
+            Semester.AddSemester(semester);
+            
+            AddMajorHelper(name, term, year);
+            var results = Major.GetMajor(term, year, name);
+            Assert.AreEqual(results.Name, "FTSY");
+        }
+
+        // To do -- test delete Major. Kind of breaks without error handling. 
+
         /* Test(s) for the Course methods */
         public Course CreateCourseHelper(string coordinator, string coursenumber, string displayname, string coordinatorcomment, bool iscoursecompleted, string department)
         {
@@ -156,24 +180,26 @@ namespace AbetApi.Tests
         [TestMethod]
         public void TestAddCourse()
         {
-            Semester semester = new Semester("Spring", 3030);
+            Semester semester = new Semester("Spring", 3031);
             Semester.AddSemester(semester);
-            var course = CreateCourseHelper(
+            Course course = new Course(
                 "Elrond, Lord of Rivendell",
-                "2001",
+                "2021",
                 "The Lord of the Rings",
                 "A mighty Elf-ruler of old who lived in Middle-earth from the First Age to the beginning of the Fourth Age.",
                 true,
                 "FTSY"
            );
-            Course.AddCourse("Spring", 3030, course);
+            Course.AddCourse("Spring", 3031, course);
+            Section section = new Section("ELR001", true, "001", 12);
+            course.Sections.Add(section);
             //FIXME Need a return status of code here for successful insertion
         }
 
         [TestMethod]
         public void TestGetCourse()
         {
-            var course = Course.GetCourse("Spring", 3030, "FTSY", "2021");
+            var course = Course.GetCourse("Spring", 3031, "FTSY", "2021");
             Assert.IsNotNull(course, "The course does not exist.");
         }
 
