@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AbetApi.EFModels;
 using System.Collections.Generic;
 
+
 namespace AbetApi.Tests
 {
     [TestClass]
@@ -144,6 +145,36 @@ namespace AbetApi.Tests
             Semester.DeleteSemester(semester.Term, semester.Year);
             var results = GetSemesterHelper();
             Assert.IsTrue(numsemesters - results == 1);
+        }
+
+        /* Test(s) for the Course methods */
+        public Course CreateCourseHelper(string coordinator, string coursenumber, string displayname, string coordinatorcomment, bool iscoursecompleted, string department)
+        {
+            return new Course(coordinator, coursenumber, displayname, coordinatorcomment, iscoursecompleted, department); 
+        }
+
+        [TestMethod]
+        public void TestAddCourse()
+        {
+            Semester semester = new Semester("Spring", 3030);
+            Semester.AddSemester(semester);
+            var course = CreateCourseHelper(
+                "Elrond, Lord of Rivendell",
+                "2001",
+                "The Lord of the Rings",
+                "A mighty Elf-ruler of old who lived in Middle-earth from the First Age to the beginning of the Fourth Age.",
+                true,
+                "FTSY"
+           );
+            Course.AddCourse("Spring", 3030, course);
+            //FIXME Need a return status of code here for successful insertion
+        }
+
+        [TestMethod]
+        public void TestGetCourse()
+        {
+            var course = Course.GetCourse("Spring", 3030, "FTSY", "2021");
+            Assert.IsNotNull(course, "The course does not exist.");
         }
 
     }
