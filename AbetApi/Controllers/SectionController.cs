@@ -44,9 +44,9 @@ namespace AbetApi.Controllers
           // string department:    Major department, such as CSCE or MEEN
           // string courseNumber:  Course identifier, such as 3600 for Systems Programming
           // string sectionNumber: Course section, such as 001 or 002
-          // description:          This function gets a JSON object that contains sectonID,
-          //                       instructorEUD, isSectioncompleted, sectionNumber,
-          //                       numberOfStudents
+          // description:          This function gets a JSON object that contains sectonID int,
+          //                       instructorEUD string, isSectioncompleted boolean, 
+          //                       sectionNumber string,numberOfStudents int
           ////////////////////////////////////////////////////////////////////////////////////
           [Authorize(Roles = RoleTypes.Admin)]
           [HttpGet("GetSection")]
@@ -91,5 +91,5 @@ namespace AbetApi.Controllers
           {
                Section.DeleteSection(term, year, department, courseNumber, sectionNumber);
           } // DeleteSection
-     }
+     } // SectionController
 }
