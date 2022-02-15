@@ -32,9 +32,18 @@ namespace AbetApi.Controllers
           ////////////////////////////////////////////////////////////////////////////////////
           [Authorize(Roles = RoleTypes.Admin)]
           [HttpPost("AddSection")]
-          public void AddSection(string term, int year, string department, string courseNumber, Section section)
+          public async Task<IActionResult> AddSection(string term, int year, string department, string courseNumber, Section section)
           {
-               Section.AddSection(term, year, department, courseNumber, section);
+               try
+               {
+                    await Section.AddSection(term, year, department, courseNumber, section);
+                    return Ok();
+               }
+               catch (Exception ex)
+               {
+                    return BadRequest(ex.Message);
+               }
+               
           } // AddSection
 
           ////////////////////////////////////////////////////////////////////////////////////
@@ -50,11 +59,16 @@ namespace AbetApi.Controllers
           ////////////////////////////////////////////////////////////////////////////////////
           [Authorize(Roles = RoleTypes.Admin)]
           [HttpGet("GetSection")]
-          public Task<Section> GetSection(string term, int year, string department, string courseNumber, string sectionNumber)
+          public async Task<IActionResult> GetSection(string term, int year, string department, string courseNumber, string sectionNumber)
           {
-               var taskResult = Section.GetSection(term, year, department, courseNumber, sectionNumber);
-
-               return taskResult;
+               try
+               {
+                    return Ok(await Section.GetSection(term, year, department, courseNumber, sectionNumber));
+               }
+               catch (Exception ex)
+               {
+                    return BadRequest(ex.Message);
+               }
           } // GetSection
 
           ////////////////////////////////////////////////////////////////////////////////////
@@ -71,9 +85,17 @@ namespace AbetApi.Controllers
           ////////////////////////////////////////////////////////////////////////////////////
           [Authorize(Roles = RoleTypes.Admin)]
           [HttpPatch("EditSection")]
-          public void EditSection(string term, int year, string department, string courseNumber, string sectionNumber, Section NewValue)
+          public async Task<IActionResult> EditSection(string term, int year, string department, string courseNumber, string sectionNumber, Section NewValue)
           {
-               Section.EditSection(term, year, department, courseNumber, sectionNumber, NewValue);
+               try
+               {
+                    await Section.EditSection(term, year, department, courseNumber, sectionNumber, NewValue);
+                    return Ok();
+               }
+               catch (Exception ex)
+               {
+                    return BadRequest(ex.Message);
+               }
           } // EditSection
 
           ////////////////////////////////////////////////////////////////////////////////////
@@ -87,9 +109,17 @@ namespace AbetApi.Controllers
           ////////////////////////////////////////////////////////////////////////////////////
           [Authorize(Roles = RoleTypes.Admin)]
           [HttpDelete("DeleteSection")]
-          public void DeleteSection(string term, int year, string department, string courseNumber, string sectionNumber)
+          public async Task<IActionResult> DeleteSection(string term, int year, string department, string courseNumber, string sectionNumber)
           {
-               Section.DeleteSection(term, year, department, courseNumber, sectionNumber);
+               try
+               {
+                    await Section.DeleteSection(term, year, department, courseNumber, sectionNumber);
+                    return Ok();
+               }
+               catch (Exception ex)
+               {
+                    return BadRequest(ex.Message);
+               }
           } // DeleteSection
      } // SectionController
 }
