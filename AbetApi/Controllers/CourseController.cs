@@ -10,95 +10,137 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AbetApi.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class CourseController : ControllerBase
-    {
-        [Authorize(Roles = RoleTypes.Coordinator)]
-        [HttpPost("AddCourse")]
-        public void AddCourse(string term, int year, Course course)
-        {
-            EFModels.Course.AddCourse(term, year, course);
-        }
+     [ApiController]
+     [Route("[controller]")]
+     public class CourseController : ControllerBase
+     {
+          //[Authorize(Roles = RoleTypes.Coordinator)]
+          [HttpPost("AddCourse")]
+          public async Task<IActionResult> AddCourse(string term, int year, Course course)
+          {
+               try
+               {
+                    await Course.AddCourse(term, year, course);
+                    return Ok();
+               }
+               catch (Exception ex)
+               {
+                    return BadRequest(ex.Message);
+               }
+          } // AddCourse
 
-        [Authorize(Roles = RoleTypes.Coordinator)]
-        [HttpGet("GetCourse")]       
-        public Course GetCourse(string term, int year, string department, string courseNumber)
-        {
-            var taskResult = EFModels.Course.GetCourse(term, year, department, courseNumber);
+          //[Authorize(Roles = RoleTypes.Coordinator)]
+          [HttpGet("GetCourse")]
+          public async Task<IActionResult> GetCourse(string term, int year, string department, string courseNumber)
+          {
+               try
+               {
+                    return Ok(await Course.GetCourse(term, year, department, courseNumber));
+               }
+               catch (Exception ex)
+               {
+                    return BadRequest(ex.Message);
+               }
+          } // GetCourse
 
-            var result = taskResult.Result;
+          //[Authorize(Roles = RoleTypes.Coordinator)]
+          [HttpPatch("EditCourse")]
+          public async Task<IActionResult> EditCourse(string term, int year, string department, string courseNumber, Course NewValue)
+          {
+               try
+               {
+                    await Course.EditCourse(term, year, department, courseNumber, NewValue);
+                    return Ok();
+               }
+               catch (Exception ex)
+               {
+                    return BadRequest(ex.Message);
+               }
+          } // EditCourse
 
-            return result;
+          //[Authorize(Roles = RoleTypes.Coordinator)]
+          [HttpDelete("DeleteCourse")]
+          public async Task<IActionResult> DeleteCourse(string term, int year, string department, string courseNumber)
+          {
+               try
+               {
+                    await Course.DeleteCourse(term, year, department, courseNumber);
+                    return Ok();
+               }
+               catch (Exception ex)
+               {
+                    return BadRequest(ex.Message);
+               }
+          } // DeleteCourse
 
-        }
+          //[Authorize(Roles = RoleTypes.Coordinator)]
+          [HttpGet("GetSections")]
+          public async Task<IActionResult> GetSections(string term, int year, string department, string courseNumber)
+          {
+               try
+               {
+                    return Ok(await Course.GetSections(term, year, department, courseNumber));
+               }
+               catch (Exception ex)
+               {
+                    return BadRequest(ex.Message);
+               }
+          } // GetSections
 
-        [Authorize(Roles = RoleTypes.Coordinator)]
-        [HttpPatch("EditCourse")]
-        public void EditCourse(string term, int year, string department, string courseNumber, Course NewValue)
-        {
-            EFModels.Course.EditCourse(term, year, department,courseNumber, NewValue);
-        }
+          //[Authorize(Roles = RoleTypes.Coordinator)]
+          [HttpGet("GetMajorsThatRequireCourse")]
+          public async Task<IActionResult> getMajorsThatRequireCourse(string term, int year, string department, string courseNumber)
+          {
+               try
+               {
+                    return Ok(await Course.getMajorsThatRequireCourse(term, year, department, courseNumber));
+               }
+               catch (Exception ex)
+               {
+                    return BadRequest(ex.Message);
+               }
+          } // getMajorsThatRequireCourse
 
-        [Authorize(Roles = RoleTypes.Coordinator)]
-        [HttpDelete("DeleteCourse")]
-        public void DeleteCourse(string term, int year, string department, string courseNumber)
-        {
-            EFModels.Course.DeleteCourse(term, year, department, courseNumber);
-        }
+          //[Authorize(Roles = RoleTypes.Coordinator)]
+          [HttpGet("GetCoursesByDepartment")]
+          public async Task<IActionResult> GetCoursesByDepartment(string term, int year, string department)
+          {
+               try
+               {
+                    return Ok(await Course.GetCoursesByDepartment(term, year, department));
+               }
+               catch (Exception ex)
+               {
+                    return BadRequest(ex.Message);
+               }
+          } // GetCoursesByDepartment
 
-        [Authorize(Roles = RoleTypes.Coordinator)]
-        [HttpGet("GetSections")]
-        public List<Section> GetSections(string term, int year, string department, string courseNumber)
-        {
-            var taskResult = EFModels.Course.GetSections(term, year, department, courseNumber);
+          //[Authorize(Roles = RoleTypes.Coordinator)]
+          [HttpGet("GetCourseNamesByDepartment")]
+          public async Task<IActionResult> GetCourseNamesByDepartment(string term, int year, string department)
+          {
+               try
+               {
+                    return Ok(await Course.GetCourseNamesByDepartment(term, year, department));
+               }
+               catch (Exception ex)
+               {
+                    return BadRequest(ex.Message);
+               }
+          }
 
-            var result = taskResult.Result;
-
-            return result;
-        }
-
-        [Authorize(Roles = RoleTypes.Coordinator)]
-        [HttpGet("GetMajorsThatRequireCourse")]
-        public List<string> getMajorsThatRequireCourse(string term, int year, string department, string courseNumber)
-        {
-            var taskResult = EFModels.Course.getMajorsThatRequireCourse(term, year, department, courseNumber);
-
-            var result = taskResult.Result;
-
-            return result;
-        }
-        [Authorize(Roles = RoleTypes.Coordinator)]
-        [HttpGet("GetCoursesByDepartment")]
-        public List<Course> GetCoursesByDepartment(string term, int year, string department)
-        {
-            var taskResult = EFModels.Course.GetCoursesByDepartment(term, year, department);
-
-            var result = taskResult.Result;
-
-            return result;
-        }
-
-        [Authorize(Roles = RoleTypes.Coordinator)]
-        [HttpGet("GetCourseNamesByDepartment")]
-        public List<string> GetCourseNamesByDepartment(string term, int year, string department)
-        {
-            var taskResult = EFModels.Course.GetCourseNamesByDepartment(term, year, department);
-
-            var result = taskResult.Result;
-
-            return result;
-        }
-
-        [Authorize(Roles = RoleTypes.Coordinator)]
-        [HttpGet("GetDepartments")]
-        public List<string> GetDepartments(string term, int year)
-        {
-            var taskResult = EFModels.Course.GetDepartments(term, year);
-
-            var result = taskResult.Result;
-
-            return result;
-        }
-    }
+          //[Authorize(Roles = RoleTypes.Coordinator)]
+          [HttpGet("GetDepartments")]
+          public async Task<IActionResult> GetDepartments(string term, int year)
+          {
+               try
+               {
+                    return Ok(await Course.GetDepartments(term, year));
+               }
+               catch (Exception ex)
+               {
+                    return BadRequest(ex.Message);
+               }
+          } // GetDepartments
+     } // CourseController
 }
