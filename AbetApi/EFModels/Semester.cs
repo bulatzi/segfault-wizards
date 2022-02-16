@@ -59,6 +59,7 @@ namespace AbetApi.EFModels
                }
           }
 
+          //COULD GIVE INDICATION OF NO SEMESTERS LISTED
           //This function returns all semesters in the Semester table from the database.
           public static async Task<List<Semester>> GetSemesters()
           {

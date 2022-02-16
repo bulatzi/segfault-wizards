@@ -26,7 +26,7 @@ namespace AbetApi.Controllers
                {
                     return BadRequest(ex.Message);
                }
-          }
+          } // GetSemesters
 
           //This function adds a semester with the provided information to the database.
           //[Authorize(Roles = RoleTypes.Admin)]
@@ -42,7 +42,7 @@ namespace AbetApi.Controllers
                {
                     return BadRequest(ex.Message);
                } 
-          }
+          } // AddSemester
 
           //This function deletes a semester from the database with the provided information.
           //[Authorize(Roles = RoleTypes.Admin)]
@@ -58,6 +58,6 @@ namespace AbetApi.Controllers
                {
                     return BadRequest(ex.Message);
                }   
-          }
-     }
+          } // DeleteSemester
+     } // SemesterController
 }
