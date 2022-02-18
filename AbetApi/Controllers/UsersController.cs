@@ -28,7 +28,7 @@ namespace AbetApi.Controllers
                {
                     return BadRequest(ex.Message);
                }
-          }
+          } // GetUser
 
           // THROWS AN INNER EXCEPTION THAT MIGHT NEED TO BE RETHROWN FOR DETAILS
           // This function creates a user with the provided information.
@@ -45,7 +45,7 @@ namespace AbetApi.Controllers
                {
                     return BadRequest(ex.Message);
                }
-          }
+          } // AddUser
 
           // This function deletes a user's profile from the databse.
           // This does not delete a user from the UNT system. It only removes their roles to this system.
@@ -62,7 +62,7 @@ namespace AbetApi.Controllers
                {
                     return BadRequest(ex.Message);
                }
-          }
+          } // DeleteUser
 
           // This function updates a user with the provided information
           // User is selected via the given EUID
@@ -80,7 +80,7 @@ namespace AbetApi.Controllers
                {
                     return BadRequest(ex.Message);
                }
-          }
+          } // EditUser
 
           // THROWS AN INNER EXCEPTION THAT MIGHT NEED TO BE RETHROWN FOR DETAILS
           // This function creates a user with the provided information.
@@ -109,6 +109,6 @@ namespace AbetApi.Controllers
                     return BadRequest(ex.Message);
                }
 
-          }
-     }
+          } // AddUserWithRoles
+     } // UserController
 }

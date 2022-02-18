@@ -37,7 +37,7 @@ namespace AbetApi.EFModels
                     context.Users.Add(User);
                     context.SaveChanges();
                }
-          }
+          } // AddUser
 
           //This function finds the user with the EUID of the first input argument,
           //and updates their information with NewUserInfo
@@ -57,7 +57,7 @@ namespace AbetApi.EFModels
                     user.EUID = NewUserInfo.EUID;
                     context.SaveChanges();
                }
-          }
+          } // EditUser
 
           // This function deletes a selected user
           // Anybody calling this function should make sure you want to call this function. Deletions are final.
@@ -72,7 +72,7 @@ namespace AbetApi.EFModels
                     context.Remove(user);
                     context.SaveChanges();
                }
-          }
+          } // DeleteUser
 
           // This function returns user information for the provided EUID
           public async static Task<User> GetUser(string EUID)
@@ -83,7 +83,7 @@ namespace AbetApi.EFModels
                     var user = context.Users.FirstOrDefault(p => p.EUID == EUID);
                     return user;
                }
-          }
+          } // GetUser
 
           public User(string FirstName, string LastName, string EUID)
           {
@@ -109,6 +109,6 @@ namespace AbetApi.EFModels
                     var output = user.Roles.ToList();
                     return output;
                }
-          }
-     }
+          } // GetRolesByUser
+     } // User
 }
