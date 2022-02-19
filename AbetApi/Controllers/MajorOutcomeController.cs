@@ -16,34 +16,61 @@ namespace AbetApi.Controllers
     {
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpPost("AddMajorOutcome")]
-        public void AddMajorOutcome(string term, int year, string majorName, MajorOutcome majorOutcome)
+        public async Task<IActionResult> AddMajorOutcome(string term, int year, string majorName, MajorOutcome majorOutcome)
         {
-            EFModels.MajorOutcome.AddMajorOutcome(term, year, majorName, majorOutcome);
-        }
+            try
+            {
+                await MajorOutcome.AddMajorOutcome(term, year, majorName, majorOutcome);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        } // AddMajorOutcome
 
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpGet("GetMajorOutcome")]
-        public MajorOutcome GetMajorOutcome(string term, int year, string majorName, string outcomeName)
+        public async Task<IActionResult> GetMajorOutcome(string term, int year, string majorName, string outcomeName)
         {
-            var taskResult = EFModels.MajorOutcome.GetMajorOutcome(term: term, year: year, majorName, outcomeName);
-
-            var result = taskResult.Result;
-            return result;
-        }
+            try
+            {
+                return Ok(await MajorOutcome.GetMajorOutcome(term: term, year: year, majorName, outcomeName));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        } // GetMajorOutcome
 
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpPatch("EditMajorOutcome")]
-        public void EditMajorOutcome(string term, int year, string majorName, string outcomeName, MajorOutcome NewValue)
+        public async Task<IActionResult> EditMajorOutcome(string term, int year, string majorName, string outcomeName, MajorOutcome NewValue)
         {
-            EFModels.MajorOutcome.EditMajorOutcome(term, year, majorName,outcomeName,NewValue);
-        }
+            try
+            {
+                await MajorOutcome.EditMajorOutcome(term, year, majorName, outcomeName, NewValue);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        } // EditMajorOutcome
 
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpDelete("DeleteMajorOutcome")]
-        public void DeleteMajorOutcome(string term, int year, string majorName, string outcomeName)
+        public async Task<IActionResult> DeleteMajorOutcome(string term, int year, string majorName, string outcomeName)
         {
-            EFModels.MajorOutcome.DeleteMajorOutcome(term, year, majorName, outcomeName);
-        }
-        
-    }
+            try
+            {
+                await MajorOutcome.DeleteMajorOutcome(term, year, majorName, outcomeName);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        } // DeleteMajorOutcome
+    } // MajorOutcomeController
 }

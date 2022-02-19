@@ -14,7 +14,7 @@ namespace AbetApi.Controllers
     public class SemesterController : ControllerBase
     {
         //This function gets all semesters from the Semesters table in the database.
-        //[Authorize(Roles = RoleTypes.Admin)]
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpGet("GetSemesters")]
         public async Task<IActionResult> GetSemesters()
         {
@@ -29,7 +29,7 @@ namespace AbetApi.Controllers
         } // GetSemesters
 
         //This function adds a semester with the provided information to the database.
-        //[Authorize(Roles = RoleTypes.Admin)]
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("AddSemester")]
         public async Task<IActionResult> AddSemester(Semester semester)
         {
@@ -45,7 +45,7 @@ namespace AbetApi.Controllers
         } // AddSemester
 
         //This function deletes a semester from the database with the provided information.
-        //[Authorize(Roles = RoleTypes.Admin)]
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpDelete("DeleteSemester")]
         public async Task<IActionResult> DeleteSemester(Semester semester)
         {

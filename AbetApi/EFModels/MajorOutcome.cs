@@ -18,7 +18,8 @@ namespace AbetApi.EFModels
         [JsonIgnore]
         public ICollection<CourseOutcome> CourseOutcomes { get; set; }
 
-        public MajorOutcome() {
+        public MajorOutcome()
+        {
             this.Majors = new List<Major>();
             this.CourseOutcomes = new List<CourseOutcome>();
         }
@@ -28,17 +29,17 @@ namespace AbetApi.EFModels
             this.Description = description;
         }
 
-        public static void AddMajorOutcome(string term, int year, string majorName, MajorOutcome majorOutcome)
+        public static async Task AddMajorOutcome(string term, int year, string majorName, MajorOutcome majorOutcome)
         {
             majorOutcome.MajorOutcomeId = 0;
-            using (var context = new ABETDBContext())
+            await using (var context = new ABETDBContext())
             {
                 Major tempMajor = null;
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
                 context.Entry(semester).Collection(semester => semester.Majors).Load();
                 foreach (var major in semester.Majors)
                 {
-                    if(major.Name == majorName)
+                    if (major.Name == majorName)
                     {
                         tempMajor = major;
                         break;
@@ -48,8 +49,10 @@ namespace AbetApi.EFModels
                 context.MajorOutcomes.Add(majorOutcome);
                 tempMajor.MajorOutcomes.Add(majorOutcome);
                 context.SaveChanges();
+
+                return;
             }
-        }
+        } // AddMajorOutcome
 
         public static async Task<MajorOutcome> GetMajorOutcome(string term, int year, string majorName, string outcomeName)
         {
@@ -75,11 +78,11 @@ namespace AbetApi.EFModels
                 }
                 return null;
             }
-        }
+        } // GetMajorOutcome
 
-        public static void EditMajorOutcome(string term, int year, string majorName, string outcomeName, MajorOutcome NewValue)
+        public static async Task EditMajorOutcome(string term, int year, string majorName, string outcomeName, MajorOutcome NewValue)
         {
-            using (var context = new ABETDBContext())
+            await using (var context = new ABETDBContext())
             {
                 //FIXME - Add null checking
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
@@ -101,12 +104,14 @@ namespace AbetApi.EFModels
                         }
                     }
                 }
+                return;
             }
-        }
+        } // EditMajorOutcome
 
-        public static void DeleteMajorOutcome(string term, int year, string majorName, string outcomeName)
+        // WILL GIVE A 200 SUCCESS IN MAJORNAME AND OUTCOMENAME, EVEN IF IT DOESN"T EXIST OR THE VALUE IS NULL
+        public static async Task DeleteMajorOutcome(string term, int year, string majorName, string outcomeName)
         {
-            using (var context = new ABETDBContext())
+            await using (var context = new ABETDBContext())
             {
                 //FIXME - Add null checking
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
@@ -127,7 +132,8 @@ namespace AbetApi.EFModels
                         }
                     }
                 }
+                return;
             }
-        }
-    }
+        } // DeleteMajorOutcome
+    } // MajorOutcome
 }
