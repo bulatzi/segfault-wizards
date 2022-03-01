@@ -26,9 +26,8 @@ namespace AbetApi.EFModels
         [JsonIgnore]
         public ICollection<Semester> Semesters { get; set; } //
 
-        public Course(string coordinator, string courseNumber, string displayName, string coordinatorComment, bool isCourseCompleted, string department)
+        public Course(string coordinator, string courseNumber, string displayName, string coordinatorComment, bool isCourseCompleted, string department) : this()
         {
-            this.CoordinatorEUID = coordinator; // Coordinator for the class
             this.CourseNumber = courseNumber; // e.g. 2100
             this.DisplayName = displayName; // A human readable name. (Intro to networks)
             this.CoordinatorComment = coordinatorComment; // A miscellanious comment
