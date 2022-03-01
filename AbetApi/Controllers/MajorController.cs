@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using AbetApi.EFModels;
 using AbetApi.Authentication;
-using Microsoft.AspNetCore.Authorization;
 
 namespace AbetApi.Controllers
 {
@@ -15,30 +17,77 @@ namespace AbetApi.Controllers
     {
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("AddMajor")]
-        public void AddMajor(string term, int year, string name)
+        public async Task<IActionResult> AddMajor(string term, int year, string name)
         {
-            Major.AddMajor(term, year, name);
-        }
+            try
+            {
+                await Major.AddMajor(term, year, name);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        } // AddMajor
 
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpGet("GetMajors")]
-        public List<Major> GetMajors(string term, int year)
+        public async Task<IActionResult> GetMajors(string term, int year)
         {
-            return Major.GetMajors(term, year);
-        }
+            try
+            {
+                return Ok(await Major.GetMajors(term, year));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        } // GetMajors
 
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPatch("EditMajor")]
-        public void EditMajor(string term, int year, string name, string NewValue)
+        public async Task<IActionResult> EditMajor(string term, int year, string name, string NewValue)
         {
-            Major.EditMajor(term, year, name, NewValue);
-        }
+            try
+            {
+                await Major.EditMajor(term, year, name, NewValue);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        } // EditMajor
 
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpDelete("DeleteMajor")]
-        public void DeleteMajor(string term, int year, string name)
+        public async Task<IActionResult> DeleteMajor(string term, int year, string name)
         {
-            Major.DeleteMajor(term, year, name);
-        }
-    }
+            try
+            {
+                await Major.DeleteMajor(term, year, name);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        } // DeleteMajor
+
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpGet("GetCoursesByMajor")]
+        public async Task<IActionResult> GetCoursesByMajor(string term, int year, string major)
+        {
+            try
+            {
+                //var taskResult = await Major.GetCoursesByMajor(term, year, major);
+                //return Ok(taskResult);
+                return Ok(await Major.GetCoursesByMajor(term, year, major));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        } // GetCoursesByMajor
+    } // MajorController
 }

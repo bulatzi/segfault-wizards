@@ -16,25 +16,48 @@ namespace AbetApi.Controllers
         //This function gets all semesters from the Semesters table in the database.
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpGet("GetSemesters")]
-        public List<Semester> GetSemesters()
+        public async Task<IActionResult> GetSemesters()
         {
-            return Semester.GetSemesters();
-        }
+            try
+            {
+                return Ok(await Semester.GetSemesters());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        } // GetSemesters
 
         //This function adds a semester with the provided information to the database.
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("AddSemester")]
-        public void AddSemester(Semester semester)
+        public async Task<IActionResult> AddSemester(Semester semester)
         {
-            EFModels.Semester.AddSemester(semester);
-        }
+            try
+            {
+                await Semester.AddSemester(semester);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        } // AddSemester
 
         //This function deletes a semester from the database with the provided information.
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpDelete("DeleteSemester")]
-        public void DeleteSemester(Semester semester)
+        public async Task<IActionResult> DeleteSemester(Semester semester)
         {
-            EFModels.Semester.DeleteSemester(semester.Term, semester.Year);
-        }
-    }
+            try
+            {
+                await Semester.DeleteSemester(semester.Term, semester.Year);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        } // DeleteSemester
+    } // SemesterController
 }

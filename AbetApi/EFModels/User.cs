@@ -18,14 +18,15 @@ namespace AbetApi.EFModels
         [JsonIgnore]
         public ICollection<Role> Roles { get; set; }
 
-        public User() 
+        public User()
         {
             this.Roles = new List<Role>();
         }
 
+        // THROWS AN INNER EXCEPTION THAT MIGHT NEED TO BE RETHROWN FOR DETAILS
         // This function creates a user profile in the DB with the given information
         // EUID must be unique from other users in the DB
-        public async static void AddUser(User User)
+        public async static Task AddUser(User User)
         {
             //Sets the user ID to 0, to allow the database to auto increment the UserId value
             User.UserId = 0;
@@ -36,11 +37,11 @@ namespace AbetApi.EFModels
                 context.Users.Add(User);
                 context.SaveChanges();
             }
-        }
+        } // AddUser
 
         //This function finds the user with the EUID of the first input argument,
         //and updates their information with NewUserInfo
-        public async static void EditUser(string EUID, User NewUserInfo)
+        public async static Task EditUser(string EUID, User NewUserInfo)
         {
             //Sets the user ID to 0, to allow the database to auto increment the UserId value
             NewUserInfo.UserId = 0;
@@ -56,11 +57,11 @@ namespace AbetApi.EFModels
                 user.EUID = NewUserInfo.EUID;
                 context.SaveChanges();
             }
-        }
+        } // EditUser
 
         // This function deletes a selected user
         // Anybody calling this function should make sure you want to call this function. Deletions are final.
-        public async static void DeleteUser(string EUID)
+        public async static Task DeleteUser(string EUID)
         {
             await using (var context = new ABETDBContext())
             {
@@ -71,7 +72,7 @@ namespace AbetApi.EFModels
                 context.Remove(user);
                 context.SaveChanges();
             }
-        }
+        } // DeleteUser
 
         // This function returns user information for the provided EUID
         public async static Task<User> GetUser(string EUID)
@@ -82,7 +83,7 @@ namespace AbetApi.EFModels
                 var user = context.Users.FirstOrDefault(p => p.EUID == EUID);
                 return user;
             }
-        }
+        } // GetUser
 
         public User(string FirstName, string LastName, string EUID)
         {
@@ -94,7 +95,7 @@ namespace AbetApi.EFModels
         // Gets a list of roles from the selected user
         public static async Task<List<Role>> GetRolesByUser(string EUID)
         {
-            using (var context = new ABETDBContext())
+            await using (var context = new ABETDBContext())
             {
                 // Finds the user
                 var user = context.Users.FirstOrDefault(u => u.EUID == EUID);
@@ -108,6 +109,6 @@ namespace AbetApi.EFModels
                 var output = user.Roles.ToList();
                 return output;
             }
-        }
-    }
+        } // GetRolesByUser
+    } // User
 }

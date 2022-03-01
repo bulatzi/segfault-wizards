@@ -16,7 +16,7 @@ namespace AbetApi.EFModels
         public string SectionNumber { get; set; } //Ex: 1
         public int NumberOfStudents { get; set; }
         [JsonIgnore]
-        public ICollection<Grade> Grades { get; set; } 
+        public ICollection<Grade> Grades { get; set; }
 
         public Section(string instructorEUID, bool sectionCompleted, string sectionNumber, int numberOfStudents)
         {
@@ -31,10 +31,10 @@ namespace AbetApi.EFModels
             this.Grades = new List<Grade>();
         }
 
-        public static void AddSection(string term, int year, string department, string courseNumber, Section section)
+        public static async Task AddSection(string term, int year, string department, string courseNumber, Section section)
         {
             section.SectionId = 0;
-            using(var context = new ABETDBContext())
+            await using (var context = new ABETDBContext())
             {
                 //Find the semester/course the section will belong to
                 Course tempCourse = null;
@@ -53,12 +53,15 @@ namespace AbetApi.EFModels
                 context.Sections.Add(section);
                 tempCourse.Sections.Add(section);
                 context.SaveChanges();
-            }
-        }
 
-        public static Section GetSection(string term, int year, string department, string courseNumber, string sectionNumber)
+                return;
+            }
+        } // AddSection
+
+        // NEEDS ADDITIONAL NULL CHECKING AND TRHOWING OF EXCEPTIONS
+        public static async Task<Section> GetSection(string term, int year, string department, string courseNumber, string sectionNumber)
         {
-            using (var context = new ABETDBContext())
+            await using (var context = new ABETDBContext())
             {
                 //FIXME - Add null checking
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
@@ -70,7 +73,7 @@ namespace AbetApi.EFModels
                         context.Entry(course).Collection(course => course.Sections).Load();
                         foreach (var section in course.Sections)
                         {
-                            if(section.SectionNumber == sectionNumber )
+                            if (section.SectionNumber == sectionNumber)
                             {
                                 return section;
                             }
@@ -80,11 +83,11 @@ namespace AbetApi.EFModels
                 }
                 return null;
             }
-        }
+        } // GetSection
 
-        public static void EditSection(string term, int year, string department, string courseNumber, string sectionNumber, Section NewValue)
+        public static async Task EditSection(string term, int year, string department, string courseNumber, string sectionNumber, Section NewValue)
         {
-            using (var context = new ABETDBContext())
+            await using (var context = new ABETDBContext())
             {
                 //FIXME - Add null checking
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
@@ -107,12 +110,13 @@ namespace AbetApi.EFModels
                         }
                     }
                 }
+                return;
             }
-        }
+        } // EditSection
 
-        public static void DeleteSection(string term, int year, string department, string courseNumber, string sectionNumber)
+        public static async Task DeleteSection(string term, int year, string department, string courseNumber, string sectionNumber)
         {
-            using (var context = new ABETDBContext())
+            await using (var context = new ABETDBContext())
             {
                 //FIXME - Add null checking
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
@@ -133,7 +137,8 @@ namespace AbetApi.EFModels
                         }
                     }
                 }
+                return;
             }
-        }
-    }
+        } // DeleteSection
+    } // Section
 }

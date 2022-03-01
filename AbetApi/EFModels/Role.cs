@@ -14,7 +14,8 @@ namespace AbetApi.EFModels
         public String Name { get; set; }
         [JsonIgnore]
         public ICollection<User> Users { get; set; }
-        public Role() {
+        public Role()
+        {
             this.Users = new List<User>();
         }
         public Role(String Name)
@@ -22,9 +23,10 @@ namespace AbetApi.EFModels
             this.Name = Name;
         }
 
+        // SHOULD PROBABLY NOT ALL NULL AS AN INPUT
         // This function creates a role with the given name
         // Naming convention is the role name starting with uppercase
-        public async static void CreateRole(string RoleName)
+        public static async Task CreateRole(string RoleName)
         {
             // Creates role
             Role role = new Role(RoleName);
@@ -34,11 +36,13 @@ namespace AbetApi.EFModels
             {
                 context.Roles.Add(role);
                 context.SaveChanges();
+
+                return;
             }
-        }
+        } // CreateRole
 
         // This function deletes a selected role
-        public async static void DeleteRole(string roleName)
+        public static async Task DeleteRole(string roleName)
         {
             await using (var context = new ABETDBContext())
             {
@@ -48,8 +52,10 @@ namespace AbetApi.EFModels
                 //Delete the role, and save changes
                 context.Remove(role);
                 context.SaveChanges();
+
+                return;
             }
-        }
+        } // DeleteRole
 
         // Gets a list of users with the selected role
         public static async Task<List<User>> GetUsersByRole(string roleName)
@@ -66,10 +72,11 @@ namespace AbetApi.EFModels
                 var output = role.Users.ToList();
                 return output;
             }
-        }
+        } // GetUsersByRole
 
+        // NEEDS AN INNER EXCEPTION THROW, OTHERWISE THE DETAIL IS LACKING, HAPPENS WHEN USER ALREADY ROLE
         // This function gives a selected user a provided role.
-        public async static void AddRoleToUser(string EUID, string roleName)
+        public async static Task AddRoleToUser(string EUID, string roleName)
         {
             await using (var context = new ABETDBContext())
             {
@@ -82,11 +89,13 @@ namespace AbetApi.EFModels
                 // The user is added to the role, and the changes are saved
                 role.Users.Add(user);
                 context.SaveChanges();
+
+                return;
             }
-        }
+        } // AddRoleToUser
 
         // This function removes a role from a user, selected via EUID
-        public async static void RemoveRoleFromUser(string EUID, string roleName)
+        public async static Task RemoveRoleFromUser(string EUID, string roleName)
         {
             await using (var context = new ABETDBContext())
             {
@@ -102,7 +111,9 @@ namespace AbetApi.EFModels
                 //This removes the user from the join table
                 role.Users.Remove(user);
                 context.SaveChanges();
+
+                return;
             }
-        }
-    }
+        } // RemoveRoleFromUser
+    } // Role
 }
