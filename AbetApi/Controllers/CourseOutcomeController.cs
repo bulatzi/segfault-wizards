@@ -15,30 +15,62 @@ namespace AbetApi.Controllers
     {
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpPost("addCourseOutcome")]
-        public void CreateCourseOutcome(string term, int year, string classDepartment, string courseNumber,CourseOutcome courseOutcome)
+        public async Task<IActionResult> CreateCourseOutcome(string term, int year, string classDepartment, string courseNumber, CourseOutcome courseOutcome)
         {
-            EFModels.CourseOutcome.CreateCourseOutcome(term, year, classDepartment, courseNumber, courseOutcome);
-        }
+            try
+            {
+                await CourseOutcome.CreateCourseOutcome(term, year, classDepartment, courseNumber, courseOutcome);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        } // CreateCourseOutcome
 
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpDelete("DeleteCourseOutcome")]
-        public void DeleteCourseOutcome(string term, int year, string classDepartment, string courseNumber, string majorName)
+        public async Task<IActionResult> DeleteCourseOutcome(string term, int year, string classDepartment, string courseNumber, string majorName)
         {
-            EFModels.CourseOutcome.DeleteCourseOutcome(term, year, classDepartment, courseNumber, majorName);
-        }
+            try
+            {
+                await CourseOutcome.DeleteCourseOutcome(term, year, classDepartment, courseNumber, majorName);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        } //DeleteCourseOutcome
 
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpPost("AddMajorOutcome")]
-        public void AddMajorOutcome(string term, int year, string classDepartment, string courseNumber, string majorName, string outcomeName)
+        public async Task<IActionResult> AddMajorOutcome(string term, int year, string classDepartment, string courseNumber, string majorName, string outcomeName)
         {
-            EFModels.CourseOutcome.AddMajorOutcome(term, year, classDepartment,courseNumber, majorName, outcomeName);
-        }
+            try
+            {
+                await CourseOutcome.AddMajorOutcome(term, year, classDepartment, courseNumber, majorName, outcomeName);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        } // AddMajorOutcome
 
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpDelete("DeleteMajorOutcome")]
-        public void RemoveMajorOutcome(string term, int year, string classDepartment, string courseNumber, string majorName, string outcomeName)
+        public async Task<IActionResult> RemoveMajorOutcome(string term, int year, string classDepartment, string courseNumber, string majorName, string outcomeName)
         {
-            EFModels.CourseOutcome.RemoveMajorOutcome(term,year, classDepartment, courseNumber,majorName, outcomeName);
-        }
-    }
+            try
+            {
+                await CourseOutcome.RemoveMajorOutcome(term, year, classDepartment, courseNumber, majorName, outcomeName);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        } // RemoveMajorOutcome
+    } // CourseOutcomeController
 }

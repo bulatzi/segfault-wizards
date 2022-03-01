@@ -27,12 +27,14 @@ namespace AbetApi.EFModels
             this.Year = year;
         }
 
-        Semester() {
+        Semester()
+        {
             this.Courses = new List<Course>();
             this.Majors = new List<Major>();
         }
 
-        public async static void AddSemester(Semester semester)
+        // NEEDS ADDITIONAL NULL CHECKING AND INPUT SCRUBBING
+        public async static Task AddSemester(Semester semester)
         {
             // Sets the user id to be 0, so entity framework will give it a primary key
             semester.SemesterId = 0;
@@ -42,32 +44,36 @@ namespace AbetApi.EFModels
             {
                 context.Semesters.Add(semester);
                 context.SaveChanges();
+
+                return;
             }
-        }
+        } // AddSemester
 
         // This function searches for an item with the provided term and year. It returns null if the item isn't found.
         public async static Task<Semester> GetSemester(string term, int year)
         {
-            await using (var context = new ABETDBContext()) 
+            await using (var context = new ABETDBContext())
             {
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
                 return semester;
             }
         }
 
+        //COULD GIVE INDICATION OF NO SEMESTERS LISTED
         //This function returns all semesters in the Semester table from the database.
-        public static List<Semester> GetSemesters()
+        public static async Task<List<Semester>> GetSemesters()
         {
-            using (var context = new ABETDBContext())
+            await using (var context = new ABETDBContext())
             {
                 return context.Semesters.ToList();
             }
-        }
+        } // GetSemesters
 
         // This function finds a semester by term and year, and updates the semester to the values of the provided semester object.
         // Note: This function may need to also include editing courses and majors in the future, but it's not here currently that data will need to have its own dedicated functions for editing.
-        public async static void EditSemester(string term, int year, Semester NewValue) { 
-            await using (var context = new ABETDBContext()) 
+        public async static void EditSemester(string term, int year, Semester NewValue)
+        {
+            await using (var context = new ABETDBContext())
             {
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
                 semester.Term = NewValue.Term;
@@ -79,27 +85,29 @@ namespace AbetApi.EFModels
 
         // This function finds a semester and deletes it.
         // Anybody calling this function should make sure you want to call this function. Deletions are final.
-        public async static void DeleteSemester(string term, int year)
+        public async static Task DeleteSemester(string term, int year)
         {
             await using (var context = new ABETDBContext())
             {
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
                 context.Remove(semester);
                 context.SaveChanges();
+
+                return;
             }
-        }
+        } // DeleteSemester
 
         public static List<Course> GetCourses(string term, int year)
         {
             List<Course> list = new List<Course>();
 
-            using(var context = new ABETDBContext())
+            using (var context = new ABETDBContext())
             {
                 //FIXME - Add null check
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
 
-                foreach(var course in semester.Courses)
+                foreach (var course in semester.Courses)
                 {
                     list.Add(course);
                 }

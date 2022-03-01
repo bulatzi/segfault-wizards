@@ -132,7 +132,7 @@ namespace AbetApi.Data
             MajorOutcome.AddMajorOutcome("Fall", 2022, "CS", new MajorOutcome("3", "Accomplishes websites"));
             var tempMajorOutcome =  MajorOutcome.GetMajorOutcome("Fall", 2022, "CS", "2");
             MajorOutcome.EditMajorOutcome("Fall", 2022, "CS", "3", new MajorOutcome("3", "Gud at spelung"));
-            MajorOutcome.DeleteMajorOutcome("Fall", 2022, "CS", "3");
+            //MajorOutcome.DeleteMajorOutcome("Fall", 2022, "CS", "3");
 
             System.Console.WriteLine("");
 

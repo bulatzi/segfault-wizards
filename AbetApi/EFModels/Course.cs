@@ -44,7 +44,7 @@ namespace AbetApi.EFModels
             this.Semesters = new List<Semester>();
         }
 
-        public async static void AddCourse(string term, int year, Course course)
+        public async static Task AddCourse(string term, int year, Course course)
         {
             course.CourseId = 0;
 
@@ -56,8 +56,10 @@ namespace AbetApi.EFModels
                 context.Courses.Add(course);
                 semester.Courses.Add(course);
                 context.SaveChanges();
+
+                return;
             }
-        }
+        } // AddCourse
 
         public async static Task<Course> GetCourse(string term, int year, string department, string courseNumber)
         {
@@ -76,10 +78,9 @@ namespace AbetApi.EFModels
                 }
             }
             return null;
+        } // GetCourse
 
-        }
-
-        public async static void EditCourse(string term, int year, string department, string courseNumber, Course NewValue)
+        public async static Task EditCourse(string term, int year, string department, string courseNumber, Course NewValue)
         {
             await using (var context = new ABETDBContext())
             {
@@ -101,10 +102,13 @@ namespace AbetApi.EFModels
                         return;
                     }
                 }
+                return;
             }
-        }
+        } // EditCourse
 
-        public async static void DeleteCourse(string term, int year, string department, string courseNumber)
+        // THIS THREW THREE EXCEPTIONS ONE MISTAKEN INPUT, ONE FROM ENTITY and TWO FROM SYSTEM.PRIVATE.CORELIB. COULD USE MORE DETAIL FOR THROWN EXCEPTIONS
+        // MIGHT BE STANDARD, BUT MESSAGE WAS ALSO 'SEE INTERIOR EXCEPTION'
+        public async static Task DeleteCourse(string term, int year, string department, string courseNumber)
         {
             await using (var context = new ABETDBContext())
             {
@@ -119,8 +123,9 @@ namespace AbetApi.EFModels
                         return;
                     }
                 }
+                return;
             }
-        }
+        } // DeleteCourse
 
         // This function gets all the sections from the course specified by the input arguments
         public static async Task<List<Section>> GetSections(string term, int year, string department, string courseNumber)
@@ -141,12 +146,12 @@ namespace AbetApi.EFModels
                         {
                             list.Add(section);
                         }
-                        
+
                     }
                 }
                 return list;
             }
-        }
+        } // GetSections
 
         public static async Task<List<string>> getMajorsThatRequireCourse(string term, int year, string department, string courseNumber)
         {
@@ -166,12 +171,12 @@ namespace AbetApi.EFModels
                         {
                             list.Add(courseOutcomes.Major);
                         }
-                        
+
                     }
                 }
                 return list;
             }
-        }
+        } // getMajorsThatRequireCourse
 
 
         //this function returns a list of all courses in a given department for a given semester
@@ -181,7 +186,7 @@ namespace AbetApi.EFModels
             await using (var context = new ABETDBContext())
             {
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
-                context.Entry(semester).Collection(semester =>  semester.Courses).Load();
+                context.Entry(semester).Collection(semester => semester.Courses).Load();
                 foreach (var course in semester.Courses)
                 {
                     if (course.Department == department)
@@ -191,7 +196,7 @@ namespace AbetApi.EFModels
                 }
             }
             return list;
-        }
+        } // GetCoursesByDepartment
 
         //this function returns a list of all course names in a given department for a given semester
         public static async Task<List<string>> GetCourseNamesByDepartment(string term, int year, string department)
@@ -210,7 +215,7 @@ namespace AbetApi.EFModels
                 }
             }
             return list;
-        }
+        } // GetCourseNamesByDepartment
 
         //this function returns a list of all departments that have courses for a given semester
         public static async Task<List<string>> GetDepartments(string term, int year)
@@ -223,10 +228,10 @@ namespace AbetApi.EFModels
                 foreach (var courses in semester.Courses)
                 {
                     list.Add(courses.Department);
-                    
+
                 }
                 return list.ToList();
             }
-        }
-    }
+        } // GetDepartments
+    } // Course
 }
