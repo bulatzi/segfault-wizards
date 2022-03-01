@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text.Json.Serialization;
 using AbetApi.Data;
+using System.Threading.Tasks;
 
 namespace AbetApi.EFModels
 {
@@ -112,6 +113,35 @@ namespace AbetApi.EFModels
                         return;
                     }
                 }
+            }
+        }
+
+        //This function gets all of the courses required by a major
+        //it takes a term and year to find a semester and the name of the major being looked into
+        public async static Task<List<Course>> GetCoursesByMajor(string term, int year, string majorName)
+        {
+            List<Course> list = new List<Course>();
+            await using (var context = new ABETDBContext())
+            {
+                //this finds the semester to start at and loads all the courses
+                Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+                context.Entry(semester).Collection(semester => semester.Courses).Load();
+                //for every course loaded, load the course outcomes
+                foreach (var course in semester.Courses)
+                {
+                    context.Entry(course).Collection(course => course.CourseOutcomes).Load();   
+                    //for every course outcome, check if it maps to the major
+                    foreach (var courseOutcome in course.CourseOutcomes)
+                    {
+                        //if it maps to the major
+                        if(courseOutcome.Major == majorName)
+                        {
+                            //add it to the list
+                            list.Add(course);
+                        }
+                    }
+                }
+                return list;
             }
         }
     }

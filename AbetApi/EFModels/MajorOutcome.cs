@@ -51,9 +51,9 @@ namespace AbetApi.EFModels
             }
         }
 
-        public static MajorOutcome GetMajorOutcome(string term, int year, string majorName, string outcomeName)
+        public static async Task<MajorOutcome> GetMajorOutcome(string term, int year, string majorName, string outcomeName)
         {
-            using (var context = new ABETDBContext())
+            await using (var context = new ABETDBContext())
             {
                 //FIXME - Add null checking
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
