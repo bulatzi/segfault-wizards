@@ -75,11 +75,11 @@ namespace AbetApi.Controllers
 
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpGet("GetSectionsByCourse")]
-        public async Task<IActionResult> GetSections(string term, int year, string department, string courseNumber)
+        public async Task<IActionResult> GetSectionsByCourse(string term, int year, string department, string courseNumber)
         {
             try
             {
-                return Ok(await Course.GetSections(term, year, department, courseNumber));
+                return Ok(await Course.GetSectionsByCourse(term, year, department, courseNumber));
             }
             catch (Exception ex)
             {

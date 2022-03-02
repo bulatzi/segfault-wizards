@@ -127,7 +127,7 @@ namespace AbetApi.EFModels
         } // DeleteCourse
 
         // This function gets all the sections from the course specified by the input arguments
-        public static async Task<List<Section>> GetSections(string term, int year, string department, string courseNumber)
+        public static async Task<List<Section>> GetSectionsByCourse(string term, int year, string department, string courseNumber)
         {
             List<Section> list = new List<Section>();
 
