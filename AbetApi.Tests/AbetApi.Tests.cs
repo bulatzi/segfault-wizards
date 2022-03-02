@@ -164,7 +164,13 @@ namespace AbetApi.Tests
             Assert.AreEqual(results.Name, name);
         }
 
-        // To do -- test delete Major. Kind of breaks without error handling. 
+        [TestMethod]
+        public void TestGetMajor()
+        {
+            Major.AddMajor("Spring", 3030, "FTSY");
+            var result = Major.GetMajor("Spring", 3030, "FTSY");
+            Assert.AreEqual(result.Name, "FTSY");
+        }
 
         /* Test(s) for the Course methods */
         public Course CreateCourseHelper(string coordinator, string coursenumber, string displayname, string coordinatorcomment, bool iscoursecompleted, string department)
