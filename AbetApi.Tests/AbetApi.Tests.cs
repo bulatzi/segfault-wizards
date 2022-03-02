@@ -186,6 +186,23 @@ namespace AbetApi.Tests
             Assert.IsTrue(chkIfMajorExists);
         }
 
+        [TestMethod]
+        public void TestEditMajors()
+        {
+            Major.AddMajor("Spring", 3030, "TestEdit");
+            Major.EditMajor("Spring", 3030, "TestEdit", "TestEditFTSY");
+            var result = Major.GetMajor("Spring", 3030, "TestEditFTSY");
+            Assert.AreEqual(result.Name, "TestEditFTSY");
+        }
+
+        [TestMethod]
+        public void TestDeleteMajor()
+        {
+            Major.DeleteMajor("Spring", 3030, "TestEditFTSY");
+            var result = Major.GetMajor("Spring", 3030, "TestEditFTSY");
+            Assert.IsNull(result);
+        }
+
         /* Test(s) for the Course methods */
         public Course CreateCourseHelper(string coordinator, string coursenumber, string displayname, string coordinatorcomment, bool iscoursecompleted, string department)
         {
