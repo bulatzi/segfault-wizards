@@ -14,6 +14,7 @@ namespace AbetApi.EFModels
         public string CoordinatorEUID { get; set; }
         public string CourseNumber { get; set; } //Ex: 2100
         public string DisplayName { get; set; } //Ex: "Assembly Langauge And Computer Organization"
+        [JsonIgnore]
         public string CoordinatorComment { get; set; }
         public bool IsCourseCompleted { get; set; } // (if it's true, can't edit any more) Ask for a confirmation before setting to true
         public string Department { get; set; } //Ex. "CSCE"
