@@ -194,7 +194,7 @@ namespace AbetApi.Tests
             var result = Major.GetMajor("Spring", 3030, "TestEditFTSY");
             Assert.AreEqual(result.Name, "TestEditFTSY");
         }
-
+        
         [TestMethod]
         public void TestDeleteMajor()
         {
