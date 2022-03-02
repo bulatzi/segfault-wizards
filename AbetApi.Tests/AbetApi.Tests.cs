@@ -172,6 +172,20 @@ namespace AbetApi.Tests
             Assert.AreEqual(result.Name, "FTSY");
         }
 
+        [TestMethod]
+        public void TestGetMajors()
+        {
+            var results = Major.GetMajors("Spring", 3030);
+            bool chkIfMajorExists = false;
+            foreach(var result in results)
+            {
+                if (result.Name == "FTSY"){
+                    chkIfMajorExists = true;
+                }
+            }
+            Assert.IsTrue(chkIfMajorExists);
+        }
+
         /* Test(s) for the Course methods */
         public Course CreateCourseHelper(string coordinator, string coursenumber, string displayname, string coordinatorcomment, bool iscoursecompleted, string department)
         {
