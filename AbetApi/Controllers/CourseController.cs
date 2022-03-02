@@ -74,7 +74,7 @@ namespace AbetApi.Controllers
         } // DeleteCourse
 
         [Authorize(Roles = RoleTypes.Coordinator)]
-        [HttpGet("GetSections")]
+        [HttpGet("GetSectionsByCourse")]
         public async Task<IActionResult> GetSections(string term, int year, string department, string courseNumber)
         {
             try
