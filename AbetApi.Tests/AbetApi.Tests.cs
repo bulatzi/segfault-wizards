@@ -202,5 +202,38 @@ namespace AbetApi.Tests
             Assert.IsNotNull(course, "The course does not exist.");
         }
 
+        [TestMethod]
+        public void TestEditCourse()
+        {
+            Course course = new Course(
+            "Elrond, Lord of Rivendell",
+            "2021",
+            "The Lord of the Rings",
+            "A mighty Elf-ruler of old who lived in Middle-earth from the First Age to the beginning of the Fourth Age.",
+            true,
+            "FTSY"
+            );
+
+            Course newCourse = new Course(
+            "Elrond, Lord of Rivendell (EDIT)",
+            "2022",
+            "The Lord of the Rings (EDIT)",
+            "A mighty Elf-ruler of old who lived in Middle-earth from the First Age to the beginning of the Fourth Age. (EDIT)",
+            false,
+            "FTSY"
+            );
+
+
+            Course.EditCourse("Spring", 3031, course.Department, course.CourseNumber, newCourse);
+            var result = Course.GetCourse("Spring", 3031, "FTSY", "2022");
+            Assert.AreNotEqual(result.CoordinatorEUID, course.CoordinatorEUID);
+            Assert.AreNotEqual(result.CourseNumber, course.CourseNumber);
+            Assert.AreNotEqual(result.DisplayName, course.DisplayName);
+            Assert.AreNotEqual(result.CoordinatorComment, course.CoordinatorComment);
+            Assert.AreNotEqual(result.IsCourseCompleted, course.IsCourseCompleted);
+            Assert.AreEqual(result.CourseNumber, "2022");
+
+        }
+
     }
 }
