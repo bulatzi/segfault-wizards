@@ -223,7 +223,6 @@ namespace AbetApi.Tests
             "FTSY"
             );
 
-
             Course.EditCourse("Spring", 3031, course.Department, course.CourseNumber, newCourse);
             var result = Course.GetCourse("Spring", 3031, "FTSY", "2022");
             Assert.AreNotEqual(result.CoordinatorEUID, course.CoordinatorEUID);
@@ -233,6 +232,14 @@ namespace AbetApi.Tests
             Assert.AreNotEqual(result.IsCourseCompleted, course.IsCourseCompleted);
             Assert.AreEqual(result.CourseNumber, "2022");
 
+        }
+
+        [TestMethod]
+        public void TestDeleteCourse()
+        {
+            Course.DeleteCourse("Spring", 3031, "FTSY", "2022");
+            var result = Course.GetCourse("Spring", 3031, "FTSY", "2022");
+            Assert.IsNull(result);
         }
 
     }
