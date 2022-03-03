@@ -233,5 +233,38 @@ namespace AbetApi.EFModels
                 return list.ToList();
             }
         } // GetDepartments
+
+        //gets all the courseoutcomes assigned to a course
+        public static async Task<List<MajorOutcome>> GetMajorOutcomesSatisfied(string term, int year, string department, string courseNumber)
+        {
+            List<MajorOutcome> majorOutcomes = new List<MajorOutcome>();
+
+            await using (var context = new ABETDBContext())
+            {
+                Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+                context.Entry(semester).Collection(semester => semester.Courses).Load();
+                foreach (var course in semester.Courses)
+                {
+                    if (course.CourseNumber == courseNumber && course.Department == department)
+                    {
+                        context.Entry(course).Collection(course => course.CourseOutcomes).Load();
+                        foreach (var courseoutcome in course.CourseOutcomes)
+                        {
+                            context.Entry(courseoutcome).Collection(courseoutcome => courseoutcome.MajorOutcomes).Load();
+                            foreach (var majoroutcome in courseoutcome.MajorOutcomes)
+                            {
+                                majorOutcomes.Add(majoroutcome);
+                            }
+                        }
+                    }
+                }
+
+                return majorOutcomes.ToList();
+            }
+            
+            
+
+        }//GetCoursesCourseOutcomes
+
     } // Course
 }

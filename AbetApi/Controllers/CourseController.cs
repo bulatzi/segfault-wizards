@@ -142,5 +142,21 @@ namespace AbetApi.Controllers
                 return BadRequest(ex.Message);
             }
         } // GetDepartments
+
+        [Authorize(Roles = RoleTypes.Coordinator)]
+        [HttpGet("GetMajorOutcomesSatisfied")]
+        public async Task<IActionResult> GetMajorOutcomesSatisfied(string term, int year, string department, string courseNumber)
+        {
+            try
+            {
+                return Ok(await Course.GetMajorOutcomesSatisfied(term, year, department, courseNumber));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }//GetMajorOutcomesSatisfied
+
+
     } // CourseController
 }
