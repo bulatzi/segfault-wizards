@@ -279,5 +279,39 @@ namespace AbetApi.Tests
             Assert.IsNull(result);
         }
 
+        /* Test(s) for the Section methods */
+        [TestMethod]
+        public void TestAddSection()
+        {
+            Section section = new Section("gtg001", true, "000001", 9);
+            Section.AddSection("Spring", 3031, "FTSY", "2022", section);
+            var result = Section.GetSection("Spring", 3031, "FTSY", "2022", section.SectionNumber);
+            Assert.AreEqual(result.InstructorEUID, section.InstructorEUID);
+            Assert.AreEqual(result.IsSectionCompleted, section.IsSectionCompleted);
+            Assert.AreEqual(result.NumberOfStudents, section.NumberOfStudents);
+            Assert.AreEqual(result.SectionNumber, section.SectionNumber);
+        }
+
+        [TestMethod]
+        public void TestEditSection()
+        {
+            Section section = new Section("gtg001", false, "000002", 10);
+            Section.EditSection("Spring", 3031, "FTSY", "2022", "000001", section);
+            var result = Section.GetSection("Spring", 3031, "FTSY", "2022", section.SectionNumber);
+            Assert.AreEqual(result.InstructorEUID, section.InstructorEUID);
+            Assert.IsFalse(result.IsSectionCompleted);
+            Assert.AreNotEqual(result.NumberOfStudents, 9);
+            Assert.AreNotEqual(result.SectionNumber, "000001");
+        }
+
+        [TestMethod]
+        public void TestDeleteSection()
+        {
+            Section.DeleteSection("Spring", 3031, "FTSY", "2022", "000002");
+            var result = Section.GetSection("Spring", 3031, "FTSY", "2022", "000002");
+            Assert.IsNull(result);
+        }
+
+
     }
 }
