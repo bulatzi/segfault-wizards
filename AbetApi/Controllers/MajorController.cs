@@ -15,7 +15,7 @@ namespace AbetApi.Controllers
     [Route("[controller]")]
     public class MajorController : ControllerBase
     {
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("AddMajor")]
         public async Task<IActionResult> AddMajor(string term, int year, string name)
         {
@@ -30,7 +30,7 @@ namespace AbetApi.Controllers
             }
         } // AddMajor
 
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpGet("GetMajors")]
         public async Task<IActionResult> GetMajors(string term, int year)
         {
@@ -44,7 +44,7 @@ namespace AbetApi.Controllers
             }
         } // GetMajors
 
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPatch("EditMajor")]
         public async Task<IActionResult> EditMajor(string term, int year, string name, string NewValue)
         {
@@ -59,7 +59,7 @@ namespace AbetApi.Controllers
             }
         } // EditMajor
 
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpDelete("DeleteMajor")]
         public async Task<IActionResult> DeleteMajor(string term, int year, string name)
         {
@@ -74,7 +74,7 @@ namespace AbetApi.Controllers
             }
         } // DeleteMajor
 
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpGet("GetCoursesByMajor")]
         public async Task<IActionResult> GetCoursesByMajor(string term, int year, string major)
         {

@@ -13,7 +13,7 @@ namespace AbetApi.Controllers
     [Route("[controller]")]
     public class CourseOutcomeController : ControllerBase
     {
-        [Authorize(Roles = RoleTypes.Coordinator)]
+        //[Authorize(Roles = RoleTypes.Coordinator)]
         [HttpPost("addCourseOutcome")]
         public async Task<IActionResult> CreateCourseOutcome(string term, int year, string classDepartment, string courseNumber, CourseOutcome courseOutcome)
         {
@@ -28,7 +28,7 @@ namespace AbetApi.Controllers
             }
         } // CreateCourseOutcome
 
-        [Authorize(Roles = RoleTypes.Coordinator)]
+        //[Authorize(Roles = RoleTypes.Coordinator)]
         [HttpDelete("DeleteCourseOutcome")]
         public async Task<IActionResult> DeleteCourseOutcome(string term, int year, string classDepartment, string courseNumber, string majorName)
         {
@@ -43,7 +43,7 @@ namespace AbetApi.Controllers
             }
         } //DeleteCourseOutcome
 
-        [Authorize(Roles = RoleTypes.Coordinator)]
+        //[Authorize(Roles = RoleTypes.Coordinator)]
         [HttpPost("AddMajorOutcome")]
         public async Task<IActionResult> AddMajorOutcome(string term, int year, string classDepartment, string courseNumber, string majorName, string outcomeName)
         {
@@ -58,7 +58,7 @@ namespace AbetApi.Controllers
             }
         } // AddMajorOutcome
 
-        [Authorize(Roles = RoleTypes.Coordinator)]
+        //[Authorize(Roles = RoleTypes.Coordinator)]
         [HttpDelete("DeleteMajorOutcome")]
         public async Task<IActionResult> RemoveMajorOutcome(string term, int year, string classDepartment, string courseNumber, string majorName, string outcomeName)
         {

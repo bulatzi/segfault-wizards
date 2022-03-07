@@ -30,7 +30,7 @@ namespace AbetApi.Controllers
         //                       can be different. A SectionID number is auto-generated
         //                       in sequential order in relation to the other sections
         ////////////////////////////////////////////////////////////////////////////////////
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("AddSection")]
         public async Task<IActionResult> AddSection(string term, int year, string department, string courseNumber, Section section)
         {
@@ -57,7 +57,7 @@ namespace AbetApi.Controllers
         //                       instructorEUD string, isSectioncompleted boolean, 
         //                       sectionNumber string,numberOfStudents int
         ////////////////////////////////////////////////////////////////////////////////////
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpGet("GetSection")]
         public async Task<IActionResult> GetSection(string term, int year, string department, string courseNumber, string sectionNumber)
         {
@@ -83,7 +83,7 @@ namespace AbetApi.Controllers
         //                       sectionNumber string, numberOfStudents int
         // description:          This function edits the prexisting sections
         ////////////////////////////////////////////////////////////////////////////////////
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPatch("EditSection")]
         public async Task<IActionResult> EditSection(string term, int year, string department, string courseNumber, string sectionNumber, Section NewValue)
         {
@@ -107,7 +107,7 @@ namespace AbetApi.Controllers
         // string sectionNumber: Course section, such as 001 or 002
         // description:          This function deletes the prexisting sections
         ////////////////////////////////////////////////////////////////////////////////////
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpDelete("DeleteSection")]
         public async Task<IActionResult> DeleteSection(string term, int year, string department, string courseNumber, string sectionNumber)
         {

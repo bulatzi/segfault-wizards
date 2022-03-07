@@ -71,7 +71,7 @@ namespace AbetApi.Controller
 
         //---------------INSTRUCTOR LEVEL FUNCTIONS---------------
 
-        [Authorize(Roles = RoleTypes.Instructor)]
+        //[Authorize(Roles = RoleTypes.Instructor)]
         [HttpPost("sections/by-userid-semester-year")]
         public List<Section> GetSectionsByUserId([FromBody] BodyParams body)
         {
@@ -79,7 +79,7 @@ namespace AbetApi.Controller
             //return abetRepo.GetSectionsByUserId(body.UserId, body.Year, body.Semester);
         }
 
-        [Authorize(Roles = RoleTypes.Instructor)]
+        //[Authorize(Roles = RoleTypes.Instructor)]
         [HttpPost("forms/by-section")]
         public Form GetFormBySection([FromBody] BodyParams body)
         {
@@ -101,7 +101,7 @@ namespace AbetApi.Controller
             //return abetRepo.GetFormBySection(body.Section);
         }
 
-        [Authorize(Roles = RoleTypes.Instructor)]
+        //[Authorize(Roles = RoleTypes.Instructor)]
         [HttpPost("forms/new-blank")]
         public Form GetBlankForm([FromBody] BodyParams body)
         {
@@ -115,7 +115,7 @@ namespace AbetApi.Controller
             return mockAbetRepo.GetBlankForm();
         }
 
-        [Authorize(Roles = RoleTypes.Instructor)]
+        //[Authorize(Roles = RoleTypes.Instructor)]
         [HttpPost("forms/post-form")]
         public ActionResult PostForm([FromBody] BodyParams body)
         {
@@ -136,7 +136,7 @@ namespace AbetApi.Controller
             
         }
 
-        [Authorize(Roles = RoleTypes.Instructor)]
+        //[Authorize(Roles = RoleTypes.Instructor)]
         [HttpPost("sections/post-section")]
         public ActionResult PostSection([FromBody] BodyParams body)
         {
@@ -158,7 +158,7 @@ namespace AbetApi.Controller
 
         }
 
-        [Authorize(Roles = RoleTypes.Instructor)]
+        //[Authorize(Roles = RoleTypes.Instructor)]
         [HttpPost("student-work/upload")]
         public ActionResult UploadStudentWork([FromForm] IFormFile file, [FromForm] int? outcomeId, [FromForm] string courseNumber, [FromForm] string sectionNumber, [FromForm] string semester, [FromForm] int? year)
         {
@@ -182,7 +182,7 @@ namespace AbetApi.Controller
                 return BadRequest(new { sqlReturn.message });
         }
 
-        [Authorize(Roles = RoleTypes.Instructor)]
+        //[Authorize(Roles = RoleTypes.Instructor)]
         [HttpPost("student-work/download")]
         public ActionResult DownloadStudentWork([FromBody] BodyParams body)
         {
@@ -203,7 +203,7 @@ namespace AbetApi.Controller
                 return File(file, "application/octet-stream");
         }
 
-        [Authorize(Roles = RoleTypes.Instructor)]
+        //[Authorize(Roles = RoleTypes.Instructor)]
         [HttpPost("student-work/delete")]
         public ActionResult DeleteStudentWork([FromBody] BodyParams body)
         {
@@ -221,7 +221,7 @@ namespace AbetApi.Controller
         //---------------COORDINATOR LEVEL FUNCTIONS---------------
 
         //Function has been tested and errors have been added to the documentation. Currently testing using SQL server.
-        [Authorize(Roles = RoleTypes.Coordinator)]
+        //[Authorize(Roles = RoleTypes.Coordinator)]
         [HttpPost("forms/by-course")]
         public List<Form> GetFormsByCourse([FromBody] BodyParams body)
         {
@@ -229,7 +229,7 @@ namespace AbetApi.Controller
             //return abetRepo.GetFormsByCourse(body.Course);
         }
 
-        [Authorize(Roles = RoleTypes.Coordinator)]
+        //[Authorize(Roles = RoleTypes.Coordinator)]
         [HttpPost("courses/post-comment")]
         public ActionResult PostComment([FromBody] BodyParams body)
         {
@@ -242,7 +242,7 @@ namespace AbetApi.Controller
 
         //---------------ADMIN LEVEL FUNCTIONS---------------
 
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("sections/by-semester-year")]
         public List<Section> GetSectionsByYearAndSemester([FromBody] BodyParams body)
         {
@@ -280,14 +280,14 @@ namespace AbetApi.Controller
             */
         }
 
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("forms/by-semester-year")]
         public List<Form> GetFormsByYearAndSemester([FromBody] BodyParams body)
         {
             return mockAbetRepo.GetFormsByYearAndSemester(body.Year, body.Semester);
         }
 
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("sections/add-section")]
         public ActionResult AddSection([FromBody] BodyParams body)
         {
@@ -297,7 +297,7 @@ namespace AbetApi.Controller
                 return BadRequest();
         }
 
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("faculty/get-list")]
         public FacultyList GetFacultyList()
         {
@@ -305,7 +305,7 @@ namespace AbetApi.Controller
             //return abetRepo.GetFacultyList();
         }
 
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("faculty/add-member")]
         public ActionResult AddFacultyMember([FromBody] BodyParams body)
         {
@@ -319,7 +319,7 @@ namespace AbetApi.Controller
                 return BadRequest();
         }
 
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("outcomes/get-outcomes-by-program")]
         //public Program_Outcomes GetCourseObjectives([FromBody] BodyParams body)
         public ActionResult GetCourseObjectives([FromBody] BodyParams body)
@@ -329,7 +329,7 @@ namespace AbetApi.Controller
             //return Ok(abetRepo.GetCourseObjectives(body.Program));
         }
 
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("courses/get-by-department")]
         public List<Course> GetCoursesByDepartment([FromBody] BodyParams body)
         {
@@ -337,7 +337,7 @@ namespace AbetApi.Controller
             //return abetRepo.GetCoursesByDepartment(body.Department);
         }
 
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("courses/get-by-year-semester")]
         public List<Course> GetCoursesByYear([FromBody] BodyParams body)
         {
@@ -346,7 +346,7 @@ namespace AbetApi.Controller
             return mockAbetRepo.GetCoursesByYear(body.Year, body.Semester);
         }
 
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("courses/add-course")]
         public ActionResult AddCourse([FromBody] BodyParams body)
         {
@@ -357,7 +357,7 @@ namespace AbetApi.Controller
                 return BadRequest();
         }
 
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("courses/remove-course")]
         public ActionResult RemoveCourse([FromBody] BodyParams body)
         {
@@ -368,7 +368,7 @@ namespace AbetApi.Controller
                return BadRequest();
         }
 
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("course-outcomes/post-outcomes")]
         public ActionResult PostCourseOutcomes([FromBody] BodyParams body)
         {
@@ -378,7 +378,7 @@ namespace AbetApi.Controller
                 return BadRequest();
         }
 
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("course-outcomes/by-course")]
         public List<CourseMapping> GetCourseOutcomesByCourse([FromBody] BodyParams body)
         {
@@ -386,7 +386,7 @@ namespace AbetApi.Controller
             //return abetRepo.GetCourseOutcomesByCourse(body.Course);
         }
         
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("upload-access-db")]
         public ActionResult UploadAccessDB([FromForm] IFormFile file)
         {
@@ -409,7 +409,7 @@ namespace AbetApi.Controller
                 return BadRequest(new { sqlReturn.message });
         }
 
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("programs/add-program")]
         public ActionResult AddProgram([FromBody] BodyParams body)
         {
@@ -424,7 +424,7 @@ namespace AbetApi.Controller
             return Ok();
         }
 
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("programs/delete-program")]
         public ActionResult DeleteProgram([FromBody] BodyParams body)
         {
@@ -439,7 +439,7 @@ namespace AbetApi.Controller
             return Ok();
         }
 
-        [Authorize(Roles = RoleTypes.Admin)]
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("programs/get-programs")]
         public List<UntPrograms> GetAllPrograms()
         {
@@ -456,7 +456,7 @@ namespace AbetApi.Controller
 
         //---------------STUDENT LEVEL FUNCTIONS---------------
 
-        [Authorize(Roles = RoleTypes.Student)]
+        //[Authorize(Roles = RoleTypes.Student)]
         [HttpPost("student-surveys/post-survey")]
         public ActionResult PostStudentForm([FromBody] BodyParams body)
         {
