@@ -14,7 +14,7 @@ namespace AbetApi.Controllers
     [Route("[controller]")]
     public class CourseController : ControllerBase
     {
-        //[Authorize(Roles = RoleTypes.Coordinator)]
+        [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpPost("AddCourse")]
         public async Task<IActionResult> AddCourse(string term, int year, Course course)
         {
@@ -29,7 +29,7 @@ namespace AbetApi.Controllers
             }
         } // AddCourse
 
-        //[Authorize(Roles = RoleTypes.Coordinator)]
+        [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpGet("GetCourse")]
         public async Task<IActionResult> GetCourse(string term, int year, string department, string courseNumber)
         {
@@ -43,7 +43,7 @@ namespace AbetApi.Controllers
             }
         } // GetCourse
 
-        //[Authorize(Roles = RoleTypes.Coordinator)]
+        [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpPatch("EditCourse")]
         public async Task<IActionResult> EditCourse(string term, int year, string department, string courseNumber, Course NewValue)
         {
@@ -58,7 +58,7 @@ namespace AbetApi.Controllers
             }
         } // EditCourse
 
-        //[Authorize(Roles = RoleTypes.Coordinator)]
+        [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpDelete("DeleteCourse")]
         public async Task<IActionResult> DeleteCourse(string term, int year, string department, string courseNumber)
         {
@@ -73,7 +73,7 @@ namespace AbetApi.Controllers
             }
         } // DeleteCourse
 
-        //[Authorize(Roles = RoleTypes.Coordinator)]
+        [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpGet("GetSectionsByCourse")]
         public async Task<IActionResult> GetSections(string term, int year, string department, string courseNumber)
         {
@@ -87,7 +87,7 @@ namespace AbetApi.Controllers
             }
         } // GetSections
 
-        //[Authorize(Roles = RoleTypes.Coordinator)]
+        [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpGet("GetMajorsThatRequireCourse")]
         public async Task<IActionResult> getMajorsThatRequireCourse(string term, int year, string department, string courseNumber)
         {
@@ -101,7 +101,7 @@ namespace AbetApi.Controllers
             }
         } // getMajorsThatRequireCourse
 
-        //[Authorize(Roles = RoleTypes.Coordinator)]
+        [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpGet("GetCoursesByDepartment")]
         public async Task<IActionResult> GetCoursesByDepartment(string term, int year, string department)
         {
@@ -115,7 +115,7 @@ namespace AbetApi.Controllers
             }
         } // GetCoursesByDepartment
 
-        //[Authorize(Roles = RoleTypes.Coordinator)]
+        [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpGet("GetCourseNamesByDepartment")]
         public async Task<IActionResult> GetCourseNamesByDepartment(string term, int year, string department)
         {
@@ -129,7 +129,7 @@ namespace AbetApi.Controllers
             }
         }
 
-        //[Authorize(Roles = RoleTypes.Coordinator)]
+        [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpGet("GetDepartments")]
         public async Task<IActionResult> GetDepartments(string term, int year)
         {

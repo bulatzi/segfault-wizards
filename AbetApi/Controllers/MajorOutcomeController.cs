@@ -14,7 +14,7 @@ namespace AbetApi.Controllers
     [Route("[controller]")]
     public class MajorOutcomeController : ControllerBase
     {
-        //[Authorize(Roles = RoleTypes.Coordinator)]
+        [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpPost("AddMajorOutcome")]
         public async Task<IActionResult> AddMajorOutcome(string term, int year, string majorName, MajorOutcome majorOutcome)
         {
@@ -29,7 +29,7 @@ namespace AbetApi.Controllers
             }
         } // AddMajorOutcome
 
-        //[Authorize(Roles = RoleTypes.Coordinator)]
+        [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpGet("GetMajorOutcome")]
         public async Task<IActionResult> GetMajorOutcome(string term, int year, string majorName, string outcomeName)
         {
@@ -43,7 +43,7 @@ namespace AbetApi.Controllers
             }
         } // GetMajorOutcome
 
-        //[Authorize(Roles = RoleTypes.Coordinator)]
+        [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpPatch("EditMajorOutcome")]
         public async Task<IActionResult> EditMajorOutcome(string term, int year, string majorName, string outcomeName, MajorOutcome NewValue)
         {
@@ -58,7 +58,7 @@ namespace AbetApi.Controllers
             }
         } // EditMajorOutcome
 
-        //[Authorize(Roles = RoleTypes.Coordinator)]
+        [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpDelete("DeleteMajorOutcome")]
         public async Task<IActionResult> DeleteMajorOutcome(string term, int year, string majorName, string outcomeName)
         {
