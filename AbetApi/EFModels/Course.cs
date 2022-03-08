@@ -14,6 +14,7 @@ namespace AbetApi.EFModels
         public string CoordinatorEUID { get; set; }
         public string CourseNumber { get; set; } //Ex: 2100
         public string DisplayName { get; set; } //Ex: "Assembly Langauge And Computer Organization"
+        [JsonIgnore]
         public string CoordinatorComment { get; set; }
         public bool IsCourseCompleted { get; set; } // (if it's true, can't edit any more) Ask for a confirmation before setting to true
         public string Department { get; set; } //Ex. "CSCE"
@@ -127,7 +128,7 @@ namespace AbetApi.EFModels
         } // DeleteCourse
 
         // This function gets all the sections from the course specified by the input arguments
-        public static async Task<List<Section>> GetSections(string term, int year, string department, string courseNumber)
+        public static async Task<List<Section>> GetSectionsByCourse(string term, int year, string department, string courseNumber)
         {
             List<Section> list = new List<Section>();
 
@@ -232,5 +233,38 @@ namespace AbetApi.EFModels
                 return list.ToList();
             }
         } // GetDepartments
+
+        //gets all the courseoutcomes assigned to a course
+        public static async Task<List<MajorOutcome>> GetMajorOutcomesSatisfied(string term, int year, string department, string courseNumber)
+        {
+            List<MajorOutcome> majorOutcomes = new List<MajorOutcome>();
+
+            await using (var context = new ABETDBContext())
+            {
+                Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+                context.Entry(semester).Collection(semester => semester.Courses).Load();
+                foreach (var course in semester.Courses)
+                {
+                    if (course.CourseNumber == courseNumber && course.Department == department)
+                    {
+                        context.Entry(course).Collection(course => course.CourseOutcomes).Load();
+                        foreach (var courseoutcome in course.CourseOutcomes)
+                        {
+                            context.Entry(courseoutcome).Collection(courseoutcome => courseoutcome.MajorOutcomes).Load();
+                            foreach (var majoroutcome in courseoutcome.MajorOutcomes)
+                            {
+                                majorOutcomes.Add(majoroutcome);
+                            }
+                        }
+                    }
+                }
+
+                return majorOutcomes.ToList();
+            }
+            
+            
+
+        }//GetCoursesCourseOutcomes
+
     } // Course
 }

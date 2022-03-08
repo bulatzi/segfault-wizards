@@ -89,5 +89,19 @@ namespace AbetApi.Controllers
                 return BadRequest(ex.Message);
             }
         } // GetCoursesByMajor
+
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpGet("GetMajorOutcomesByMajor")]
+        public async Task<IActionResult> GetMajorOutcomesByMajor(string term, int year, string majorName)
+        {
+            try
+            {
+                return Ok(await Major.GetMajorOutcomesByMajor(term, year, majorName));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     } // MajorController
 }

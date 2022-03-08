@@ -136,5 +136,29 @@ namespace AbetApi.EFModels
                 return list;
             }
         } // GetCoursesByMajor
+
+        public async static Task<List<MajorOutcome>> GetMajorOutcomesByMajor(string term, int year, string majorName)
+        {
+
+            List<MajorOutcome> majorOutcomes = new List<MajorOutcome>();
+            await using (var context = new ABETDBContext())
+            {
+                Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+                context.Entry(semester).Collection(semester => semester.Majors).Load();
+                foreach (var major in semester.Majors)
+                {
+                    if (majorName == major.Name)
+                    {
+                        context.Entry(major).Collection(major => major.MajorOutcomes).Load();
+                        foreach (var majoroutcome in major.MajorOutcomes)
+                        {
+                            majorOutcomes.Add(majoroutcome);
+                        }
+                    }
+                }
+                return majorOutcomes.ToList();
+            }
+        }//GetMajorOutcomesByMajor
+
     } // Major
 }
