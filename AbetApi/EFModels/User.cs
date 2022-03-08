@@ -34,6 +34,15 @@ namespace AbetApi.EFModels
             //FIXME - Add error checking. User requires a unique EUID that breaks if you try to save changes with 2 of the same EUID.
             await using (var context = new ABETDBContext())
             {
+                //Try to find the user in the database.
+                var tempUser = context.Users.FirstOrDefault(p => p.EUID == User.EUID);
+
+                //Check the new user to be created does not copy an EUID already being used in the datbaase and throw an exception if it does.
+                if ( tempUser != null)
+                {
+                    throw new ArgumentException("A user with that EUID already exists in the database.");
+                }    
+
                 context.Users.Add(User);
                 context.SaveChanges();
             }
@@ -51,6 +60,12 @@ namespace AbetApi.EFModels
                 //find the user with a matching EUID
                 var user = context.Users.FirstOrDefault(p => p.EUID == EUID);
 
+                //Check to make sure the specified user to work on was a valid user from the database and throw an exception if it was not.
+                if(user == null)
+                {
+                    throw new ArgumentException("The user you wanted to edit does not exist in the database.");
+                }
+
                 //Copy new values of user over to the user that's being edited
                 user.FirstName = NewUserInfo.FirstName;
                 user.LastName = NewUserInfo.LastName;
@@ -67,6 +82,12 @@ namespace AbetApi.EFModels
             {
                 //find the user with a matching EUID
                 var user = context.Users.FirstOrDefault(p => p.EUID == EUID);
+
+                //Check to make sure the specified user to work on was a valid user from the database and throw an exception if it was not.
+                if (user == null)
+                {
+                    throw new ArgumentException("The user you wanted to delete does not exist in the database.");
+                }
 
                 //Delete the result, and save changes
                 context.Remove(user);

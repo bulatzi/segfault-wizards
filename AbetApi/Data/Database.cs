@@ -108,7 +108,7 @@ namespace AbetApi.Data
             var springSemester = Semester.GetSemester("Spring", 2022);
             var fallSemester = Semester.GetSemester("Fall", 2022); // This won't work. It returns null when it can't find something
             //Update
-            Semester.EditSemester("Spring", 2022, new Semester("Fall", 2022));
+            Semester.EditSemester("Spring", 2022, new Semester("Winter", 2022));
             //Read (again)
             springSemester = Semester.GetSemester("Spring", 2022);
             fallSemester = Semester.GetSemester("Fall", 2022);

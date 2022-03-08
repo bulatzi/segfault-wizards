@@ -44,6 +44,23 @@ namespace AbetApi.Controllers
             }
         } // AddSemester
 
+        //This function edits an already existing semester with the newly provided information to the database.
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpPatch("EditSemester")]
+        public async Task<IActionResult> EditSemester(string term, int year, Semester semester)
+        {
+            try
+            {
+                await Semester.EditSemester(term, year, semester);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
         //This function deletes a semester from the database with the provided information.
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpDelete("DeleteSemester")]
