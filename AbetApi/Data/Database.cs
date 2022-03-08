@@ -27,6 +27,7 @@ namespace AbetApi.Data
                 context.Semesters.Clear();
                 context.Users.Clear();
                 context.Roles.Clear();
+                context.Surveys.Clear();
                 context.SaveChanges();
             }
         }
