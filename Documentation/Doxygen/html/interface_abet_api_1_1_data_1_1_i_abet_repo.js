@@ -1,0 +1,27 @@
+var interface_abet_api_1_1_data_1_1_i_abet_repo =
+[
+    [ "AddCourse", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#aacd95ddd348ab89023870a6d2ec3b2b2", null ],
+    [ "AddFacultyMember", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#ab71fcdedcb01c293b613a494b20b3d8e", null ],
+    [ "AddProgram", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#aa57c2f83477ec19820503f0826fba1e7", null ],
+    [ "DeleteProgram", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#afb4969ba5872aba1e8ffe135b3e04747", null ],
+    [ "GetAllPrograms", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#a7f31c0e5fe44430bb6b2c68b9107755f", null ],
+    [ "GetBlankForm", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#abf99aec14a60b54e877999758f39f523", null ],
+    [ "GetCourseObjectives", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#adde338bfa4eff35b9bf65dd2e9847d96", null ],
+    [ "GetCourseOutcomesByCourse", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#a11fc1e33ec51d14c3db6e3f47b3f26ab", null ],
+    [ "GetCoursesByDepartment", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#a7b7bee637526b183f11be9139b0707dc", null ],
+    [ "GetCoursesByYear", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#a8570906851604abc35019cd0b81d758d", null ],
+    [ "GetFacultyList", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#ab988eda65e33b81ff13f9e09e602c08d", null ],
+    [ "GetFormBySection", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#a391463c143ae89877c32a2e136fd9577", null ],
+    [ "GetFormsByCourse", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#a8b04f0a4399ed2875b8f79c6ac6293ea", null ],
+    [ "GetRole", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#a8434485d643a506b52b7d5e3007c7ed8", null ],
+    [ "GetSectionsByUserId", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#a53fea3dcc4aec0bb0ac3cd84088af451", null ],
+    [ "GetSectionsByYearAndSemester", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#a7b437dd55246f5494dc08474cfb9bba3", null ],
+    [ "GetStudentWorkInfo", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#accd329b548817d3d288fede376d8eb44", null ],
+    [ "PostAccessDbData", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#a715a01af9e289cbaffd54da82ec512be", null ],
+    [ "PostComment", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#a1de3ab4688db856db4f5452288dcd499", null ],
+    [ "PostForm", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#a010a9e2d644c4540d5f6aa509add7e54", null ],
+    [ "PostSection", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#a6368836bd504933d2ab8e853c427c61a", null ],
+    [ "PostStudentSurvey", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#ab707bf78b85327d2a567a54714f62184", null ],
+    [ "PostStudentWorkInfo", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#a04dd643378448afc91a694bf8c5f2389", null ],
+    [ "RemoveCourse", "interface_abet_api_1_1_data_1_1_i_abet_repo.html#afbd411023909457c48a0b2daa259946d", null ]
+];
