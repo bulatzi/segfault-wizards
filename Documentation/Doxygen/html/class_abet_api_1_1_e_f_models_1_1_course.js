@@ -1,0 +1,26 @@
+var class_abet_api_1_1_e_f_models_1_1_course =
+[
+    [ "Course", "class_abet_api_1_1_e_f_models_1_1_course.html#a0ef52284594bbb5706874009d14cef13", null ],
+    [ "Course", "class_abet_api_1_1_e_f_models_1_1_course.html#ae6e44562220024c6954b295dd4c4a1d5", null ],
+    [ "AddCourse", "class_abet_api_1_1_e_f_models_1_1_course.html#a9cb01cd091afc4c6dffefee30059d38f", null ],
+    [ "DeleteCourse", "class_abet_api_1_1_e_f_models_1_1_course.html#a4569ef471553f10ff48cda8b37595d71", null ],
+    [ "EditCourse", "class_abet_api_1_1_e_f_models_1_1_course.html#ab7cc933df80bd9d327b5280b1c067b90", null ],
+    [ "GetCourse", "class_abet_api_1_1_e_f_models_1_1_course.html#afc1db27f50dfed8b29f6213ef8235cc9", null ],
+    [ "GetCourseNamesByDepartment", "class_abet_api_1_1_e_f_models_1_1_course.html#aa07cbfba39ca6908232a042afb99365d", null ],
+    [ "GetCoursesByDepartment", "class_abet_api_1_1_e_f_models_1_1_course.html#aafc9664c0877176ae0ee1b2014922d5f", null ],
+    [ "GetDepartments", "class_abet_api_1_1_e_f_models_1_1_course.html#a245dab9d58e84e72676adcd2e572fbae", null ],
+    [ "GetMajorOutcomesSatisfied", "class_abet_api_1_1_e_f_models_1_1_course.html#a24eab6fe926bbf308615749dbd8695c9", null ],
+    [ "getMajorsThatRequireCourse", "class_abet_api_1_1_e_f_models_1_1_course.html#a63814659ab098510309472f4602360c9", null ],
+    [ "GetSectionsByCourse", "class_abet_api_1_1_e_f_models_1_1_course.html#a11caca3189b6c33a83a893b1f7eafbc8", null ],
+    [ "CoordinatorComment", "class_abet_api_1_1_e_f_models_1_1_course.html#a1e38a65f894248205181b8b8bfdcb5a1", null ],
+    [ "CoordinatorEUID", "class_abet_api_1_1_e_f_models_1_1_course.html#a3e01575ab0f03e2e85d21208e8d0340f", null ],
+    [ "CourseId", "class_abet_api_1_1_e_f_models_1_1_course.html#ae916a0e66ba13f806381c2a1be8e36c1", null ],
+    [ "CourseNumber", "class_abet_api_1_1_e_f_models_1_1_course.html#ab657d873bba8d65e8b487a8905a4d003", null ],
+    [ "CourseOutcomes", "class_abet_api_1_1_e_f_models_1_1_course.html#a14a9fe582d35b21db83024e720ce4859", null ],
+    [ "Department", "class_abet_api_1_1_e_f_models_1_1_course.html#a9113985551b6144e11c8ac90c4be561a", null ],
+    [ "DisplayName", "class_abet_api_1_1_e_f_models_1_1_course.html#abfcaa0d23a70ab5faecf7e35d323c318", null ],
+    [ "IsCourseCompleted", "class_abet_api_1_1_e_f_models_1_1_course.html#a64c92eaf257f7d537baf02d7c07012a3", null ],
+    [ "RequiredByMajors", "class_abet_api_1_1_e_f_models_1_1_course.html#a508bc8fa7b7b363d4dbdf672bef079b1", null ],
+    [ "Sections", "class_abet_api_1_1_e_f_models_1_1_course.html#ab3ebdd4088edc32515c78055e43a973f", null ],
+    [ "Semesters", "class_abet_api_1_1_e_f_models_1_1_course.html#a80273a576d2dacc10a0c7535fad3b537", null ]
+];

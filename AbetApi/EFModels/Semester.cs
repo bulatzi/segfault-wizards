@@ -5,35 +5,85 @@ using System.Threading.Tasks;
 using System.Text.Json.Serialization;
 using AbetApi.Data;
 
+//! The EFModels namespace
+/*! 
+ * This namespace falls under the AbetAPI namespace, and is for EFModels.
+ * The EFModels are generally called from the Controllers namespace, to 
+ * provide the controllers functionality, ultimately giving endpoints/functionality
+ * for the UI elements
+ */
 namespace AbetApi.EFModels
 {
+    //! The Semester Class
+    /*! 
+     * This class gets called by the SemesterController class
+     * and provides functions to get and return data
+     */
     public class Semester
     {
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        //! The SemesterID setter/getter function
+        /*! 
+         * This is a single line dual function for setting and getting
+         */
         public int SemesterId { get; set; }
+        //! The Year setter/getter function
+        /*! 
+         * This is a single line dual function for setting and getting
+         */
         public int Year { get; set; }
+        //! The Term setter/getter function
+        /*! 
+         * This is a single line dual function for setting and getting
+         */
         public string Term { get; set; }
         //string Session { get; set; } // Session is not required. All courses fall under the purview of spring/fall.
         [JsonIgnore]
+        //! The Courses setter/getter function
+        /*! 
+         * This is a single line dual function for setting and getting
+         */
         public ICollection<Course> Courses { get; set; }
         [JsonIgnore]
+        //! The Majors setter/getter function
+        /*! 
+         * This is a single line dual function for setting and getting
+         */
         public ICollection<Major> Majors { get; set; }
 
-        // This constructor creates an empty semester.
-        // You must add majors and courses afterwards
+        //! Paramaterized Constructor
+        /*! 
+         * This constructor creates an empty semester.
+         * You must add majors and courses afterwards
+         * \param Term The Term (Fall/Spring) for the given semester
+         * \param year The year for the given semester
+         */
         public Semester(string Term, int year)
         {
             this.Term = Term;
             this.Year = year;
         }
 
+        //! Constructor
+        /*! 
+         * This Constructor builds courses and majors for semester
+         */
         Semester()
         {
             this.Courses = new List<Course>();
             this.Majors = new List<Major>();
         }
 
-        // NEEDS ADDITIONAL NULL CHECKING AND INPUT SCRUBBING
+        //! The AddSemester Function
+        /*! 
+         * This function adds a semester to the database. It is an async Task to pass exceptions to the Controllers.SemesterController in Controllers.
+         * It first sets the user id to 0 so that the entity framework will give it a primary key.
+         * It then checks to see if the term of the semester is null. Then checks if the semester year 
+         * is less than 1890. It formats the term string to a standard and opens a context with the database.
+         * It then checks to see if the semester is already in the database and throws an exception if it is.
+         * Otherwise, it is then added and then saves the changes.
+         * \param semester This is a semester object to hold various data, such as year, term, courses, majors, outcomes, etc.
+         */
         public async static Task AddSemester(Semester semester)
         {
             // Sets the user id to be 0, so entity framework will give it a primary key
@@ -73,7 +123,14 @@ namespace AbetApi.EFModels
             }
         } // AddSemester
 
-        // This function searches for an item with the provided term and year. It returns null if the item isn't found.
+        //! The GetSemester function
+        /*! 
+         * This function searches for a semester with the provided term and year and returns a semester object. 
+         * It is an async Task<Semester> to pass exceptions and a semester object to the Controllers.SemesterController in Controllers.
+         * It returns null if the item isn't found.
+         * \param term The term (Spring/Fall) of the respective semester
+         * \param year The year of the respective semester
+         */
         public async static Task<Semester> GetSemester(string term, int year)
         {
             //Format the term string to follow a standard.
@@ -88,7 +145,11 @@ namespace AbetApi.EFModels
         }
 
         //COULD GIVE INDICATION OF NO SEMESTERS LISTED
-        //This function returns all semesters in the Semester table from the database.
+        //! The GetSemesters function
+        /*! 
+         * This function returns all semesters in the Semester table from the database.
+         * It is an async Task<List<Semester>> to pass exceptions and a list of semester objects to the Controllers.SemesterController in Controllers.
+         */
         public static async Task<List<Semester>> GetSemesters()
         {
             await using (var context = new ABETDBContext())
@@ -97,8 +158,20 @@ namespace AbetApi.EFModels
             }
         } // GetSemesters
 
-        // This function finds a semester by term and year, and updates the semester to the values of the provided semester object.
-        // Note: This function may need to also include editing courses and majors in the future, but it's not here currently that data will need to have its own dedicated functions for editing.
+        //! The EditSemester function
+        /*! 
+         * This function finds a semester by term and year, and updates the semester to the values of the provided semester object.
+         * Note: This function may need to also include editing courses and majors in the future, but it's not here currently that 
+         * data will need to have its own dedicated functions for editing.
+         * It is an async Task to pass exceptions to the Controllers.SemesterController in Controllers.
+         * It first checks to make sure the semester term is not null and that the year is greater than 1890. It then checks to make sure
+         * the new input term is not null and that the new input year is also greater than 1890. It formats the term strings to the standard
+         * and checks to make sure the semester to be edited exists (otherwise throws an exception). After this, it checks to see if the
+         * new semester info is a duplicate and throws an exception if it is. Otherwise the changes are made and saved.
+         * \param term The term (Spring/Fall) of the respective semester
+         * \param year The year of the respective semester
+         * \param NewValue A semester object to provide new values to an old semester object
+         */
         public static async Task EditSemester(string term, int year, Semester NewValue)
         {
             await using (var context = new ABETDBContext())
@@ -158,8 +231,15 @@ namespace AbetApi.EFModels
             }
         }
 
-        // This function finds a semester and deletes it.
-        // Anybody calling this function should make sure you want to call this function. Deletions are final.
+        //! The DeleteSemester function
+        /*! 
+         * This function finds a semester and deletes it.. Anybody calling this function should make sure you want to call this function. Deletions are final.
+         * It is an async Task to pass exceptions to the Controllers.SemesterController in Controllers.
+         * First checks to make sure the semester term is not null and that the year is greater than 1890 (otherwise throws exceptions). It formats the term string
+         * to a standard, and tries to find the semester to delete (throws an exception otherwise). If found, it deletes it and saves the changes.
+         * \param Term The Term (Fall/Spring) for the given semester
+         * \param year The year for the given semester
+         */
         public async static Task DeleteSemester(string term, int year)
         {
             await using (var context = new ABETDBContext())
@@ -194,6 +274,16 @@ namespace AbetApi.EFModels
             }
         } // DeleteSemester
 
+        // SHOULD THIS BE A TASK???
+        //! The GetCourses function
+        /*! 
+         * This function gets courses related to a term and year of a semester.
+         * It first checks to see if the semester term is null and that the year is greater than 1890 (throws and exception otherwise).
+         * It then formats the term spring to a standard and checks if the semester exists (throws an exception otherwise). It then retrieves the courses
+         * and passes them back to the controller in a list.
+         * \param Term The Term (Fall/Spring) for the given semester
+         * \param year The year for the given semester
+         */
         public static List<Course> GetCourses(string term, int year)
         {
             List<Course> list = new List<Course>();
