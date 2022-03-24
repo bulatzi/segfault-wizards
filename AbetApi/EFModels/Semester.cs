@@ -57,10 +57,10 @@ namespace AbetApi.EFModels
             await using (var context = new ABETDBContext())
             {
                 //Try to find the semester in the database.
-                Semester tempSemester = context.Semesters.FirstOrDefault(p => p.Term == semester.Term && p.Year == semester.Year);
+                Semester duplicateSemester = context.Semesters.FirstOrDefault(p => p.Term == semester.Term && p.Year == semester.Year);
 
                 //If the semester already exists in the database, then throw an exception.
-                if(tempSemester != null)
+                if(duplicateSemester != null)
                 {
                     throw new ArgumentException("The semester you are trying to add already exists in the database.");
                 }

@@ -66,10 +66,10 @@ namespace AbetApi.EFModels
             await using (var context = new ABETDBContext())
             {
                 //Try to find the user in the database.
-                User tempUser = context.Users.FirstOrDefault(p => p.EUID == User.EUID);
+                User duplicateUser = context.Users.FirstOrDefault(p => p.EUID == User.EUID);
 
                 //Check the new user to be created does not copy an EUID already being used in the datbaase and throw an exception if it does.
-                if ( tempUser != null)
+                if (duplicateUser != null)
                 {
                     throw new ArgumentException("A user with that EUID already exists in the database.");
                 }    
