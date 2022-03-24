@@ -66,7 +66,7 @@ namespace AbetApi.EFModels
             await using (var context = new ABETDBContext())
             {
                 //Try to find the user in the database.
-                var tempUser = context.Users.FirstOrDefault(p => p.EUID == User.EUID);
+                User tempUser = context.Users.FirstOrDefault(p => p.EUID == User.EUID);
 
                 //Check the new user to be created does not copy an EUID already being used in the datbaase and throw an exception if it does.
                 if ( tempUser != null)
@@ -94,7 +94,7 @@ namespace AbetApi.EFModels
             //Try to find the specified user.
             await using (var context = new ABETDBContext())
             {
-                var user = context.Users.FirstOrDefault(p => p.EUID == EUID);
+                User user = context.Users.FirstOrDefault(p => p.EUID == EUID);
 
                 //If the specified user does not exist, then throw an exception.
                 if (user == null)
@@ -112,6 +112,12 @@ namespace AbetApi.EFModels
         {
             //Sets the user ID to 0, to allow the database to auto increment the UserId value
             NewUserInfo.UserId = 0;
+
+            //Check that the EUID of the existing user information is not null or empty.
+            if (EUID == null || EUID == "")
+            {
+                throw new ArgumentException("The EUID for the user to edit cannot be empty.");
+            }
 
             //Check that the first name of the new user information is not null or empty.
             if (NewUserInfo.FirstName == null || NewUserInfo.FirstName == "")
@@ -139,7 +145,7 @@ namespace AbetApi.EFModels
             await using (var context = new ABETDBContext())
             {
                 //find the user with a matching EUID
-                var user = context.Users.FirstOrDefault(p => p.EUID == EUID);
+                User user = context.Users.FirstOrDefault(p => p.EUID == EUID);
 
                 //Check to make sure the specified user to work on was a valid user from the database and throw an exception if it was not.
                 if(user == null)
@@ -180,7 +186,7 @@ namespace AbetApi.EFModels
             await using (var context = new ABETDBContext())
             {
                 //find the user with a matching EUID
-                var user = context.Users.FirstOrDefault(p => p.EUID == EUID);
+                User user = context.Users.FirstOrDefault(p => p.EUID == EUID);
 
                 //Check to make sure the specified user to work on was a valid user from the database and throw an exception if it was not.
                 if (user == null)
@@ -209,16 +215,19 @@ namespace AbetApi.EFModels
             await using (var context = new ABETDBContext())
             {
                 // Finds the user
-                var user = context.Users.FirstOrDefault(u => u.EUID == EUID);
+                User user = context.Users.FirstOrDefault(u => u.EUID == EUID);
+
+                //Throw an exception if the user specified does not exist.
                 if (user == null)
-                    return null;
+                {
+                    throw new ArgumentException("The user specified does not exist in the database.");
+                }
 
                 //This uses explicit loading to tell the database we want Roles loaded
                 context.Entry(user).Collection(user => user.Roles).Load();
 
                 // Converts the roles of that user in to a list and returns the list.
-                var output = user.Roles.ToList();
-                return output;
+                return user.Roles.ToList();
             }
         } // GetRolesByUser
     } // User
