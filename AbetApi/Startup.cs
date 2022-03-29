@@ -64,6 +64,10 @@ namespace AbetApi
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AbetApi", Version = "v1" });
+                
+                //use fully qualified object names
+                c.CustomSchemaIds(x => x.FullName);
+
             });
         }
 

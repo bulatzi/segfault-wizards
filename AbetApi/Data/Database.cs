@@ -27,6 +27,7 @@ namespace AbetApi.Data
                 context.Semesters.Clear();
                 context.Users.Clear();
                 context.Roles.Clear();
+                context.Surveys.Clear();
                 context.SaveChanges();
             }
         }
@@ -108,7 +109,7 @@ namespace AbetApi.Data
             var springSemester = Semester.GetSemester("Spring", 2022);
             var fallSemester = Semester.GetSemester("Fall", 2022); // This won't work. It returns null when it can't find something
             //Update
-            Semester.EditSemester("Spring", 2022, new Semester("Fall", 2022));
+            Semester.EditSemester("Spring", 2022, new Semester("Winter", 2022));
             //Read (again)
             springSemester = Semester.GetSemester("Spring", 2022);
             fallSemester = Semester.GetSemester("Fall", 2022);
@@ -118,7 +119,7 @@ namespace AbetApi.Data
 
             //Major class testing
             /////////////////////////////////////////////////////////////////////////////////
-            Major.AddMajor("Fall", 2022, new Major("CS"));
+            Major.AddMajor("Fall", 2022, "CS");
             //var temp = Major.GetMajor("Fall", 2022, "CS");
             //temp = Major.GetMajor("Fall", 2022, "CSE"); // return null
             //Major.EditMajor("Fall", 2022, "CS", new Major("IT"));
@@ -132,7 +133,7 @@ namespace AbetApi.Data
             MajorOutcome.AddMajorOutcome("Fall", 2022, "CS", new MajorOutcome("3", "Accomplishes websites"));
             var tempMajorOutcome =  MajorOutcome.GetMajorOutcome("Fall", 2022, "CS", "2");
             MajorOutcome.EditMajorOutcome("Fall", 2022, "CS", "3", new MajorOutcome("3", "Gud at spelung"));
-            MajorOutcome.DeleteMajorOutcome("Fall", 2022, "CS", "3");
+            //MajorOutcome.DeleteMajorOutcome("Fall", 2022, "CS", "3");
 
             System.Console.WriteLine("");
 

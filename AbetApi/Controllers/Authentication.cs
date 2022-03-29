@@ -20,7 +20,7 @@ namespace AbetApi.Controllers
         }
 
         // This function is used to return a token that contains all of the roles a user has after successfully logging in
-        [HttpGet("Login")]
+        [HttpPost("Login")]
         public ActionResult Login(string EUID, string password)
         {
             if (string.IsNullOrEmpty(EUID) || string.IsNullOrEmpty(password))
