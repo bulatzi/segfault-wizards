@@ -108,10 +108,10 @@ namespace AbetApi.EFModels
             await using (var context = new ABETDBContext())
             {
                 //Try to find the semester in the database.
-                Semester tempSemester = context.Semesters.FirstOrDefault(p => p.Term == semester.Term && p.Year == semester.Year);
+                Semester duplicateSemester = context.Semesters.FirstOrDefault(p => p.Term == semester.Term && p.Year == semester.Year);
 
                 //If the semester already exists in the database, then throw an exception.
-                if(tempSemester != null)
+                if(duplicateSemester != null)
                 {
                     throw new ArgumentException("The semester you are trying to add already exists in the database.");
                 }
@@ -133,6 +133,18 @@ namespace AbetApi.EFModels
          */
         public async static Task<Semester> GetSemester(string term, int year)
         {
+            //Check the term is not null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check the year is not before the establishment of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
             //Format the term string to follow a standard.
             term = term[0].ToString().ToUpper() + term.Substring(1);
 
@@ -140,6 +152,13 @@ namespace AbetApi.EFModels
             await using (var context = new ABETDBContext())
             {
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+
+                //If the specified semester does not exist, then throw an exception.
+                if(semester == null)
+                {
+                    throw new ArgumentException("The specified semester does not exist in the databaase.");
+                }
+
                 return semester;
             }
         }
@@ -174,36 +193,36 @@ namespace AbetApi.EFModels
          */
         public static async Task EditSemester(string term, int year, Semester NewValue)
         {
+            //Check that the term of the semester to be edited is not null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term for which semester to edit cannot be empty.");
+            }
+
+            //Check that the year is not before the establishment of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year for which semester to edit cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Check that the new term is not null or empty.
+            if (NewValue.Term == null || NewValue.Term == "")
+            {
+                throw new ArgumentException("The new term cannot be empty.");
+            }
+
+            //Check that the new year is not before the establishment of the university.
+            if (NewValue.Year < 1890)
+            {
+                throw new ArgumentException("The new year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Format the term strings to follow a standard.
+            term = term[0].ToString().ToUpper() + term.Substring(1);
+            NewValue.Term = NewValue.Term[0].ToString().ToUpper() + NewValue.Term.Substring(1);
+
             await using (var context = new ABETDBContext())
             {
-                //Check that the term of the semester to be edited is not null or empty.
-                if (term == null || term == "")
-                {
-                    throw new ArgumentException("The term for which semester to edit cannot be empty.");
-                }
-
-                //Check that the year is not before the establishment of the university.
-                if (year < 1890)
-                {
-                    throw new ArgumentException("The year for which semester to edit cannot be empty, or less than the establishment date of UNT.");
-                }
-
-                //Check that the new term is not null or empty.
-                if (NewValue.Term == null || NewValue.Term == "")
-                {
-                    throw new ArgumentException("The new term cannot be empty.");
-                }
-
-                //Check that the new year is not before the establishment of the university.
-                if (NewValue.Year < 1890)
-                {
-                    throw new ArgumentException("The new year cannot be empty, or less than the establishment date of UNT.");
-                }
-
-                //Format the term strings to follow a standard.
-                term = term[0].ToString().ToUpper() + term.Substring(1);
-                NewValue.Term = NewValue.Term[0].ToString().ToUpper() + NewValue.Term.Substring(1);
-
                 //Try to find the specified semester to be edited.
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
 
@@ -214,20 +233,19 @@ namespace AbetApi.EFModels
                 }
 
                 //Try to find the new semester information in the database.
-                Semester newSemester = context.Semesters.FirstOrDefault(p => p.Term == NewValue.Term && p.Year == NewValue.Year);
+                Semester duplicateSemester = context.Semesters.FirstOrDefault(p => p.Term == NewValue.Term && p.Year == NewValue.Year);
 
                 //If we do find the new information then that is a duplicate and we don't allow duplicates.
-                if (newSemester != null)
+                if (duplicateSemester != null)
                 {
                     throw new ArgumentException("That semester already exists in the database.");
                 }
 
+                //Copy new values of semester over to the semester that's being edited
                 semester.Term = NewValue.Term;
                 semester.Year = NewValue.Year;
 
                 context.SaveChanges();
-
-                return;
             }
         }
 
@@ -242,23 +260,23 @@ namespace AbetApi.EFModels
          */
         public async static Task DeleteSemester(string term, int year)
         {
+            //Check that the term of the semester is not null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term for which semester to delete cannot be empty.");
+            }
+
+            //Check that the year is not before the establishment of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year for which semester to delete cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Format the term string to follow a standard.
+            term = term[0].ToString().ToUpper() + term.Substring(1);
+
             await using (var context = new ABETDBContext())
             {
-                //Check that the term of the semester is not null or empty.
-                if (term == null || term == "")
-                {
-                    throw new ArgumentException("The term for which semester to delete cannot be empty.");
-                }
-
-                //Check that the year is not before the establishment of the university.
-                if (year < 1890)
-                {
-                    throw new ArgumentException("The year for which semester to delete cannot be empty, or less than the establishment date of UNT.");
-                }
-
-                //Format the term string to follow a standard.
-                term = term[0].ToString().ToUpper() + term.Substring(1);
-
                 //Try to find the specified semester.
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
 
@@ -267,14 +285,13 @@ namespace AbetApi.EFModels
                 {
                     throw new ArgumentException("The semester specified to delete does not exist in the database.");
                 }
+
                 context.Remove(semester);
                 context.SaveChanges();
-
-                return;
             }
         } // DeleteSemester
 
-        // SHOULD THIS BE A TASK???
+
         //! The GetCourses function
         /*! 
          * This function gets courses related to a term and year of a semester.
@@ -284,27 +301,25 @@ namespace AbetApi.EFModels
          * \param Term The Term (Fall/Spring) for the given semester
          * \param year The year for the given semester
          */
-        public static List<Course> GetCourses(string term, int year)
+        public static async Task<List<Course>> GetCourses(string term, int year)
         {
-            List<Course> list = new List<Course>();
-
-            using (var context = new ABETDBContext())
+            //Check that the term of the semester is not null or empty..
+            if (term == null || term == "")
             {
-                //Check that the term of the semester is not null or empty..
-                if (term == null || term == "")
-                {
-                    throw new ArgumentException("The term for which semester's courses to display cannot be empty.");
-                }
+                throw new ArgumentException("The term for which semester's courses to display cannot be empty.");
+            }
 
-                //Check that the year is not before the establishment of the university.
-                if (year < 1890)
-                {
-                    throw new ArgumentException("The year for which semester's courses to display cannot be empty, or less than the establishment date of UNT.");
-                }
+            //Check that the year is not before the establishment of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year for which semester's courses to display cannot be empty, or less than the establishment date of UNT.");
+            }
 
-                //Format the term string to follow a standard.
-                term = term[0].ToString().ToUpper() + term.Substring(1);
+            //Format the term string to follow a standard.
+            term = term[0].ToString().ToUpper() + term.Substring(1);
 
+            await using (var context = new ABETDBContext())
+            {
                 //Try to find the specified semester.
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
 
@@ -316,11 +331,7 @@ namespace AbetApi.EFModels
 
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
 
-                foreach (var course in semester.Courses)
-                {
-                    list.Add(course);
-                }
-                return list;
+                return semester.Courses.ToList();
             }
         }
     }
