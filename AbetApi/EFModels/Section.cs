@@ -35,7 +35,7 @@ namespace AbetApi.EFModels
         //This means that the department member variable for the class Course should be removed and I am anticipating that.
         public static async Task AddSection(string term, int year, string department, string courseNumber, Section section)
         {
-            // Sets the user id to be 0, so entity framework will give it a primary key
+            // Sets the section id to be 0, so entity framework will give it a primary key
             section.SectionId = 0;
 
             //Check if the term is null or empty

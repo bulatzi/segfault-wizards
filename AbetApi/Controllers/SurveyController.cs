@@ -14,7 +14,7 @@ namespace AbetApi.Controllers
     {
         // This function returns a specific set of specified questions
         [HttpGet("GetQuestionSet")]
-        public async Task<IActionResult> GetQuestionSet(string term, string year, string questionSetName)
+        public async Task<IActionResult> GetQuestionSet(string term, int year, string questionSetName)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace AbetApi.Controllers
 
         // This function will return the standard set of questions
         [HttpGet("GetQuestions")]
-        public async Task<IActionResult> GetQuestions(string term, string year)
+        public async Task<IActionResult> GetQuestions(string term, int year)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace AbetApi.Controllers
         }
 
         [HttpPost("SaveQuestions")]
-        public async Task<IActionResult> SaveQuestions(string term, string year, string questionSetName, List<string> questions)
+        public async Task<IActionResult> SaveQuestions(string term, int year, string questionSetName, List<string> questions)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace AbetApi.Controllers
         }
 
         [HttpPost("PostSurvey")]
-        public async Task<IActionResult> PostSurvey(string EUID, string term, string year, string department, string courseNumber, string sectionNumber, List<int> answerList, string additionalComments)
+        public async Task<IActionResult> PostSurvey(string EUID, string term, int year, string department, string courseNumber, string sectionNumber, List<int> answerList, string additionalComments)
         {
             try 
             {
