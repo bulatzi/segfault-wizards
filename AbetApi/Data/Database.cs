@@ -65,13 +65,13 @@ namespace AbetApi.Data
             //var result = User.GetUser("bdm0121").Result;
 
             //Creates default roles
-            Role.CreateRole("Admin");
-            Role.CreateRole("Coordinator");
-            Role.CreateRole("Instructor");
-            Role.CreateRole("Fellow");
-            Role.CreateRole("FullTime");
-            Role.CreateRole("Adjunct");
-            Role.CreateRole("Student");
+            Role.CreateRole(new Role("Admin"));
+            Role.CreateRole(new Role("Coordinator"));
+            Role.CreateRole(new Role("Instructor"));
+            Role.CreateRole(new Role("Fellow"));
+            Role.CreateRole(new Role("FullTime"));
+            Role.CreateRole(new Role("Adjunct"));
+            Role.CreateRole(new Role("Student"));
 
             //Gives admin access to:
             /*

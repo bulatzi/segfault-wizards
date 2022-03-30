@@ -39,10 +39,6 @@ namespace AbetApi.Controllers
         {
             try
             {
-                List<User> admins = new List<User>();
-                List<User> instructors = new List<User>();
-                List<User> coordinators = new List<User>();
-
                 AbetApi.Models.Faculty temp = new AbetApi.Models.Faculty
                 {
                     Admins = await Role.GetUsersByRole("Admin"),
@@ -62,7 +58,7 @@ namespace AbetApi.Controllers
         // Role name can include any characters. Any function calls for a role will be case sensitive.
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("CreateRole")]
-        public async Task<IActionResult> CreateRole(string roleName)
+        public async Task<IActionResult> CreateRole(Role roleName)
         {
             try
             {
