@@ -38,7 +38,7 @@ namespace AbetApi.EFModels
             // Sets the section id to be 0, so entity framework will give it a primary key
             section.SectionId = 0;
 
-            //Check if the term is null or empty
+            //Check if the term is null or empty.
             if (term == null || term == "")
             {
                 throw new ArgumentException("The term cannot be empty.");
@@ -83,8 +83,9 @@ namespace AbetApi.EFModels
 
             await using (var context = new ABETDBContext())
             {
-                //Find the semester/course the section will belong to
                 Course tempCourse = null;
+
+                //Find the semester/course the section will belong to
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
 
                 //Check if the semester is null.
@@ -109,13 +110,17 @@ namespace AbetApi.EFModels
                     throw new ArgumentException("The specified course does not exist in the database.");
                 }
 
-                //Try to find the new section in the database.
-                Section duplicateSection = context.Sections.FirstOrDefault(p => p.SectionNumber == section.SectionNumber);
+                //Load the sections under the course specified.
+                context.Entry(tempCourse).Collection(course => course.Sections).Load();
 
-                //If we do find the section already in the database, that is a duplicate and we do not allow duplicates.
-                if(duplicateSection != null)
+                //Try to find the new section in the database.
+                foreach (Section duplicateSection in tempCourse.Sections)
                 {
-                    throw new ArgumentException("That section already exists in the database.");
+                    //If we do find the section already in the database, that is a duplicate and we do not allow duplicates.
+                    if (duplicateSection.SectionNumber == section.SectionNumber)
+                    {
+                        throw new ArgumentException("That section already exists in the database.");
+                    }
                 }
 
                 //Add the section to the database table, and the course join table, then save changes
@@ -311,7 +316,7 @@ namespace AbetApi.EFModels
                 //Check if section is null.
                 if (tempSection == null)
                 {
-                    throw new ArgumentException("The specified section does not exist in the database.");
+                    throw new ArgumentException("The specified section to edit does not exist in the database.");
                 }
 
                 tempSection.InstructorEUID = NewValue.InstructorEUID;
