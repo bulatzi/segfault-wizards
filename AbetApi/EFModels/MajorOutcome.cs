@@ -90,6 +90,7 @@ namespace AbetApi.EFModels
                     if (major.Name == majorName)
                     {
                         tempMajor = major;
+                        break;
                     }
                 }
 
@@ -152,6 +153,9 @@ namespace AbetApi.EFModels
 
             await using (var context = new ABETDBContext())
             {
+                Major tempMajor = null;
+                MajorOutcome tempMajorOutcome = null;
+
                 //Try to find the specified semester in the database.
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
 
@@ -169,21 +173,37 @@ namespace AbetApi.EFModels
                 {
                     if (major.Name == majorName)
                     {
-                        //Load the major outcomes under the specified major.
-                        context.Entry(major).Collection(major => major.MajorOutcomes).Load();
-
-                        //Loop through the major outcomes and look for the specified major outcome.
-                        foreach (var majorOutcome in major.MajorOutcomes)
-                        {
-                            if (majorOutcome.Name == outcomeName)
-                            {
-                                return majorOutcome;
-                            }
-                        }
-                        throw new ArgumentException("The specified major outcome does not exist in the database.");
+                        tempMajor = major;
+                        break;
                     }
                 }
-                throw new ArgumentException("The specified major does not exist in the database.");
+
+                //Check major is not null.
+                if(tempMajor == null)
+                {
+                    throw new ArgumentException("The specified major does not exist in the database.");
+                }
+
+                //Load the major outcomes under the specified major.
+                context.Entry(tempMajor).Collection(major => major.MajorOutcomes).Load();
+
+                //Loop through the major outcomes and look for the specified major outcome.
+                foreach (var majorOutcome in tempMajor.MajorOutcomes)
+                {
+                    if (majorOutcome.Name == outcomeName)
+                    {
+                        tempMajorOutcome = majorOutcome;
+                        break;
+                    }
+                }
+
+                //Check if major outcome is null.
+                if(tempMajorOutcome == null)
+                {
+                    throw new ArgumentException("The specified major outcome does not exist in the database.");
+                }
+
+                return tempMajorOutcome;
             }
         } // GetMajorOutcome
 
