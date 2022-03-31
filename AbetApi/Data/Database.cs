@@ -180,6 +180,13 @@ namespace AbetApi.Data
             //CourseOutcome.RemoveMajorOutcome("Fall", 2022, "CSCE", "1040", "CS", "2");
 
             System.Console.WriteLine(""); //This is a placeholder for a debugger break point
+            //Testing for section grades in the section class
+            /////////////////////////////////////////////////////////////////////
+            //Grade.SetSectionGrade("Fall", 2022, "CSCE", "3600", "002", new Grade())
+            List<Grade> grades = new List<Grade>();
+            grades.Add(new Grade("CSCE", 1, 2, 3, 4, 5, 6, 7, 739));
+            grades.Add(new Grade("EENG", 1, 2, 3, 4, 5, 6, 7, 740));
+            Grade.AddGrades("Fall", 2022, "CSCE", "3600", "002", grades);
         }
     }
 }
