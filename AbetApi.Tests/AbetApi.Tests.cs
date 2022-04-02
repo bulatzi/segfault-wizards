@@ -284,7 +284,7 @@ namespace AbetApi.Tests
         [TestMethod]
         public void TestAddSection()
         {
-            Section section = new Section("gtg001", true, "000001", 9);
+            Section section = new Section("gtg001", true, "000099", 9);
             Section.AddSection("Spring", 3031, "FTSY", "2022", section);
             var result = Section.GetSection("Spring", 3031, "FTSY", "2022", section.SectionNumber);
             Assert.AreEqual(result.InstructorEUID, section.InstructorEUID);
