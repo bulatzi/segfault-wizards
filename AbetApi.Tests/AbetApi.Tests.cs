@@ -236,8 +236,8 @@ namespace AbetApi.Tests
         [TestMethod]
         public void TestGetCourse()
         {
-            var course = Course.GetCourse("Spring", 3031, "FTSY", "3031");
-            Assert.IsNotNull(course, "The course does not exist.");
+            var course = Course.GetCourse("Spring", 3031, "ThisCourseDefinitelyDoesNotExist", "3031");
+            Assert.IsNull(course, "The course should not exist.");
         }
 
         [TestMethod]
@@ -296,13 +296,16 @@ namespace AbetApi.Tests
         [TestMethod]
         public void TestEditSection()
         {
-            Section section = new Section("gtg001", false, "000002", 10);
-            Section.EditSection("Spring", 3031, "FTSY", "2022", "000001", section);
-            var result = Section.GetSection("Spring", 3031, "FTSY", "2022", section.SectionNumber);
-            Assert.AreEqual(result.InstructorEUID, section.InstructorEUID);
+            Section section1 = new Section("gtg001", false, "000005", 10);
+            Section section2 = new Section("gtg001", false, "000009", 10);
+
+            Section.AddSection("Spring", 3031, "FTSY", "2022", section1);
+            Section.EditSection("Spring", 3031, "FTSY", "2022", "000005", section2);
+            var result = Section.GetSection("Spring", 3031, "FTSY", "2022", section2.SectionNumber);
+            Assert.AreEqual(result.InstructorEUID, section1.InstructorEUID);
             Assert.IsFalse(result.IsSectionCompleted);
             Assert.AreNotEqual(result.NumberOfStudents, 9);
-            Assert.AreNotEqual(result.SectionNumber, "000001");
+            Assert.AreEqual(result.SectionNumber, "000009");
         }
 
         [TestMethod]
