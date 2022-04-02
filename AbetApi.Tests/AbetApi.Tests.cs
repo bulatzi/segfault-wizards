@@ -177,9 +177,10 @@ namespace AbetApi.Tests
         {
             var results = Major.GetMajors("Spring", 3030);
             bool chkIfMajorExists = false;
-            foreach(var result in results)
+            foreach (var result in results)
             {
-                if (result.Name == "FTSY"){
+                if (result.Name == "FTSY")
+                {
                     chkIfMajorExists = true;
                 }
             }
@@ -194,7 +195,7 @@ namespace AbetApi.Tests
             var result = Major.GetMajor("Spring", 3030, "TestEditFTSY");
             Assert.AreEqual(result.Name, "TestEditFTSY");
         }
-        
+
         [TestMethod]
         public void TestDeleteMajor()
         {
@@ -235,7 +236,7 @@ namespace AbetApi.Tests
         [TestMethod]
         public void TestGetCourse()
         {
-            var course = Course.GetCourse("Spring", 3031, "FTSY", "2021");
+            var course = Course.GetCourse("Spring", 3031, "FTSY", "3031");
             Assert.IsNotNull(course, "The course does not exist.");
         }
 
