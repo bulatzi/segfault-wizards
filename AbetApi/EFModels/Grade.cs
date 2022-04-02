@@ -40,7 +40,7 @@ namespace AbetApi.EFModels
         }
 
 
-        public static async Task AddGrades(string term, int year, string department, string courseNumber, string sectionNumber, List<Grade> grades)
+        public static async Task SetGrades(string term, int year, string department, string courseNumber, string sectionNumber, List<Grade> grades)
         {
             //Check if the term is null or empty.
             if (term == null || term == "")
@@ -79,6 +79,7 @@ namespace AbetApi.EFModels
                     throw new ArgumentException("The specified semester does not exist in the database.");
                 }
 
+                //Finds the relevant course
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
                 foreach (var course in semester.Courses)
                 {
@@ -98,18 +99,42 @@ namespace AbetApi.EFModels
                 //Load the sections under the course specified.
                 context.Entry(tempCourse).Collection(course => course.Sections).Load();
 
-                //Add the section to the database table, and the course join table, then save changes
-                //context.Sections.Add(section);
-                //tempCourse.Sections.Add(section);
-
-                //context.SaveChanges();
-
+                //For each section
                 foreach(var section in tempCourse.Sections)
                 {
+                    //If the section is found, create/overwrite the grades
                     if(section.SectionNumber == sectionNumber)
                     {
+                        //Loads existing grades for that section
+                        context.Entry(section).Collection(section => section.Grades).Load();
+
+                        //If there are existing grades, overwrite them if applicable
+                        if (section.Grades.Count > 0)
+                        {
+                            //Compare each grade to each existing grade. If it already exists, just replace it.
+                            foreach (var i in section.Grades)
+                            {
+                                for (int j = 0; j < grades.Count; j++)
+                                {
+                                    if (i.Major == grades[j].Major)
+                                    {
+                                        //This copy is written out manually, to ensure we don't accidentally overwrite the primary key of the object in the database
+                                        i.A = grades[j].A;
+                                        i.B = grades[j].B;
+                                        i.C = grades[j].C;
+                                        i.D = grades[j].D;
+                                        i.F = grades[j].F;
+                                        i.W = grades[j].W;
+                                        i.I = grades[j].I;
+                                        i.TotalStudents = grades[j].TotalStudents;
+                                        grades.RemoveAt(j);
+                                    }
+                                }
+                            }
+                        }
+
                         //Add the grades
-                        foreach(var grade in grades)
+                        foreach (var grade in grades)
                         {
                             context.Grades.Add(grade);
                             section.Grades.Add(grade);

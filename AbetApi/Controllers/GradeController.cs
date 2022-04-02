@@ -27,12 +27,12 @@ namespace AbetApi.Controllers
         } // GetGrades
 
         [Authorize(Roles = RoleTypes.Instructor)]
-        [HttpGet("SetGrades")]
-        public async Task<IActionResult> AddGrades(string term, int year, string department, string courseNumber, string sectionNumber, List<Grade> grades)
+        [HttpPost("SetGrades")]
+        public async Task<IActionResult> SetGrades(string term, int year, string department, string courseNumber, string sectionNumber, List<Grade> grades)
         {
             try
             {
-                await Grade.AddGrades(term, year, department, courseNumber, sectionNumber, grades);
+                await Grade.SetGrades(term, year, department, courseNumber, sectionNumber, grades);
                 return Ok();
             }
             catch (Exception ex)
