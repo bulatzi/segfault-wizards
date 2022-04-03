@@ -6,19 +6,58 @@ using AbetApi.Data;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
+//! The EFModels namespace
+/*! 
+ * This namespace falls under the AbetAPI namespace, and is for EFModels.
+ * The EFModels are generally called from the Controllers namespace, to 
+ * provide the controllers functionality, ultimately giving endpoints/functionality
+ * for the UI elements
+ */
 namespace AbetApi.EFModels
 {
+    //! The User Class
+    /*! 
+     * This class gets called by the UsersController class
+     * and provides functions to get and return data
+     */
     public class User
     {
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        //! The UserID setter/getter function
+        /*!
+         *  This is a single line dual function for setting and getting
+         */
         public int UserId { get; set; }
+        //! The FirstName setter/getter function
+        /*!
+         *  This is a single line dual function for setting and getting
+         */
         public string FirstName { get; set; }
+        //! The LastName setter/getter function
+        /*!
+         *  This is a single line dual function for setting and getting
+         */
         public string LastName { get; set; }
+        //! The EUID setter/getter function
+        /*!
+         *  This is a single line dual function for setting and getting
+         */
         public string EUID { get; set; }
         [JsonIgnore]
+        //! The Roles setter/getter function
+        /*!
+         *  This is a single line dual function for setting and getting
+         */
         public ICollection<Role> Roles { get; set; }
 
         //This is a constructor to create a user object from the given name and EUID.
+        //! Paramaterized Constructor
+        /*! 
+         * This is a constructor to create a user object from the given name and EUID.
+         * \param FirstName First name of the user
+         * \param LastName Last name of the user
+         * \param EUID The user's EUID
+         */
         public User(string FirstName, string LastName, string EUID)
         {
             this.FirstName = FirstName;
@@ -26,13 +65,25 @@ namespace AbetApi.EFModels
             this.EUID = EUID;
         }
 
+        //! Constructor
+        /*! 
+         * This Constructor builds a user with roles
+         */
         public User()
         {
             this.Roles = new List<Role>();
         }
 
-        // This function creates a user profile in the DB with the given information
-        // EUID must be unique from other users in the DB
+        //! The AddUser Function
+        /*!
+         * This function creates a user profile in the DB with the given information. EUID must be unique from other users in the DB
+         * It is an async Task to pass exceptions to the Controllers.UserController in Controllers
+         * It first sets the user Id to 0 so that the entity framwork auto increment the value.
+         * It then checks that the first name of the user is not null or empty, same with the lasst name, and EUID.
+         * It formats the first and last name, and the EUID to follow a standard. It then opens a context with the database,
+         * makes changes, and saves the changes. In this process, it will check for duplicate users.
+         * \param User A user object holding the relevent data for a user (First name, Last name, EUID).
+         */
         public async static Task AddUser(User User)
         {
             //Sets the user ID to 0, to allow the database to auto increment the UserId value
@@ -79,7 +130,13 @@ namespace AbetApi.EFModels
             }
         } // AddUser
 
-        // This function returns user information for the provided EUID.
+        //! The GetUser Function
+        /*!
+         * This function returns user information for the provided EUID. 
+         * It is an async Task<User> to pass exceptions and a user object to the Controllers.UserController in Controllers.
+         * It first checks for a null input (EUID), then formats the input to a standard, and checks for the user specifiedd by the input.
+         * \param EUID A string holding the EUID of the desired user
+         */
         public async static Task<User> GetUser(string EUID)
         {
             //Check that the EUID of the user is not null or empty.
@@ -106,8 +163,16 @@ namespace AbetApi.EFModels
             }
         } // GetUser
 
-        //This function finds the user with the EUID of the first input argument,
-        //and updates their information with NewUserInfo
+        //! The EditUser Funciton
+        /*!
+         * This function finds the user with the EUID of the first input argument, and updates their information with NewUserInfo.
+         * It is an async Task to pass exceptions to the Controllers.UserController in Controllers.
+         * It first sets the user ID to 0 for entity framework to auto increment.
+         * It then checks for null inputs, then formats the input if not null.
+         * Then it tries to find the user with the EUID and checks if the change will make a duplicate. Otherwise, makes the changes and saves.
+         * \param EUID The users EUID
+         * \param NewUserInfo A User object with the edit info
+         */
         public async static Task EditUser(string EUID, User NewUserInfo)
         {
             //Sets the user ID to 0, to allow the database to auto increment the UserId value
@@ -170,8 +235,14 @@ namespace AbetApi.EFModels
             }
         } // EditUser
 
-        // This function deletes a selected user
-        // Anybody calling this function should make sure you want to call this function. Deletions are final.
+        //! The DeleteUser Function
+        /*!
+         * This function deletes a selected user. Anybody calling this function should make sure you want to call this function. Deletions are final.
+         * It is an async Task to pass exceptions to the Controllers.UserController in Controllers.
+         * It first checks for null inputs, and otherwise formats it to a standard. 
+         * It then checks if the user exists, and if so, deletes them and saves the changes.
+         * \param EUID A string with the users EUID
+         */
         public async static Task DeleteUser(string EUID)
         {
             //Check that the EUID of the user to delete is not null or empty.
@@ -200,7 +271,14 @@ namespace AbetApi.EFModels
             }
         } // DeleteUser
 
-        // Gets a list of roles from the selected user
+        //! The GetRolesByUser Function
+        /*!
+         * This function gets the roles of a user in a list format.
+         * It is an async Task<List<Role>> to pass exceptions and a user.Roles object, in list form, to the Controllers.UserController in Controllers.
+         * It first checks for null inputs, then formats the input to a standard
+         * It checks that the user exists, then collects the users roles into a list and returns it
+         * \param EUID A string with the users EUID
+         */
         public static async Task<List<Role>> GetRolesByUser(string EUID)
         {
             //Check that the EUID of the user to find is not null or empty.

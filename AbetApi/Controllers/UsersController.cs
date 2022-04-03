@@ -8,16 +8,32 @@ using AbetApi.EFModels;
 using AbetApi.Authentication;
 using Microsoft.AspNetCore.Authorization;
 
+//! The Controllers Namespace
+/*! 
+ * This namespace falls under the AbetAPI namespace, and is for controllers.
+ * The controller generally tie directly into the EFModels namespace function
+ * to provide the ABET website with endpoints/functionality for UI elements
+ */
 namespace AbetApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    //! The UsersController Class
+    /*! 
+     * This class controls most of the user endpoints
+     * It inherits from ControllerBase
+     */
     public class UsersController : ControllerBase
     {
-        // GIVES A 204 FOR BLANK INPUT
-        // This function takes an EUID and returns the user information for that EUID.
+        
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpGet("GetUser")]
+        //! The GetUser function
+        /*! 
+         * This function takes an EUID and returns the user information for that EUID. Utilizes EFModels.User in EFModels.
+         * Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message.
+         * \param EUID A string of the desired users enterprise user identification (EUID).
+         */
         public async Task<IActionResult> GetUser(string EUID)
         {
             try
@@ -30,10 +46,14 @@ namespace AbetApi.Controllers
             }
         } // GetUser
 
-        // THROWS AN INNER EXCEPTION THAT MIGHT NEED TO BE RETHROWN FOR DETAILS
-        // This function creates a user with the provided information.
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("AddUser")]
+        //! The AddUser function
+        /*! 
+         * This function creates a user with the provided information. Utilizes EFModels.User in EFModels.
+         * Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message.
+         * \param user A user object that contains relevent user information.
+         */
         public async Task<IActionResult> AddUser(User user)
         {
             try
@@ -47,10 +67,15 @@ namespace AbetApi.Controllers
             }
         } // AddUser
 
-        // This function deletes a user's profile from the databse.
-        // This does not delete a user from the UNT system. It only removes their roles to this system.
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpDelete("DeleteUser")]
+        //! The DeleteUser function
+        /*! 
+         * This function deletes a user's profile from the databse. Utilizes EFModels.User in EFModels.
+         * This does not delete a user from the UNT system. It only removes their roles to this system.
+         * Returns A 200 OK if successful, otherwise a 400 bad request with the argument exception message.
+         * \param EUID A string of the desired users enterprise user identification (EUID).
+         */
         public async Task<IActionResult> DeleteUser(string EUID)
         {
             try
@@ -64,11 +89,16 @@ namespace AbetApi.Controllers
             }
         } // DeleteUser
 
-        // This function updates a user with the provided information
-        // User is selected via the given EUID
-        // information provided in NewUserInfo is used to replace the existing information
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPatch("EditUser")]
+        //! The EditUser function
+        /*! 
+         * This function updates a user with the provided information. Utilizes EFModels.User in EFModels.
+         * User is selected via the given EUID, and information provided in NewUserInfo is used to replace the existing information.
+         * Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message.
+         * \param EUID A string of the desired users enterprise user identification (EUID).
+         * \param NewUserInfo A User object that provides the relevent info for editing an existing user.
+         */
         public async Task<IActionResult> EditUser(string EUID, User NewUserInfo)
         {
             try
@@ -82,10 +112,14 @@ namespace AbetApi.Controllers
             }
         } // EditUser
 
-        // THROWS AN INNER EXCEPTION THAT MIGHT NEED TO BE RETHROWN FOR DETAILS
-        // This function creates a user with the provided information.
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("AddUserWithRoles")]
+        //! AddUserWithRoles function
+        /*! 
+         * This function creates a user with the provided information (Has roles associated already). Utilizes Models.UserWithRoles in Models.
+         * Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message.
+         * \param userWithRoles a Models.UserWithRoles object
+         */
         public async Task<IActionResult> AddUserWithRoles(AbetApi.Models.UserWithRoles userWithRoles)
         {
             try
