@@ -80,8 +80,6 @@ namespace AbetApi.Controllers
         {
             try
             {
-                //var taskResult = await Major.GetCoursesByMajor(term, year, major);
-                //return Ok(taskResult);
                 return Ok(await Major.GetCoursesByMajor(term, year, major));
             }
             catch (Exception ex)
