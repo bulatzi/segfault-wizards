@@ -32,6 +32,43 @@ namespace AbetApi.EFModels
             this.Description = Description;
         }
 
+        public static async Task<List<MajorOutcome>> GetLinkedMajorOutcomes(string term, int year, string classDepartment, string courseNumber, string courseOutcomeName)
+        {
+            await using (var context = new ABETDBContext())
+            {
+                //FIXME - Add null checking
+                //Finds the semester
+                Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+
+                //Finds the course
+                context.Entry(semester).Collection(semester => semester.Courses).Load();
+                foreach (var course in semester.Courses)
+                {
+                    //if it finds the course, Find all existing course outcomes
+                    if (course.Department == classDepartment && course.CourseNumber == courseNumber)
+                    {
+                        //Loads existing course outcomes
+                        context.Entry(course).Collection(course => course.CourseOutcomes).Load();
+
+                        foreach(var courseOutcome in course.CourseOutcomes)
+                        {
+                            //If the specified course outcome name is found, load it's associated major outcomes
+                            if(courseOutcome.Name == courseOutcomeName)
+                            {
+                                //Loads major outcomes
+                                context.Entry(courseOutcome).Collection(courseOutcome => courseOutcome.MajorOutcomes).Load();
+
+                                //Returns those major outcomes as a list
+                                return courseOutcome.MajorOutcomes.ToList();
+                            }
+                        }
+                        return null;
+                    }
+                }
+                return null;
+            }
+        }
+
         //This is used to add a course outcome to a course.
         public static async Task CreateCourseOutcome(string term, int year, string classDepartment, string courseNumber, CourseOutcome courseOutcome)
         {
