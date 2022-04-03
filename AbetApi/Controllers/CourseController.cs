@@ -87,6 +87,7 @@ namespace AbetApi.Controllers
             }
         } // GetSections
 
+        /*
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpGet("GetMajorsThatRequireCourse")]
         public async Task<IActionResult> getMajorsThatRequireCourse(string term, int year, string department, string courseNumber)
@@ -99,7 +100,7 @@ namespace AbetApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        } // getMajorsThatRequireCourse
+        } // getMajorsThatRequireCourse*/
 
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpGet("GetCoursesByDepartment")]

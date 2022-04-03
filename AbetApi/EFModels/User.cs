@@ -206,7 +206,7 @@ namespace AbetApi.EFModels
             //Check that the EUID of the user to find is not null or empty.
             if (EUID == null || EUID == "")
             {
-                throw new ArgumentException("The new EUID cannot be empty.");
+                throw new ArgumentException("The EUID cannot be empty.");
             }
 
             //Format EUID to follow a standard.

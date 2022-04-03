@@ -30,11 +30,11 @@ namespace AbetApi.Controllers
 
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpDelete("DeleteCourseOutcome")]
-        public async Task<IActionResult> DeleteCourseOutcome(string term, int year, string classDepartment, string courseNumber, string majorName)
+        public async Task<IActionResult> DeleteCourseOutcome(string term, int year, string classDepartment, string courseNumber, string name)
         {
             try
             {
-                await CourseOutcome.DeleteCourseOutcome(term, year, classDepartment, courseNumber, majorName);
+                await CourseOutcome.DeleteCourseOutcome(term, year, classDepartment, courseNumber, name);
                 return Ok();
             }
             catch (Exception ex)
@@ -44,12 +44,41 @@ namespace AbetApi.Controllers
         } //DeleteCourseOutcome
 
         [Authorize(Roles = RoleTypes.Coordinator)]
-        [HttpPost("AddMajorOutcome")]
-        public async Task<IActionResult> AddMajorOutcome(string term, int year, string classDepartment, string courseNumber, string majorName, string outcomeName)
+        [HttpGet("GetCourseOutcomes")]
+        public async Task<IActionResult> GetCourseOutcomes(string term, int year, string classDepartment, string courseNumber)
         {
             try
             {
-                await CourseOutcome.AddMajorOutcome(term, year, classDepartment, courseNumber, majorName, outcomeName);
+                return Ok(await CourseOutcome.GetCourseOutcomes(term, year, classDepartment, courseNumber));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        //public static async Task<List<MajorOutcome>> GetLinkedMajorOutcomes(string term, int year, string classDepartment, string courseNumber, string courseOutcomeName)
+        [Authorize(Roles = RoleTypes.Coordinator)]
+        [HttpGet("GetLinkedMajorOutcomes")]
+        public async Task<IActionResult> GetLinkedMajorOutcomes(string term, int year, string classDepartment, string courseNumber, string courseOutcomeName)
+        {
+            try
+            {
+                return Ok(await CourseOutcome.GetLinkedMajorOutcomes(term, year, classDepartment, courseNumber, courseOutcomeName));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize(Roles = RoleTypes.Coordinator)]
+        [HttpPost("LinkToMajorOutcome")]
+        public async Task<IActionResult> LinkToMajorOutcome(string term, int year, string classDepartment, string courseNumber, string courseOutcomeName, string majorName, string majorOutcomeName)
+        {
+            try
+            {
+                await CourseOutcome.LinkToMajorOutcome(term, year, classDepartment, courseNumber, courseOutcomeName, majorName, majorOutcomeName);
                 return Ok();
             }
             catch (Exception ex)
@@ -59,12 +88,12 @@ namespace AbetApi.Controllers
         } // AddMajorOutcome
 
         [Authorize(Roles = RoleTypes.Coordinator)]
-        [HttpDelete("DeleteMajorOutcome")]
-        public async Task<IActionResult> RemoveMajorOutcome(string term, int year, string classDepartment, string courseNumber, string majorName, string outcomeName)
+        [HttpDelete("RemoveLinkToMajorOutcome")]
+        public async Task<IActionResult> RemoveLinkToMajorOutcome(string term, int year, string classDepartment, string courseNumber, string courseOutcomeName, string majorName, string majorOutcomeName)
         {
             try
             {
-                await CourseOutcome.RemoveMajorOutcome(term, year, classDepartment, courseNumber, majorName, outcomeName);
+                await CourseOutcome.RemoveLinkToMajorOutcome(term, year, classDepartment, courseNumber, courseOutcomeName, majorName, majorOutcomeName);
                 return Ok();
             }
             catch (Exception ex)
