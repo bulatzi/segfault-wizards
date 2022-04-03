@@ -13,19 +13,23 @@ namespace AbetApi.EFModels
     {
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int CourseOutcomeId { get; set; }
-        public string Major { get; set; } //Searching for the major WILL BE case sensitive
-                                          //public List<string> Outcomes; // This will store designators for major objectives, such as 1/2/etc...
+        public string Name { get; set; } //
+        public string Description { get; set; }
         [JsonIgnore]
         public ICollection<MajorOutcome> MajorOutcomes { get; set; }
+        [JsonIgnore]
+        public ICollection<Course> Courses { get; set; } // This will hold the singular course this outcome belongs to
 
         public CourseOutcome()
         {
             this.MajorOutcomes = new List<MajorOutcome>();
+            this.Courses = new List<Course>();
         }
 
-        public CourseOutcome(string major)
+        public CourseOutcome(string Name, string Description)
         {
-            this.Major = major;
+            this.Name = Name;
+            this.Description = Description;
         }
 
         //This is used to add a course outcome to a course.
@@ -41,8 +45,27 @@ namespace AbetApi.EFModels
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
                 foreach (var course in semester.Courses)
                 {
+                    //if it finds the course, create/update the course outcomes
                     if (course.Department == classDepartment && course.CourseNumber == courseNumber)
                     {
+                        //Check if the course outcomes already exist. If they do, change them.
+                        //If they don't, create them
+
+                        //Loads existing course outcomes
+                        context.Entry(course).Collection(course => course.CourseOutcomes).Load();
+
+                        //If the entry already exists, edit the description and return early
+                        foreach(var outcome in course.CourseOutcomes)
+                        {
+                            if(outcome.Name == courseOutcome.Name)
+                            {
+                                outcome.Description = courseOutcome.Description;
+                                context.SaveChanges();
+                                return;
+                            }
+                        }
+
+                        //If the entry doesn't exist, add it.
                         context.CourseOutcomes.Add(courseOutcome);
                         course.CourseOutcomes.Add(courseOutcome);
                         context.SaveChanges();
@@ -52,8 +75,35 @@ namespace AbetApi.EFModels
             }
         } // CreateCourseOutcome
 
+        public static async Task<List<CourseOutcome>> GetCourseOutcomes(string term, int year, string classDepartment, string courseNumber)
+        {
+
+            await using (var context = new ABETDBContext())
+            {
+                //FIXME - Add null checking
+                //Finds the semester
+                Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+
+                //Finds the course
+                context.Entry(semester).Collection(semester => semester.Courses).Load();
+                foreach (var course in semester.Courses)
+                {
+                    //if it finds the course, Find all existing course outcomes
+                    if (course.Department == classDepartment && course.CourseNumber == courseNumber)
+                    {
+                        //Loads existing course outcomes
+                        context.Entry(course).Collection(course => course.CourseOutcomes).Load();
+
+                        //Returns course outcomes in the form of a list
+                        return course.CourseOutcomes.ToList();
+                    }
+                }
+                return null;
+            }
+        }
+
         //This function finds a major under a course and deletes the course outcome container
-        public static async Task DeleteCourseOutcome(string term, int year, string classDepartment, string courseNumber, string majorName)
+        public static async Task DeleteCourseOutcome(string term, int year, string classDepartment, string courseNumber, string name)
         {
             await using (var context = new ABETDBContext())
             {
@@ -76,7 +126,7 @@ namespace AbetApi.EFModels
                         context.Entry(course).Collection(course => course.CourseOutcomes).Load();
                         foreach (var courseOutcome in course.CourseOutcomes)
                         {
-                            if (courseOutcome.Major == majorName)
+                            if (courseOutcome.Name == name)
                             {
                                 context.Remove(courseOutcome);
                                 context.SaveChanges();
@@ -92,7 +142,7 @@ namespace AbetApi.EFModels
         // NEEDS DUPLICATE DATA HANDLING
         // This is used to add an outcome (from a major) to the course outcome object.
         // The major and outcome must already exist before you call this function
-        public static async Task AddMajorOutcome(string term, int year, string classDepartment, string courseNumber, string majorName, string outcomeName)
+        public static async Task LinkToMajorOutcome(string term, int year, string classDepartment, string courseNumber, string courseOutcomeName, string majorName, string majorOutcomeName)
         {
             await using (var context = new ABETDBContext())
             {
@@ -117,7 +167,7 @@ namespace AbetApi.EFModels
                         //Finds the specific major outcome
                         foreach (var majorOutcome in major.MajorOutcomes)
                         {
-                            if (outcomeName == majorOutcome.Name)
+                            if (majorOutcomeName == majorOutcome.Name)
                                 tempMajorOutcome = majorOutcome;
                         }
                     }
@@ -133,7 +183,7 @@ namespace AbetApi.EFModels
                         context.Entry(course).Collection(course => course.CourseOutcomes).Load();
                         foreach (var courseOutcome in course.CourseOutcomes)
                         {
-                            if (courseOutcome.Major == majorName)
+                            if (courseOutcome.Name == courseOutcomeName)
                             {
                                 //Adds the outcome designator to the course outcomes
                                 courseOutcome.MajorOutcomes.Add(tempMajorOutcome);
@@ -147,7 +197,7 @@ namespace AbetApi.EFModels
         } // AddMajorOutcome
 
         //This is used to remove an outcome (from a major) from the course outcome object.
-        public static async Task RemoveMajorOutcome(string term, int year, string classDepartment, string courseNumber, string majorName, string outcomeName)
+        public static async Task RemoveLinkToMajorOutcome(string term, int year, string classDepartment, string courseNumber, string courseOutcomeName, string majorName, string majorOutcomeName)
         {
             await using (var context = new ABETDBContext())
             {
@@ -172,7 +222,7 @@ namespace AbetApi.EFModels
                         //Finds the specific major outcome
                         foreach (var majorOutcome in major.MajorOutcomes)
                         {
-                            if (outcomeName == majorOutcome.Name)
+                            if (majorOutcomeName == majorOutcome.Name)
                                 tempMajorOutcome = majorOutcome;
                         }
                     }
@@ -188,14 +238,14 @@ namespace AbetApi.EFModels
                         context.Entry(course).Collection(course => course.CourseOutcomes).Load();
                         foreach (var courseOutcome in course.CourseOutcomes)
                         {
-                            if (courseOutcome.Major == majorName)
+                            if (courseOutcome.Name == courseOutcomeName)
                             {
                                 //Finds the outcome attached to the course, and removes it from the list
                                 //It does not delete the outcome, or the courseoutcome. It just kills the join table entry.
                                 context.Entry(courseOutcome).Collection(courseOutcome => courseOutcome.MajorOutcomes).Load();
                                 foreach (var outcome in courseOutcome.MajorOutcomes)
                                 {
-                                    if (outcome.Name == outcomeName)
+                                    if (outcome.Name == majorOutcomeName)
                                     {
                                         courseOutcome.MajorOutcomes.Remove(outcome);
                                         context.SaveChanges();

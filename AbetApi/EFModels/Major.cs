@@ -109,31 +109,56 @@ namespace AbetApi.EFModels
         } // DeleteMajor
 
         //This function gets all of the courses required by a major
-        //it takes a term and year to find a semester and the name of the major being looked into
         public async static Task<List<Course>> GetCoursesByMajor(string term, int year, string majorName)
         {
-            List<Course> list = new List<Course>();
+            //This function follows join tables from: Semester -> Major -> MajorOutcome -> CourseOutcome -> Course
+            //This function could be very inefficient with production amounts of data in it. It's searching through every course mapped to a course/major outcome, so it could try to add the same course to the hashset as many as 7+ times.
+
             await using (var context = new ABETDBContext())
             {
                 //this finds the semester to start at and loads all the courses
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
-                context.Entry(semester).Collection(semester => semester.Courses).Load();
-                //for every course loaded, load the course outcomes
-                foreach (var course in semester.Courses)
+
+                //Loads Majors
+                context.Entry(semester).Collection(semester => semester.Majors).Load();
+
+                //Finds the relevant Major
+                Major major = null;
+                foreach (var tempMajor in semester.Majors)
                 {
-                    context.Entry(course).Collection(course => course.CourseOutcomes).Load();
-                    //for every course outcome, check if it maps to the major
-                    foreach (var courseOutcome in course.CourseOutcomes)
+                    //If it finds the major, move on, otherwise return null
+                    if (tempMajor.Name == majorName)
                     {
-                        //if it maps to the major
-                        if (courseOutcome.Major == majorName)
+                        major = tempMajor;
+                    }
+                }
+                if (major == null)
+                    return null;
+
+                //Loads all relevant major outcomes
+                context.Entry(major).Collection(major => major.MajorOutcomes).Load();
+
+                //Go through each list of course outcomes and add the course
+                HashSet<Course> courses = new HashSet<Course>();
+                foreach (var majorOutcome in major.MajorOutcomes)
+                {
+                    //Load course outcomes
+                    context.Entry(majorOutcome).Collection(majorOutcome => majorOutcome.CourseOutcomes).Load();
+
+                    foreach (var courseOutcome in majorOutcome.CourseOutcomes)
+                    {
+                        //Load the relevant course
+                        context.Entry(courseOutcome).Collection(courseOutcome => courseOutcome.Courses).Load();
+
+                        //Take that course, and add it to the hash set. This may add something to the list that's already there, but the hash set gets rid of duplicates.
+                        Course tempCourse = courseOutcome.Courses.FirstOrDefault();
+                        if (tempCourse != null)
                         {
-                            //add it to the list
-                            list.Add(course);
+                            courses.Add(tempCourse);
                         }
                     }
                 }
-                return list;
+                return courses.ToList();
             }
         } // GetCoursesByMajor
 

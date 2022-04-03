@@ -164,29 +164,34 @@ namespace AbetApi.Data
 
             //CourseOutcome class testing
             /////////////////////////////////////////////////////////////////////////////////
-            CourseOutcome.CreateCourseOutcome("Fall", 2022, "CSCE", "3600", new CourseOutcome("CS"));
-            CourseOutcome.CreateCourseOutcome("Fall", 2022, "CSCE", "1040", new CourseOutcome("CS"));
+            CourseOutcome.CreateCourseOutcome("Fall", 2022, "CSCE", "3600", new CourseOutcome("1", "Some description 1"));
+            CourseOutcome.CreateCourseOutcome("Fall", 2022, "CSCE", "3600", new CourseOutcome("2", "Some description 2"));
+            CourseOutcome.CreateCourseOutcome("Fall", 2022, "CSCE", "1040", new CourseOutcome("1", "Some description 1"));
+            CourseOutcome.CreateCourseOutcome("Fall", 2022, "CSCE", "1040", new CourseOutcome("2", "Some description 2"));
+            CourseOutcome.CreateCourseOutcome("Fall", 2022, "CSCE", "1040", new CourseOutcome("2", "Some different description 2")); // This overwrites the other 2 for this course
 
             //CourseOutcome.AddMajorOutcome("Fall", 2022, "CSCE", "3600", "CS", "739");// These next 3 will not work
             //CourseOutcome.AddMajorOutcome("Fall", 2022, "CSCE", "3600", "CS", "22");
             //CourseOutcome.AddMajorOutcome("Fall", 2022, "CSCE", "1040", "CS", "42");
-            CourseOutcome.AddMajorOutcome("Fall", 2022, "CSCE", "1040", "CS", "2"); // This one should work
-            CourseOutcome.AddMajorOutcome("Fall", 2022, "CSCE", "1040", "CS", "1");
+            CourseOutcome.LinkToMajorOutcome("Fall", 2022, "CSCE", "1040","2", "CS", "2"); // This one should work
+            CourseOutcome.LinkToMajorOutcome("Fall", 2022, "CSCE", "1040", "1", "CS", "1"); // Doesn't add anything because it doesn't find a major outcome by the name of "".s
+            CourseOutcome.LinkToMajorOutcome("Fall", 2022, "CSCE", "3600", "1", "CS", "1");
+            CourseOutcome.LinkToMajorOutcome("Fall", 2022, "CSCE", "3600", "2", "CS", "2");
 
             System.Console.WriteLine("");
 
-            CourseOutcome.DeleteCourseOutcome("Fall", 2022, "CSCE", "1040", "CS");
+            //CourseOutcome.DeleteCourseOutcome("Fall", 2022, "CSCE", "1040", "2");
 
-            //CourseOutcome.RemoveMajorOutcome("Fall", 2022, "CSCE", "1040", "CS", "2");
+            //CourseOutcome.RemoveLinkToMajorOutcome("Fall", 2022, "CSCE", "1040", "2", "CS", "2");
 
             System.Console.WriteLine(""); //This is a placeholder for a debugger break point
             //Testing for section grades in the section class
             /////////////////////////////////////////////////////////////////////
             //Grade.SetSectionGrade("Fall", 2022, "CSCE", "3600", "002", new Grade())
             List<Grade> grades = new List<Grade>();
-            grades.Add(new Grade("CSCE", 1, 2, 3, 4, 5, 6, 7, 739));
-            grades.Add(new Grade("EENG", 1, 2, 3, 4, 5, 6, 7, 740));
-            Grade.AddGrades("Fall", 2022, "CSCE", "3600", "002", grades);
+            grades.Add(new Grade("CSCE", 1, 2, 3, 4, 5, 6, 7, 666));
+            grades.Add(new Grade("EENG", 8, 9, 10, 11, 12, 13, 14, 999));
+            Grade.SetGrades("Fall", 2022, "CSCE", "3600", "002", grades);
         }
     }
 }

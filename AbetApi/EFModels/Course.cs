@@ -153,6 +153,7 @@ namespace AbetApi.EFModels
             }
         } // GetSections
 
+        /*
         public static async Task<List<string>> getMajorsThatRequireCourse(string term, int year, string department, string courseNumber)
         {
             List<string> list = new List<string>();
@@ -177,6 +178,7 @@ namespace AbetApi.EFModels
                 return list;
             }
         } // getMajorsThatRequireCourse
+        */
 
 
         //this function returns a list of all courses in a given department for a given semester
