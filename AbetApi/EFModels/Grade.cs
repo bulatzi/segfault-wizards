@@ -39,7 +39,6 @@ namespace AbetApi.EFModels
             this.TotalStudents = TotalStudents;
         }
 
-
         public static async Task SetGrades(string term, int year, string department, string courseNumber, string sectionNumber, List<Grade> grades)
         {
             //Check if the term is null or empty.
