@@ -6,14 +6,32 @@ using System.Threading.Tasks;
 using AbetApi.EFModels;
 using AbetApi.Models;
 
+//! The Controllers Namespace
+/*! 
+ * This namespace falls under the AbetAPI namespace, and is for controllers.
+ * The controller generally tie directly into the EFModels namespace function
+ * to provide the ABET website with endpoints/functionality for UI elements
+ */
 namespace AbetApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    //! The SurveyController Class
+    /*! 
+     * This class controls most of the Survey and Question endpoints
+     * It inherits from ControllerBase
+     */
     public class SurveyController : ControllerBase
     {
-        // This function returns a specific set of specified questions
         [HttpGet("GetQuestionSet")]
+        //! The GetQuestionSet function
+        /*! 
+         * This function returns a specific set of specified questions. Utilizes EFModels.Question in EFModels.
+         * Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message.
+         * \param term The Term (Fall/Spring) for the given semester
+         * \param year The year for the given semester
+         * \param questionSetName Name for the question set
+         */
         public async Task<IActionResult> GetQuestionSet(string term, int year, string questionSetName)
         {
             try
@@ -26,8 +44,14 @@ namespace AbetApi.Controllers
             }
         }
 
-        // This function will return the standard set of questions
         [HttpGet("GetQuestions")]
+        //! The GetQuestions function
+        /*! 
+         * This function will return the standard set of questions. Utilizes EFModels.Question in EFModels.
+         * Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message.
+         * \param term The Term (Fall/Spring) for the given semester
+         * \param year The year for the given semester
+         */
         public async Task<IActionResult> GetQuestions(string term, int year)
         {
             try
@@ -44,6 +68,15 @@ namespace AbetApi.Controllers
         }
 
         [HttpPost("SaveQuestions")]
+        //! The SaveQuestions function
+        /*! 
+         * This function will save a list of questions to a new question set with a specific set name. Utilizes EFModels.Question in EFModels.
+         * Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message.
+         * \param term The Term (Fall/Spring) for the given semester
+         * \param year The year for the given semester
+         * \param questionSetName Name for the question set
+         * \param questions A list of questions in string form
+         */
         public async Task<IActionResult> SaveQuestions(string term, int year, string questionSetName, List<string> questions)
         {
             try
@@ -58,6 +91,19 @@ namespace AbetApi.Controllers
         }
 
         [HttpPost("PostSurvey")]
+        //! The PostSurvey function
+        /*! 
+         * This function will post a new survey utilizing the listed parameters. Utilizes EFModels.Survey in EFModels.
+         * Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message.
+         * \param EUID A string of the desired users enterprise user identification (EUID).
+         * \param term The Term (Fall/Spring) for the given semester
+         * \param year The year for the given semester
+         * \param department The name of the department for the survey
+         * \param courseNumber The course number of the course for the survey
+         * \param sectionNumber The section number of the section of the course for the survey
+         * \param answerList a list of ints with the answers given
+         * \param additionalComments Any additional comments associated with the survey
+         */
         public async Task<IActionResult> PostSurvey(string EUID, string term, int year, string department, string courseNumber, string sectionNumber, List<int> answerList, string additionalComments)
         {
             try 

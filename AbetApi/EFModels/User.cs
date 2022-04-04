@@ -50,7 +50,6 @@ namespace AbetApi.EFModels
          */
         public ICollection<Role> Roles { get; set; }
 
-        //This is a constructor to create a user object from the given name and EUID.
         //! Paramaterized Constructor
         /*! 
          * This is a constructor to create a user object from the given name and EUID.
