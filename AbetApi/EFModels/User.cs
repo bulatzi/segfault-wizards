@@ -220,7 +220,7 @@ namespace AbetApi.EFModels
                 //Throw an exception if the user specified does not exist.
                 if (user == null)
                 {
-                    throw new ArgumentException("The user specified does not exist in the database.");
+                    return null;
                 }
 
                 //This uses explicit loading to tell the database we want Roles loaded
