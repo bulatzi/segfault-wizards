@@ -23,7 +23,10 @@ namespace AbetApi.Controllers
 
                 //Converts the data to a format for the front end and returns the data
                 //return Ok(AbetApi.Models.Grade.ConvertToModelGrade(grades));
-                return Ok(AbetApi.Models.StudentOutcomesCompleted.ConvertToModelStudentOutcomesCompleted());
+
+                //return Ok(AbetApi.Models.StudentOutcomesCompleted.ConvertToModelStudentOutcomesCompleted());
+                //return Ok();
+                return Ok(AbetApi.Models.StudentOutcomesCompleted.ConvertToModelStudentOutcomesCompleted(term, year, department, courseNumber, StudentOutcomesCompleted.GetStudentOutcomesCompleted(term, year, department, courseNumber, sectionNumber).Result));
             }
             catch (Exception ex)
             {
@@ -38,6 +41,16 @@ namespace AbetApi.Controllers
             try
             {
                 //await Grade.SetGrades(term, year, department, courseNumber, sectionNumber, AbetApi.Models.Grade.ConvertToEFModelGrade(gradesDictionary));
+
+                //Need to turn a dictionary back in to a list of singular StudentOutcomesCompleted objects
+                //There will be one for each major mentioned in that dictionary
+
+                List<StudentOutcomesCompleted> tempList = AbetApi.Models.StudentOutcomesCompleted.ConvertToEFModelStudentOutcomesCompleted(term, year, department, courseNumber, sectionNumber, studentOutcomesCompletedDictionary);
+
+                foreach(var item in tempList)
+                {
+                    StudentOutcomesCompleted.SetStudentOutcomesCompleted(item.Term, item.Year, item.ClassDepartment, item.CourseNumber, item.SectionName, item.CourseOutcomeName, item.MajorName, item.StudentsCompleted);
+                }
                 return Ok();
             }
             catch (Exception ex)

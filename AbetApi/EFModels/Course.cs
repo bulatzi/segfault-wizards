@@ -268,5 +268,17 @@ namespace AbetApi.EFModels
 
         }//GetCoursesCourseOutcomes
 
+        //Returns a list of all courses for a semester
+        public static async Task<List<Course>> GetCourses(string term, int year)
+        {
+            await using (var context = new ABETDBContext())
+            {
+                Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+                context.Entry(semester).Collection(semester => semester.Courses).Load();
+
+                return semester.Courses.ToList();
+            }
+        } // GetCourses
+
     } // Course
 }

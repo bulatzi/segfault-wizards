@@ -28,6 +28,7 @@ namespace AbetApi.Data
                 context.Users.Clear();
                 context.Roles.Clear();
                 context.Surveys.Clear();
+                context.StudentOutcomesCompleted.Clear();
                 context.SaveChanges();
             }
         }
@@ -120,6 +121,8 @@ namespace AbetApi.Data
             //Major class testing
             /////////////////////////////////////////////////////////////////////////////////
             Major.AddMajor("Fall", 2022, "CS");
+            Major.AddMajor("Fall", 2022, "IT");
+            Major.AddMajor("Fall", 2022, "CYS");
             //var temp = Major.GetMajor("Fall", 2022, "CS");
             //temp = Major.GetMajor("Fall", 2022, "CSE"); // return null
             //Major.EditMajor("Fall", 2022, "CS", new Major("IT"));
@@ -173,8 +176,8 @@ namespace AbetApi.Data
             //CourseOutcome.AddMajorOutcome("Fall", 2022, "CSCE", "3600", "CS", "739");// These next 3 will not work
             //CourseOutcome.AddMajorOutcome("Fall", 2022, "CSCE", "3600", "CS", "22");
             //CourseOutcome.AddMajorOutcome("Fall", 2022, "CSCE", "1040", "CS", "42");
-            CourseOutcome.LinkToMajorOutcome("Fall", 2022, "CSCE", "1040","2", "CS", "2"); // This one should work
-            CourseOutcome.LinkToMajorOutcome("Fall", 2022, "CSCE", "1040", "1", "CS", "1"); // Doesn't add anything because it doesn't find a major outcome by the name of "".s
+            CourseOutcome.LinkToMajorOutcome("Fall", 2022, "CSCE", "1040","2", "CS", "1"); // This one should work
+            CourseOutcome.LinkToMajorOutcome("Fall", 2022, "CSCE", "1040", "1", "CS", "2");
             CourseOutcome.LinkToMajorOutcome("Fall", 2022, "CSCE", "3600", "1", "CS", "1");
             CourseOutcome.LinkToMajorOutcome("Fall", 2022, "CSCE", "3600", "2", "CS", "2");
 
@@ -192,6 +195,18 @@ namespace AbetApi.Data
             grades.Add(new Grade("CSCE", 1, 2, 3, 4, 5, 6, 7, 666));
             grades.Add(new Grade("EENG", 8, 9, 10, 11, 12, 13, 14, 999));
             Grade.SetGrades("Fall", 2022, "CSCE", "3600", "002", grades);
+
+
+            //Testing section for StudentOutcomesCompleted
+            StudentOutcomesCompleted.SetStudentOutcomesCompleted("Fall", 2022, "CSCE", "3600", "002", "1", "CS", 10);
+            StudentOutcomesCompleted.SetStudentOutcomesCompleted("Fall", 2022, "CSCE", "3600", "002", "2", "IT", 20);
+            StudentOutcomesCompleted.SetStudentOutcomesCompleted("Fall", 2022, "CSCE", "3600", "002", "1", "IT", 10);
+            StudentOutcomesCompleted.SetStudentOutcomesCompleted("Fall", 2022, "CSCE", "3600", "002", "2", "CS", 20);
+
+            var temp = StudentOutcomesCompleted.GetStudentOutcomesCompleted("Fall", 2022, "CSCE", "3600", "002");
+
+            //var eh = CourseOutcome.MapCourseOutcomeToMajorOutcome("Fall", 2022, "CSCE", "1040", "3", "CS").Result;
+            System.Console.WriteLine(""); //This is a placeholder for a debugger break point
         }
     }
 }

@@ -12,8 +12,8 @@ namespace AbetApi.Data
     public class ABETDBContext : DbContext
     {
         // All of these DbSet collections are used to create database tables with entity framework
-        public DbSet<Course> Courses { get; set;} 
-        public DbSet<CourseOutcome> CourseOutcomes { get; set; } 
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<CourseOutcome> CourseOutcomes { get; set; }
         public DbSet<Grade> Grades { get; set; }
         public DbSet<Major> Majors { get; set; }
         public DbSet<MajorOutcome> MajorOutcomes { get; set; }
@@ -23,6 +23,7 @@ namespace AbetApi.Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<Survey> Surveys { get; set; }
         public DbSet<Question> Questions { get; set; }
+        public DbSet<StudentOutcomesCompleted> StudentOutcomesCompleted {get;set;}
 
         // This function is used to select a connection string for your database.
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -74,7 +74,8 @@ namespace AbetApi.Controllers
             }
         } // DeleteMajor
 
-        [Authorize(Roles = RoleTypes.Admin)]
+
+        //[Authorize(Roles = RoleTypes.Admin)]
         [HttpGet("GetCoursesByMajor")]
         public async Task<IActionResult> GetCoursesByMajor(string term, int year, string major)
         {
