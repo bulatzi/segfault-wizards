@@ -11,7 +11,7 @@ namespace AbetApi.Models
     {
         public static Dictionary<string, int[]> ConvertToModelFullReport()
         {
-            string term = "Fall";
+            string term = "Spring";
             int year = 2022;
             string majorName;
 
