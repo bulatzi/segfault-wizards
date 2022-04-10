@@ -28,7 +28,7 @@ namespace AbetApi.Controllers
 
         //[Authorize(Roles = RoleTypes.Instructor)]
         [HttpPost("SetStudentOutcomesCompleted")]
-        public async Task<IActionResult> SetStudentOutcomesCompleted(string term, int year, string department, string courseNumber, string sectionNumber, Dictionary<string, string> studentOutcomesCompletedDictionary)
+        public async Task<IActionResult> SetStudentOutcomesCompleted(string term, int year, string department, string courseNumber, string sectionNumber, List<Dictionary<string, string>> studentOutcomesCompletedDictionary)
         {
             try
             {

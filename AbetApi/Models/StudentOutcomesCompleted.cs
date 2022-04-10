@@ -49,7 +49,7 @@ namespace AbetApi.Models
             return tempList;
         }
 
-        public static List<AbetApi.EFModels.StudentOutcomesCompleted> ConvertToEFModelStudentOutcomesCompleted(string term, int year, string department, string courseNumber, string sectionNumber, Dictionary<string, string> studentOutcomesCompletedDictionary)
+        public static List<AbetApi.EFModels.StudentOutcomesCompleted> ConvertToEFModelStudentOutcomesCompleted(string term, int year, string department, string courseNumber, string sectionNumber, List<Dictionary<string, string>> studentOutcomesCompletedDictionaries)
         {
             //Get a list of existing majors
             //Scan through each key of the dictionary. If the name matches with an existing major, convert it to a StudentOutcomesCompleted object
@@ -61,24 +61,27 @@ namespace AbetApi.Models
             //For each major, find the corresponding major entry in this provided studentOutcomesCompleted object
             foreach(var major in majorList)
             {
-                //For each separate item in the dictionary, validate it is a major name
-                foreach(var item in studentOutcomesCompletedDictionary)
+                foreach (var dictionary in studentOutcomesCompletedDictionaries)
                 {
-                    //If it is a major name, turn that major in to a stand alone student outcomes completed object
-                    if(item.Key == major.Name)
+                    //For each separate item in the dictionary, validate it is a major name
+                    foreach (var item in dictionary)
                     {
-                        //Convert the string integer back to an int
-                        //This will fail if the value of the students completed string does not convert back in to an integer. This may need more error handling.
-                        int tempInt = 0;
-                        if (Int32.TryParse(item.Value, out tempInt))
+                        //If it is a major name, turn that major in to a stand alone student outcomes completed object
+                        if (item.Key == major.Name)
                         {
+                            //Convert the string integer back to an int
+                            //This will fail if the value of the students completed string does not convert back in to an integer. This may need more error handling.
+                            int tempInt = 0;
+                            if (Int32.TryParse(item.Value, out tempInt))
+                            {
 
-                            //create a student outcome object
-                            studentOutcomesCompletedList.Add(new AbetApi.EFModels.StudentOutcomesCompleted(term, year, department, courseNumber, sectionNumber, studentOutcomesCompletedDictionary["outcomeName"], item.Key, tempInt));
-                        }
-                        else
-                        {
-                            throw new Exception("Data format was incorrect");
+                                //create a student outcome object
+                                studentOutcomesCompletedList.Add(new AbetApi.EFModels.StudentOutcomesCompleted(term, year, department, courseNumber, sectionNumber, dictionary["outcomeName"], item.Key, tempInt));
+                            }
+                            else
+                            {
+                                throw new Exception("Data format was incorrect");
+                            }
                         }
                     }
                 }
