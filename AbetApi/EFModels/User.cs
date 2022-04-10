@@ -153,13 +153,17 @@ namespace AbetApi.EFModels
                     throw new ArgumentException("The user you wanted to edit does not exist in the database.");
                 }
 
-                //Try to find the specified user.
-                User duplicateUser = context.Users.FirstOrDefault(p => p.EUID == NewUserInfo.EUID);
-
-                //If the new user EUID already exists in the database, then that is a duplicate and we do not allow duplicates.
-                if (duplicateUser != null)
+                //If we are trying to change the EUID, then make sure that we aren't trying to duplicate an EUID.
+                if (EUID != NewUserInfo.EUID)
                 {
-                    throw new ArgumentException("The EUID to change to already exists in the database.");
+                    //Try to find the specified user.
+                    User duplicateUser = context.Users.FirstOrDefault(p => p.EUID == NewUserInfo.EUID);
+
+                    //If the new user already exists in the database, then that is a duplicate and we do not allow duplicates.
+                    if (duplicateUser != null)
+                    {
+                        throw new ArgumentException("The EUID to change to already exists in the database.");
+                    }
                 }
 
                 //Copy new values of user over to the user that's being edited
