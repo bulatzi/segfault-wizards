@@ -9,53 +9,8 @@ namespace AbetApi.Models
 {
     public class FullReport
     {
-        public static Dictionary<string, int[]> ConvertToModelFullReport()
+        public static Dictionary<string, Dictionary<string, int[]>> GenerateFullReport(string term, int year)
         {
-            string term = "Spring";
-            int year = 2022;
-            string majorName;
-
-            //List<Dictionary<string, int[]>> tempList = new List<Dictionary<string, int[]>>();
-
-            //Dictionary<string, int[]> tempdictionary = new Dictionary<string, int[]>();
-
-            //int[] tempArray = new int[] { 0,5,0,0,1,0,0,1,0,1};
-
-            //tempdictionary.Add("1010", tempArray);
-            //tempdictionary.Add("1030", tempArray);
-            //tempdictionary.Add("2010", tempArray);
-            //tempdictionary.Add("2030", tempArray);
-
-            //return tempdictionary;
-
-            //Tasks
-            //Convert course outcomes to major outcomes to figure out what goes in which columns
-            //aggregate numbers across all sections
-
-            //Pull CourseOutcomesCompleted for all sections
-            //Take the provided major, 
-
-            //Make a function that takes course information and a major name, finds its course outcomes, maps it back to majors. if that major is contained, it steals the number of the major outcome and returns it
-
-            //As I translate course outcomes to major outcomes, maybe I can just overwrite the number of the course outcome for simplicity
-            //Then, iterate over all objects. Take the array of 10, initialize all with 0s. 
-            //If the number is still 0 at the end, replace it with a "-"
-
-            //What I have - a function that takes a course outcome and tells me which one it should be on. (one indexed)
-            //Lets assume that I have already total'd the numbers, and I just need to move them around
-
-            //make a dictionary that is the outcome name, and an int
-            //total up each outcome across sections
-            //When done, run the outcome name through the map translator
-            //take the dictionary, and hard code put numbers in the array
-            //Add array to temp dictionary
-
-            ///////////////////////////////////////////////////////////////////////////////////////////
-            //pull all outcomesCompleted in
-            //Dictionary<Dictionary<Dictionary<string, int>>> courseNumber : section : major : outcomesCompleted
-            //Iterate over all objects, and total up all course outcomes completed
-            //With all of the data organized... create a dictionary for each major
-
             //Step 1: Sort all data in to an array of course outcomes completed. Go major : course : array
                     //Translate each courseOutcomeName in to a 0 indexed number to decide where the data goes
                     //When you set StudentOutcomesCompleted, verify that all outcome names can be converted to ints.
@@ -63,10 +18,6 @@ namespace AbetApi.Models
             //Step 3: Translate the first array in to the second array. One courseOutcome can map to multiple majorOutcomes
                     //Find the column's that the number needs to be added to, and add it to all appropriate columns
             //Step 4: Return a list of Dictionary<string, int[]>
-
-            //pull list of courses
-            //FIXME - make it add a field for all courses, not just the ones with StudentOutcomesCompleted objects
-            //List<AbetApi.EFModels.Course> courses = AbetApi.EFModels.Course.GetCourses(term, year).Result;
 
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //This block of code creates a blank container to read data in to for data aggregation
@@ -128,12 +79,6 @@ namespace AbetApi.Models
                 aggregationData[studentOutcomesCompleted.MajorName][studentOutcomesCompleted.CourseNumber][column] += studentOutcomesCompleted.StudentsCompleted;
             }
 
-            //System.Console.WriteLine("");
-
-            //Get a list of majors, create a dictionary for each of them
-            //Get a list of courses, create a dictionary for each of them, in each major dictionary
-            //Scan through the courseoutcomescompleted, translate each in to its appropriate array
-
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //Now the data for course outcomes is stored in the aggregationData object.
             //We need to map each column of course outcome data to its respective linked majorOutcomes. 
@@ -184,32 +129,11 @@ namespace AbetApi.Models
                 }
             }
 
-            System.Console.WriteLine("");
-            /*
-             To test:
-                Make a semester
-                Make at least 3 classes
-                make at least 3 sections
-                create 2 course outcomes for each course
-                create 2 major outcomes for each major
-                links course and major outcomes
-                
-             */
+            return calculatedData;
 
-
-
-            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            ///This is just here to shut the function up
-            Dictionary<string, int[]> tempdictionary = new Dictionary<string, int[]>();
-
-            //int[] tempArray = new int[] { 0,5,0,0,1,0,0,1,0,1};
-
-            //tempdictionary.Add("1010", tempArray);
-            //tempdictionary.Add("1030", tempArray);
-            //tempdictionary.Add("2010", tempArray);
-            //tempdictionary.Add("2030", tempArray);
-
-            return tempdictionary;
+            //FIXME:
+            //Make the report find which columns need dashes in them
+            //Figure out a way to calculate percentages. (Ask ludi where/how we should store counts of students for specific majors)
         }
 
         //This function takes a course outcome name, and returns a list of associated major outcomes.

@@ -12,12 +12,23 @@ namespace AbetApi.Models
             //Pulls all the relevant course outcomes in to a list
             List<AbetApi.EFModels.CourseOutcome> courseOutcomeList = AbetApi.EFModels.CourseOutcome.GetCourseOutcomes(term, year, department, courseNumber).Result;
 
+            List<AbetApi.EFModels.Major> majorList = AbetApi.EFModels.Major.GetMajors(term, year).Result;
+
             //Scan through the list of course outcomes for the provided course. For each outcome, create a dictionary entry for it.
             foreach(var courseOutcome in courseOutcomeList)
             {
                 Dictionary<string, string> tempDictionary = new Dictionary<string, string>();
                 tempDictionary.Add("outcomeName", courseOutcome.Name);
                 tempDictionary.Add("outcomeDescription", courseOutcome.Description);
+
+                //Adds blank forms to the object
+                if(majorList != null)
+                {
+                    foreach(var major in majorList)
+                    {
+                        tempDictionary.Add(major.Name, "0");
+                    }
+                }
 
                 tempList.Add(tempDictionary);
             }
@@ -29,7 +40,8 @@ namespace AbetApi.Models
                 {
                     if(dictionary["outcomeName"] == studentOutcomesCompleted.CourseOutcomeName)
                     {
-                        dictionary.Add(studentOutcomesCompleted.MajorName, studentOutcomesCompleted.StudentsCompleted.ToString());
+                        //dictionary.Add(studentOutcomesCompleted.MajorName, studentOutcomesCompleted.StudentsCompleted.ToString());
+                        dictionary[studentOutcomesCompleted.MajorName] = studentOutcomesCompleted.StudentsCompleted.ToString();
                     }
                 }
             }

@@ -18,14 +18,6 @@ namespace AbetApi.Controllers
         {
             try
             {
-                //Get the specified grades
-                //var grades = await Grade.GetGrades(term, year, department, courseNumber, sectionNumber);
-
-                //Converts the data to a format for the front end and returns the data
-                //return Ok(AbetApi.Models.Grade.ConvertToModelGrade(grades));
-
-                //return Ok(AbetApi.Models.StudentOutcomesCompleted.ConvertToModelStudentOutcomesCompleted());
-                //return Ok();
                 return Ok(AbetApi.Models.StudentOutcomesCompleted.ConvertToModelStudentOutcomesCompleted(term, year, department, courseNumber, StudentOutcomesCompleted.GetStudentOutcomesCompleted(term, year, department, courseNumber, sectionNumber).Result));
             }
             catch (Exception ex)
