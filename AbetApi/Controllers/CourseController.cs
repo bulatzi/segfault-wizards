@@ -158,6 +158,18 @@ namespace AbetApi.Controllers
             }
         }//GetMajorOutcomesSatisfied
 
-
+        [Authorize(Roles = RoleTypes.Coordinator)]
+        [HttpGet("GetCoursesByCoordinator")]
+        public async Task<IActionResult> GetCoursesByCoordinator(string term, int year, string instructorEUID)
+        {
+            try
+            {
+                return Ok(await Course.GetCoursesByCoordinator(term, year, instructorEUID));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     } // CourseController
 }

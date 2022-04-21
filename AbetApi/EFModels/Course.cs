@@ -29,6 +29,7 @@ namespace AbetApi.EFModels
 
         public Course(string coordinator, string courseNumber, string displayName, string coordinatorComment, bool isCourseCompleted, string department) : this()
         {
+            this.CoordinatorEUID = coordinator;
             this.CourseNumber = courseNumber; // e.g. 2100
             this.DisplayName = displayName; // A human readable name. (Intro to networks)
             this.CoordinatorComment = coordinatorComment; // A miscellanious comment
@@ -180,6 +181,65 @@ namespace AbetApi.EFModels
         } // getMajorsThatRequireCourse
         */
 
+        //This function will return a list of courses with the specified coordinator
+        public static async Task<List<AbetApi.Models.CourseInfo>> GetCoursesByCoordinator(string term, int year, string coordinatorEUID)
+        {
+            //Find the semester
+            //For each course, scan through their sections
+            //for each section, validate if the instructor is teaching this course
+            //if no, move on
+            //if yes, build that model object
+
+            //Check if the term is null or empty
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check if the year is before the establishment date of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Format term to follow a standard.
+            term = term[0].ToString().ToUpper() + term.Substring(1);
+
+            await using (var context = new ABETDBContext())
+            {
+                Course tempCourse = null;
+
+                //Try to find the semester specified.
+                Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+
+                //Check if the semester is null.
+                if (semester == null)
+                {
+                    throw new ArgumentException("The specified semester does not exist in the database.");
+                }
+
+                //Load the courses under that semester and try to find the course specified.
+                context.Entry(semester).Collection(semester => semester.Courses).Load();
+                //Load each section under each course
+                foreach (var course in semester.Courses)
+                {
+                    context.Entry(course).Collection(course => course.Sections).Load();
+                }
+
+                //scan over all sections, looking for that instructor. If found, add it to the list
+                List<AbetApi.Models.CourseInfo> courseInfoList = new List<AbetApi.Models.CourseInfo>();
+                foreach (var course in semester.Courses)
+                {
+                    if(course.CoordinatorEUID == coordinatorEUID)
+                    {
+                        courseInfoList.Add(new AbetApi.Models.CourseInfo(course.DisplayName, course.CourseNumber, coordinatorEUID));
+                    }
+                }
+
+                return courseInfoList;
+            }
+        }
+
 
         //this function returns a list of all courses in a given department for a given semester
         public static async Task<List<Course>> GetCoursesByDepartment(string term, int year, string department)
@@ -279,6 +339,8 @@ namespace AbetApi.EFModels
                 return semester.Courses.ToList();
             }
         } // GetCourses
+
+        //A function that returns a list of all the courses taught by a specific instructor
 
     } // Course
 }
