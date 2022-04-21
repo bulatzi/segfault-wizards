@@ -410,6 +410,67 @@ namespace AbetApi.EFModels
             }
         } // DeleteSection
 
+        //GetCoursesByCoordinator
+        public static async Task<List<AbetApi.Models.SectionInfo>> GetSectionsByCoordinator(string term, int year, string coordinatorEUID)
+        {
+            //Find the semester
+            //For each course, scan through their sections
+            //for each section, validate if the instructor is teaching this course
+            //if no, move on
+            //if yes, build that model object
+
+            //Check if the term is null or empty
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check if the year is before the establishment date of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Format term to follow a standard.
+            term = term[0].ToString().ToUpper() + term.Substring(1);
+
+            await using (var context = new ABETDBContext())
+            {
+                //Try to find the semester specified.
+                Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+
+                //Check if the semester is null.
+                if (semester == null)
+                {
+                    throw new ArgumentException("The specified semester does not exist in the database.");
+                }
+
+                //Load the courses under that semester and try to find the course specified.
+                context.Entry(semester).Collection(semester => semester.Courses).Load();
+                //Load each section under each course
+                foreach (var course in semester.Courses)
+                {
+                    context.Entry(course).Collection(course => course.Sections).Load();
+                }
+
+                //scan over all sections, looking for that instructor. If found, add it to the list
+                List<AbetApi.Models.SectionInfo> sectionInfoList = new List<AbetApi.Models.SectionInfo>();
+                foreach (var course in semester.Courses)
+                {
+                    if (course.CoordinatorEUID == coordinatorEUID)
+                    {
+                        //Add each section
+                        foreach (var section in course.Sections)
+                        {
+                            sectionInfoList.Add(new AbetApi.Models.SectionInfo(course.DisplayName, course.CourseNumber, section.SectionNumber, section.InstructorEUID, course.CoordinatorEUID));
+                        }
+                    }
+                }
+
+                return sectionInfoList;
+            }
+        }
+
         //This function will return a list of sections taught by that instructor
         public static async Task<List<AbetApi.Models.SectionInfo>> GetSectionsByInstructor(string term, int year, string instructorEUID)
         {

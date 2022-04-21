@@ -59,7 +59,6 @@ namespace AbetApi.Controllers
 
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpGet("GetLinkedMajorOutcomes")]
-        public async Task<IActionResult> GetLinkedMajorOutcomes(string term, int year, string classDepartment, string courseNumber, string courseOutcomeName)
         public async Task<IActionResult> GetLinkedMajorOutcomes(string term, int year, string classDepartment, string courseNumber, string courseOutcomeName, string majorName)
         {
             try
