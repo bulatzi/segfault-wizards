@@ -60,10 +60,11 @@ namespace AbetApi.Controllers
         [Authorize(Roles = RoleTypes.Coordinator)]
         [HttpGet("GetLinkedMajorOutcomes")]
         public async Task<IActionResult> GetLinkedMajorOutcomes(string term, int year, string classDepartment, string courseNumber, string courseOutcomeName)
+        public async Task<IActionResult> GetLinkedMajorOutcomes(string term, int year, string classDepartment, string courseNumber, string courseOutcomeName, string majorName)
         {
             try
             {
-                return Ok(await CourseOutcome.GetLinkedMajorOutcomes(term, year, classDepartment, courseNumber, courseOutcomeName));
+                return Ok(await CourseOutcome.GetLinkedMajorOutcomes(term, year, classDepartment, courseNumber, courseOutcomeName, majorName));
             }
             catch (Exception ex)
             {
