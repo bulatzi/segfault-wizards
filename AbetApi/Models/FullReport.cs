@@ -9,14 +9,14 @@ namespace AbetApi.Models
 {
     public class FullReport
     {
-        public static Dictionary<string, Dictionary<string, int[]>> GenerateFullReport(string term, int year)
+        public static Dictionary<string, Dictionary<string, string[]>> GenerateFullReport(string term, int year)
         {
             //Step 1: Sort all data in to an array of course outcomes completed. Go major : course : array
-                    //Translate each courseOutcomeName in to a 0 indexed number to decide where the data goes
-                    //When you set StudentOutcomesCompleted, verify that all outcome names can be converted to ints.
+            //Translate each courseOutcomeName in to a 0 indexed number to decide where the data goes
+            //When you set StudentOutcomesCompleted, verify that all outcome names can be converted to ints.
             //Step 2: By the same organization, create arrays of all 0's.
             //Step 3: Translate the first array in to the second array. One courseOutcome can map to multiple majorOutcomes
-                    //Find the column's that the number needs to be added to, and add it to all appropriate columns
+            //Find the column's that the number needs to be added to, and add it to all appropriate columns
             //Step 4: Return a list of Dictionary<string, int[]>
 
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,24 +37,19 @@ namespace AbetApi.Models
             //Creates the container for data aggregation
             Dictionary<string, Dictionary<string, int[]>> aggregationData = new Dictionary<string, Dictionary<string, int[]>>();
             Dictionary<string, Dictionary<string, int[]>> calculatedData = new Dictionary<string, Dictionary<string, int[]>>();
+            Dictionary<string, Dictionary<string, string[]>> calculatedStringData = new Dictionary<string, Dictionary<string, string[]>>();
 
             //Creates the first layer of dictionaries, which are each of the majors
             foreach (var major in majorsList)
             {
                 aggregationData.Add(major.Name, new Dictionary<string, int[]>());
                 calculatedData.Add(major.Name, new Dictionary<string, int[]>());
+                calculatedStringData.Add(major.Name, new Dictionary<string, string[]>());
             }
 
             //Creates the second layer of dictionaries, which are all of the courses for each major
-            foreach(var majorDictionary in aggregationData)
-            {
-                foreach(var course in courseList)
-                {
-                    majorDictionary.Value.Add(course.CourseNumber, new int[majorOutcomeColumns]);
-                }
-            }
-
-            foreach (var majorDictionary in calculatedData)
+            //populate the dictionaries used to calculate data
+            foreach (var majorDictionary in aggregationData)
             {
                 foreach (var course in courseList)
                 {
@@ -62,7 +57,30 @@ namespace AbetApi.Models
                 }
             }
 
-            //calculatedData.Value.Add(course.CourseNumber, new int[majorOutcomeColumns]);
+            //populate the dictionaries used to store the summed data
+            foreach (var majorDictionary in calculatedData)
+            {
+                foreach (var course in courseList)
+                {
+                    majorDictionary.Value.Add(course.CourseNumber, new int[majorOutcomeColumns]);
+
+                    //Fill each array with -1
+                    //-1 represents that the array hasn't been mapped to anything, so that value can be replaced by a - in the report
+                    for (int i = 0; i < majorOutcomeColumns; i++)
+                    {
+                        majorDictionary.Value[course.CourseNumber][i] = -1;
+                    }
+                }
+            }
+
+            //populate the dictionaries used to store the output strings of the function
+            foreach (var majorDictionary in calculatedStringData)
+            {
+                foreach (var course in courseList)
+                {
+                    majorDictionary.Value.Add(course.CourseNumber, new string[majorOutcomeColumns]);
+                }
+            }
 
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //This block of code will iterate through the list of student outcomes completed and sum them, organized by major->course->courseOutcome
@@ -88,14 +106,14 @@ namespace AbetApi.Models
             //Send that outcome name in to the mapCoursetoMajorOutcome() function.
             //Take the list it returns, and convert each one in to integers again -1, to zero index.
             //For each item in that list, add the initial index to each column in the other object
-                //If the number is zero, you can skip
+            //If the number is zero, you can skip
 
-            foreach(var majorDictionary in aggregationData)
+            foreach (var majorDictionary in aggregationData)
             {
                 string major = majorDictionary.Key;
-                foreach(var courseDictionary in majorDictionary.Value)
+                foreach (var courseDictionary in majorDictionary.Value)
                 {
-                    for(int i = 0; i < courseDictionary.Value.Length; i++)
+                    for (int i = 0; i < courseDictionary.Value.Length; i++)
                     {
                         //Take the index
                         //+1 it
@@ -122,6 +140,8 @@ namespace AbetApi.Models
 
                             for (int j = 0; j < intColumns.Count; j++)
                             {
+                                if (calculatedData[major][courseDictionary.Key][intColumns[j]] == -1)
+                                    calculatedData[major][courseDictionary.Key][intColumns[j]]++;
                                 calculatedData[major][courseDictionary.Key][intColumns[j]] += aggregationData[major][courseDictionary.Key][i];
                             }
                         }
@@ -129,10 +149,25 @@ namespace AbetApi.Models
                 }
             }
 
-            return calculatedData;
+            //if -1, it means there are no linked course outcomes associated with that major outcome, so it replaces it with "--"
+
+            foreach (var major in calculatedData)
+            {
+                foreach (var course in major.Value)
+                {
+                    for (int i = 0; i < course.Value.Length; i++)
+                    {
+                        if (calculatedData[major.Key][course.Key][i] == -1)
+                            calculatedStringData[major.Key][course.Key][i] = "--";
+                        else
+                            calculatedStringData[major.Key][course.Key][i] = calculatedData[major.Key][course.Key][i].ToString();
+                    }
+                }
+            }
+
+            return calculatedStringData;
 
             //FIXME:
-            //Make the report find which columns need dashes in them
             //Figure out a way to calculate percentages. (Ask ludi where/how we should store counts of students for specific majors)
         }
 
