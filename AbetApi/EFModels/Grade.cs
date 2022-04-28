@@ -21,7 +21,7 @@ namespace AbetApi.EFModels
         public int I { get; set; }
         public int TotalStudents { get; set; }
 
-        Grade()
+        public Grade()
         {
             // Intentionally left blank
         }
