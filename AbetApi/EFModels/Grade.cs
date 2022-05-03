@@ -21,7 +21,7 @@ namespace AbetApi.EFModels
         public int I { get; set; }
         public int TotalStudents { get; set; }
 
-        Grade()
+        public Grade()
         {
             // Intentionally left blank
         }
@@ -38,7 +38,6 @@ namespace AbetApi.EFModels
             this.I = I;
             this.TotalStudents = TotalStudents;
         }
-
 
         public static async Task SetGrades(string term, int year, string department, string courseNumber, string sectionNumber, List<Grade> grades)
         {

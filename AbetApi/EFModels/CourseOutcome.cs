@@ -32,7 +32,7 @@ namespace AbetApi.EFModels
             this.Description = Description;
         }
 
-        public static async Task<List<MajorOutcome>> GetLinkedMajorOutcomes(string term, int year, string classDepartment, string courseNumber, string courseOutcomeName)
+        public static async Task<List<MajorOutcome>> GetLinkedMajorOutcomes(string term, int year, string classDepartment, string courseNumber, string courseOutcomeName, string majorName)
         {
             await using (var context = new ABETDBContext())
             {
@@ -57,9 +57,22 @@ namespace AbetApi.EFModels
                             {
                                 //Loads major outcomes
                                 context.Entry(courseOutcome).Collection(courseOutcome => courseOutcome.MajorOutcomes).Load();
-
+                                
+                                //Scan through major outcomes, and remove the entries that are not the major you're looking for
+                                List<MajorOutcome> majorOutcomes = new List<MajorOutcome>();
+                                foreach(var majorOutcome in courseOutcome.MajorOutcomes)
+                                {
+                                    context.Entry(majorOutcome).Collection(majorOutcome => majorOutcome.Majors).Load();
+                                    foreach(var major in majorOutcome.Majors)
+                                    {
+                                        if(major.Name == majorName)
+                                        {
+                                            majorOutcomes.Add(majorOutcome);
+                                        }
+                                    }
+                                }
                                 //Returns those major outcomes as a list
-                                return courseOutcome.MajorOutcomes.ToList();
+                                return majorOutcomes;
                             }
                         }
                         return null;

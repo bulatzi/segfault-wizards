@@ -42,6 +42,17 @@ namespace AbetApi.EFModels
             {
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
 
+                //context.Entry(semester).Collection(semester => semester.Courses).Load();
+                context.Entry(semester).Collection(semester => semester.Majors).Load();
+                foreach(var majorList in semester.Majors)
+                {
+                    if(majorList.Name == name)
+                    {
+                        //FIXME - This might should throw an error, and force an error message when somebody tries to enter duplicate data
+                        return;
+                    }
+                }
+
                 Major major = new Major(name);
 
                 context.Majors.Add(major);

@@ -121,5 +121,19 @@ namespace AbetApi.Controllers
                 return BadRequest(ex.Message);
             }
         } // DeleteSection
+
+        [Authorize(Roles = RoleTypes.Instructor)]
+        [HttpGet("GetSectionsByInstructor")]
+        public async Task<IActionResult> GetSectionsByInstructor(string term, int year, string instructorEUID)
+        {
+            try
+            {
+                return Ok(await Section.GetSectionsByInstructor(term, year, instructorEUID));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     } // SectionController
 }

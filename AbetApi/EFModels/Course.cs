@@ -29,6 +29,7 @@ namespace AbetApi.EFModels
 
         public Course(string coordinator, string courseNumber, string displayName, string coordinatorComment, bool isCourseCompleted, string department) : this()
         {
+            this.CoordinatorEUID = coordinator;
             this.CourseNumber = courseNumber; // e.g. 2100
             this.DisplayName = displayName; // A human readable name. (Intro to networks)
             this.CoordinatorComment = coordinatorComment; // A miscellanious comment
@@ -180,7 +181,6 @@ namespace AbetApi.EFModels
         } // getMajorsThatRequireCourse
         */
 
-
         //this function returns a list of all courses in a given department for a given semester
         public static async Task<List<Course>> GetCoursesByDepartment(string term, int year, string department)
         {
@@ -267,6 +267,20 @@ namespace AbetApi.EFModels
             
 
         }//GetCoursesCourseOutcomes
+
+        //Returns a list of all courses for a semester
+        public static async Task<List<Course>> GetCourses(string term, int year)
+        {
+            await using (var context = new ABETDBContext())
+            {
+                Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+                context.Entry(semester).Collection(semester => semester.Courses).Load();
+
+                return semester.Courses.ToList();
+            }
+        } // GetCourses
+
+        //A function that returns a list of all the courses taught by a specific instructor
 
     } // Course
 }

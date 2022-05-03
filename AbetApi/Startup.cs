@@ -11,7 +11,6 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.OpenApi.Models;
-using AbetApi.Data;
 
 namespace AbetApi
 {

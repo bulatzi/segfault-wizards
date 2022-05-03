@@ -18,7 +18,8 @@ namespace AbetApi.Controllers
         public string DoStuff()
         {
             Database database = new Database();
-            database.DoStuff();
+            //database.DoStuff();
+            database.WIPDoStuff();
             return "Done";
         }
 
