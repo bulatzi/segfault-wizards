@@ -18,7 +18,7 @@ namespace AbetApi.EFModels
         public ICollection<MajorOutcome> MajorOutcomes { get; set; }
 
         [JsonIgnore]
-        public ICollection<Semester> Semesters { get; set; } //
+        public ICollection<Semester> Semesters { get; set; }
 
         [JsonIgnore]
         public ICollection<Course> CoursesRequiredBy { get; set; }
@@ -35,87 +35,220 @@ namespace AbetApi.EFModels
             this.Name = Name;
         }
 
-        // FIXME - Majors are required to have a semester that they're a part of.
-        public static async Task AddMajor(string term, int year, string name)
+        public static async Task AddMajor(string term, int year, string majorName)
         {
+            //Check if the term is null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check if the year is before the establishment date of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Check if the name of the major is null or empty.
+            if (majorName == null || majorName == "")
+            {
+                throw new ArgumentException("The name of the major cannot be empty.");
+            }
+
+            //Format term and major name to follow a standard.
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            majorName = majorName.ToUpper();
+
             await using (var context = new ABETDBContext())
             {
+                //Try to find the specified semester in the database.
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
 
-                //context.Entry(semester).Collection(semester => semester.Courses).Load();
-                context.Entry(semester).Collection(semester => semester.Majors).Load();
-                foreach(var majorList in semester.Majors)
+                //If it does not exist, throw an exception.
+                if (semester == null)
                 {
-                    if(majorList.Name == name)
+                    throw new ArgumentException("The specified semester does not exist in the database.");
+                }
+
+                //Load the majors under the specified semester.
+                context.Entry(semester).Collection(semester => semester.Majors).Load();
+
+                //Loop through the majors and look for the specified major.
+                foreach (Major major in semester.Majors)
+                {
+                    //If the major already exists, then that is a duplicate and we don't allow duplicates.
+                    if (major.Name == majorName)
                     {
-                        //FIXME - This might should throw an error, and force an error message when somebody tries to enter duplicate data
-                        return;
+                        throw new ArgumentException("The specified major already exists in the database.");
                     }
                 }
 
-                Major major = new Major(name);
+                //Add the major to the database.
+                Major tempMajor = new Major(majorName);
+                context.Majors.Add(tempMajor);
+                semester.Majors.Add(tempMajor);
 
-                context.Majors.Add(major);
-                semester.Majors.Add(major);
                 context.SaveChanges();
-
-                return;
             }
         } // AddMajor
 
         public static async Task<List<Major>> GetMajors(string term, int year)
         {
+            //Check if the term is null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check if the year is before the establishment date of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
             await using (var context = new ABETDBContext())
             {
+                //Try to find the specified semester in the database.
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
 
-                //if (semester == null)
-                //     return null;
-
+                //If it does not exist, throw an exception.
                 if (semester == null)
-                    throw new Exception("It was wrong lol and you should feel bad");
+                {
+                    throw new ArgumentException("The specified semester does not exist in the database.");
+                }
 
+                //Load the majors under the specified semester.
                 context.Entry(semester).Collection(semester => semester.Majors).Load();
 
+                //Return the list of majors.
                 return semester.Majors.ToList();
             }
         } // GetMajors
 
-        public async static Task EditMajor(string term, int year, string name, string NewValue)
+        public async static Task EditMajor(string term, int year, string oldMajorName, string newMajorName)
         {
+            //Check if the term is null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check if the year is before the establishment date of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Check if the old name of the major is null or empty.
+            if (oldMajorName == null || oldMajorName == "")
+            {
+                throw new ArgumentException("The name of the major cannot be empty.");
+            }
+
+            //Check if the new name of the major is null or empty.
+            if (newMajorName == null || newMajorName == "")
+            {
+                throw new ArgumentException("The name of the major cannot be empty.");
+            }
+
+            //Format term and major names to follow a standard.
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            oldMajorName = oldMajorName.ToUpper();
+            newMajorName = newMajorName.ToUpper();
+
             await using (var context = new ABETDBContext())
             {
+                Major tempMajor = null;
+
+                //Try to find the specified semester in the database.
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+
+                //If it does not exist, throw an exception.
+                if (semester == null)
+                {
+                    throw new ArgumentException("The specified semester does not exist in the database.");
+                }
+
+                //Load the majors under the specified semester.
                 context.Entry(semester).Collection(semester => semester.Majors).Load();
 
-                foreach (var major in semester.Majors)
+                //Loop through the majors and look for the specified major.
+                foreach (Major major in semester.Majors)
                 {
-                    if (major.Name == name)
+                    //Check if the new major name already exists, if it does then that is a duplicate and we do not allow duplicates.
+                    if (major.Name == newMajorName)
                     {
-                        major.Name = NewValue;
-                        context.SaveChanges();
-                        return;
+                        throw new ArgumentException("The new major name already exists in the database.");
+                    }
+
+                    //Find the major specified to edit.
+                    if (major.Name == oldMajorName)
+                    {
+                        tempMajor = major;
                     }
                 }
+
+                //Check if old major is null.
+                if (tempMajor == null)
+                {
+                    throw new ArgumentException("The specified major to edit does not exist in the database.");
+                }
+
+                tempMajor.Name = newMajorName;
+                context.SaveChanges();
             }
         } // EditMajor
 
-        public async static Task DeleteMajor(string term, int year, string name)
+        public async static Task DeleteMajor(string term, int year, string majorName)
         {
+            //Check if the term is null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check if the year is before the establishment date of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Check if the old name of the major is null or empty.
+            if (majorName == null || majorName == "")
+            {
+                throw new ArgumentException("The name of the major cannot be empty.");
+            }
+
+            //Format term and major name to follow a standard.
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            majorName = majorName.ToUpper();
+
             await using (var context = new ABETDBContext())
             {
+                //Try to find the specified semester in the database.
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+
+                //If it does not exist, throw an exception.
+                if (semester == null)
+                {
+                    throw new ArgumentException("The specified semester does not exist in the database.");
+                }
+
+                //Load the majors under the specified semester.
                 context.Entry(semester).Collection(semester => semester.Majors).Load();
 
-                foreach (var major in semester.Majors)
+                //Loop through the majors and look for the specified major.
+                foreach (Major major in semester.Majors)
                 {
-                    if (major.Name == name)
+                    if (major.Name == majorName)
                     {
                         context.Remove(major);
                         context.SaveChanges();
                         return;
                     }
                 }
+
+                throw new ArgumentException("The major specified does not exist in the database.");
             }
         } // DeleteMajor
 
@@ -125,38 +258,71 @@ namespace AbetApi.EFModels
             //This function follows join tables from: Semester -> Major -> MajorOutcome -> CourseOutcome -> Course
             //This function could be very inefficient with production amounts of data in it. It's searching through every course mapped to a course/major outcome, so it could try to add the same course to the hashset as many as 7+ times.
 
+            //Check if the term is null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check if the year is before the establishment date of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Check if the old name of the major is null or empty.
+            if (majorName == null || majorName == "")
+            {
+                throw new ArgumentException("The name of the major cannot be empty.");
+            }
+
+            //Format term and major name to follow a standard.
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            majorName = majorName.ToUpper();
+
             await using (var context = new ABETDBContext())
             {
-                //this finds the semester to start at and loads all the courses
+                Major tempMajor = null;
+
+                //Try to find the specified semester in the database.
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
 
-                //Loads Majors
+                //If it does not exist, throw an exception.
+                if (semester == null)
+                {
+                    throw new ArgumentException("The specified semester does not exist in the database.");
+                }
+
+                //Load the majors under the specified semester.
                 context.Entry(semester).Collection(semester => semester.Majors).Load();
 
-                //Finds the relevant Major
-                Major major = null;
-                foreach (var tempMajor in semester.Majors)
+                //Loop through the majors and look for the specified major.
+                foreach (Major major in semester.Majors)
                 {
-                    //If it finds the major, move on, otherwise return null
-                    if (tempMajor.Name == majorName)
+                    if (major.Name == majorName)
                     {
-                        major = tempMajor;
+                        tempMajor = major;
+                        break;
                     }
                 }
-                if (major == null)
-                    return null;
+
+                //Check if major is null.
+                if (tempMajor == null)
+                {
+                    throw new ArgumentException("The specified major does not exist in the database.");
+                }
 
                 //Loads all relevant major outcomes
-                context.Entry(major).Collection(major => major.MajorOutcomes).Load();
+                context.Entry(tempMajor).Collection(major => major.MajorOutcomes).Load();
 
                 //Go through each list of course outcomes and add the course
                 HashSet<Course> courses = new HashSet<Course>();
-                foreach (var majorOutcome in major.MajorOutcomes)
+                foreach (MajorOutcome majorOutcome in tempMajor.MajorOutcomes)
                 {
                     //Load course outcomes
                     context.Entry(majorOutcome).Collection(majorOutcome => majorOutcome.CourseOutcomes).Load();
 
-                    foreach (var courseOutcome in majorOutcome.CourseOutcomes)
+                    foreach (CourseOutcome courseOutcome in majorOutcome.CourseOutcomes)
                     {
                         //Load the relevant course
                         context.Entry(courseOutcome).Collection(courseOutcome => courseOutcome.Courses).Load();
@@ -169,30 +335,74 @@ namespace AbetApi.EFModels
                         }
                     }
                 }
+
+                //Check to see if any courses were added to the list.
+                if(courses.Count() == 0)
+                {
+                    throw new ArgumentException("The major specified has no courses required.");
+                }
+
                 return courses.ToList();
             }
         } // GetCoursesByMajor
 
         public async static Task<List<MajorOutcome>> GetMajorOutcomesByMajor(string term, int year, string majorName)
         {
+            //Check if the term is null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
 
-            List<MajorOutcome> majorOutcomes = new List<MajorOutcome>();
+            //Check if the year is before the establishment date of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Check if the old name of the major is null or empty.
+            if (majorName == null || majorName == "")
+            {
+                throw new ArgumentException("The name of the major cannot be empty.");
+            }
+
+            //Format term and major name to follow a standard.
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            majorName = majorName.ToUpper();
+
             await using (var context = new ABETDBContext())
             {
+                //Try to find the specified semester in the database.
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
-                context.Entry(semester).Collection(semester => semester.Majors).Load();
-                foreach (var major in semester.Majors)
+
+                //If it does not exist, throw an exception.
+                if (semester == null)
                 {
+                    throw new ArgumentException("The specified semester does not exist in the database.");
+                }
+
+                //Load the majors under the specified semester.
+                context.Entry(semester).Collection(semester => semester.Majors).Load();
+
+                //Loop through the majors and look for the specified major.
+                foreach (Major major in semester.Majors)
+                {
+                    //If we find the right major, then load the major outcomes under it and add them all to a list.
                     if (majorName == major.Name)
                     {
                         context.Entry(major).Collection(major => major.MajorOutcomes).Load();
-                        foreach (var majoroutcome in major.MajorOutcomes)
+
+                        //Check to see if the specified major has major outcomes.
+                        if(major.MajorOutcomes.Count() == 0)
                         {
-                            majorOutcomes.Add(majoroutcome);
+                            throw new ArgumentException("The major specified has no major outcomes.");
                         }
+
+                        return major.MajorOutcomes.ToList();
                     }
                 }
-                return majorOutcomes.ToList();
+
+                throw new ArgumentException("The major specified has no major outcomes.");
             }
         }//GetMajorOutcomesByMajor
 
