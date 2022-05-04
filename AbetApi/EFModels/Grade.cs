@@ -77,6 +77,10 @@ namespace AbetApi.EFModels
                 throw new ArgumentException("The grades list cannot be empty.");
             }
 
+            //Format term and department to follow a standard.
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            department = department.ToUpper();
+
             await using (var context = new ABETDBContext())
             {
                 Course tempCourse = null;
@@ -181,6 +185,10 @@ namespace AbetApi.EFModels
             {
                 throw new ArgumentException("The section number cannot be empty.");
             }
+
+            //Format term and department to follow a standard.
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            department = department.ToUpper();
 
             await using (var context = new ABETDBContext())
             {
