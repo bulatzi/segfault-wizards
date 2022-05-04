@@ -76,6 +76,12 @@ namespace AbetApi.EFModels
                 throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
             }
 
+            //Check if the department is null or empty.
+            if (survey.department == null || survey.department == "")
+            {
+                throw new ArgumentException("The department cannot be empty.");
+            }
+
             //Check if the course number is null or empty.
             if (survey.courseNumber == null || survey.courseNumber == "")
             {
@@ -102,6 +108,7 @@ namespace AbetApi.EFModels
 
             //Format term and EUID to follow a standard.
             survey.term = survey.term[0].ToString().ToUpper() + survey.term[1..].ToLower();
+            survey.department = survey.department.ToUpper();
             survey.EUID = survey.EUID.ToLower();
 
             await using(var context = new ABETDBContext())
