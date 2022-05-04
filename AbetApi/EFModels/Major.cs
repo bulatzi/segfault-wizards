@@ -337,7 +337,7 @@ namespace AbetApi.EFModels
                 }
 
                 //Check to see if any courses were added to the list.
-                if(courses.Count() == 0)
+                if(courses.Count == 0)
                 {
                     throw new ArgumentException("The major specified has no courses required.");
                 }
@@ -393,7 +393,7 @@ namespace AbetApi.EFModels
                         context.Entry(major).Collection(major => major.MajorOutcomes).Load();
 
                         //Check to see if the specified major has major outcomes.
-                        if(major.MajorOutcomes.Count() == 0)
+                        if(major.MajorOutcomes.Count == 0)
                         {
                             throw new ArgumentException("The major specified has no major outcomes.");
                         }

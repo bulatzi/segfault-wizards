@@ -53,6 +53,12 @@ namespace AbetApi.EFModels
                 throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
             }
 
+            //Check if the department is null or empty.
+            if (department == null || department == "")
+            {
+                throw new ArgumentException("The department cannot be empty.");
+            }
+
             //Check if the course number is null or empty.
             if (courseNumber == null || courseNumber == "")
             {
@@ -63,6 +69,12 @@ namespace AbetApi.EFModels
             if (sectionNumber == null || sectionNumber == "")
             {
                 throw new ArgumentException("The section number cannot be empty.");
+            }
+
+            //Check that the grades list is not null or empty
+            if(grades.Count == 0)
+            {
+                throw new ArgumentException("The grades list cannot be empty.");
             }
 
             await using (var context = new ABETDBContext())
@@ -99,7 +111,7 @@ namespace AbetApi.EFModels
                 context.Entry(tempCourse).Collection(course => course.Sections).Load();
 
                 //For each section
-                foreach(var section in tempCourse.Sections)
+                foreach(Section section in tempCourse.Sections)
                 {
                     //If the section is found, create/overwrite the grades
                     if(section.SectionNumber == sectionNumber)
@@ -139,7 +151,6 @@ namespace AbetApi.EFModels
                             section.Grades.Add(grade);
                         }
                         context.SaveChanges();
-                        return;
                     }
                 }
             }
@@ -184,6 +195,7 @@ namespace AbetApi.EFModels
                     throw new ArgumentException("The specified semester does not exist in the database.");
                 }
 
+                //Try to find the specified course.
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
                 foreach (Course course in semester.Courses)
                 {
@@ -203,12 +215,7 @@ namespace AbetApi.EFModels
                 //Load the sections under the course specified.
                 context.Entry(tempCourse).Collection(course => course.Sections).Load();
 
-                //Add the section to the database table, and the course join table, then save changes
-                //context.Sections.Add(section);
-                //tempCourse.Sections.Add(section);
-
-                //context.SaveChanges();
-
+                //Try to find the section specified. If we find it return the grades from that section.
                 foreach (Section section in tempCourse.Sections)
                 {
                     if (section.SectionNumber == sectionNumber)
