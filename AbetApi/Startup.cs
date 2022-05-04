@@ -53,11 +53,8 @@ namespace AbetApi
                 o.MultipartBodyLengthLimit = int.MaxValue;
                 o.MemoryBufferThreshold = int.MaxValue;
             });
-            services.AddScoped<IMockAbetRepo, MockAbetRepo>();
             services.AddScoped<ILdap, Ldap>();
-            services.AddScoped<IAbetRepo, AbetRepo>();
             services.AddScoped<ITokenGenerator, TokenGenerator>();
-            services.AddScoped<IUploadManager, UploadManager>();
 
             //Adds swagger
             services.AddSwaggerGen(c =>
