@@ -142,13 +142,13 @@ namespace AbetApi.EFModels
             //Check if the old name of the major is null or empty.
             if (oldMajorName == null || oldMajorName == "")
             {
-                throw new ArgumentException("The name of the major cannot be empty.");
+                throw new ArgumentException("The name of the major to edit cannot be empty.");
             }
 
             //Check if the new name of the major is null or empty.
             if (newMajorName == null || newMajorName == "")
             {
-                throw new ArgumentException("The name of the major cannot be empty.");
+                throw new ArgumentException("The new name of the major cannot be empty.");
             }
 
             //Format term and major names to follow a standard.
@@ -402,7 +402,7 @@ namespace AbetApi.EFModels
                     }
                 }
 
-                throw new ArgumentException("The major specified has no major outcomes.");
+                throw new ArgumentException("The major specified does not exist in the database.");
             }
         }//GetMajorOutcomesByMajor
 
