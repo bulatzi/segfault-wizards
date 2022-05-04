@@ -57,8 +57,8 @@ namespace AbetApi.EFModels
             }
 
             //Format first name, last name, and EUID to follow a standard.
-            User.FirstName = User.FirstName[0].ToString().ToUpper() + User.FirstName.Substring(1);
-            User.LastName = User.LastName[0].ToString().ToUpper() + User.LastName.Substring(1);
+            User.FirstName = User.FirstName[0].ToString().ToUpper() + User.FirstName[1..].ToLower();
+            User.LastName = User.LastName[0].ToString().ToUpper() + User.LastName[1..].ToLower();
             //When formatting EUID I want to ask Ludi if an EUID will always be three letters followed by 4 numbers, or if we don't care to check formatting that specifically.
             User.EUID = User.EUID.ToLower();
 
@@ -138,8 +138,8 @@ namespace AbetApi.EFModels
             }
 
             //Format first name, last name, and EUID of the new user information to follow a standard.
-            NewUserInfo.FirstName = NewUserInfo.FirstName[0].ToString().ToUpper() + NewUserInfo.FirstName.Substring(1);
-            NewUserInfo.LastName = NewUserInfo.LastName[0].ToString().ToUpper() + NewUserInfo.LastName.Substring(1);
+            NewUserInfo.FirstName = NewUserInfo.FirstName[0].ToString().ToUpper() + NewUserInfo.FirstName[1..].ToLower();
+            NewUserInfo.LastName = NewUserInfo.LastName[0].ToString().ToUpper() + NewUserInfo.LastName[1..].ToLower();
             NewUserInfo.EUID = NewUserInfo.EUID.ToLower();
 
             await using (var context = new ABETDBContext())

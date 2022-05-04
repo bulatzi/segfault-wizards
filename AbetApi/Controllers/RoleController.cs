@@ -18,7 +18,7 @@ namespace AbetApi.Controllers
     public class RoleController : ControllerBase
     {
         // This function returns all users with the provided role name
-        //[Authorize(Roles = RoleTypes.Admin)]
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpGet("GetUsersByRole")]
         public async Task<IActionResult> GetUsersByRole(string roleName)
         {
@@ -33,7 +33,7 @@ namespace AbetApi.Controllers
         } // GetUsersByRole
 
         // This function returns a list of all users with the Admin/Instructor/Coordinator roles
-        //[Authorize(Roles = RoleTypes.Admin)]
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpGet("GetFaculty")]
         public async Task<IActionResult> GetFaculty()
         {
@@ -56,7 +56,7 @@ namespace AbetApi.Controllers
 
         // This function creates a role with a given role name
         // Role name can include any characters. Any function calls for a role will be case sensitive.
-        //[Authorize(Roles = RoleTypes.Admin)]
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("CreateRole")]
         public async Task<IActionResult> CreateRole(Role roleName)
         {
@@ -73,7 +73,7 @@ namespace AbetApi.Controllers
 
         // This function deletes a role by the given name
         // Anybody that calls this endpoint should include a verification before actually calling this endpoint. Deletions are final.
-        //[Authorize(Roles = RoleTypes.Admin)]
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpDelete("DeleteRole")]
         public async Task<IActionResult> DeleteRole(string roleName)
         {
@@ -89,7 +89,7 @@ namespace AbetApi.Controllers
         } // DeleteRole
 
         // This function adds the provided role to the given user (via EUID)
-        //[Authorize(Roles = RoleTypes.Admin)]
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("AddRoleToUser")]
         public async Task<IActionResult> AddRoleToUser(string EUID, string roleName)
         {
@@ -105,7 +105,7 @@ namespace AbetApi.Controllers
         } // AddRoleToUser
 
         // This function removes the selected role from the selected user (via EUID)
-        //[Authorize(Roles = RoleTypes.Admin)]
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpDelete("RemoveRoleFromUser")]
         public async Task<IActionResult> RemoveRoleFromUser(string EUID, string roleName)
         {

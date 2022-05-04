@@ -35,7 +35,7 @@ namespace AbetApi.Models
         public static List<AbetApi.EFModels.Grade> ConvertToEFModelGrade(Dictionary<string, AbetApi.Models.Grade> gradesDictionary)
         {
             List<AbetApi.EFModels.Grade> gradesList = new List<AbetApi.EFModels.Grade>();
-            foreach (var grade in gradesDictionary)
+            foreach (KeyValuePair<string, AbetApi.Models.Grade > grade in gradesDictionary)
             {
                 gradesList.Add(new AbetApi.EFModels.Grade(grade.Key, grade.Value.A, grade.Value.B, grade.Value.C, grade.Value.D, grade.Value.F, grade.Value.W, grade.Value.I, grade.Value.TotalStudents));
             }
@@ -50,7 +50,7 @@ namespace AbetApi.Models
             Dictionary<string, AbetApi.Models.Grade> dictionary = new Dictionary<string, AbetApi.Models.Grade>();
 
             //For each grade object, convert the object to the requested data format
-            foreach (var grade in gradesList)
+            foreach (EFModels.Grade grade in gradesList)
             {
                 dictionary.Add(grade.Major, new AbetApi.Models.Grade(grade));
             }

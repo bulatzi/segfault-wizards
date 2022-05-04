@@ -10,7 +10,7 @@ namespace AbetApi.Controllers
 {
     public class ReportController : ControllerBase
     {
-        //[Authorize(Roles = RoleTypes.Instructor)]
+        [Authorize(Roles = RoleTypes.Instructor)]
         [HttpGet("GenerateFullReport")]
         public async Task<IActionResult> GenerateFullReport(string term, int year)
         {

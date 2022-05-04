@@ -102,7 +102,7 @@ namespace AbetApi.EFModels
             }
 
             //Format the term string to follow a standard.
-            semester.Term = semester.Term[0].ToString().ToUpper() + semester.Term.Substring(1);
+            semester.Term = semester.Term[0].ToString().ToUpper() + semester.Term[1..].ToLower();
 
             //Opens a context with the database, makes changes, and saves the changes
             await using (var context = new ABETDBContext())
@@ -146,7 +146,7 @@ namespace AbetApi.EFModels
             }
 
             //Format the term string to follow a standard.
-            term = term[0].ToString().ToUpper() + term.Substring(1);
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
 
             //Try to find the specified semester.
             await using (var context = new ABETDBContext())
@@ -218,8 +218,8 @@ namespace AbetApi.EFModels
             }
 
             //Format the term strings to follow a standard.
-            term = term[0].ToString().ToUpper() + term.Substring(1);
-            NewValue.Term = NewValue.Term[0].ToString().ToUpper() + NewValue.Term.Substring(1);
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            NewValue.Term = NewValue.Term[0].ToString().ToUpper() + NewValue.Term[1..].ToLower();
 
             await using (var context = new ABETDBContext())
             {
@@ -273,7 +273,7 @@ namespace AbetApi.EFModels
             }
 
             //Format the term string to follow a standard.
-            term = term[0].ToString().ToUpper() + term.Substring(1);
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
 
             await using (var context = new ABETDBContext())
             {
@@ -316,7 +316,7 @@ namespace AbetApi.EFModels
             }
 
             //Format the term string to follow a standard.
-            term = term[0].ToString().ToUpper() + term.Substring(1);
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
 
             await using (var context = new ABETDBContext())
             {

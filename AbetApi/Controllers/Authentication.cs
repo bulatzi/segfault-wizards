@@ -68,7 +68,7 @@ namespace AbetApi.Controllers
                     }
                     else if (roles.Count > 0)
                     {
-                        foreach (var itr in roles)
+                        foreach (EFModels.Role itr in roles)
                         {
                             rolesToAdd.Add(itr.Name);
                         }

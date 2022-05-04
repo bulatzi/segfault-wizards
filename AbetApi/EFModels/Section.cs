@@ -31,8 +31,6 @@ namespace AbetApi.EFModels
             this.Grades = new List<Grade>();
         }
 
-        //I am intentionally not error checking for department, because the project scope only covers the CSCE department.
-        //This means that the department member variable for the class Course should be removed and I am anticipating that.
         public static async Task AddSection(string term, int year, string department, string courseNumber, Section section)
         {
             // Sets the section id to be 0, so entity framework will give it a primary key
@@ -48,6 +46,12 @@ namespace AbetApi.EFModels
             if (year < 1890)
             {
                 throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Check if the department is null or empty.+
+            if (department == null || department == "")
+            {
+                throw new ArgumentException("The department cannot be empty.");
             }
 
             //Check if the course number is null or empty.
@@ -77,7 +81,7 @@ namespace AbetApi.EFModels
             }
 
             //Format term and instructor EUID to follow a standard.
-            term = term[0].ToString().ToUpper() + term.Substring(1);
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
             //When formatting EUID I want to ask Ludi if an EUID will always be three letters followed by 4 numbers, or if we don't care to check formatting that specifically.
             section.InstructorEUID = section.InstructorEUID.ToLower();
 
@@ -95,7 +99,7 @@ namespace AbetApi.EFModels
                 }
 
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == department && course.CourseNumber == courseNumber)
                     {
@@ -145,6 +149,12 @@ namespace AbetApi.EFModels
                 throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
             }
 
+            //Check if the department is null or empty.
+            if (department == null || department == "")
+            {
+                throw new ArgumentException("The department cannot be empty.");
+            }
+
             //Check if the course number is null or empty.
             if (courseNumber == null || courseNumber == "")
             {
@@ -158,7 +168,7 @@ namespace AbetApi.EFModels
             }
 
             //Format term to follow a standard.
-            term = term[0].ToString().ToUpper() + term.Substring(1);
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
 
             await using (var context = new ABETDBContext())
             {
@@ -176,7 +186,7 @@ namespace AbetApi.EFModels
 
                 //Load the courses under that semester and try to find the course specified.
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == department && course.CourseNumber == courseNumber)
                     {
@@ -193,7 +203,7 @@ namespace AbetApi.EFModels
 
                 //Load the sections under that course and try to find the section specified.
                 context.Entry(tempCourse).Collection(course => course.Sections).Load();
-                foreach (var section in tempCourse.Sections)
+                foreach (Section section in tempCourse.Sections)
                 {
                     if (section.SectionNumber == sectionNumber)
                     {
@@ -259,7 +269,7 @@ namespace AbetApi.EFModels
             }
 
             //Format term and new instructor EUID to follow a standard.
-            term = term[0].ToString().ToUpper() + term.Substring(1);
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
             //When formatting EUID I want to ask Ludi if an EUID will always be three letters followed by 4 numbers, or if we don't care to check formatting that specifically.
             NewValue.InstructorEUID = NewValue.InstructorEUID.ToLower();
 
@@ -279,7 +289,7 @@ namespace AbetApi.EFModels
 
                 //Load the courses under that semester and try to find the course specified.
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == department && course.CourseNumber == courseNumber)
                     {
@@ -298,7 +308,7 @@ namespace AbetApi.EFModels
                 context.Entry(tempCourse).Collection(course => course.Sections).Load();
 
                 //Try to find the new section information in the database.
-                foreach (var section in tempCourse.Sections)
+                foreach (Section section in tempCourse.Sections)
                 {
                     //If we are trying to change a sections number to an already existing section number, that is a duplicate and we do not allow duplicates.                    
                     if(sectionNumber != NewValue.SectionNumber && section.SectionNumber == NewValue.SectionNumber)
@@ -355,7 +365,7 @@ namespace AbetApi.EFModels
             }
 
             //Format term to follow a standard.
-            term = term[0].ToString().ToUpper() + term.Substring(1);
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
 
             await using (var context = new ABETDBContext())
             {
@@ -373,7 +383,7 @@ namespace AbetApi.EFModels
 
                 //Load the courses under that semester and try to find the course specified.
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == department && course.CourseNumber == courseNumber)
                     {
@@ -390,7 +400,7 @@ namespace AbetApi.EFModels
 
                 //Load the sections under that course and try to find the section specified.
                 context.Entry(tempCourse).Collection(course => course.Sections).Load();
-                foreach (var section in tempCourse.Sections)
+                foreach (Section section in tempCourse.Sections)
                 {
                     if (section.SectionNumber == sectionNumber)
                     {
@@ -432,7 +442,7 @@ namespace AbetApi.EFModels
             }
 
             //Format term to follow a standard.
-            term = term[0].ToString().ToUpper() + term.Substring(1);
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
 
             await using (var context = new ABETDBContext())
             {
@@ -448,19 +458,19 @@ namespace AbetApi.EFModels
                 //Load the courses under that semester and try to find the course specified.
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
                 //Load each section under each course
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     context.Entry(course).Collection(course => course.Sections).Load();
                 }
 
                 //scan over all sections, looking for that instructor. If found, add it to the list
                 List<AbetApi.Models.SectionInfo> sectionInfoList = new List<AbetApi.Models.SectionInfo>();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     if (course.CoordinatorEUID == coordinatorEUID)
                     {
                         //Add each section
-                        foreach (var section in course.Sections)
+                        foreach (Section section in course.Sections)
                         {
                             sectionInfoList.Add(new AbetApi.Models.SectionInfo(course.DisplayName, course.CourseNumber, section.SectionNumber, section.InstructorEUID, course.CoordinatorEUID));
                         }
@@ -493,11 +503,10 @@ namespace AbetApi.EFModels
             }
 
             //Format term to follow a standard.
-            term = term[0].ToString().ToUpper() + term.Substring(1);
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
 
             await using (var context = new ABETDBContext())
             {
-                Course tempCourse = null;
 
                 //Try to find the semester specified.
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
@@ -511,16 +520,16 @@ namespace AbetApi.EFModels
                 //Load the courses under that semester and try to find the course specified.
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
                 //Load each section under each course
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     context.Entry(course).Collection(course => course.Sections).Load();
                 }
 
                 //scan over all sections, looking for that instructor. If found, add it to the list
                 List<AbetApi.Models.SectionInfo> sectionInfoList = new List<AbetApi.Models.SectionInfo>();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
-                    foreach (var section in course.Sections)
+                    foreach (Section section in course.Sections)
                     {
                         if (section.InstructorEUID == instructorEUID)
                         {

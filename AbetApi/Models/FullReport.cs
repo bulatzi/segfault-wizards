@@ -45,7 +45,7 @@ namespace AbetApi.Models
             Dictionary<string, Dictionary<string, int[]>> studentCountCompensation = new Dictionary<string, Dictionary<string, int[]>>();
 
             //Creates the first layer of dictionaries, which are each of the majors
-            foreach (var major in majorsList)
+            foreach (Major major in majorsList)
             {
                 aggregationData.Add(major.Name, new Dictionary<string, int[]>());
                 calculatedData.Add(major.Name, new Dictionary<string, float[]>());
@@ -55,18 +55,18 @@ namespace AbetApi.Models
 
             //Creates the second layer of dictionaries, which are all of the courses for each major
             //populate the dictionaries used to calculate data
-            foreach (var majorDictionary in aggregationData)
+            foreach (KeyValuePair<string, Dictionary<string, int[]>> majorDictionary in aggregationData)
             {
-                foreach (var course in courseList)
+                foreach (Course course in courseList)
                 {
                     majorDictionary.Value.Add(course.CourseNumber, new int[majorOutcomeColumns]);
                 }
             }
 
             //populate the dictionaries used to store the summed data
-            foreach (var majorDictionary in calculatedData)
+            foreach (KeyValuePair<string, Dictionary<string, float[]>> majorDictionary in calculatedData)
             {
-                foreach (var course in courseList)
+                foreach (Course course in courseList)
                 {
                     majorDictionary.Value.Add(course.CourseNumber, new float[majorOutcomeColumns]);
 
@@ -80,18 +80,18 @@ namespace AbetApi.Models
             }
 
             //populate the dictionaries used to store the output strings of the function
-            foreach (var majorDictionary in calculatedStringData)
+            foreach (KeyValuePair<string, Dictionary<string, string[]>> majorDictionary in calculatedStringData)
             {
-                foreach (var course in courseList)
+                foreach (Course course in courseList)
                 {
                     majorDictionary.Value.Add(course.CourseNumber, new string[majorOutcomeColumns]);
                 }
             }
 
             //populate the dictionaries used to compensate for total student count
-            foreach(var majorDictionary in studentCountCompensation)
+            foreach(KeyValuePair<string, Dictionary<string, int[]>> majorDictionary in studentCountCompensation)
             {
-                foreach(var course in courseList)
+                foreach(Course course in courseList)
                 {
                     majorDictionary.Value.Add(course.CourseNumber, new int[majorOutcomeColumns]);
 
@@ -107,7 +107,7 @@ namespace AbetApi.Models
             //This block of code will iterate through the list of student outcomes completed and sum them, organized by major->course->courseOutcome
 
             //sort all of the studentOutcomesCompleted in to appropriate arrays
-            foreach (var studentOutcomesCompleted in studentOutcomesCompletedList)
+            foreach (EFModels.StudentOutcomesCompleted studentOutcomesCompleted in studentOutcomesCompletedList)
             {
                 //Find the zero indexed column each number should go in to
                 int column;
@@ -129,10 +129,10 @@ namespace AbetApi.Models
             //For each item in that list, add the initial index to each column in the other object
             //If the number is zero, you can skip
 
-            foreach (var majorDictionary in aggregationData)
+            foreach (KeyValuePair<string, Dictionary<string, int[]>> majorDictionary in aggregationData)
             {
                 string major = majorDictionary.Key;
-                foreach (var courseDictionary in majorDictionary.Value)
+                foreach (KeyValuePair<string, int[]> courseDictionary in majorDictionary.Value)
                 {
                     for (int i = 0; i < courseDictionary.Value.Length; i++)
                     {
@@ -150,7 +150,7 @@ namespace AbetApi.Models
                         {
                             //This next section takes one-indexed string names of columns and converts them to zero-indexed ints
                             List<int> intColumns = new List<int>();
-                            foreach (var columnString in columnsToAdd)
+                            foreach (string columnString in columnsToAdd)
                             {
                                 //convert to int
                                 int tempInt;
@@ -161,7 +161,7 @@ namespace AbetApi.Models
 
                             //This section increments the values of the student count compensation arrays
                             
-                            foreach(var column in intColumns)
+                            foreach(int column in intColumns)
                             {
                                 studentCountCompensation[major][courseDictionary.Key][column]++;
                             }
@@ -181,10 +181,10 @@ namespace AbetApi.Models
             //Iterate through all calculated data arrays, and convert existing values in to percentages.
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
-            foreach (var majorDictionary in aggregationData)
+            foreach (KeyValuePair<string, Dictionary<string, int[]>> majorDictionary in aggregationData)
             {
                 string major = majorDictionary.Key;
-                foreach (var courseDictionary in majorDictionary.Value)
+                foreach (KeyValuePair<string, int[]> courseDictionary in majorDictionary.Value)
                 {
                     for (int i = 0; i < courseDictionary.Value.Length; i++)
                     {
@@ -215,9 +215,9 @@ namespace AbetApi.Models
 
 
             //if -1, it means there are no linked course outcomes associated with that major outcome, so it replaces it with "--"
-            foreach (var major in calculatedData)
+            foreach (KeyValuePair<string, Dictionary<string, float[]>> major in calculatedData)
             {
-                foreach (var course in major.Value)
+                foreach (KeyValuePair<string, float[]> course in major.Value)
                 {
                     for (int i = 0; i < course.Value.Length; i++)
                     {
@@ -252,7 +252,7 @@ namespace AbetApi.Models
 
                 //Finds the course
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     //if it finds the course, Find all existing course outcomes
                     if (/*course.Department == courseDepartment && */course.CourseNumber == courseNumber)
@@ -261,7 +261,7 @@ namespace AbetApi.Models
                         context.Entry(course).Collection(course => course.CourseOutcomes).Load();
 
                         //Find the relevant course outcome
-                        foreach (var courseOutcome in course.CourseOutcomes)
+                        foreach (CourseOutcome courseOutcome in course.CourseOutcomes)
                         {
                             //If found, map it back to relevant major outcomes
                             if (courseOutcome.Name == courseOutcomeName)
@@ -270,7 +270,7 @@ namespace AbetApi.Models
                                 context.Entry(courseOutcome).Collection(courseOutcome => courseOutcome.MajorOutcomes).Load();
 
                                 //Load all majors
-                                foreach (var majorOutcome in courseOutcome.MajorOutcomes)
+                                foreach (MajorOutcome majorOutcome in courseOutcome.MajorOutcomes)
                                 {
                                     context.Entry(majorOutcome).Collection(majorOutcome => majorOutcome.Majors).Load();
                                 }
@@ -278,7 +278,7 @@ namespace AbetApi.Models
                                 List<string> relevantMajorOutcomes = new List<string>();
 
                                 //Scan through major outcomes, and validate that the major it belongs to is the one we're looking for
-                                foreach (var majorOutcome in courseOutcome.MajorOutcomes)
+                                foreach (MajorOutcome majorOutcome in courseOutcome.MajorOutcomes)
                                 {
                                     //FIXME - make this account for not finding a major
                                     if (majorOutcome.Majors.First().Name == majorName)
@@ -333,7 +333,7 @@ namespace AbetApi.Models
 
                 //Finds the relevant course
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     if (course.CourseNumber == courseNumber)
                     {
@@ -354,14 +354,14 @@ namespace AbetApi.Models
                 int totalStudents = 0;
 
                 //For each section
-                foreach (var section in tempCourse.Sections)
+                foreach (Section section in tempCourse.Sections)
                 {
 
                     //Loads existing grades for that section
                     context.Entry(section).Collection(section => section.Grades).Load();
 
                     //scan through the grades, and find the one for the appropriate major
-                    foreach (var grade in section.Grades)
+                    foreach (EFModels.Grade grade in section.Grades)
                     {
                         if (grade.Major == majorName)
                         {

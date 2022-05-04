@@ -80,7 +80,7 @@ namespace AbetApi.EFModels
 
                 //Finds the relevant course
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == department && course.CourseNumber == courseNumber)
                     {
@@ -111,7 +111,7 @@ namespace AbetApi.EFModels
                         if (section.Grades.Count > 0)
                         {
                             //Compare each grade to each existing grade. If it already exists, just replace it.
-                            foreach (var i in section.Grades)
+                            foreach (EFModels.Grade i in section.Grades)
                             {
                                 for (int j = 0; j < grades.Count; j++)
                                 {
@@ -133,7 +133,7 @@ namespace AbetApi.EFModels
                         }
 
                         //Add the grades
-                        foreach (var grade in grades)
+                        foreach (EFModels.Grade grade in grades)
                         {
                             context.Grades.Add(grade);
                             section.Grades.Add(grade);
@@ -185,7 +185,7 @@ namespace AbetApi.EFModels
                 }
 
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == department && course.CourseNumber == courseNumber)
                     {
@@ -209,7 +209,7 @@ namespace AbetApi.EFModels
 
                 //context.SaveChanges();
 
-                foreach (var section in tempCourse.Sections)
+                foreach (Section section in tempCourse.Sections)
                 {
                     if (section.SectionNumber == sectionNumber)
                     {

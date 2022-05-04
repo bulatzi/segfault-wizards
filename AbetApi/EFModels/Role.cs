@@ -34,7 +34,7 @@ namespace AbetApi.EFModels
             }
 
             //Format role name to follow a standard
-            role.Name = role.Name[0].ToString().ToUpper() + role.Name.Substring(1);
+            role.Name = role.Name[0].ToString().ToUpper() + role.Name[1..].ToLower();
 
             // Adds role to the DB.
             await using (var context = new ABETDBContext())
@@ -69,7 +69,7 @@ namespace AbetApi.EFModels
             }
 
             //Format role name and EUID to follow a standard.
-            roleName = roleName[0].ToString().ToUpper() + roleName.Substring(1);
+            roleName = roleName[0].ToString().ToUpper() + roleName[1..].ToLower();
             EUID = EUID.ToLower();
 
             await using (var context = new ABETDBContext())
@@ -120,7 +120,7 @@ namespace AbetApi.EFModels
             }
 
             //Format role name and EUID to follow a standard.
-            roleName = roleName[0].ToString().ToUpper() + roleName.Substring(1);
+            roleName = roleName[0].ToString().ToUpper() + roleName[1..].ToLower();
 
             await using (var context = new ABETDBContext())
             {
@@ -151,7 +151,7 @@ namespace AbetApi.EFModels
             }
 
             //Format role name and EUID to follow a standard.
-            roleName = roleName[0].ToString().ToUpper() + roleName.Substring(1);
+            roleName = roleName[0].ToString().ToUpper() + roleName[1..].ToLower();
 
             await using (var context = new ABETDBContext())
             {
@@ -189,7 +189,7 @@ namespace AbetApi.EFModels
             }
 
             //Format role name and EUID to follow a standard.
-            roleName = roleName[0].ToString().ToUpper() + roleName.Substring(1);
+            roleName = roleName[0].ToString().ToUpper() + roleName[1..].ToLower();
             EUID = EUID.ToLower();
 
             await using (var context = new ABETDBContext())

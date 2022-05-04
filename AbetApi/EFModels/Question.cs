@@ -51,7 +51,7 @@ namespace AbetApi.EFModels
             }
 
             //Format term to follow a standard.
-            term = term[0].ToString().ToUpper() + term.Substring(1);
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
 
             //Creats a list to store relevant selected questions
             List<string> questions = new List<string>();
@@ -59,7 +59,7 @@ namespace AbetApi.EFModels
             await using (var context = new ABETDBContext())
             {
                 //Scan through all the entries of the questions table
-                foreach (var question in context.Questions)
+                foreach (Question question in context.Questions)
                 {
                     //If the question goes by the same question set name, and it's in the right year/term, add the question to the list
                     if (question.questionSetName == questionSetName && question.term == term && question.year == year)
@@ -95,14 +95,14 @@ namespace AbetApi.EFModels
             }
 
             //Format term to follow a standard.
-            term = term[0].ToString().ToUpper() + term.Substring(1);
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
 
             await using (var context = new ABETDBContext())
             {
 
                 //Delete existing questions with these identifiers
                 //Scan through all the entries of the questions table
-                foreach (var question in context.Questions)
+                foreach (Question question in context.Questions)
                 {
                     //If the question goes by the same question set name, and it's in the right year/term, remove the question from the list
                     if (question.questionSetName == questionSet.questionSetName && question.term == term && question.year == year)
@@ -111,7 +111,7 @@ namespace AbetApi.EFModels
                     }
                 }
 
-                foreach (var questionString in questionSet.questions)
+                foreach (string questionString in questionSet.questions)
                 {
                     Question tempQuestion = new Question(term, year, questionSet.questionSetName, questionString);
                     context.Add(tempQuestion);

@@ -12,7 +12,7 @@ namespace AbetApi.Controllers
     [Route("[controller]")]
     public class StudentOutcomesCompletedController : ControllerBase
     {
-        //[Authorize(Roles = RoleTypes.Instructor)]
+        [Authorize(Roles = RoleTypes.Instructor)]
         [HttpGet("GetStudentOutcomesCompleted")]
         public async Task<IActionResult> GetStudentOutcomesCompleted(string term, int year, string department, string courseNumber, string sectionNumber)
         {
@@ -26,7 +26,7 @@ namespace AbetApi.Controllers
             }
         } // GetStudentOutcomesCompleted
 
-        //[Authorize(Roles = RoleTypes.Instructor)]
+        [Authorize(Roles = RoleTypes.Instructor)]
         [HttpPost("SetStudentOutcomesCompleted")]
         public async Task<IActionResult> SetStudentOutcomesCompleted(string term, int year, string department, string courseNumber, string sectionNumber, List<Dictionary<string, string>> studentOutcomesCompletedDictionary)
         {

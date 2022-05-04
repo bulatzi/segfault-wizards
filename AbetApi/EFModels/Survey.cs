@@ -101,7 +101,7 @@ namespace AbetApi.EFModels
             }
 
             //Format term and EUID to follow a standard.
-            survey.term = survey.term[0].ToString().ToUpper() + survey.term.Substring(1);
+            survey.term = survey.term[0].ToString().ToUpper() + survey.term[1..].ToLower();
             survey.EUID = survey.EUID.ToLower();
 
             await using(var context = new ABETDBContext())

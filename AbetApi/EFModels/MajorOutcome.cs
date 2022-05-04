@@ -65,8 +65,8 @@ namespace AbetApi.EFModels
             }
 
             //Format term and major name to follow a standard.
-            term = term[0].ToString().ToUpper() + term.Substring(1);
-            majorName = majorName[0].ToString().ToUpper() + majorName.Substring(1);
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            majorName = majorName[0].ToString().ToUpper() + majorName[1..].ToLower();
 
             await using (var context = new ABETDBContext())
             {
@@ -85,7 +85,7 @@ namespace AbetApi.EFModels
                 context.Entry(semester).Collection(semester => semester.Majors).Load();
 
                 //Loop through the majors and look for the specified major.
-                foreach (var major in semester.Majors)
+                foreach (Major major in semester.Majors)
                 {
                     if (major.Name == majorName)
                     {
@@ -148,8 +148,8 @@ namespace AbetApi.EFModels
             }
 
             //Format term and major name to follow a standard.
-            term = term[0].ToString().ToUpper() + term.Substring(1);
-            majorName = majorName[0].ToString().ToUpper() + majorName.Substring(1);
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            majorName = majorName[0].ToString().ToUpper() + majorName[1..].ToLower();
 
             await using (var context = new ABETDBContext())
             {
@@ -169,7 +169,7 @@ namespace AbetApi.EFModels
                 context.Entry(semester).Collection(semester => semester.Majors).Load();
 
                 //Loop through the majors and look for the specified major.
-                foreach (var major in semester.Majors)
+                foreach (Major major in semester.Majors)
                 {
                     if (major.Name == majorName)
                     {
@@ -188,7 +188,7 @@ namespace AbetApi.EFModels
                 context.Entry(tempMajor).Collection(major => major.MajorOutcomes).Load();
 
                 //Loop through the major outcomes and look for the specified major outcome.
-                foreach (var majorOutcome in tempMajor.MajorOutcomes)
+                foreach (MajorOutcome majorOutcome in tempMajor.MajorOutcomes)
                 {
                     if (majorOutcome.Name == outcomeName)
                     {
@@ -246,8 +246,8 @@ namespace AbetApi.EFModels
             }
 
             //Format term and major name to follow a standard.
-            term = term[0].ToString().ToUpper() + term.Substring(1);
-            majorName = majorName[0].ToString().ToUpper() + majorName.Substring(1);
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            majorName = majorName[0].ToString().ToUpper() + majorName[1..].ToLower();
 
             await using (var context = new ABETDBContext())
             {
@@ -267,7 +267,7 @@ namespace AbetApi.EFModels
                 context.Entry(semester).Collection(semester => semester.Majors).Load();
 
                 //Loop through the majors and look for the specified major.
-                foreach (var major in semester.Majors)
+                foreach (Major major in semester.Majors)
                 {
                     if (major.Name == majorName)
                     {
@@ -314,7 +314,6 @@ namespace AbetApi.EFModels
             }
         } // EditMajorOutcome
 
-        // WILL GIVE A 200 SUCCESS IN MAJORNAME AND OUTCOMENAME, EVEN IF IT DOESN"T EXIST OR THE VALUE IS NULL
         public static async Task DeleteMajorOutcome(string term, int year, string majorName, string outcomeName)
         {
             //Check if the term is null or empty.
@@ -342,8 +341,8 @@ namespace AbetApi.EFModels
             }
 
             //Format term and major name to follow a standard.
-            term = term[0].ToString().ToUpper() + term.Substring(1);
-            majorName = majorName[0].ToString().ToUpper() + majorName.Substring(1);
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            majorName = majorName[0].ToString().ToUpper() + majorName[1..].ToLower();
 
             await using (var context = new ABETDBContext())
             {
@@ -363,7 +362,7 @@ namespace AbetApi.EFModels
                 context.Entry(semester).Collection(semester => semester.Majors).Load();
 
                 //Loop through the majors and look for the specified major.
-                foreach (var major in semester.Majors)
+                foreach (Major major in semester.Majors)
                 {
                     if (major.Name == majorName)
                     {

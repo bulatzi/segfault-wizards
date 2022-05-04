@@ -42,7 +42,7 @@ namespace AbetApi.EFModels
 
                 //Finds the course
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     //if it finds the course, Find all existing course outcomes
                     if (course.Department == classDepartment && course.CourseNumber == courseNumber)
@@ -93,7 +93,7 @@ namespace AbetApi.EFModels
 
                 //Finds the course
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     //if it finds the course, create/update the course outcomes
                     if (course.Department == classDepartment && course.CourseNumber == courseNumber)
@@ -136,7 +136,7 @@ namespace AbetApi.EFModels
 
                 //Finds the course
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     //if it finds the course, Find all existing course outcomes
                     if (course.Department == classDepartment && course.CourseNumber == courseNumber)
@@ -168,13 +168,13 @@ namespace AbetApi.EFModels
 
                 //Finds the course
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == classDepartment && course.CourseNumber == courseNumber)
                     {
                         //Finds the course outcome
                         context.Entry(course).Collection(course => course.CourseOutcomes).Load();
-                        foreach (var courseOutcome in course.CourseOutcomes)
+                        foreach (CourseOutcome courseOutcome in course.CourseOutcomes)
                         {
                             if (courseOutcome.Name == name)
                             {
@@ -209,13 +209,13 @@ namespace AbetApi.EFModels
                 MajorOutcome tempMajorOutcome = null;
                 context.Entry(semester).Collection(semester => semester.Majors).Load();
                 //Finds the relevant major
-                foreach (var major in semester.Majors)
+                foreach (Major major in semester.Majors)
                 {
                     if (major.Name == majorName)
                     {
                         context.Entry(major).Collection(major => major.MajorOutcomes).Load();
                         //Finds the specific major outcome
-                        foreach (var majorOutcome in major.MajorOutcomes)
+                        foreach (MajorOutcome majorOutcome in major.MajorOutcomes)
                         {
                             if (majorOutcomeName == majorOutcome.Name)
                                 tempMajorOutcome = majorOutcome;
@@ -225,13 +225,13 @@ namespace AbetApi.EFModels
 
                 //Finds the course
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == classDepartment && course.CourseNumber == courseNumber)
                     {
                         //Finds the course outcome
                         context.Entry(course).Collection(course => course.CourseOutcomes).Load();
-                        foreach (var courseOutcome in course.CourseOutcomes)
+                        foreach (CourseOutcome courseOutcome in course.CourseOutcomes)
                         {
                             if (courseOutcome.Name == courseOutcomeName)
                             {
@@ -264,13 +264,13 @@ namespace AbetApi.EFModels
                 MajorOutcome tempMajorOutcome = null;
                 context.Entry(semester).Collection(semester => semester.Majors).Load();
                 //Finds the relevant major
-                foreach (var major in semester.Majors)
+                foreach (Major major in semester.Majors)
                 {
                     if (major.Name == majorName)
                     {
                         context.Entry(major).Collection(major => major.MajorOutcomes).Load();
                         //Finds the specific major outcome
-                        foreach (var majorOutcome in major.MajorOutcomes)
+                        foreach (MajorOutcome majorOutcome in major.MajorOutcomes)
                         {
                             if (majorOutcomeName == majorOutcome.Name)
                                 tempMajorOutcome = majorOutcome;
@@ -280,20 +280,20 @@ namespace AbetApi.EFModels
 
                 //Finds the course
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == classDepartment && course.CourseNumber == courseNumber)
                     {
                         //Finds the course outcome
                         context.Entry(course).Collection(course => course.CourseOutcomes).Load();
-                        foreach (var courseOutcome in course.CourseOutcomes)
+                        foreach (CourseOutcome courseOutcome in course.CourseOutcomes)
                         {
                             if (courseOutcome.Name == courseOutcomeName)
                             {
                                 //Finds the outcome attached to the course, and removes it from the list
                                 //It does not delete the outcome, or the courseoutcome. It just kills the join table entry.
                                 context.Entry(courseOutcome).Collection(courseOutcome => courseOutcome.MajorOutcomes).Load();
-                                foreach (var outcome in courseOutcome.MajorOutcomes)
+                                foreach (MajorOutcome outcome in courseOutcome.MajorOutcomes)
                                 {
                                     if (outcome.Name == majorOutcomeName)
                                     {

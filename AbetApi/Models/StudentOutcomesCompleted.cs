@@ -15,7 +15,7 @@ namespace AbetApi.Models
             List<AbetApi.EFModels.Major> majorList = AbetApi.EFModels.Major.GetMajors(term, year).Result;
 
             //Scan through the list of course outcomes for the provided course. For each outcome, create a dictionary entry for it.
-            foreach(var courseOutcome in courseOutcomeList)
+            foreach(EFModels.CourseOutcome courseOutcome in courseOutcomeList)
             {
                 Dictionary<string, string> tempDictionary = new Dictionary<string, string>();
                 tempDictionary.Add("outcomeName", courseOutcome.Name);
@@ -61,10 +61,10 @@ namespace AbetApi.Models
             //For each major, find the corresponding major entry in this provided studentOutcomesCompleted object
             foreach(var major in majorList)
             {
-                foreach (var dictionary in studentOutcomesCompletedDictionaries)
+                foreach (Dictionary<string, string> dictionary in studentOutcomesCompletedDictionaries)
                 {
                     //For each separate item in the dictionary, validate it is a major name
-                    foreach (var item in dictionary)
+                    foreach (KeyValuePair<string, string> item in dictionary)
                     {
                         //If it is a major name, turn that major in to a stand alone student outcomes completed object
                         if (item.Key == major.Name)

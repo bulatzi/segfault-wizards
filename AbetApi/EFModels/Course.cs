@@ -71,7 +71,7 @@ namespace AbetApi.EFModels
             //FIXME - Add a null check
             Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
             context.Entry(semester).Collection(semester => semester.Courses).Load();
-            foreach (var course in semester.Courses)
+            foreach (Course course in semester.Courses)
             {
                 if (course.Department == department && course.CourseNumber == courseNumber)
                 {
@@ -87,7 +87,7 @@ namespace AbetApi.EFModels
             {
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == department && course.CourseNumber == courseNumber)
                     {
@@ -115,7 +115,7 @@ namespace AbetApi.EFModels
             {
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == department && course.CourseNumber == courseNumber)
                     {
@@ -138,12 +138,12 @@ namespace AbetApi.EFModels
                 //FIXME - Add null checking
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == department && course.CourseNumber == courseNumber)
                     {
                         context.Entry(course).Collection(course => course.Sections).Load();
-                        foreach (var section in course.Sections)
+                        foreach (Section section in course.Sections)
                         {
                             list.Add(section);
                         }
@@ -164,12 +164,12 @@ namespace AbetApi.EFModels
                 //FIXME - Add null checking
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == department && course.CourseNumber == courseNumber)
                     {
                         context.Entry(course).Collection(course => course.CourseOutcomes).Load();
-                        foreach (var courseOutcomes in course.CourseOutcomes)
+                        foreach (CourseOutcome courseOutcomes in course.CourseOutcomes)
                         {
                             list.Add(courseOutcomes.Major);
                         }
@@ -189,7 +189,7 @@ namespace AbetApi.EFModels
             {
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == department)
                     {
@@ -208,7 +208,7 @@ namespace AbetApi.EFModels
             {
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == department)
                     {
@@ -227,7 +227,7 @@ namespace AbetApi.EFModels
             {
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var courses in semester.Courses)
+                foreach (Course courses in semester.Courses)
                 {
                     list.Add(courses.Department);
 
@@ -245,15 +245,15 @@ namespace AbetApi.EFModels
             {
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+                foreach (Course course in semester.Courses)
                 {
                     if (course.CourseNumber == courseNumber && course.Department == department)
                     {
                         context.Entry(course).Collection(course => course.CourseOutcomes).Load();
-                        foreach (var courseoutcome in course.CourseOutcomes)
+                        foreach (CourseOutcome courseoutcome in course.CourseOutcomes)
                         {
                             context.Entry(courseoutcome).Collection(courseoutcome => courseoutcome.MajorOutcomes).Load();
-                            foreach (var majoroutcome in courseoutcome.MajorOutcomes)
+                            foreach (MajorOutcome majoroutcome in courseoutcome.MajorOutcomes)
                             {
                                 majorOutcomes.Add(majoroutcome);
                             }

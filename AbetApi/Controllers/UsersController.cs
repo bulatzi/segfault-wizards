@@ -15,7 +15,7 @@ namespace AbetApi.Controllers
     public class UsersController : ControllerBase
     {
         // This function takes an EUID and returns the user information for that EUID.
-        //[Authorize(Roles = RoleTypes.Admin)]
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpGet("GetUser")]
         public async Task<IActionResult> GetUser(string EUID)
         {
@@ -30,7 +30,7 @@ namespace AbetApi.Controllers
         } // GetUser
 
         // This function creates a user with the provided information.
-        //[Authorize(Roles = RoleTypes.Admin)]
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("AddUser")]
         public async Task<IActionResult> AddUser(User user)
         {
@@ -47,7 +47,7 @@ namespace AbetApi.Controllers
 
         // This function deletes a user's profile from the databse.
         // This does not delete a user from the UNT system. It only removes their roles to this system.
-        //[Authorize(Roles = RoleTypes.Admin)]
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpDelete("DeleteUser")]
         public async Task<IActionResult> DeleteUser(string EUID)
         {
@@ -65,7 +65,7 @@ namespace AbetApi.Controllers
         // This function updates a user with the provided information
         // User is selected via the given EUID
         // information provided in NewUserInfo is used to replace the existing information
-        //[Authorize(Roles = RoleTypes.Admin)]
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpPatch("EditUser")]
         public async Task<IActionResult> EditUser(string EUID, User NewUserInfo)
         {
@@ -81,14 +81,14 @@ namespace AbetApi.Controllers
         } // EditUser
 
         // This function creates a user with the provided information.
-        //[Authorize(Roles = RoleTypes.Admin)]
+        [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("AddUserWithRoles")]
         public async Task<IActionResult> AddUserWithRoles(AbetApi.Models.UserWithRoles userWithRoles)
         {
             try
             {
                 await EFModels.User.AddUser(userWithRoles.user);
-                foreach (var role in userWithRoles.roles)
+                foreach (string role in userWithRoles.roles)
                 {
                     try
                     {
