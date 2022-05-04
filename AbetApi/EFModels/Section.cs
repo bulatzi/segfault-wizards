@@ -48,7 +48,7 @@ namespace AbetApi.EFModels
                 throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
             }
 
-            //Check if the department is null or empty.+
+            //Check if the department is null or empty.
             if (department == null || department == "")
             {
                 throw new ArgumentException("The department cannot be empty.");
@@ -80,9 +80,9 @@ namespace AbetApi.EFModels
                 throw new ArgumentException("The number of students cannot be zero.");
             }
 
-            //Format term and instructor EUID to follow a standard.
+            //Format term, department, and instructor EUID to follow a standard.
             term = term[0].ToString().ToUpper() + term[1..].ToLower();
-            //When formatting EUID I want to ask Ludi if an EUID will always be three letters followed by 4 numbers, or if we don't care to check formatting that specifically.
+            department = department.ToUpper();
             section.InstructorEUID = section.InstructorEUID.ToLower();
 
             await using (var context = new ABETDBContext())
@@ -167,8 +167,9 @@ namespace AbetApi.EFModels
                 throw new ArgumentException("The section number cannot be empty.");
             }
 
-            //Format term to follow a standard.
+            //Format term and department to follow a standard.
             term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            department = department.ToUpper();
 
             await using (var context = new ABETDBContext())
             {
@@ -236,6 +237,12 @@ namespace AbetApi.EFModels
                 throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
             }
 
+            //Check if the department is null or empty.
+            if (department == null || department == "")
+            {
+                throw new ArgumentException("The department cannot be empty.");
+            }
+
             //Check if the course number is null or empty.
             if (courseNumber == null || courseNumber == "")
             {
@@ -268,9 +275,9 @@ namespace AbetApi.EFModels
                 throw new ArgumentException("The new number of students cannot be zero.");
             }
 
-            //Format term and new instructor EUID to follow a standard.
+            //Format term, department, and new instructor EUID to follow a standard.
             term = term[0].ToString().ToUpper() + term[1..].ToLower();
-            //When formatting EUID I want to ask Ludi if an EUID will always be three letters followed by 4 numbers, or if we don't care to check formatting that specifically.
+            department = department.ToUpper();
             NewValue.InstructorEUID = NewValue.InstructorEUID.ToLower();
 
             await using (var context = new ABETDBContext())
@@ -352,6 +359,12 @@ namespace AbetApi.EFModels
                 throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
             }
 
+            //Check if the department is null or empty.
+            if (department == null || department == "")
+            {
+                throw new ArgumentException("The department cannot be empty.");
+            }
+
             //Check if the course number is null or empty.
             if (courseNumber == null || courseNumber == "")
             {
@@ -364,8 +377,9 @@ namespace AbetApi.EFModels
                 throw new ArgumentException("The section number cannot be empty.");
             }
 
-            //Format term to follow a standard.
+            //Format term and department to follow a standard.
             term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            department = department.ToUpper();
 
             await using (var context = new ABETDBContext())
             {
@@ -441,8 +455,15 @@ namespace AbetApi.EFModels
                 throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
             }
 
-            //Format term to follow a standard.
+            //Check if the coordinator EUID is null or empty.
+            if (coordinatorEUID == null || coordinatorEUID == "")
+            {
+                throw new ArgumentException("The coordinator EUID cannot be empty.");
+            }
+
+            //Format term and coordinator EUID to follow a standard.
             term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            coordinatorEUID = coordinatorEUID.ToLower();
 
             await using (var context = new ABETDBContext())
             {
@@ -502,8 +523,15 @@ namespace AbetApi.EFModels
                 throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
             }
 
+            //Check if the instructor EUID is null or empty.
+            if (instructorEUID == null || instructorEUID == "")
+            {
+                throw new ArgumentException("The instructor EUID cannot be empty.");
+            }
+
             //Format term to follow a standard.
             term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            instructorEUID = instructorEUID.ToLower();
 
             await using (var context = new ABETDBContext())
             {
