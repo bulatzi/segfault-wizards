@@ -66,7 +66,7 @@ namespace AbetApi.EFModels
 
             //Format term and major name to follow a standard.
             term = term[0].ToString().ToUpper() + term[1..].ToLower();
-            majorName = majorName[0].ToString().ToUpper() + majorName[1..].ToLower();
+            majorName = majorName.ToUpper();
 
             await using (var context = new ABETDBContext())
             {
@@ -149,7 +149,7 @@ namespace AbetApi.EFModels
 
             //Format term and major name to follow a standard.
             term = term[0].ToString().ToUpper() + term[1..].ToLower();
-            majorName = majorName[0].ToString().ToUpper() + majorName[1..].ToLower();
+            majorName = majorName.ToUpper();
 
             await using (var context = new ABETDBContext())
             {
@@ -247,7 +247,7 @@ namespace AbetApi.EFModels
 
             //Format term and major name to follow a standard.
             term = term[0].ToString().ToUpper() + term[1..].ToLower();
-            majorName = majorName[0].ToString().ToUpper() + majorName[1..].ToLower();
+            majorName = majorName.ToUpper();
 
             await using (var context = new ABETDBContext())
             {
@@ -342,7 +342,7 @@ namespace AbetApi.EFModels
 
             //Format term and major name to follow a standard.
             term = term[0].ToString().ToUpper() + term[1..].ToLower();
-            majorName = majorName[0].ToString().ToUpper() + majorName[1..].ToLower();
+            majorName = majorName.ToUpper();
 
             await using (var context = new ABETDBContext())
             {
