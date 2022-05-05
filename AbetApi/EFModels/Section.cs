@@ -5,19 +5,63 @@ using System.Threading.Tasks;
 using System.Text.Json.Serialization;
 using AbetApi.Data;
 
+//! The EFModels namespace
+/*! 
+ * This namespace falls under the AbetAPI namespace, and is for EFModels.
+ * The EFModels are generally called from the Controllers namespace, to 
+ * provide the controllers functionality, ultimately giving endpoints/functionality
+ * for the UI elements
+ */
 namespace AbetApi.EFModels
 {
+    //! The Section Class
+    /*! 
+     * This class gets called by the SectionController class
+     * and provides functions to get and return data
+     */
     public class Section
     {
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        //! The SectionID setter/getter function
+        /*!
+         *  This is a single line dual function for setting and getting
+         */
         public int SectionId { get; set; }
+        //! The InstructorEUID setter/getter function
+        /*!
+         *  This is a single line dual function for setting and getting
+         */
         public string InstructorEUID { get; set; }
+        //! The IsSectionCompleted setter/getter function
+        /*!
+         *  This is a single line dual function for setting and getting
+         */
         public bool IsSectionCompleted { get; set; }
+        //! The SectionNumber setter/getter function
+        /*!
+         *  This is a single line dual function for setting and getting
+         */
         public string SectionNumber { get; set; } //Ex: 1
+        //! The NumberOfStudents setter/getter function
+        /*!
+         *  This is a single line dual function for setting and getting
+         */
         public int NumberOfStudents { get; set; }
         [JsonIgnore]
+        //! The ICollection setter/getter function
+        /*!
+         *  This is a single line dual function for setting and getting
+         */
         public ICollection<Grade> Grades { get; set; }
 
+        //! Parameterized Constructor
+        /*!
+         * This is a constructor to create a Section object from the given parameters
+         * \param instructorEUID A string of the desired instructors enterprise user identification (EUID).
+         * \param sectionCompleted A bool of whether a section is completed or not
+         * \param sectionNumber A string of the section number of the section of the course for the survey
+         * \param numberOfStudents An int of the number of students for a section
+         */
         public Section(string instructorEUID, bool sectionCompleted, string sectionNumber, int numberOfStudents)
         {
             this.InstructorEUID = instructorEUID;
@@ -26,11 +70,27 @@ namespace AbetApi.EFModels
             this.NumberOfStudents = numberOfStudents;
         }
 
+        //! Constructor
+        /*! 
+         * This Constructor builds a Section object
+         */
         public Section()
         {
             this.Grades = new List<Grade>();
         }
 
+        //! The AddSection function
+        /*! 
+         * This function adds a section/section info to a specific course/courseID. Specific courses (and all their sections)
+         * all share the same CourseID, though the InstructorEUID can be different. A SectionID number is auto-generated
+         * in sequential order in relation to the other sections.
+         * It is an async Task to pass exceptions to the Controllers.SectionController in Controllers
+         * \param term The Term (Fall/Spring) for the given semester
+         * \param year The year for the given semester
+         * \param department Major department, such as CSCE or MEEN
+         * \param courseNumber Course identifier, such as 3600 for Systems Programming
+         * \param section Section object that contains: InstructorEUID string, sectionCompleted boolean, sectionNumber int, numberOfStudents int
+         */
         public static async Task AddSection(string term, int year, string department, string courseNumber, Section section)
         {
             // Sets the section id to be 0, so entity framework will give it a primary key
@@ -135,6 +195,17 @@ namespace AbetApi.EFModels
             }
         } // AddSection
 
+        //! The GetSection function
+        /*! 
+         * This function gets a JSON object that contains sectonID int, instructorEUD string, isSectioncompleted boolean,
+         * sectionNumber string,numberOfStudents int.
+         * It is an async Task<Section> to pass exceptions and a Section object to the Controllers.SectionController in Controllers
+         * \param term The Term (Fall/Spring) for the given semester
+         * \param year The year for the given semester
+         * \param department Major department, such as CSCE or MEEN
+         * \param courseNumber Course identifier, such as 3600 for Systems Programming
+         * \param sectionNumber Course section, such as 001 or 002
+         */
         public static async Task<Section> GetSection(string term, int year, string department, string courseNumber, string sectionNumber)
         {
             //Check if the term is null or empty
@@ -223,6 +294,17 @@ namespace AbetApi.EFModels
             }
         } // GetSection
 
+        //! The EditSection function
+        /*! 
+         * This function edits the prexisting sections.
+         * It is an async Task to pass exceptions to the Controllers.SectionController in Controllers
+         * \param term The Term (Fall/Spring) for the given semester
+         * \param year The year for the given semester
+         * \param department Major department, such as CSCE or MEEN
+         * \param courseNumber Course identifier, such as 3600 for Systems Programming
+         * \param sectionNumber Course section, such as 001 or 002
+         * \param NewValue NewValue object that contains sectionID int, instructorEUID string, isSectionCompleted boolean, sectionNumber string, numberOfStudents int
+         */
         public static async Task EditSection(string term, int year, string department, string courseNumber, string sectionNumber, Section NewValue)
         {
             //Check if the term is null or empty
@@ -345,6 +427,16 @@ namespace AbetApi.EFModels
             }
         } // EditSection
 
+        //! The DeleteSection function
+        /*! 
+         * This function deletes the prexisting sections.
+         * It is an async Task to pass exceptions to the Controllers.SectionController in Controllers
+         * \param term The Term (Fall/Spring) for the given semester
+         * \param year The year for the given semester
+         * \param department Major department, such as CSCE or MEEN
+         * \param courseNumber Course identifier, such as 3600 for Systems Programming
+         * \param sectionNumber Course section, such as 001 or 002
+         */
         public static async Task DeleteSection(string term, int year, string department, string courseNumber, string sectionNumber)
         {
             //Check if the term is null or empty
@@ -434,7 +526,14 @@ namespace AbetApi.EFModels
             }
         } // DeleteSection
 
-        //GetCoursesByCoordinator
+        //! The GetSectionsByCoordinator function
+        /*! 
+         * This function gets sections under an Coordinator.
+         * It is an async Task<List<AbetApi.Models.SectionInfo>> to pass exceptions and a list of SectionInfo objects to the Controllers.SectionController in Controllers
+         * \param term The Term (Fall/Spring) for the given semester
+         * \param year The year for the given semester
+         * \param instructorEUID EUID of the instructor
+         */
         public static async Task<List<AbetApi.Models.SectionInfo>> GetSectionsByCoordinator(string term, int year, string coordinatorEUID)
         {
             //Find the semester
@@ -500,9 +599,16 @@ namespace AbetApi.EFModels
 
                 return sectionInfoList;
             }
-        }
+        } // GetSectionsByCoordinator
 
-        //This function will return a list of sections taught by that instructor
+        //! The GetSectionsByInstructor function
+        /*! 
+         * This function gets sections taught under an Instructor.
+         * It is an async Task<List<AbetApi.Models.SectionInfo>> to pass exceptions and a list of SectionInfo objects to the Controllers.SectionController in Controllers
+         * \param term The Term (Fall/Spring) for the given semester
+         * \param year The year for the given semester
+         * \param instructorEUID EUID of the instructor
+         */
         public static async Task<List<AbetApi.Models.SectionInfo>> GetSectionsByInstructor(string term, int year, string instructorEUID)
         {
             //Find the semester
@@ -569,5 +675,5 @@ namespace AbetApi.EFModels
                 return sectionInfoList;
             }
         }
-    } // Section
+    } // GetSectionsByInstructor
 }

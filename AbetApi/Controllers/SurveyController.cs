@@ -42,7 +42,7 @@ namespace AbetApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        }
+        } // GetQuestionSet
 
         [HttpGet("GetQuestions")]
         //! The GetQuestions function
@@ -65,7 +65,7 @@ namespace AbetApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        }
+        } // GetQuestions
 
         [HttpPost("SaveQuestions")]
         //! The SaveQuestions function
@@ -88,7 +88,7 @@ namespace AbetApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        }
+        } // SaveQuestions
 
         [HttpPost("PostSurvey")]
         //! The PostSurvey function
@@ -115,8 +115,8 @@ namespace AbetApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        }
-    }
+        } // PostSurvey
+    } // SurveyController
 }
 
 /*
