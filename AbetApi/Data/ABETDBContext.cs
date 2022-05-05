@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using MySql.EntityFrameworkCore.Extensions;
 using Microsoft.EntityFrameworkCore;
 using AbetApi.EFModels;
+using Microsoft.Extensions.Configuration;
+using System.Configuration;
 
 namespace AbetApi.Data
 {
@@ -28,7 +30,8 @@ namespace AbetApi.Data
         // This function is used to select a connection string for your database.
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL("server=localhost;database=abetrepo;user=root;password=1234");
+            string connectionString = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("ConnectionString").Value;
+            optionsBuilder.UseMySQL(connectionString);
         }
 
         // This function is used to add database constraints to data in tables
@@ -53,7 +56,6 @@ namespace AbetApi.Data
         {
             //Intentionally left blank
         }
-
     }
 
     // This is a custom function that adds a clear function to all DbSet classes
