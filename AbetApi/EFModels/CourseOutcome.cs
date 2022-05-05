@@ -217,7 +217,6 @@ namespace AbetApi.EFModels
 
             await using (var context = new ABETDBContext())
             {
-                CourseOutcome duplicateCourseOutcome = null;
                 Course tempCourse = null;
 
                 //Try to find the specified semester in the database.
@@ -263,15 +262,8 @@ namespace AbetApi.EFModels
                 {
                     if (tempCourseOutcome.Name == courseOutcome.Name)
                     {
-                        duplicateCourseOutcome = tempCourseOutcome;
-                        break;
+                        throw new ArgumentException("That course outcome already exists in the database.");
                     }
-                }
-
-                //Check if the entry is a duplicate.
-                if(duplicateCourseOutcome != null)
-                {
-                    throw new ArgumentException("That course outcome already exists in the database.");
                 }
 
                 //If the entry doesn't exist, add it.
