@@ -1,0 +1,407 @@
+\hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo}{}\doxysection{Abet\+Api.\+Data.\+IMock\+Abet\+Repo Interface Reference}
+\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo}\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+
+
+Inheritance diagram for Abet\+Api.\+Data.\+IMock\+Abet\+Repo\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=226pt]{interface_abet_api_1_1_data_1_1_i_mock_abet_repo__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+List$<$ Section $>$ \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a9b2bbebcc242675e595d1dd500e28472}{Get\+Sections\+By\+User\+Id}} (string user\+Id, int year, string semester)
+\item 
+List$<$ Section $>$ \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_aaa3a028ba4a40aee25884272deb39caa}{Get\+Sections\+By\+Year\+And\+Semester}} (int year, string semester)
+\item 
+Form \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_af4ea079253400b7ed2d1d80bcf43960c}{Get\+Form\+By\+Section}} (Section section)
+\item 
+List$<$ Form $>$ \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_afc82948cdf01e67d075fb525f042e1f8}{Get\+Forms\+By\+Course}} (Course course)
+\item 
+List$<$ Form $>$ \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_ab9075e2ccd09e3e2d6ace643e05f25fd}{Get\+Forms\+By\+Year\+And\+Semester}} (int year, string semester)
+\item 
+Form \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_abed09ab9bb406c269228ecb449c36f6b}{Get\+Blank\+Form}} ()
+\item 
+bool \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_af4898ed4a0da6b32574bad63bbdc5435}{Post\+Form}} (Form form)
+\item 
+bool \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a4fc097791c73c3f54cd272e0d0219662}{Post\+Comment}} (Course course)
+\item 
+bool \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a8776dfdef54de1e3348d11b198b26a75}{Add\+Section}} (Section section)
+\item 
+string \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a82f3b65731064a19e3d1046d06bfbe75}{Get\+Role}} (string user\+Id)
+\item 
+Faculty\+List \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a9fbcc2cf61a55abd626f607a90e50428}{Get\+Faculty\+List}} ()
+\item 
+bool \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a24179f93ed8b5ca8ec3668f09973872e}{Add\+Faculty\+Member}} (Info info, string faculty\+Type)
+\item 
+Program\+\_\+\+Outcomes \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_acfa34299c0f35959e3ca253066f4c879}{Get\+Course\+Objectives}} (string program)
+\item 
+List$<$ Course $>$ \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a5a59f01af37c660761a28939d11fb903}{Get\+Courses\+By\+Department}} (string department)
+\item 
+bool \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a1de5ccc354e670702986391949b82c87}{Add\+Course}} (Course course)
+\item 
+bool \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a61938b266478d87434bb4c9769f67005}{Remove\+Course}} (Course course)
+\item 
+bool \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_aec03aa0bec01e69f24ec6d4c3ef26aca}{Post\+Course\+Outcomes}} (List$<$ Course\+Outcome $>$ course\+Outcomes\+List)
+\item 
+List$<$ Course\+Mapping $>$ \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a05f25af3afad07c20c94bb0f36c6fef7}{Get\+Course\+Outcomes\+By\+Course}} (Course course)
+\item 
+List$<$ Course $>$ \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a4096263c1c8ead50367144e7907cf120}{Get\+Courses\+By\+Year}} (int year, string semester)
+\item 
+bool \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_abe6081d2f7307145355778486db11703}{Post\+Section}} (Section section)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a1de5ccc354e670702986391949b82c87}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a1de5ccc354e670702986391949b82c87}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!AddCourse@{AddCourse}}
+\index{AddCourse@{AddCourse}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{AddCourse()}{AddCourse()}}
+{\footnotesize\ttfamily bool Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Add\+Course (\begin{DoxyParamCaption}\item[{Course}]{course }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_aae39d1177ab8d550614d1def87df9578}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a1de5ccc354e670702986391949b82c87_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a24179f93ed8b5ca8ec3668f09973872e}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a24179f93ed8b5ca8ec3668f09973872e}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!AddFacultyMember@{AddFacultyMember}}
+\index{AddFacultyMember@{AddFacultyMember}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{AddFacultyMember()}{AddFacultyMember()}}
+{\footnotesize\ttfamily bool Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Add\+Faculty\+Member (\begin{DoxyParamCaption}\item[{Info}]{info,  }\item[{string}]{faculty\+Type }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_af27f027f69280134aec2133f05bb9d0b}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a24179f93ed8b5ca8ec3668f09973872e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a8776dfdef54de1e3348d11b198b26a75}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a8776dfdef54de1e3348d11b198b26a75}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!AddSection@{AddSection}}
+\index{AddSection@{AddSection}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{AddSection()}{AddSection()}}
+{\footnotesize\ttfamily bool Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Add\+Section (\begin{DoxyParamCaption}\item[{Section}]{section }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_a0b7b09d2d8d13b05f3da9dcee2a838f9}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a8776dfdef54de1e3348d11b198b26a75_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_abed09ab9bb406c269228ecb449c36f6b}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_abed09ab9bb406c269228ecb449c36f6b}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!GetBlankForm@{GetBlankForm}}
+\index{GetBlankForm@{GetBlankForm}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{GetBlankForm()}{GetBlankForm()}}
+{\footnotesize\ttfamily Form Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Get\+Blank\+Form (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_ad56db2fce0c4f7421afb7f0188d28adb}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_abed09ab9bb406c269228ecb449c36f6b_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_acfa34299c0f35959e3ca253066f4c879}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_acfa34299c0f35959e3ca253066f4c879}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!GetCourseObjectives@{GetCourseObjectives}}
+\index{GetCourseObjectives@{GetCourseObjectives}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{GetCourseObjectives()}{GetCourseObjectives()}}
+{\footnotesize\ttfamily Program\+\_\+\+Outcomes Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Get\+Course\+Objectives (\begin{DoxyParamCaption}\item[{string}]{program }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_a6103aad8841aa757e6269c1d5fc07cef}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_acfa34299c0f35959e3ca253066f4c879_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a05f25af3afad07c20c94bb0f36c6fef7}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a05f25af3afad07c20c94bb0f36c6fef7}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!GetCourseOutcomesByCourse@{GetCourseOutcomesByCourse}}
+\index{GetCourseOutcomesByCourse@{GetCourseOutcomesByCourse}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{GetCourseOutcomesByCourse()}{GetCourseOutcomesByCourse()}}
+{\footnotesize\ttfamily List$<$ Course\+Mapping $>$ Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Get\+Course\+Outcomes\+By\+Course (\begin{DoxyParamCaption}\item[{Course}]{course }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_a201d5382b19f9c7f917cde486ed99622}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a05f25af3afad07c20c94bb0f36c6fef7_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a5a59f01af37c660761a28939d11fb903}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a5a59f01af37c660761a28939d11fb903}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!GetCoursesByDepartment@{GetCoursesByDepartment}}
+\index{GetCoursesByDepartment@{GetCoursesByDepartment}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{GetCoursesByDepartment()}{GetCoursesByDepartment()}}
+{\footnotesize\ttfamily List$<$ Course $>$ Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Get\+Courses\+By\+Department (\begin{DoxyParamCaption}\item[{string}]{department }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_ada36fe4c9aa5d04a8463c86b75c18bbf}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a5a59f01af37c660761a28939d11fb903_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a4096263c1c8ead50367144e7907cf120}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a4096263c1c8ead50367144e7907cf120}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!GetCoursesByYear@{GetCoursesByYear}}
+\index{GetCoursesByYear@{GetCoursesByYear}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{GetCoursesByYear()}{GetCoursesByYear()}}
+{\footnotesize\ttfamily List$<$ Course $>$ Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Get\+Courses\+By\+Year (\begin{DoxyParamCaption}\item[{int}]{year,  }\item[{string}]{semester }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_a849fb185195b7798efff1491ac72b486}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a4096263c1c8ead50367144e7907cf120_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a9fbcc2cf61a55abd626f607a90e50428}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a9fbcc2cf61a55abd626f607a90e50428}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!GetFacultyList@{GetFacultyList}}
+\index{GetFacultyList@{GetFacultyList}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{GetFacultyList()}{GetFacultyList()}}
+{\footnotesize\ttfamily Faculty\+List Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Get\+Faculty\+List (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_a374fd2557d6ef9db6cf87c2bac68efb3}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a9fbcc2cf61a55abd626f607a90e50428_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_af4ea079253400b7ed2d1d80bcf43960c}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_af4ea079253400b7ed2d1d80bcf43960c}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!GetFormBySection@{GetFormBySection}}
+\index{GetFormBySection@{GetFormBySection}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{GetFormBySection()}{GetFormBySection()}}
+{\footnotesize\ttfamily Form Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Get\+Form\+By\+Section (\begin{DoxyParamCaption}\item[{Section}]{section }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_a66147e97e90c11ab474f016da9bbef16}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_af4ea079253400b7ed2d1d80bcf43960c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_afc82948cdf01e67d075fb525f042e1f8}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_afc82948cdf01e67d075fb525f042e1f8}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!GetFormsByCourse@{GetFormsByCourse}}
+\index{GetFormsByCourse@{GetFormsByCourse}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{GetFormsByCourse()}{GetFormsByCourse()}}
+{\footnotesize\ttfamily List$<$ Form $>$ Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Get\+Forms\+By\+Course (\begin{DoxyParamCaption}\item[{Course}]{course }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_a9f340d7a3bdd5455e88eef44867454a9}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_afc82948cdf01e67d075fb525f042e1f8_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_ab9075e2ccd09e3e2d6ace643e05f25fd}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_ab9075e2ccd09e3e2d6ace643e05f25fd}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!GetFormsByYearAndSemester@{GetFormsByYearAndSemester}}
+\index{GetFormsByYearAndSemester@{GetFormsByYearAndSemester}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{GetFormsByYearAndSemester()}{GetFormsByYearAndSemester()}}
+{\footnotesize\ttfamily List$<$ Form $>$ Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Get\+Forms\+By\+Year\+And\+Semester (\begin{DoxyParamCaption}\item[{int}]{year,  }\item[{string}]{semester }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_ab258d1df19401df66124aa9494be1a67}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_ab9075e2ccd09e3e2d6ace643e05f25fd_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a82f3b65731064a19e3d1046d06bfbe75}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a82f3b65731064a19e3d1046d06bfbe75}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!GetRole@{GetRole}}
+\index{GetRole@{GetRole}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{GetRole()}{GetRole()}}
+{\footnotesize\ttfamily string Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Get\+Role (\begin{DoxyParamCaption}\item[{string}]{user\+Id }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_a166b5c9a8ebaaa85393adc22a9ad6f43}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a9b2bbebcc242675e595d1dd500e28472}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a9b2bbebcc242675e595d1dd500e28472}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!GetSectionsByUserId@{GetSectionsByUserId}}
+\index{GetSectionsByUserId@{GetSectionsByUserId}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{GetSectionsByUserId()}{GetSectionsByUserId()}}
+{\footnotesize\ttfamily List$<$ Section $>$ Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Get\+Sections\+By\+User\+Id (\begin{DoxyParamCaption}\item[{string}]{user\+Id,  }\item[{int}]{year,  }\item[{string}]{semester }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_ab45eeab5d361cee0ae5f6e651270bdfd}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a9b2bbebcc242675e595d1dd500e28472_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_aaa3a028ba4a40aee25884272deb39caa}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_aaa3a028ba4a40aee25884272deb39caa}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!GetSectionsByYearAndSemester@{GetSectionsByYearAndSemester}}
+\index{GetSectionsByYearAndSemester@{GetSectionsByYearAndSemester}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{GetSectionsByYearAndSemester()}{GetSectionsByYearAndSemester()}}
+{\footnotesize\ttfamily List$<$ Section $>$ Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Get\+Sections\+By\+Year\+And\+Semester (\begin{DoxyParamCaption}\item[{int}]{year,  }\item[{string}]{semester }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_a7ff77440f2f54cc8fb63203e3f562f2b}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_aaa3a028ba4a40aee25884272deb39caa_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a4fc097791c73c3f54cd272e0d0219662}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a4fc097791c73c3f54cd272e0d0219662}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!PostComment@{PostComment}}
+\index{PostComment@{PostComment}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{PostComment()}{PostComment()}}
+{\footnotesize\ttfamily bool Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Post\+Comment (\begin{DoxyParamCaption}\item[{Course}]{course }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_ad25aff9b5286a4f037601cb8c66d876d}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a4fc097791c73c3f54cd272e0d0219662_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_aec03aa0bec01e69f24ec6d4c3ef26aca}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_aec03aa0bec01e69f24ec6d4c3ef26aca}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!PostCourseOutcomes@{PostCourseOutcomes}}
+\index{PostCourseOutcomes@{PostCourseOutcomes}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{PostCourseOutcomes()}{PostCourseOutcomes()}}
+{\footnotesize\ttfamily bool Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Post\+Course\+Outcomes (\begin{DoxyParamCaption}\item[{List$<$ Course\+Outcome $>$}]{course\+Outcomes\+List }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_a8b8873cb6c5e4e275c74ed7f177aaa6c}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_aec03aa0bec01e69f24ec6d4c3ef26aca_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_af4898ed4a0da6b32574bad63bbdc5435}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_af4898ed4a0da6b32574bad63bbdc5435}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!PostForm@{PostForm}}
+\index{PostForm@{PostForm}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{PostForm()}{PostForm()}}
+{\footnotesize\ttfamily bool Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Post\+Form (\begin{DoxyParamCaption}\item[{Form}]{form }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_a62d45627c3580c8bad16cbd92f0dbf3d}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_af4898ed4a0da6b32574bad63bbdc5435_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_abe6081d2f7307145355778486db11703}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_abe6081d2f7307145355778486db11703}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!PostSection@{PostSection}}
+\index{PostSection@{PostSection}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{PostSection()}{PostSection()}}
+{\footnotesize\ttfamily bool Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Post\+Section (\begin{DoxyParamCaption}\item[{Section}]{section }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_a69d213118496df4673fdb2807ea93f56}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_abe6081d2f7307145355778486db11703_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a61938b266478d87434bb4c9769f67005}\label{interface_abet_api_1_1_data_1_1_i_mock_abet_repo_a61938b266478d87434bb4c9769f67005}} 
+\index{AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}!RemoveCourse@{RemoveCourse}}
+\index{RemoveCourse@{RemoveCourse}!AbetApi.Data.IMockAbetRepo@{AbetApi.Data.IMockAbetRepo}}
+\doxysubsubsection{\texorpdfstring{RemoveCourse()}{RemoveCourse()}}
+{\footnotesize\ttfamily bool Abet\+Api.\+Data.\+IMock\+Abet\+Repo.\+Remove\+Course (\begin{DoxyParamCaption}\item[{Course}]{course }\end{DoxyParamCaption})}
+
+
+
+Implemented in \mbox{\hyperlink{class_abet_api_1_1_data_1_1_mock_abet_repo_a366ea697b54ce77c7fb74c6971916e0c}{Abet\+Api.\+Data.\+Mock\+Abet\+Repo}}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Chet\+L/\+Documents/\+Git\+Hub\+Desktop/segfault-\/wizards/\+Abet\+Api/\+Data/\mbox{\hyperlink{_i_mock_abet_repo_8cs}{IMock\+Abet\+Repo.\+cs}}\end{DoxyCompactItemize}

@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "Capstone", "index.html", [
+  [ "ABET Project", "index.html", [
     [ "ABET_Course_Assessment_Tool", "md__c___users__chet_l__documents__git_hub_desktop_segfault_wizards__abet_api__r_e_a_d_m_e.html", null ],
     [ "Packages", "namespaces.html", [
       [ "Packages", "namespaces.html", "namespaces_dup" ]
@@ -49,11 +49,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_8_n_e_t_core_app_00_version_0av5_80_8_assembly_attributes_8cs.html",
-"class_abet_api_1_1_controllers_1_1_semester_controller.html#a409263fcdab48f4e55c3287920da5407",
-"class_abet_api_1_1_e_f_models_1_1_course.html#aafc9664c0877176ae0ee1b2014922d5f",
-"class_abet_api_1_1_e_f_models_1_1_user.html#a5c6cf2b8a15db5592eb9e4640f82f002",
-"class_abet_api_1_1_models_1_1_abet_models_1_1_student___outcome.html#ad6e9f468b207e600bc0b63fdc8da6a00",
-"interface_abet_api_1_1_data_1_1_i_upload_manager.html#a0b724d7b9f0cf28f52a9d040fdd135f6"
+"class_abet_api_1_1_controllers_1_1_section_controller.html#a9e8deffb6dda60497fc8fa2dd3d213c1",
+"class_abet_api_1_1_e_f_models_1_1_course.html#a9113985551b6144e11c8ac90c4be561a",
+"class_abet_api_1_1_e_f_models_1_1_survey.html#aaa2a0790ec9c4df0c13349cd36b543dd",
+"class_abet_api_1_1_models_1_1_abet_models_1_1_sql_return.html#a826ad8f5c79bb7b2eef1c36da4c304a0",
+"interface_abet_api_1_1_data_1_1_i_mock_abet_repo.html#acfa34299c0f35959e3ca253066f4c879"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

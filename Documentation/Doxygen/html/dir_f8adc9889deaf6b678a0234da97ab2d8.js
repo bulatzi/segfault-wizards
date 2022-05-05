@@ -15,6 +15,9 @@ var dir_f8adc9889deaf6b678a0234da97ab2d8 =
     [ "CustomController.cs", "_custom_controller_8cs.html", [
       [ "AbetApi.Controllers.CustomController", "class_abet_api_1_1_controllers_1_1_custom_controller.html", "class_abet_api_1_1_controllers_1_1_custom_controller" ]
     ] ],
+    [ "GradeController.cs", "_grade_controller_8cs.html", [
+      [ "AbetApi.Controllers.GradeController", "class_abet_api_1_1_controllers_1_1_grade_controller.html", "class_abet_api_1_1_controllers_1_1_grade_controller" ]
+    ] ],
     [ "MajorController.cs", "_major_controller_8cs.html", [
       [ "AbetApi.Controllers.MajorController", "class_abet_api_1_1_controllers_1_1_major_controller.html", "class_abet_api_1_1_controllers_1_1_major_controller" ]
     ] ],

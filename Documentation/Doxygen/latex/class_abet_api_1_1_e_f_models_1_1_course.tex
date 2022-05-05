@@ -1,0 +1,273 @@
+\hypertarget{class_abet_api_1_1_e_f_models_1_1_course}{}\doxysection{Abet\+Api.\+EFModels.\+Course Class Reference}
+\label{class_abet_api_1_1_e_f_models_1_1_course}\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_a0ef52284594bbb5706874009d14cef13}{Course}} (string coordinator, string course\+Number, string display\+Name, string coordinator\+Comment, bool is\+Course\+Completed, string department)
+\item 
+\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_ae6e44562220024c6954b295dd4c4a1d5}{Course}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static async Task \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_a9cb01cd091afc4c6dffefee30059d38f}{Add\+Course}} (string term, int year, \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course}{Course}} course)
+\item 
+static async Task$<$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course}{Course}} $>$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_afc1db27f50dfed8b29f6213ef8235cc9}{Get\+Course}} (string term, int year, string department, string course\+Number)
+\item 
+static async Task \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_ab7cc933df80bd9d327b5280b1c067b90}{Edit\+Course}} (string term, int year, string department, string course\+Number, \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course}{Course}} New\+Value)
+\item 
+static async Task \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_a4569ef471553f10ff48cda8b37595d71}{Delete\+Course}} (string term, int year, string department, string course\+Number)
+\item 
+static async Task$<$ List$<$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_section}{Section}} $>$ $>$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_a11caca3189b6c33a83a893b1f7eafbc8}{Get\+Sections\+By\+Course}} (string term, int year, string department, string course\+Number)
+\item 
+static async Task$<$ List$<$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course}{Course}} $>$ $>$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_aafc9664c0877176ae0ee1b2014922d5f}{Get\+Courses\+By\+Department}} (string term, int year, string department)
+\item 
+static async Task$<$ List$<$ string $>$ $>$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_aa07cbfba39ca6908232a042afb99365d}{Get\+Course\+Names\+By\+Department}} (string term, int year, string department)
+\item 
+static async Task$<$ List$<$ string $>$ $>$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_a245dab9d58e84e72676adcd2e572fbae}{Get\+Departments}} (string term, int year)
+\item 
+static async Task$<$ List$<$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_major_outcome}{Major\+Outcome}} $>$ $>$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_a24eab6fe926bbf308615749dbd8695c9}{Get\+Major\+Outcomes\+Satisfied}} (string term, int year, string department, string course\+Number)
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_ae916a0e66ba13f806381c2a1be8e36c1}{Course\+Id}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_a3e01575ab0f03e2e85d21208e8d0340f}{Coordinator\+EUID}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_ab657d873bba8d65e8b487a8905a4d003}{Course\+Number}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_abfcaa0d23a70ab5faecf7e35d323c318}{Display\+Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_a1e38a65f894248205181b8b8bfdcb5a1}{Coordinator\+Comment}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+bool \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_a64c92eaf257f7d537baf02d7c07012a3}{Is\+Course\+Completed}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_a9113985551b6144e11c8ac90c4be561a}{Department}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+List$<$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_outcome}{Course\+Outcome}} $>$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_a14a9fe582d35b21db83024e720ce4859}{Course\+Outcomes}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+ICollection$<$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_major}{Major}} $>$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_a508bc8fa7b7b363d4dbdf672bef079b1}{Required\+By\+Majors}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+ICollection$<$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_section}{Section}} $>$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_ab3ebdd4088edc32515c78055e43a973f}{Sections}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+ICollection$<$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_semester}{Semester}} $>$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_a80273a576d2dacc10a0c7535fad3b537}{Semesters}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_a0ef52284594bbb5706874009d14cef13}\label{class_abet_api_1_1_e_f_models_1_1_course_a0ef52284594bbb5706874009d14cef13}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!Course@{Course}}
+\index{Course@{Course}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{Course()}{Course()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Abet\+Api.\+EFModels.\+Course.\+Course (\begin{DoxyParamCaption}\item[{string}]{coordinator,  }\item[{string}]{course\+Number,  }\item[{string}]{display\+Name,  }\item[{string}]{coordinator\+Comment,  }\item[{bool}]{is\+Course\+Completed,  }\item[{string}]{department }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_ae6e44562220024c6954b295dd4c4a1d5}\label{class_abet_api_1_1_e_f_models_1_1_course_ae6e44562220024c6954b295dd4c4a1d5}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!Course@{Course}}
+\index{Course@{Course}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{Course()}{Course()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Abet\+Api.\+EFModels.\+Course.\+Course (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_a9cb01cd091afc4c6dffefee30059d38f}\label{class_abet_api_1_1_e_f_models_1_1_course_a9cb01cd091afc4c6dffefee30059d38f}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!AddCourse@{AddCourse}}
+\index{AddCourse@{AddCourse}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{AddCourse()}{AddCourse()}}
+{\footnotesize\ttfamily static async Task Abet\+Api.\+EFModels.\+Course.\+Add\+Course (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course}{Course}}}]{course }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_e_f_models_1_1_course_a9cb01cd091afc4c6dffefee30059d38f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_a4569ef471553f10ff48cda8b37595d71}\label{class_abet_api_1_1_e_f_models_1_1_course_a4569ef471553f10ff48cda8b37595d71}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!DeleteCourse@{DeleteCourse}}
+\index{DeleteCourse@{DeleteCourse}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{DeleteCourse()}{DeleteCourse()}}
+{\footnotesize\ttfamily static async Task Abet\+Api.\+EFModels.\+Course.\+Delete\+Course (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{department,  }\item[{string}]{course\+Number }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_e_f_models_1_1_course_a4569ef471553f10ff48cda8b37595d71_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_ab7cc933df80bd9d327b5280b1c067b90}\label{class_abet_api_1_1_e_f_models_1_1_course_ab7cc933df80bd9d327b5280b1c067b90}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!EditCourse@{EditCourse}}
+\index{EditCourse@{EditCourse}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{EditCourse()}{EditCourse()}}
+{\footnotesize\ttfamily static async Task Abet\+Api.\+EFModels.\+Course.\+Edit\+Course (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{department,  }\item[{string}]{course\+Number,  }\item[{\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course}{Course}}}]{New\+Value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_e_f_models_1_1_course_ab7cc933df80bd9d327b5280b1c067b90_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_afc1db27f50dfed8b29f6213ef8235cc9}\label{class_abet_api_1_1_e_f_models_1_1_course_afc1db27f50dfed8b29f6213ef8235cc9}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!GetCourse@{GetCourse}}
+\index{GetCourse@{GetCourse}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{GetCourse()}{GetCourse()}}
+{\footnotesize\ttfamily static async Task$<$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course}{Course}} $>$ Abet\+Api.\+EFModels.\+Course.\+Get\+Course (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{department,  }\item[{string}]{course\+Number }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_e_f_models_1_1_course_afc1db27f50dfed8b29f6213ef8235cc9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_aa07cbfba39ca6908232a042afb99365d}\label{class_abet_api_1_1_e_f_models_1_1_course_aa07cbfba39ca6908232a042afb99365d}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!GetCourseNamesByDepartment@{GetCourseNamesByDepartment}}
+\index{GetCourseNamesByDepartment@{GetCourseNamesByDepartment}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{GetCourseNamesByDepartment()}{GetCourseNamesByDepartment()}}
+{\footnotesize\ttfamily static async Task$<$ List$<$ string $>$ $>$ Abet\+Api.\+EFModels.\+Course.\+Get\+Course\+Names\+By\+Department (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{department }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_e_f_models_1_1_course_aa07cbfba39ca6908232a042afb99365d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_aafc9664c0877176ae0ee1b2014922d5f}\label{class_abet_api_1_1_e_f_models_1_1_course_aafc9664c0877176ae0ee1b2014922d5f}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!GetCoursesByDepartment@{GetCoursesByDepartment}}
+\index{GetCoursesByDepartment@{GetCoursesByDepartment}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{GetCoursesByDepartment()}{GetCoursesByDepartment()}}
+{\footnotesize\ttfamily static async Task$<$ List$<$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course}{Course}} $>$ $>$ Abet\+Api.\+EFModels.\+Course.\+Get\+Courses\+By\+Department (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{department }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_e_f_models_1_1_course_aafc9664c0877176ae0ee1b2014922d5f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_a245dab9d58e84e72676adcd2e572fbae}\label{class_abet_api_1_1_e_f_models_1_1_course_a245dab9d58e84e72676adcd2e572fbae}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!GetDepartments@{GetDepartments}}
+\index{GetDepartments@{GetDepartments}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{GetDepartments()}{GetDepartments()}}
+{\footnotesize\ttfamily static async Task$<$ List$<$ string $>$ $>$ Abet\+Api.\+EFModels.\+Course.\+Get\+Departments (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_e_f_models_1_1_course_a245dab9d58e84e72676adcd2e572fbae_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_a24eab6fe926bbf308615749dbd8695c9}\label{class_abet_api_1_1_e_f_models_1_1_course_a24eab6fe926bbf308615749dbd8695c9}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!GetMajorOutcomesSatisfied@{GetMajorOutcomesSatisfied}}
+\index{GetMajorOutcomesSatisfied@{GetMajorOutcomesSatisfied}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{GetMajorOutcomesSatisfied()}{GetMajorOutcomesSatisfied()}}
+{\footnotesize\ttfamily static async Task$<$ List$<$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_major_outcome}{Major\+Outcome}} $>$ $>$ Abet\+Api.\+EFModels.\+Course.\+Get\+Major\+Outcomes\+Satisfied (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{department,  }\item[{string}]{course\+Number }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_e_f_models_1_1_course_a24eab6fe926bbf308615749dbd8695c9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_a11caca3189b6c33a83a893b1f7eafbc8}\label{class_abet_api_1_1_e_f_models_1_1_course_a11caca3189b6c33a83a893b1f7eafbc8}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!GetSectionsByCourse@{GetSectionsByCourse}}
+\index{GetSectionsByCourse@{GetSectionsByCourse}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{GetSectionsByCourse()}{GetSectionsByCourse()}}
+{\footnotesize\ttfamily static async Task$<$ List$<$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_section}{Section}} $>$ $>$ Abet\+Api.\+EFModels.\+Course.\+Get\+Sections\+By\+Course (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{department,  }\item[{string}]{course\+Number }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_e_f_models_1_1_course_a11caca3189b6c33a83a893b1f7eafbc8_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_a1e38a65f894248205181b8b8bfdcb5a1}\label{class_abet_api_1_1_e_f_models_1_1_course_a1e38a65f894248205181b8b8bfdcb5a1}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!CoordinatorComment@{CoordinatorComment}}
+\index{CoordinatorComment@{CoordinatorComment}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{CoordinatorComment}{CoordinatorComment}}
+{\footnotesize\ttfamily string Abet\+Api.\+EFModels.\+Course.\+Coordinator\+Comment\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_a3e01575ab0f03e2e85d21208e8d0340f}\label{class_abet_api_1_1_e_f_models_1_1_course_a3e01575ab0f03e2e85d21208e8d0340f}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!CoordinatorEUID@{CoordinatorEUID}}
+\index{CoordinatorEUID@{CoordinatorEUID}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{CoordinatorEUID}{CoordinatorEUID}}
+{\footnotesize\ttfamily string Abet\+Api.\+EFModels.\+Course.\+Coordinator\+EUID\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_ae916a0e66ba13f806381c2a1be8e36c1}\label{class_abet_api_1_1_e_f_models_1_1_course_ae916a0e66ba13f806381c2a1be8e36c1}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!CourseId@{CourseId}}
+\index{CourseId@{CourseId}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{CourseId}{CourseId}}
+{\footnotesize\ttfamily int Abet\+Api.\+EFModels.\+Course.\+Course\+Id\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_ab657d873bba8d65e8b487a8905a4d003}\label{class_abet_api_1_1_e_f_models_1_1_course_ab657d873bba8d65e8b487a8905a4d003}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!CourseNumber@{CourseNumber}}
+\index{CourseNumber@{CourseNumber}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{CourseNumber}{CourseNumber}}
+{\footnotesize\ttfamily string Abet\+Api.\+EFModels.\+Course.\+Course\+Number\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_a14a9fe582d35b21db83024e720ce4859}\label{class_abet_api_1_1_e_f_models_1_1_course_a14a9fe582d35b21db83024e720ce4859}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!CourseOutcomes@{CourseOutcomes}}
+\index{CourseOutcomes@{CourseOutcomes}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{CourseOutcomes}{CourseOutcomes}}
+{\footnotesize\ttfamily List$<$\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course_outcome}{Course\+Outcome}}$>$ Abet\+Api.\+EFModels.\+Course.\+Course\+Outcomes\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_a9113985551b6144e11c8ac90c4be561a}\label{class_abet_api_1_1_e_f_models_1_1_course_a9113985551b6144e11c8ac90c4be561a}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!Department@{Department}}
+\index{Department@{Department}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{Department}{Department}}
+{\footnotesize\ttfamily string Abet\+Api.\+EFModels.\+Course.\+Department\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_abfcaa0d23a70ab5faecf7e35d323c318}\label{class_abet_api_1_1_e_f_models_1_1_course_abfcaa0d23a70ab5faecf7e35d323c318}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!DisplayName@{DisplayName}}
+\index{DisplayName@{DisplayName}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{DisplayName}{DisplayName}}
+{\footnotesize\ttfamily string Abet\+Api.\+EFModels.\+Course.\+Display\+Name\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_a64c92eaf257f7d537baf02d7c07012a3}\label{class_abet_api_1_1_e_f_models_1_1_course_a64c92eaf257f7d537baf02d7c07012a3}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!IsCourseCompleted@{IsCourseCompleted}}
+\index{IsCourseCompleted@{IsCourseCompleted}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{IsCourseCompleted}{IsCourseCompleted}}
+{\footnotesize\ttfamily bool Abet\+Api.\+EFModels.\+Course.\+Is\+Course\+Completed\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_a508bc8fa7b7b363d4dbdf672bef079b1}\label{class_abet_api_1_1_e_f_models_1_1_course_a508bc8fa7b7b363d4dbdf672bef079b1}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!RequiredByMajors@{RequiredByMajors}}
+\index{RequiredByMajors@{RequiredByMajors}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{RequiredByMajors}{RequiredByMajors}}
+{\footnotesize\ttfamily ICollection$<$\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_major}{Major}}$>$ Abet\+Api.\+EFModels.\+Course.\+Required\+By\+Majors\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_ab3ebdd4088edc32515c78055e43a973f}\label{class_abet_api_1_1_e_f_models_1_1_course_ab3ebdd4088edc32515c78055e43a973f}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!Sections@{Sections}}
+\index{Sections@{Sections}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{Sections}{Sections}}
+{\footnotesize\ttfamily ICollection$<$\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_section}{Section}}$>$ Abet\+Api.\+EFModels.\+Course.\+Sections\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_course_a80273a576d2dacc10a0c7535fad3b537}\label{class_abet_api_1_1_e_f_models_1_1_course_a80273a576d2dacc10a0c7535fad3b537}} 
+\index{AbetApi.EFModels.Course@{AbetApi.EFModels.Course}!Semesters@{Semesters}}
+\index{Semesters@{Semesters}!AbetApi.EFModels.Course@{AbetApi.EFModels.Course}}
+\doxysubsubsection{\texorpdfstring{Semesters}{Semesters}}
+{\footnotesize\ttfamily ICollection$<$\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_semester}{Semester}}$>$ Abet\+Api.\+EFModels.\+Course.\+Semesters\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Chet\+L/\+Documents/\+Git\+Hub\+Desktop/segfault-\/wizards/\+Abet\+Api/\+EFModels/\mbox{\hyperlink{_course_8cs}{Course.\+cs}}\end{DoxyCompactItemize}

@@ -1,0 +1,177 @@
+\hypertarget{class_abet_api_1_1_controllers_1_1_course_controller}{}\doxysection{Abet\+Api.\+Controllers.\+Course\+Controller Class Reference}
+\label{class_abet_api_1_1_controllers_1_1_course_controller}\index{AbetApi.Controllers.CourseController@{AbetApi.Controllers.CourseController}}
+
+
+Inheritance diagram for Abet\+Api.\+Controllers.\+Course\+Controller\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{class_abet_api_1_1_controllers_1_1_course_controller__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Abet\+Api.\+Controllers.\+Course\+Controller\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{class_abet_api_1_1_controllers_1_1_course_controller__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_course_controller_a26836a47c83b0dc8d6df55a05230e38c}{Add\+Course}} (string term, int year, \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course}{Course}} course)
+\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_course_controller_a1a41f239725d9a7ca87b72053a5c31b4}{Get\+Course}} (string term, int year, string department, string course\+Number)
+\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_course_controller_ab867a3d856124ef7f55fe8e6ff5ae5c1}{Edit\+Course}} (string term, int year, string department, string course\+Number, \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course}{Course}} New\+Value)
+\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_course_controller_a9f7311a5aa1c362179d4f9e2b766c545}{Delete\+Course}} (string term, int year, string department, string course\+Number)
+\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_course_controller_a92ee54c6c2c1375ca4ada4b229252a34}{Get\+Sections\+By\+Course}} (string term, int year, string department, string course\+Number)
+\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_course_controller_acb578ca31862f0b3e617f401465134ff}{Get\+Courses\+By\+Department}} (string term, int year, string department)
+\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_course_controller_ab6a20d2c41c435e4227564ca78c099bc}{Get\+Course\+Names\+By\+Department}} (string term, int year, string department)
+\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_course_controller_a416db04e8407f16385c09924be4656ba}{Get\+Departments}} (string term, int year)
+\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_course_controller_a28cf214a5f2cd5bad432f6f14e84441a}{Get\+Major\+Outcomes\+Satisfied}} (string term, int year, string department, string course\+Number)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_course_controller_a26836a47c83b0dc8d6df55a05230e38c}\label{class_abet_api_1_1_controllers_1_1_course_controller_a26836a47c83b0dc8d6df55a05230e38c}} 
+\index{AbetApi.Controllers.CourseController@{AbetApi.Controllers.CourseController}!AddCourse@{AddCourse}}
+\index{AddCourse@{AddCourse}!AbetApi.Controllers.CourseController@{AbetApi.Controllers.CourseController}}
+\doxysubsubsection{\texorpdfstring{AddCourse()}{AddCourse()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Course\+Controller.\+Add\+Course (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course}{Course}}}]{course }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_course_controller_a26836a47c83b0dc8d6df55a05230e38c_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_course_controller_a9f7311a5aa1c362179d4f9e2b766c545}\label{class_abet_api_1_1_controllers_1_1_course_controller_a9f7311a5aa1c362179d4f9e2b766c545}} 
+\index{AbetApi.Controllers.CourseController@{AbetApi.Controllers.CourseController}!DeleteCourse@{DeleteCourse}}
+\index{DeleteCourse@{DeleteCourse}!AbetApi.Controllers.CourseController@{AbetApi.Controllers.CourseController}}
+\doxysubsubsection{\texorpdfstring{DeleteCourse()}{DeleteCourse()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Course\+Controller.\+Delete\+Course (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{department,  }\item[{string}]{course\+Number }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_course_controller_a9f7311a5aa1c362179d4f9e2b766c545_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_course_controller_ab867a3d856124ef7f55fe8e6ff5ae5c1}\label{class_abet_api_1_1_controllers_1_1_course_controller_ab867a3d856124ef7f55fe8e6ff5ae5c1}} 
+\index{AbetApi.Controllers.CourseController@{AbetApi.Controllers.CourseController}!EditCourse@{EditCourse}}
+\index{EditCourse@{EditCourse}!AbetApi.Controllers.CourseController@{AbetApi.Controllers.CourseController}}
+\doxysubsubsection{\texorpdfstring{EditCourse()}{EditCourse()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Course\+Controller.\+Edit\+Course (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{department,  }\item[{string}]{course\+Number,  }\item[{\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_course}{Course}}}]{New\+Value }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_course_controller_ab867a3d856124ef7f55fe8e6ff5ae5c1_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_course_controller_a1a41f239725d9a7ca87b72053a5c31b4}\label{class_abet_api_1_1_controllers_1_1_course_controller_a1a41f239725d9a7ca87b72053a5c31b4}} 
+\index{AbetApi.Controllers.CourseController@{AbetApi.Controllers.CourseController}!GetCourse@{GetCourse}}
+\index{GetCourse@{GetCourse}!AbetApi.Controllers.CourseController@{AbetApi.Controllers.CourseController}}
+\doxysubsubsection{\texorpdfstring{GetCourse()}{GetCourse()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Course\+Controller.\+Get\+Course (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{department,  }\item[{string}]{course\+Number }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_course_controller_a1a41f239725d9a7ca87b72053a5c31b4_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_course_controller_ab6a20d2c41c435e4227564ca78c099bc}\label{class_abet_api_1_1_controllers_1_1_course_controller_ab6a20d2c41c435e4227564ca78c099bc}} 
+\index{AbetApi.Controllers.CourseController@{AbetApi.Controllers.CourseController}!GetCourseNamesByDepartment@{GetCourseNamesByDepartment}}
+\index{GetCourseNamesByDepartment@{GetCourseNamesByDepartment}!AbetApi.Controllers.CourseController@{AbetApi.Controllers.CourseController}}
+\doxysubsubsection{\texorpdfstring{GetCourseNamesByDepartment()}{GetCourseNamesByDepartment()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Course\+Controller.\+Get\+Course\+Names\+By\+Department (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{department }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_course_controller_ab6a20d2c41c435e4227564ca78c099bc_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_course_controller_acb578ca31862f0b3e617f401465134ff}\label{class_abet_api_1_1_controllers_1_1_course_controller_acb578ca31862f0b3e617f401465134ff}} 
+\index{AbetApi.Controllers.CourseController@{AbetApi.Controllers.CourseController}!GetCoursesByDepartment@{GetCoursesByDepartment}}
+\index{GetCoursesByDepartment@{GetCoursesByDepartment}!AbetApi.Controllers.CourseController@{AbetApi.Controllers.CourseController}}
+\doxysubsubsection{\texorpdfstring{GetCoursesByDepartment()}{GetCoursesByDepartment()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Course\+Controller.\+Get\+Courses\+By\+Department (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{department }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_course_controller_acb578ca31862f0b3e617f401465134ff_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_course_controller_a416db04e8407f16385c09924be4656ba}\label{class_abet_api_1_1_controllers_1_1_course_controller_a416db04e8407f16385c09924be4656ba}} 
+\index{AbetApi.Controllers.CourseController@{AbetApi.Controllers.CourseController}!GetDepartments@{GetDepartments}}
+\index{GetDepartments@{GetDepartments}!AbetApi.Controllers.CourseController@{AbetApi.Controllers.CourseController}}
+\doxysubsubsection{\texorpdfstring{GetDepartments()}{GetDepartments()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Course\+Controller.\+Get\+Departments (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_course_controller_a416db04e8407f16385c09924be4656ba_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_course_controller_a28cf214a5f2cd5bad432f6f14e84441a}\label{class_abet_api_1_1_controllers_1_1_course_controller_a28cf214a5f2cd5bad432f6f14e84441a}} 
+\index{AbetApi.Controllers.CourseController@{AbetApi.Controllers.CourseController}!GetMajorOutcomesSatisfied@{GetMajorOutcomesSatisfied}}
+\index{GetMajorOutcomesSatisfied@{GetMajorOutcomesSatisfied}!AbetApi.Controllers.CourseController@{AbetApi.Controllers.CourseController}}
+\doxysubsubsection{\texorpdfstring{GetMajorOutcomesSatisfied()}{GetMajorOutcomesSatisfied()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Course\+Controller.\+Get\+Major\+Outcomes\+Satisfied (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{department,  }\item[{string}]{course\+Number }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_course_controller_a28cf214a5f2cd5bad432f6f14e84441a_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_course_controller_a92ee54c6c2c1375ca4ada4b229252a34}\label{class_abet_api_1_1_controllers_1_1_course_controller_a92ee54c6c2c1375ca4ada4b229252a34}} 
+\index{AbetApi.Controllers.CourseController@{AbetApi.Controllers.CourseController}!GetSectionsByCourse@{GetSectionsByCourse}}
+\index{GetSectionsByCourse@{GetSectionsByCourse}!AbetApi.Controllers.CourseController@{AbetApi.Controllers.CourseController}}
+\doxysubsubsection{\texorpdfstring{GetSectionsByCourse()}{GetSectionsByCourse()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Course\+Controller.\+Get\+Sections\+By\+Course (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{department,  }\item[{string}]{course\+Number }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_course_controller_a92ee54c6c2c1375ca4ada4b229252a34_cgraph}
+\end{center}
+\end{figure}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Chet\+L/\+Documents/\+Git\+Hub\+Desktop/segfault-\/wizards/\+Abet\+Api/\+Controllers/\mbox{\hyperlink{_course_controller_8cs}{Course\+Controller.\+cs}}\end{DoxyCompactItemize}

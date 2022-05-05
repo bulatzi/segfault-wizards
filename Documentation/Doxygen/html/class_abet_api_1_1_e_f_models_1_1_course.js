@@ -10,7 +10,6 @@ var class_abet_api_1_1_e_f_models_1_1_course =
     [ "GetCoursesByDepartment", "class_abet_api_1_1_e_f_models_1_1_course.html#aafc9664c0877176ae0ee1b2014922d5f", null ],
     [ "GetDepartments", "class_abet_api_1_1_e_f_models_1_1_course.html#a245dab9d58e84e72676adcd2e572fbae", null ],
     [ "GetMajorOutcomesSatisfied", "class_abet_api_1_1_e_f_models_1_1_course.html#a24eab6fe926bbf308615749dbd8695c9", null ],
-    [ "getMajorsThatRequireCourse", "class_abet_api_1_1_e_f_models_1_1_course.html#a63814659ab098510309472f4602360c9", null ],
     [ "GetSectionsByCourse", "class_abet_api_1_1_e_f_models_1_1_course.html#a11caca3189b6c33a83a893b1f7eafbc8", null ],
     [ "CoordinatorComment", "class_abet_api_1_1_e_f_models_1_1_course.html#a1e38a65f894248205181b8b8bfdcb5a1", null ],
     [ "CoordinatorEUID", "class_abet_api_1_1_e_f_models_1_1_course.html#a3e01575ab0f03e2e85d21208e8d0340f", null ],

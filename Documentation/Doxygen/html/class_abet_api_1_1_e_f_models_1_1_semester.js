@@ -5,7 +5,7 @@ var class_abet_api_1_1_e_f_models_1_1_semester =
     [ "AddSemester", "class_abet_api_1_1_e_f_models_1_1_semester.html#aea8c5c8a71ac7ae8a06dc8079398266a", null ],
     [ "DeleteSemester", "class_abet_api_1_1_e_f_models_1_1_semester.html#a11360d56e41df23c51a67a10bb125151", null ],
     [ "EditSemester", "class_abet_api_1_1_e_f_models_1_1_semester.html#adfc804af0dcd4941e359852422a7c7e7", null ],
-    [ "GetCourses", "class_abet_api_1_1_e_f_models_1_1_semester.html#adf6b6f72cf597ee0d8e99287b9b5a0a9", null ],
+    [ "GetCourses", "class_abet_api_1_1_e_f_models_1_1_semester.html#a91b9ebdebc5c466cae881880bf464f91", null ],
     [ "GetSemester", "class_abet_api_1_1_e_f_models_1_1_semester.html#af6938362102e73e8ef06900f7766afd7", null ],
     [ "GetSemesters", "class_abet_api_1_1_e_f_models_1_1_semester.html#a9e723e5ee53a71faed1449ab8b81df0f", null ],
     [ "Courses", "class_abet_api_1_1_e_f_models_1_1_semester.html#a7b6655fb10ec709e294723ca51829115", null ],

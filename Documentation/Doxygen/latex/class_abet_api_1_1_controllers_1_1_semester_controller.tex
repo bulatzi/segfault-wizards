@@ -1,0 +1,142 @@
+\hypertarget{class_abet_api_1_1_controllers_1_1_semester_controller}{}\doxysection{Abet\+Api.\+Controllers.\+Semester\+Controller Class Reference}
+\label{class_abet_api_1_1_controllers_1_1_semester_controller}\index{AbetApi.Controllers.SemesterController@{AbetApi.Controllers.SemesterController}}
+
+
+The \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_semester_controller}{Semester\+Controller}} Class.  
+
+
+
+
+Inheritance diagram for Abet\+Api.\+Controllers.\+Semester\+Controller\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=226pt]{class_abet_api_1_1_controllers_1_1_semester_controller__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Abet\+Api.\+Controllers.\+Semester\+Controller\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=226pt]{class_abet_api_1_1_controllers_1_1_semester_controller__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_semester_controller_a409263fcdab48f4e55c3287920da5407}{Get\+Semesters}} ()
+\begin{DoxyCompactList}\small\item\em The Get\+Semesters function. \end{DoxyCompactList}\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_semester_controller_aa262e107c84bb33f4d83e12b9fcb0da8}{Add\+Semester}} (\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_semester}{Semester}} semester)
+\begin{DoxyCompactList}\small\item\em The Add\+Semester function. \end{DoxyCompactList}\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_semester_controller_ab2f13f867d135584b9bdfbfd1ab290b5}{Edit\+Semester}} (string term, int year, \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_semester}{Semester}} semester)
+\begin{DoxyCompactList}\small\item\em The Edit\+Semesters function. \end{DoxyCompactList}\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_semester_controller_aae1ca690202be3b50ab3a487f9b2cc96}{Delete\+Semester}} (\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_semester}{Semester}} semester)
+\begin{DoxyCompactList}\small\item\em The Delete\+Semester function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_semester_controller}{Semester\+Controller}} Class. 
+
+This class controls most of the semester endpoints It inherits from Controller\+Base 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_semester_controller_aa262e107c84bb33f4d83e12b9fcb0da8}\label{class_abet_api_1_1_controllers_1_1_semester_controller_aa262e107c84bb33f4d83e12b9fcb0da8}} 
+\index{AbetApi.Controllers.SemesterController@{AbetApi.Controllers.SemesterController}!AddSemester@{AddSemester}}
+\index{AddSemester@{AddSemester}!AbetApi.Controllers.SemesterController@{AbetApi.Controllers.SemesterController}}
+\doxysubsubsection{\texorpdfstring{AddSemester()}{AddSemester()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Semester\+Controller.\+Add\+Semester (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_semester}{Semester}}}]{semester }\end{DoxyParamCaption})}
+
+
+
+The Add\+Semester function. 
+
+This function adds a semester with the provided information to the database. Utilizes \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_semester}{EFModels.\+Semester}} in \mbox{\hyperlink{namespace_abet_api_1_1_e_f_models}{EFModels}}. Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message 
+\begin{DoxyParams}{Parameters}
+{\em semester} & A semester object \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_semester_controller_aa262e107c84bb33f4d83e12b9fcb0da8_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_semester_controller_aae1ca690202be3b50ab3a487f9b2cc96}\label{class_abet_api_1_1_controllers_1_1_semester_controller_aae1ca690202be3b50ab3a487f9b2cc96}} 
+\index{AbetApi.Controllers.SemesterController@{AbetApi.Controllers.SemesterController}!DeleteSemester@{DeleteSemester}}
+\index{DeleteSemester@{DeleteSemester}!AbetApi.Controllers.SemesterController@{AbetApi.Controllers.SemesterController}}
+\doxysubsubsection{\texorpdfstring{DeleteSemester()}{DeleteSemester()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Semester\+Controller.\+Delete\+Semester (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_semester}{Semester}}}]{semester }\end{DoxyParamCaption})}
+
+
+
+The Delete\+Semester function. 
+
+This function deletes a semester from the database with the provided information. Utilizes \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_semester}{EFModels.\+Semester}} in \mbox{\hyperlink{namespace_abet_api_1_1_e_f_models}{EFModels}}. Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message 
+\begin{DoxyParams}{Parameters}
+{\em semester} & This is a semester object to hold various data, such as year, term, courses, majors, outcomes, etc. \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_semester_controller_aae1ca690202be3b50ab3a487f9b2cc96_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_semester_controller_ab2f13f867d135584b9bdfbfd1ab290b5}\label{class_abet_api_1_1_controllers_1_1_semester_controller_ab2f13f867d135584b9bdfbfd1ab290b5}} 
+\index{AbetApi.Controllers.SemesterController@{AbetApi.Controllers.SemesterController}!EditSemester@{EditSemester}}
+\index{EditSemester@{EditSemester}!AbetApi.Controllers.SemesterController@{AbetApi.Controllers.SemesterController}}
+\doxysubsubsection{\texorpdfstring{EditSemester()}{EditSemester()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Semester\+Controller.\+Edit\+Semester (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_semester}{Semester}}}]{semester }\end{DoxyParamCaption})}
+
+
+
+The Edit\+Semesters function. 
+
+This function edits an already existing semester with the newly provided information to the database. Utilizes \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_semester}{EFModels.\+Semester}} in \mbox{\hyperlink{namespace_abet_api_1_1_e_f_models}{EFModels}} Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message 
+\begin{DoxyParams}{Parameters}
+{\em term} & The term (Spring/\+Fall) of the respective semester \\
+\hline
+{\em year} & The year of the respective semester \\
+\hline
+{\em semester} & This is a semester object to hold various data, such as year, term, courses, majors, outcomes, etc. \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_semester_controller_ab2f13f867d135584b9bdfbfd1ab290b5_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_semester_controller_a409263fcdab48f4e55c3287920da5407}\label{class_abet_api_1_1_controllers_1_1_semester_controller_a409263fcdab48f4e55c3287920da5407}} 
+\index{AbetApi.Controllers.SemesterController@{AbetApi.Controllers.SemesterController}!GetSemesters@{GetSemesters}}
+\index{GetSemesters@{GetSemesters}!AbetApi.Controllers.SemesterController@{AbetApi.Controllers.SemesterController}}
+\doxysubsubsection{\texorpdfstring{GetSemesters()}{GetSemesters()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Semester\+Controller.\+Get\+Semesters (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+The Get\+Semesters function. 
+
+This function gets all semesters from the Semesters table in the database. Utilizes \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_semester}{EFModels.\+Semester}} in \mbox{\hyperlink{namespace_abet_api_1_1_e_f_models}{EFModels}}. Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_semester_controller_a409263fcdab48f4e55c3287920da5407_cgraph}
+\end{center}
+\end{figure}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Chet\+L/\+Documents/\+Git\+Hub\+Desktop/segfault-\/wizards/\+Abet\+Api/\+Controllers/\mbox{\hyperlink{_semester_controller_8cs}{Semester\+Controller.\+cs}}\end{DoxyCompactItemize}

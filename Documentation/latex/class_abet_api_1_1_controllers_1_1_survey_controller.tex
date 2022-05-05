@@ -1,0 +1,169 @@
+\hypertarget{class_abet_api_1_1_controllers_1_1_survey_controller}{}\doxysection{Abet\+Api.\+Controllers.\+Survey\+Controller Class Reference}
+\label{class_abet_api_1_1_controllers_1_1_survey_controller}\index{AbetApi.Controllers.SurveyController@{AbetApi.Controllers.SurveyController}}
+
+
+The \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_survey_controller}{Survey\+Controller}} Class.  
+
+
+
+
+Inheritance diagram for Abet\+Api.\+Controllers.\+Survey\+Controller\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=213pt]{class_abet_api_1_1_controllers_1_1_survey_controller__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Abet\+Api.\+Controllers.\+Survey\+Controller\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=213pt]{class_abet_api_1_1_controllers_1_1_survey_controller__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_survey_controller_ae658a3de20a10bfa9cb1f3ec36ffb480}{Get\+Question\+Set}} (string term, int year, string question\+Set\+Name)
+\begin{DoxyCompactList}\small\item\em The Get\+Question\+Set function. \end{DoxyCompactList}\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_survey_controller_a14ce1b4b96820c3ce95abaa191bd4ccb}{Get\+Questions}} (string term, int year)
+\begin{DoxyCompactList}\small\item\em The Get\+Questions function. \end{DoxyCompactList}\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_survey_controller_aa63da6c99671e20e44f4b3a1d196246e}{Save\+Questions}} (string term, int year, string question\+Set\+Name, List$<$ string $>$ questions)
+\begin{DoxyCompactList}\small\item\em The Save\+Questions function. \end{DoxyCompactList}\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_survey_controller_af22f2e628eb5d2e3db00ea1dcf1c3360}{Post\+Survey}} (string EUID, string term, int year, string department, string course\+Number, string section\+Number, List$<$ int $>$ answer\+List, string additional\+Comments)
+\begin{DoxyCompactList}\small\item\em The Post\+Survey function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_survey_controller}{Survey\+Controller}} Class. 
+
+This class controls most of the Survey and Question endpoints It inherits from Controller\+Base 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_survey_controller_a14ce1b4b96820c3ce95abaa191bd4ccb}\label{class_abet_api_1_1_controllers_1_1_survey_controller_a14ce1b4b96820c3ce95abaa191bd4ccb}} 
+\index{AbetApi.Controllers.SurveyController@{AbetApi.Controllers.SurveyController}!GetQuestions@{GetQuestions}}
+\index{GetQuestions@{GetQuestions}!AbetApi.Controllers.SurveyController@{AbetApi.Controllers.SurveyController}}
+\doxysubsubsection{\texorpdfstring{GetQuestions()}{GetQuestions()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Survey\+Controller.\+Get\+Questions (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year }\end{DoxyParamCaption})}
+
+
+
+The Get\+Questions function. 
+
+This function will return the standard set of questions. Utilizes \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_question}{EFModels.\+Question}} in \mbox{\hyperlink{namespace_abet_api_1_1_e_f_models}{EFModels}}. Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message. 
+\begin{DoxyParams}{Parameters}
+{\em term} & The Term (Fall/\+Spring) for the given semester \\
+\hline
+{\em year} & The year for the given semester \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_survey_controller_a14ce1b4b96820c3ce95abaa191bd4ccb_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_survey_controller_ae658a3de20a10bfa9cb1f3ec36ffb480}\label{class_abet_api_1_1_controllers_1_1_survey_controller_ae658a3de20a10bfa9cb1f3ec36ffb480}} 
+\index{AbetApi.Controllers.SurveyController@{AbetApi.Controllers.SurveyController}!GetQuestionSet@{GetQuestionSet}}
+\index{GetQuestionSet@{GetQuestionSet}!AbetApi.Controllers.SurveyController@{AbetApi.Controllers.SurveyController}}
+\doxysubsubsection{\texorpdfstring{GetQuestionSet()}{GetQuestionSet()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Survey\+Controller.\+Get\+Question\+Set (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{question\+Set\+Name }\end{DoxyParamCaption})}
+
+
+
+The Get\+Question\+Set function. 
+
+This function returns a specific set of specified questions. Utilizes \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_question}{EFModels.\+Question}} in \mbox{\hyperlink{namespace_abet_api_1_1_e_f_models}{EFModels}}. Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message. 
+\begin{DoxyParams}{Parameters}
+{\em term} & The Term (Fall/\+Spring) for the given semester \\
+\hline
+{\em year} & The year for the given semester \\
+\hline
+{\em question\+Set\+Name} & Name for the question set \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_survey_controller_ae658a3de20a10bfa9cb1f3ec36ffb480_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_survey_controller_af22f2e628eb5d2e3db00ea1dcf1c3360}\label{class_abet_api_1_1_controllers_1_1_survey_controller_af22f2e628eb5d2e3db00ea1dcf1c3360}} 
+\index{AbetApi.Controllers.SurveyController@{AbetApi.Controllers.SurveyController}!PostSurvey@{PostSurvey}}
+\index{PostSurvey@{PostSurvey}!AbetApi.Controllers.SurveyController@{AbetApi.Controllers.SurveyController}}
+\doxysubsubsection{\texorpdfstring{PostSurvey()}{PostSurvey()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Survey\+Controller.\+Post\+Survey (\begin{DoxyParamCaption}\item[{string}]{EUID,  }\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{department,  }\item[{string}]{course\+Number,  }\item[{string}]{section\+Number,  }\item[{List$<$ int $>$}]{answer\+List,  }\item[{string}]{additional\+Comments }\end{DoxyParamCaption})}
+
+
+
+The Post\+Survey function. 
+
+This function will post a new survey utilizing the listed parameters. Utilizes \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_survey}{EFModels.\+Survey}} in \mbox{\hyperlink{namespace_abet_api_1_1_e_f_models}{EFModels}}. Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message. 
+\begin{DoxyParams}{Parameters}
+{\em EUID} & A string of the desired users enterprise user identification (EUID). \\
+\hline
+{\em term} & The Term (Fall/\+Spring) for the given semester \\
+\hline
+{\em year} & The year for the given semester \\
+\hline
+{\em department} & The name of the department for the survey \\
+\hline
+{\em course\+Number} & The course number of the course for the survey \\
+\hline
+{\em section\+Number} & The section number of the section of the course for the survey \\
+\hline
+{\em answer\+List} & a list of ints with the answers given \\
+\hline
+{\em additional\+Comments} & Any additional comments associated with the survey \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_survey_controller_af22f2e628eb5d2e3db00ea1dcf1c3360_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_survey_controller_aa63da6c99671e20e44f4b3a1d196246e}\label{class_abet_api_1_1_controllers_1_1_survey_controller_aa63da6c99671e20e44f4b3a1d196246e}} 
+\index{AbetApi.Controllers.SurveyController@{AbetApi.Controllers.SurveyController}!SaveQuestions@{SaveQuestions}}
+\index{SaveQuestions@{SaveQuestions}!AbetApi.Controllers.SurveyController@{AbetApi.Controllers.SurveyController}}
+\doxysubsubsection{\texorpdfstring{SaveQuestions()}{SaveQuestions()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Survey\+Controller.\+Save\+Questions (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{question\+Set\+Name,  }\item[{List$<$ string $>$}]{questions }\end{DoxyParamCaption})}
+
+
+
+The Save\+Questions function. 
+
+This function will save a list of questions to a new question set with a specific set name. Utilizes \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_question}{EFModels.\+Question}} in \mbox{\hyperlink{namespace_abet_api_1_1_e_f_models}{EFModels}}. Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message. 
+\begin{DoxyParams}{Parameters}
+{\em term} & The Term (Fall/\+Spring) for the given semester \\
+\hline
+{\em year} & The year for the given semester \\
+\hline
+{\em question\+Set\+Name} & Name for the question set \\
+\hline
+{\em questions} & A list of questions in string form \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_survey_controller_aa63da6c99671e20e44f4b3a1d196246e_cgraph}
+\end{center}
+\end{figure}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Chet\+L/\+Documents/\+Git\+Hub\+Desktop/segfault-\/wizards/\+Abet\+Api/\+Controllers/\mbox{\hyperlink{_survey_controller_8cs}{Survey\+Controller.\+cs}}\end{DoxyCompactItemize}

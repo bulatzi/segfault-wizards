@@ -1,0 +1,129 @@
+\hypertarget{class_abet_api_1_1_controllers_1_1_major_controller}{}\doxysection{Abet\+Api.\+Controllers.\+Major\+Controller Class Reference}
+\label{class_abet_api_1_1_controllers_1_1_major_controller}\index{AbetApi.Controllers.MajorController@{AbetApi.Controllers.MajorController}}
+
+
+Inheritance diagram for Abet\+Api.\+Controllers.\+Major\+Controller\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=208pt]{class_abet_api_1_1_controllers_1_1_major_controller__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Abet\+Api.\+Controllers.\+Major\+Controller\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=208pt]{class_abet_api_1_1_controllers_1_1_major_controller__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_major_controller_a9b5d3ceefdf63b9e268c7395793cf9e1}{Add\+Major}} (string term, int year, string name)
+\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_major_controller_a17f61fc82f79d004709112354ed83d98}{Get\+Majors}} (string term, int year)
+\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_major_controller_a5619c2fdafb408ec9e4c0d36f606619d}{Edit\+Major}} (string term, int year, string name, string New\+Value)
+\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_major_controller_ac3e496acc7dacb8a0002bed0223fef28}{Delete\+Major}} (string term, int year, string name)
+\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_major_controller_aa13b2aaeb21391a5dffed92604b46acb}{Get\+Courses\+By\+Major}} (string term, int year, string major)
+\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_major_controller_a572b349c3ac762f116e0c3ae1f6eb70c}{Get\+Major\+Outcomes\+By\+Major}} (string term, int year, string major\+Name)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_major_controller_a9b5d3ceefdf63b9e268c7395793cf9e1}\label{class_abet_api_1_1_controllers_1_1_major_controller_a9b5d3ceefdf63b9e268c7395793cf9e1}} 
+\index{AbetApi.Controllers.MajorController@{AbetApi.Controllers.MajorController}!AddMajor@{AddMajor}}
+\index{AddMajor@{AddMajor}!AbetApi.Controllers.MajorController@{AbetApi.Controllers.MajorController}}
+\doxysubsubsection{\texorpdfstring{AddMajor()}{AddMajor()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Major\+Controller.\+Add\+Major (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{name }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_major_controller_a9b5d3ceefdf63b9e268c7395793cf9e1_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_major_controller_ac3e496acc7dacb8a0002bed0223fef28}\label{class_abet_api_1_1_controllers_1_1_major_controller_ac3e496acc7dacb8a0002bed0223fef28}} 
+\index{AbetApi.Controllers.MajorController@{AbetApi.Controllers.MajorController}!DeleteMajor@{DeleteMajor}}
+\index{DeleteMajor@{DeleteMajor}!AbetApi.Controllers.MajorController@{AbetApi.Controllers.MajorController}}
+\doxysubsubsection{\texorpdfstring{DeleteMajor()}{DeleteMajor()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Major\+Controller.\+Delete\+Major (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{name }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_major_controller_ac3e496acc7dacb8a0002bed0223fef28_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_major_controller_a5619c2fdafb408ec9e4c0d36f606619d}\label{class_abet_api_1_1_controllers_1_1_major_controller_a5619c2fdafb408ec9e4c0d36f606619d}} 
+\index{AbetApi.Controllers.MajorController@{AbetApi.Controllers.MajorController}!EditMajor@{EditMajor}}
+\index{EditMajor@{EditMajor}!AbetApi.Controllers.MajorController@{AbetApi.Controllers.MajorController}}
+\doxysubsubsection{\texorpdfstring{EditMajor()}{EditMajor()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Major\+Controller.\+Edit\+Major (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{name,  }\item[{string}]{New\+Value }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_major_controller_a5619c2fdafb408ec9e4c0d36f606619d_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_major_controller_aa13b2aaeb21391a5dffed92604b46acb}\label{class_abet_api_1_1_controllers_1_1_major_controller_aa13b2aaeb21391a5dffed92604b46acb}} 
+\index{AbetApi.Controllers.MajorController@{AbetApi.Controllers.MajorController}!GetCoursesByMajor@{GetCoursesByMajor}}
+\index{GetCoursesByMajor@{GetCoursesByMajor}!AbetApi.Controllers.MajorController@{AbetApi.Controllers.MajorController}}
+\doxysubsubsection{\texorpdfstring{GetCoursesByMajor()}{GetCoursesByMajor()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Major\+Controller.\+Get\+Courses\+By\+Major (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{major }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_major_controller_aa13b2aaeb21391a5dffed92604b46acb_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_major_controller_a572b349c3ac762f116e0c3ae1f6eb70c}\label{class_abet_api_1_1_controllers_1_1_major_controller_a572b349c3ac762f116e0c3ae1f6eb70c}} 
+\index{AbetApi.Controllers.MajorController@{AbetApi.Controllers.MajorController}!GetMajorOutcomesByMajor@{GetMajorOutcomesByMajor}}
+\index{GetMajorOutcomesByMajor@{GetMajorOutcomesByMajor}!AbetApi.Controllers.MajorController@{AbetApi.Controllers.MajorController}}
+\doxysubsubsection{\texorpdfstring{GetMajorOutcomesByMajor()}{GetMajorOutcomesByMajor()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Major\+Controller.\+Get\+Major\+Outcomes\+By\+Major (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year,  }\item[{string}]{major\+Name }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_major_controller_a572b349c3ac762f116e0c3ae1f6eb70c_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_major_controller_a17f61fc82f79d004709112354ed83d98}\label{class_abet_api_1_1_controllers_1_1_major_controller_a17f61fc82f79d004709112354ed83d98}} 
+\index{AbetApi.Controllers.MajorController@{AbetApi.Controllers.MajorController}!GetMajors@{GetMajors}}
+\index{GetMajors@{GetMajors}!AbetApi.Controllers.MajorController@{AbetApi.Controllers.MajorController}}
+\doxysubsubsection{\texorpdfstring{GetMajors()}{GetMajors()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Major\+Controller.\+Get\+Majors (\begin{DoxyParamCaption}\item[{string}]{term,  }\item[{int}]{year }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_controllers_1_1_major_controller_a17f61fc82f79d004709112354ed83d98_cgraph}
+\end{center}
+\end{figure}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Chet\+L/\+Documents/\+Git\+Hub\+Desktop/segfault-\/wizards/\+Abet\+Api/\+Controllers/\mbox{\hyperlink{_major_controller_8cs}{Major\+Controller.\+cs}}\end{DoxyCompactItemize}

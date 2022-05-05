@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['major_0',['Major',['../class_abet_api_1_1_e_f_models_1_1_course_outcome.html#aafdf94ab2a5238c8bec9e3b7f2aeaf3a',1,'AbetApi.EFModels.CourseOutcome.Major()'],['../class_abet_api_1_1_e_f_models_1_1_grade.html#aaaa1b564d67ce80f6b689e6cc29d477c',1,'AbetApi.EFModels.Grade.Major()']]],
+  ['major_0',['Major',['../class_abet_api_1_1_e_f_models_1_1_grade.html#aaaa1b564d67ce80f6b689e6cc29d477c',1,'AbetApi::EFModels::Grade']]],
   ['majorid_1',['MajorId',['../class_abet_api_1_1_e_f_models_1_1_major.html#abf93e698499dcd50c18db9921f603230',1,'AbetApi::EFModels::Major']]],
   ['majoroutcomeid_2',['MajorOutcomeId',['../class_abet_api_1_1_e_f_models_1_1_major_outcome.html#a80b10a9adcef96ff0e83aa4233cf6816',1,'AbetApi::EFModels::MajorOutcome']]],
   ['majoroutcomes_3',['MajorOutcomes',['../class_abet_api_1_1_data_1_1_a_b_e_t_d_b_context.html#a84f3f02f46beeb71b6a9237bf02470ed',1,'AbetApi.Data.ABETDBContext.MajorOutcomes()'],['../class_abet_api_1_1_e_f_models_1_1_course_outcome.html#a1c6479d2e761d21cba0138b2a7229213',1,'AbetApi.EFModels.CourseOutcome.MajorOutcomes()'],['../class_abet_api_1_1_e_f_models_1_1_major.html#a2224a39da942c5d5a012f40a594cf66a',1,'AbetApi.EFModels.Major.MajorOutcomes()']]],

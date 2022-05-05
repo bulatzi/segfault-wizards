@@ -2,6 +2,8 @@ var class_abet_api_1_1_e_f_models_1_1_grade =
 [
     [ "Grade", "class_abet_api_1_1_e_f_models_1_1_grade.html#ad33bb25ee7367be0e5c462f18552fd1b", null ],
     [ "Grade", "class_abet_api_1_1_e_f_models_1_1_grade.html#ab1c7d2deb67703e8c7248c4c38adc355", null ],
+    [ "GetGrades", "class_abet_api_1_1_e_f_models_1_1_grade.html#abf358b3f1f0944b1ee68a5fe711b76c8", null ],
+    [ "SetGrades", "class_abet_api_1_1_e_f_models_1_1_grade.html#a4220c264601d8a7b695fa8682947299d", null ],
     [ "A", "class_abet_api_1_1_e_f_models_1_1_grade.html#a6cb61c26e44cfd2b50b2fb0c03c61db0", null ],
     [ "B", "class_abet_api_1_1_e_f_models_1_1_grade.html#ab13f1d11fa2403eed3d908490a2f97a4", null ],
     [ "C", "class_abet_api_1_1_e_f_models_1_1_grade.html#a8995118bcca42595ba215ba34d5378c6", null ],

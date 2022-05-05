@@ -8,6 +8,5 @@ var class_abet_api_1_1_controllers_1_1_course_controller =
     [ "GetCoursesByDepartment", "class_abet_api_1_1_controllers_1_1_course_controller.html#acb578ca31862f0b3e617f401465134ff", null ],
     [ "GetDepartments", "class_abet_api_1_1_controllers_1_1_course_controller.html#a416db04e8407f16385c09924be4656ba", null ],
     [ "GetMajorOutcomesSatisfied", "class_abet_api_1_1_controllers_1_1_course_controller.html#a28cf214a5f2cd5bad432f6f14e84441a", null ],
-    [ "getMajorsThatRequireCourse", "class_abet_api_1_1_controllers_1_1_course_controller.html#a4efe574173918a93cc02d9a54f12b280", null ],
     [ "GetSectionsByCourse", "class_abet_api_1_1_controllers_1_1_course_controller.html#a92ee54c6c2c1375ca4ada4b229252a34", null ]
 ];
