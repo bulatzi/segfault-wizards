@@ -1,7 +1,7 @@
 var class_abet_api_1_1_e_f_models_1_1_user =
 [
-    [ "User", "class_abet_api_1_1_e_f_models_1_1_user.html#affe7b05d89609249ba8f01e94209e2c6", null ],
     [ "User", "class_abet_api_1_1_e_f_models_1_1_user.html#a5c6cf2b8a15db5592eb9e4640f82f002", null ],
+    [ "User", "class_abet_api_1_1_e_f_models_1_1_user.html#affe7b05d89609249ba8f01e94209e2c6", null ],
     [ "AddUser", "class_abet_api_1_1_e_f_models_1_1_user.html#ab51615c6eef2c9135168742307c0e9b5", null ],
     [ "DeleteUser", "class_abet_api_1_1_e_f_models_1_1_user.html#ab09ac3dc7b523ee2bbd628ddb1a5a83f", null ],
     [ "EditUser", "class_abet_api_1_1_e_f_models_1_1_user.html#a89eeeb8dc1ddb9f24db95abc1eb91af8", null ],

@@ -1,0 +1,130 @@
+\hypertarget{class_abet_api_1_1_controllers_1_1_users_controller}{}\doxysection{Abet\+Api.\+Controllers.\+Users\+Controller Class Reference}
+\label{class_abet_api_1_1_controllers_1_1_users_controller}\index{AbetApi.Controllers.UsersController@{AbetApi.Controllers.UsersController}}
+
+
+The \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_users_controller}{Users\+Controller}} Class.  
+
+
+
+
+Inheritance diagram for Abet\+Api.\+Controllers.\+Users\+Controller\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=209pt]{class_abet_api_1_1_controllers_1_1_users_controller__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Abet\+Api.\+Controllers.\+Users\+Controller\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=209pt]{class_abet_api_1_1_controllers_1_1_users_controller__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_users_controller_a0f31f38f34584a7db041f0b73d9f102b}{Get\+User}} (string EUID)
+\begin{DoxyCompactList}\small\item\em The Get\+User function. \end{DoxyCompactList}\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_users_controller_ac9fc899fd4e32d72f6ada2ee7beb0c0b}{Add\+User}} (\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_user}{User}} user)
+\begin{DoxyCompactList}\small\item\em The Add\+User function. \end{DoxyCompactList}\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_users_controller_a044d9f0257c48f60af12055b791f41f1}{Delete\+User}} (string EUID)
+\begin{DoxyCompactList}\small\item\em The Delete\+User function. \end{DoxyCompactList}\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_users_controller_a636ef7bfce66b6eec4c5bcc1c377a4bc}{Edit\+User}} (string EUID, \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_user}{User}} New\+User\+Info)
+\begin{DoxyCompactList}\small\item\em The Edit\+User function. \end{DoxyCompactList}\item 
+async Task$<$ IAction\+Result $>$ \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_users_controller_ad2b7ea462bcd2fbe965651b56885122e}{Add\+User\+With\+Roles}} (\mbox{\hyperlink{class_abet_api_1_1_models_1_1_user_with_roles}{Abet\+Api.\+Models.\+User\+With\+Roles}} user\+With\+Roles)
+\begin{DoxyCompactList}\small\item\em Add\+User\+With\+Roles function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_abet_api_1_1_controllers_1_1_users_controller}{Users\+Controller}} Class. 
+
+This class controls most of the user endpoints It inherits from Controller\+Base 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_users_controller_ac9fc899fd4e32d72f6ada2ee7beb0c0b}\label{class_abet_api_1_1_controllers_1_1_users_controller_ac9fc899fd4e32d72f6ada2ee7beb0c0b}} 
+\index{AbetApi.Controllers.UsersController@{AbetApi.Controllers.UsersController}!AddUser@{AddUser}}
+\index{AddUser@{AddUser}!AbetApi.Controllers.UsersController@{AbetApi.Controllers.UsersController}}
+\doxysubsubsection{\texorpdfstring{AddUser()}{AddUser()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Users\+Controller.\+Add\+User (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_user}{User}}}]{user }\end{DoxyParamCaption})}
+
+
+
+The Add\+User function. 
+
+This function creates a user with the provided information. Utilizes \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_user}{EFModels.\+User}} in \mbox{\hyperlink{namespace_abet_api_1_1_e_f_models}{EFModels}}. Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message. 
+\begin{DoxyParams}{Parameters}
+{\em user} & A user object that contains relevent user information. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_users_controller_ad2b7ea462bcd2fbe965651b56885122e}\label{class_abet_api_1_1_controllers_1_1_users_controller_ad2b7ea462bcd2fbe965651b56885122e}} 
+\index{AbetApi.Controllers.UsersController@{AbetApi.Controllers.UsersController}!AddUserWithRoles@{AddUserWithRoles}}
+\index{AddUserWithRoles@{AddUserWithRoles}!AbetApi.Controllers.UsersController@{AbetApi.Controllers.UsersController}}
+\doxysubsubsection{\texorpdfstring{AddUserWithRoles()}{AddUserWithRoles()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Users\+Controller.\+Add\+User\+With\+Roles (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_abet_api_1_1_models_1_1_user_with_roles}{Abet\+Api.\+Models.\+User\+With\+Roles}}}]{user\+With\+Roles }\end{DoxyParamCaption})}
+
+
+
+Add\+User\+With\+Roles function. 
+
+This function creates a user with the provided information (Has roles associated already). Utilizes \mbox{\hyperlink{class_abet_api_1_1_models_1_1_user_with_roles}{Models.\+User\+With\+Roles}} in \mbox{\hyperlink{namespace_abet_api_1_1_models}{Models}}. Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message. 
+\begin{DoxyParams}{Parameters}
+{\em user\+With\+Roles} & a \mbox{\hyperlink{class_abet_api_1_1_models_1_1_user_with_roles}{Models.\+User\+With\+Roles}} object \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_users_controller_a044d9f0257c48f60af12055b791f41f1}\label{class_abet_api_1_1_controllers_1_1_users_controller_a044d9f0257c48f60af12055b791f41f1}} 
+\index{AbetApi.Controllers.UsersController@{AbetApi.Controllers.UsersController}!DeleteUser@{DeleteUser}}
+\index{DeleteUser@{DeleteUser}!AbetApi.Controllers.UsersController@{AbetApi.Controllers.UsersController}}
+\doxysubsubsection{\texorpdfstring{DeleteUser()}{DeleteUser()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Users\+Controller.\+Delete\+User (\begin{DoxyParamCaption}\item[{string}]{EUID }\end{DoxyParamCaption})}
+
+
+
+The Delete\+User function. 
+
+This function deletes a user\textquotesingle{}s profile from the databse. Utilizes \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_user}{EFModels.\+User}} in \mbox{\hyperlink{namespace_abet_api_1_1_e_f_models}{EFModels}}. This does not delete a user from the UNT system. It only removes their roles to this system. Returns A 200 OK if successful, otherwise a 400 bad request with the argument exception message. 
+\begin{DoxyParams}{Parameters}
+{\em EUID} & A string of the desired users enterprise user identification (EUID). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_users_controller_a636ef7bfce66b6eec4c5bcc1c377a4bc}\label{class_abet_api_1_1_controllers_1_1_users_controller_a636ef7bfce66b6eec4c5bcc1c377a4bc}} 
+\index{AbetApi.Controllers.UsersController@{AbetApi.Controllers.UsersController}!EditUser@{EditUser}}
+\index{EditUser@{EditUser}!AbetApi.Controllers.UsersController@{AbetApi.Controllers.UsersController}}
+\doxysubsubsection{\texorpdfstring{EditUser()}{EditUser()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Users\+Controller.\+Edit\+User (\begin{DoxyParamCaption}\item[{string}]{EUID,  }\item[{\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_user}{User}}}]{New\+User\+Info }\end{DoxyParamCaption})}
+
+
+
+The Edit\+User function. 
+
+This function updates a user with the provided information. Utilizes \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_user}{EFModels.\+User}} in \mbox{\hyperlink{namespace_abet_api_1_1_e_f_models}{EFModels}}. User is selected via the given EUID, and information provided in New\+User\+Info is used to replace the existing information. Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message. 
+\begin{DoxyParams}{Parameters}
+{\em EUID} & A string of the desired users enterprise user identification (EUID). \\
+\hline
+{\em New\+User\+Info} & A User object that provides the relevent info for editing an existing user. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_abet_api_1_1_controllers_1_1_users_controller_a0f31f38f34584a7db041f0b73d9f102b}\label{class_abet_api_1_1_controllers_1_1_users_controller_a0f31f38f34584a7db041f0b73d9f102b}} 
+\index{AbetApi.Controllers.UsersController@{AbetApi.Controllers.UsersController}!GetUser@{GetUser}}
+\index{GetUser@{GetUser}!AbetApi.Controllers.UsersController@{AbetApi.Controllers.UsersController}}
+\doxysubsubsection{\texorpdfstring{GetUser()}{GetUser()}}
+{\footnotesize\ttfamily async Task$<$ IAction\+Result $>$ Abet\+Api.\+Controllers.\+Users\+Controller.\+Get\+User (\begin{DoxyParamCaption}\item[{string}]{EUID }\end{DoxyParamCaption})}
+
+
+
+The Get\+User function. 
+
+This function takes an EUID and returns the user information for that EUID. Utilizes \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_user}{EFModels.\+User}} in \mbox{\hyperlink{namespace_abet_api_1_1_e_f_models}{EFModels}}. Returns a 200 OK if successful, otherwise a 400 bad request with the argument exception message. 
+\begin{DoxyParams}{Parameters}
+{\em EUID} & A string of the desired users enterprise user identification (EUID). \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Chet\+L/\+Documents/\+Git\+Hub\+Desktop/segfault-\/wizards/\+Abet\+Api/\+Controllers/\mbox{\hyperlink{_users_controller_8cs}{Users\+Controller.\+cs}}\end{DoxyCompactItemize}

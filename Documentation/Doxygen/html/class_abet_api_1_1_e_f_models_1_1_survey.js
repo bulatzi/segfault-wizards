@@ -1,8 +1,7 @@
 var class_abet_api_1_1_e_f_models_1_1_survey =
 [
-    [ "Survey", "class_abet_api_1_1_e_f_models_1_1_survey.html#a04784e239c1597701226e3a845679c44", null ],
+    [ "Survey", "class_abet_api_1_1_e_f_models_1_1_survey.html#a5fa7c37236f345afbc5cea23e60b6bb5", null ],
     [ "Survey", "class_abet_api_1_1_e_f_models_1_1_survey.html#a7cd2d4c94164be2fbf4cc42000fc7a66", null ],
-    [ "ContainsSurvey", "class_abet_api_1_1_e_f_models_1_1_survey.html#a0443033a7ca3ce7169a41ee0bebe977a", null ],
     [ "ConvertAnswersToList", "class_abet_api_1_1_e_f_models_1_1_survey.html#a984b85fddb897b2c9c0903e49b73be1b", null ],
     [ "ConvertAnswersToString", "class_abet_api_1_1_e_f_models_1_1_survey.html#a8d09858dec5a72a54f789bdce72ea3ae", null ],
     [ "PostSurvey", "class_abet_api_1_1_e_f_models_1_1_survey.html#a7bd5efe46e7507d3903d0c6fc5abf489", null ],
@@ -15,5 +14,5 @@ var class_abet_api_1_1_e_f_models_1_1_survey =
     [ "sectionNumber", "class_abet_api_1_1_e_f_models_1_1_survey.html#aafb4b97b9cf29bfabf0029e9e41f9b37", null ],
     [ "SurveyId", "class_abet_api_1_1_e_f_models_1_1_survey.html#aaa2a0790ec9c4df0c13349cd36b543dd", null ],
     [ "term", "class_abet_api_1_1_e_f_models_1_1_survey.html#ad1c9dcd65de6558246aa9ac1f8025fc6", null ],
-    [ "year", "class_abet_api_1_1_e_f_models_1_1_survey.html#a56c84d9c3adcf4b44d683e8065cf3a3f", null ]
+    [ "year", "class_abet_api_1_1_e_f_models_1_1_survey.html#a8a26aae49205039adfe07d30ea41a873", null ]
 ];

@@ -1,0 +1,188 @@
+\hypertarget{class_abet_api_1_1_data_1_1_upload_manager}{}\doxysection{Abet\+Api.\+Data.\+Upload\+Manager Class Reference}
+\label{class_abet_api_1_1_data_1_1_upload_manager}\index{AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}}
+
+
+Inheritance diagram for Abet\+Api.\+Data.\+Upload\+Manager\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=225pt]{class_abet_api_1_1_data_1_1_upload_manager__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Abet\+Api.\+Data.\+Upload\+Manager\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=225pt]{class_abet_api_1_1_data_1_1_upload_manager__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_abet_api_1_1_data_1_1_upload_manager_a0b51b2033e7560031650eb0a46d60ba8}{Store\+File}} (IForm\+File file, List$<$ string $>$ acceptable\+Types)
+\item 
+bool \mbox{\hyperlink{class_abet_api_1_1_data_1_1_upload_manager_aa339572766a4711d330cf2041419eb33}{Delete\+Current\+File}} ()
+\item 
+bool \mbox{\hyperlink{class_abet_api_1_1_data_1_1_upload_manager_ac8551e248a9c6b14f24ffc0b57577028}{Delete\+File}} (string file\+Path)
+\item 
+File\+Stream \mbox{\hyperlink{class_abet_api_1_1_data_1_1_upload_manager_ab870fe39e6ac47e8ecb00f625b1e8e53}{Get\+File}} (string file\+Path)
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_abet_api_1_1_data_1_1_upload_manager_aef37bb6a435eba3dca04cc218a1c87d1}{File\+Id}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \mbox{\hyperlink{class_abet_api_1_1_data_1_1_upload_manager_a366460c34dc1d0da14a19f92b9b32d36}{File\+Path}} = null\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \mbox{\hyperlink{class_abet_api_1_1_data_1_1_upload_manager_a11eaf1a6b38ff925d284deece0ee40f5}{Error\+Message}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+string \mbox{\hyperlink{class_abet_api_1_1_data_1_1_upload_manager_a883ac2c5e621afc4ccc8eaf6b38ca36e}{Original\+File\+Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+bool \mbox{\hyperlink{class_abet_api_1_1_data_1_1_upload_manager_a05d7edc344e90e90817f02e8137d5a00}{File\+Not\+Found}} = false\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_abet_api_1_1_data_1_1_upload_manager_a3b4945e8680c89d75b7723e3e7872b4f}{Generate\+File\+Name}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+readonly string \mbox{\hyperlink{class_abet_api_1_1_data_1_1_upload_manager_ae789966ca69cb76d4fe9f6ef06c048ca}{FOLDER\+\_\+\+PATH}} = Path.\+Combine(Directory.\+Get\+Current\+Directory(), \char`\"{}Uploads\char`\"{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_abet_api_1_1_data_1_1_upload_manager_aa339572766a4711d330cf2041419eb33}\label{class_abet_api_1_1_data_1_1_upload_manager_aa339572766a4711d330cf2041419eb33}} 
+\index{AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}!DeleteCurrentFile@{DeleteCurrentFile}}
+\index{DeleteCurrentFile@{DeleteCurrentFile}!AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}}
+\doxysubsubsection{\texorpdfstring{DeleteCurrentFile()}{DeleteCurrentFile()}}
+{\footnotesize\ttfamily bool Abet\+Api.\+Data.\+Upload\+Manager.\+Delete\+Current\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Implements \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_upload_manager_a7d851f063c5a44a149061b26e8b4e943}{Abet\+Api.\+Data.\+IUpload\+Manager}}.
+
+\mbox{\Hypertarget{class_abet_api_1_1_data_1_1_upload_manager_ac8551e248a9c6b14f24ffc0b57577028}\label{class_abet_api_1_1_data_1_1_upload_manager_ac8551e248a9c6b14f24ffc0b57577028}} 
+\index{AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}!DeleteFile@{DeleteFile}}
+\index{DeleteFile@{DeleteFile}!AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}}
+\doxysubsubsection{\texorpdfstring{DeleteFile()}{DeleteFile()}}
+{\footnotesize\ttfamily bool Abet\+Api.\+Data.\+Upload\+Manager.\+Delete\+File (\begin{DoxyParamCaption}\item[{string}]{file\+Path }\end{DoxyParamCaption})}
+
+
+
+Implements \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_upload_manager_a5949673799aa5e81bd421abc96b6675c}{Abet\+Api.\+Data.\+IUpload\+Manager}}.
+
+\mbox{\Hypertarget{class_abet_api_1_1_data_1_1_upload_manager_a3b4945e8680c89d75b7723e3e7872b4f}\label{class_abet_api_1_1_data_1_1_upload_manager_a3b4945e8680c89d75b7723e3e7872b4f}} 
+\index{AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}!GenerateFileName@{GenerateFileName}}
+\index{GenerateFileName@{GenerateFileName}!AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}}
+\doxysubsubsection{\texorpdfstring{GenerateFileName()}{GenerateFileName()}}
+{\footnotesize\ttfamily string Abet\+Api.\+Data.\+Upload\+Manager.\+Generate\+File\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_data_1_1_upload_manager_a3b4945e8680c89d75b7723e3e7872b4f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_data_1_1_upload_manager_ab870fe39e6ac47e8ecb00f625b1e8e53}\label{class_abet_api_1_1_data_1_1_upload_manager_ab870fe39e6ac47e8ecb00f625b1e8e53}} 
+\index{AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}!GetFile@{GetFile}}
+\index{GetFile@{GetFile}!AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}}
+\doxysubsubsection{\texorpdfstring{GetFile()}{GetFile()}}
+{\footnotesize\ttfamily File\+Stream Abet\+Api.\+Data.\+Upload\+Manager.\+Get\+File (\begin{DoxyParamCaption}\item[{string}]{file\+Path }\end{DoxyParamCaption})}
+
+
+
+Implements \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_upload_manager_a2daeb0b21f879033d771863adb9088b0}{Abet\+Api.\+Data.\+IUpload\+Manager}}.
+
+\mbox{\Hypertarget{class_abet_api_1_1_data_1_1_upload_manager_a0b51b2033e7560031650eb0a46d60ba8}\label{class_abet_api_1_1_data_1_1_upload_manager_a0b51b2033e7560031650eb0a46d60ba8}} 
+\index{AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}!StoreFile@{StoreFile}}
+\index{StoreFile@{StoreFile}!AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}}
+\doxysubsubsection{\texorpdfstring{StoreFile()}{StoreFile()}}
+{\footnotesize\ttfamily bool Abet\+Api.\+Data.\+Upload\+Manager.\+Store\+File (\begin{DoxyParamCaption}\item[{IForm\+File}]{file,  }\item[{List$<$ string $>$}]{acceptable\+Types }\end{DoxyParamCaption})}
+
+
+
+Implements \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_upload_manager_a71a50db76e93be23d733f39978fc7b7f}{Abet\+Api.\+Data.\+IUpload\+Manager}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_data_1_1_upload_manager_a0b51b2033e7560031650eb0a46d60ba8_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_abet_api_1_1_data_1_1_upload_manager_ae789966ca69cb76d4fe9f6ef06c048ca}\label{class_abet_api_1_1_data_1_1_upload_manager_ae789966ca69cb76d4fe9f6ef06c048ca}} 
+\index{AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}!FOLDER\_PATH@{FOLDER\_PATH}}
+\index{FOLDER\_PATH@{FOLDER\_PATH}!AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}}
+\doxysubsubsection{\texorpdfstring{FOLDER\_PATH}{FOLDER\_PATH}}
+{\footnotesize\ttfamily readonly string Abet\+Api.\+Data.\+Upload\+Manager.\+FOLDER\+\_\+\+PATH = Path.\+Combine(Directory.\+Get\+Current\+Directory(), \char`\"{}Uploads\char`\"{})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_abet_api_1_1_data_1_1_upload_manager_a11eaf1a6b38ff925d284deece0ee40f5}\label{class_abet_api_1_1_data_1_1_upload_manager_a11eaf1a6b38ff925d284deece0ee40f5}} 
+\index{AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}!ErrorMessage@{ErrorMessage}}
+\index{ErrorMessage@{ErrorMessage}!AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}}
+\doxysubsubsection{\texorpdfstring{ErrorMessage}{ErrorMessage}}
+{\footnotesize\ttfamily string Abet\+Api.\+Data.\+Upload\+Manager.\+Error\+Message\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Implements \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_upload_manager_a7cb3af1ae3685529af44a2b6f6eb1dcd}{Abet\+Api.\+Data.\+IUpload\+Manager}}.
+
+\mbox{\Hypertarget{class_abet_api_1_1_data_1_1_upload_manager_aef37bb6a435eba3dca04cc218a1c87d1}\label{class_abet_api_1_1_data_1_1_upload_manager_aef37bb6a435eba3dca04cc218a1c87d1}} 
+\index{AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}!FileId@{FileId}}
+\index{FileId@{FileId}!AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}}
+\doxysubsubsection{\texorpdfstring{FileId}{FileId}}
+{\footnotesize\ttfamily string Abet\+Api.\+Data.\+Upload\+Manager.\+File\+Id\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Implements \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_upload_manager_a74025a7e37c3d71572af125580d86f23}{Abet\+Api.\+Data.\+IUpload\+Manager}}.
+
+\mbox{\Hypertarget{class_abet_api_1_1_data_1_1_upload_manager_a05d7edc344e90e90817f02e8137d5a00}\label{class_abet_api_1_1_data_1_1_upload_manager_a05d7edc344e90e90817f02e8137d5a00}} 
+\index{AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}!FileNotFound@{FileNotFound}}
+\index{FileNotFound@{FileNotFound}!AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}}
+\doxysubsubsection{\texorpdfstring{FileNotFound}{FileNotFound}}
+{\footnotesize\ttfamily bool Abet\+Api.\+Data.\+Upload\+Manager.\+File\+Not\+Found = false\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Implements \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_upload_manager_a0b724d7b9f0cf28f52a9d040fdd135f6}{Abet\+Api.\+Data.\+IUpload\+Manager}}.
+
+\mbox{\Hypertarget{class_abet_api_1_1_data_1_1_upload_manager_a366460c34dc1d0da14a19f92b9b32d36}\label{class_abet_api_1_1_data_1_1_upload_manager_a366460c34dc1d0da14a19f92b9b32d36}} 
+\index{AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}!FilePath@{FilePath}}
+\index{FilePath@{FilePath}!AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}}
+\doxysubsubsection{\texorpdfstring{FilePath}{FilePath}}
+{\footnotesize\ttfamily string Abet\+Api.\+Data.\+Upload\+Manager.\+File\+Path = null\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Implements \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_upload_manager_a587f75f970c0fd3829b4b04de5a529c6}{Abet\+Api.\+Data.\+IUpload\+Manager}}.
+
+\mbox{\Hypertarget{class_abet_api_1_1_data_1_1_upload_manager_a883ac2c5e621afc4ccc8eaf6b38ca36e}\label{class_abet_api_1_1_data_1_1_upload_manager_a883ac2c5e621afc4ccc8eaf6b38ca36e}} 
+\index{AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}!OriginalFileName@{OriginalFileName}}
+\index{OriginalFileName@{OriginalFileName}!AbetApi.Data.UploadManager@{AbetApi.Data.UploadManager}}
+\doxysubsubsection{\texorpdfstring{OriginalFileName}{OriginalFileName}}
+{\footnotesize\ttfamily string Abet\+Api.\+Data.\+Upload\+Manager.\+Original\+File\+Name\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Implements \mbox{\hyperlink{interface_abet_api_1_1_data_1_1_i_upload_manager_a1f89d43c49892ab3dec3ac2ec9f7dff6}{Abet\+Api.\+Data.\+IUpload\+Manager}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Chet\+L/\+Documents/\+Git\+Hub\+Desktop/segfault-\/wizards/\+Abet\+Api/\+Data/\mbox{\hyperlink{_upload_manager_8cs}{Upload\+Manager.\+cs}}\end{DoxyCompactItemize}

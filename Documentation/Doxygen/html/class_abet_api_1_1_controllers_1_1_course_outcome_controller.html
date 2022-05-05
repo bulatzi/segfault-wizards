@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Capstone: AbetApi.Controllers.CourseOutcomeController Class Reference</title>
+<title>ABET Project: AbetApi.Controllers.CourseOutcomeController Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,9 +25,9 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Capstone<span id="projectnumber">&#160;1.0</span>
+   <div id="projectname">ABET Project
    </div>
-   <div id="projectbrief">ABET reporting system</div>
+   <div id="projectbrief">ABET Project for UNT</div>
   </td>
  </tr>
  </tbody>
@@ -112,75 +112,16 @@ Collaboration diagram for AbetApi.Controllers.CourseOutcomeController:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ac24b50b5854ccdde07cdbc64bcfcb970"><td class="memItemLeft" align="right" valign="top">async Task&lt; IActionResult &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abet_api_1_1_controllers_1_1_course_outcome_controller.html#ac24b50b5854ccdde07cdbc64bcfcb970">CreateCourseOutcome</a> (string term, int year, string classDepartment, string courseNumber, <a class="el" href="class_abet_api_1_1_e_f_models_1_1_course_outcome.html">CourseOutcome</a> courseOutcome)</td></tr>
 <tr class="separator:ac24b50b5854ccdde07cdbc64bcfcb970"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b30b643486ac4e62c13f7ed7bf3cbf6"><td class="memItemLeft" align="right" valign="top">async Task&lt; IActionResult &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abet_api_1_1_controllers_1_1_course_outcome_controller.html#a5b30b643486ac4e62c13f7ed7bf3cbf6">DeleteCourseOutcome</a> (string term, int year, string classDepartment, string courseNumber, string majorName)</td></tr>
-<tr class="separator:a5b30b643486ac4e62c13f7ed7bf3cbf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab90e357a9258fb205cd653d9998afbba"><td class="memItemLeft" align="right" valign="top">async Task&lt; IActionResult &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abet_api_1_1_controllers_1_1_course_outcome_controller.html#ab90e357a9258fb205cd653d9998afbba">AddMajorOutcome</a> (string term, int year, string classDepartment, string courseNumber, string majorName, string outcomeName)</td></tr>
-<tr class="separator:ab90e357a9258fb205cd653d9998afbba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49ddd256475c35d39fe34f5761294dcf"><td class="memItemLeft" align="right" valign="top">async Task&lt; IActionResult &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abet_api_1_1_controllers_1_1_course_outcome_controller.html#a49ddd256475c35d39fe34f5761294dcf">RemoveMajorOutcome</a> (string term, int year, string classDepartment, string courseNumber, string majorName, string outcomeName)</td></tr>
-<tr class="separator:a49ddd256475c35d39fe34f5761294dcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbbc1f215b958b5c98556a4332208cf7"><td class="memItemLeft" align="right" valign="top">async Task&lt; IActionResult &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abet_api_1_1_controllers_1_1_course_outcome_controller.html#acbbc1f215b958b5c98556a4332208cf7">DeleteCourseOutcome</a> (string term, int year, string classDepartment, string courseNumber, string name)</td></tr>
+<tr class="separator:acbbc1f215b958b5c98556a4332208cf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b1144237116590ca0490b4f28b3b28b"><td class="memItemLeft" align="right" valign="top">async Task&lt; IActionResult &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abet_api_1_1_controllers_1_1_course_outcome_controller.html#a2b1144237116590ca0490b4f28b3b28b">GetCourseOutcomes</a> (string term, int year, string classDepartment, string courseNumber)</td></tr>
+<tr class="separator:a2b1144237116590ca0490b4f28b3b28b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5ad1f68f583487f6c453a134dcc8900"><td class="memItemLeft" align="right" valign="top">async Task&lt; IActionResult &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abet_api_1_1_controllers_1_1_course_outcome_controller.html#ab5ad1f68f583487f6c453a134dcc8900">LinkToMajorOutcome</a> (string term, int year, string classDepartment, string courseNumber, string courseOutcomeName, string majorName, string majorOutcomeName)</td></tr>
+<tr class="separator:ab5ad1f68f583487f6c453a134dcc8900"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6449837a9f8a52d91db80e77edd6f470"><td class="memItemLeft" align="right" valign="top">async Task&lt; IActionResult &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abet_api_1_1_controllers_1_1_course_outcome_controller.html#a6449837a9f8a52d91db80e77edd6f470">RemoveLinkToMajorOutcome</a> (string term, int year, string classDepartment, string courseNumber, string courseOutcomeName, string majorName, string majorOutcomeName)</td></tr>
+<tr class="separator:a6449837a9f8a52d91db80e77edd6f470"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ab90e357a9258fb205cd653d9998afbba" name="ab90e357a9258fb205cd653d9998afbba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab90e357a9258fb205cd653d9998afbba">&#9670;&nbsp;</a></span>AddMajorOutcome()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">async Task&lt; IActionResult &gt; AbetApi.Controllers.CourseOutcomeController.AddMajorOutcome </td>
-          <td>(</td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>term</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>year</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>classDepartment</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>courseNumber</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>majorName</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>outcomeName</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_abet_api_1_1_controllers_1_1_course_outcome_controller_ab90e357a9258fb205cd653d9998afbba_cgraph.png" border="0" usemap="#aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_ab90e357a9258fb205cd653d9998afbba_cgraph" alt=""/></div>
-<map name="aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_ab90e357a9258fb205cd653d9998afbba_cgraph" id="aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_ab90e357a9258fb205cd653d9998afbba_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,248,47"/>
-<area shape="rect" href="class_abet_api_1_1_e_f_models_1_1_course_outcome.html#a367bcc6ec7dfed3a1c8d1fd7232dcff4" title=" " alt="" coords="296,5,529,47"/>
-</map>
-</div>
-
-</div>
-</div>
 <a id="ac24b50b5854ccdde07cdbc64bcfcb970" name="ac24b50b5854ccdde07cdbc64bcfcb970"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac24b50b5854ccdde07cdbc64bcfcb970">&#9670;&nbsp;</a></span>CreateCourseOutcome()</h2>
 
@@ -236,8 +177,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a5b30b643486ac4e62c13f7ed7bf3cbf6" name="a5b30b643486ac4e62c13f7ed7bf3cbf6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b30b643486ac4e62c13f7ed7bf3cbf6">&#9670;&nbsp;</a></span>DeleteCourseOutcome()</h2>
+<a id="acbbc1f215b958b5c98556a4332208cf7" name="acbbc1f215b958b5c98556a4332208cf7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbbc1f215b958b5c98556a4332208cf7">&#9670;&nbsp;</a></span>DeleteCourseOutcome()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -270,7 +211,7 @@ Here is the call graph for this function:</div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>majorName</em>&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -282,23 +223,72 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_abet_api_1_1_controllers_1_1_course_outcome_controller_a5b30b643486ac4e62c13f7ed7bf3cbf6_cgraph.png" border="0" usemap="#aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_a5b30b643486ac4e62c13f7ed7bf3cbf6_cgraph" alt=""/></div>
-<map name="aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_a5b30b643486ac4e62c13f7ed7bf3cbf6_cgraph" id="aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_a5b30b643486ac4e62c13f7ed7bf3cbf6_cgraph">
+<div class="center"><img src="class_abet_api_1_1_controllers_1_1_course_outcome_controller_acbbc1f215b958b5c98556a4332208cf7_cgraph.png" border="0" usemap="#aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_acbbc1f215b958b5c98556a4332208cf7_cgraph" alt=""/></div>
+<map name="aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_acbbc1f215b958b5c98556a4332208cf7_cgraph" id="aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_acbbc1f215b958b5c98556a4332208cf7_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,217,61"/>
-<area shape="rect" href="class_abet_api_1_1_e_f_models_1_1_course_outcome.html#a767cad784b97bd66cb0f98651bde7911" title=" " alt="" coords="265,13,499,54"/>
+<area shape="rect" href="class_abet_api_1_1_e_f_models_1_1_course_outcome.html#a949eab35a6d38d47ec14dbc2adad5fa2" title=" " alt="" coords="265,13,499,54"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a49ddd256475c35d39fe34f5761294dcf" name="a49ddd256475c35d39fe34f5761294dcf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a49ddd256475c35d39fe34f5761294dcf">&#9670;&nbsp;</a></span>RemoveMajorOutcome()</h2>
+<a id="a2b1144237116590ca0490b4f28b3b28b" name="a2b1144237116590ca0490b4f28b3b28b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b1144237116590ca0490b4f28b3b28b">&#9670;&nbsp;</a></span>GetCourseOutcomes()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">async Task&lt; IActionResult &gt; AbetApi.Controllers.CourseOutcomeController.RemoveMajorOutcome </td>
+          <td class="memname">async Task&lt; IActionResult &gt; AbetApi.Controllers.CourseOutcomeController.GetCourseOutcomes </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>term</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>year</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>classDepartment</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>courseNumber</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_abet_api_1_1_controllers_1_1_course_outcome_controller_a2b1144237116590ca0490b4f28b3b28b_cgraph.png" border="0" usemap="#aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_a2b1144237116590ca0490b4f28b3b28b_cgraph" alt=""/></div>
+<map name="aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_a2b1144237116590ca0490b4f28b3b28b_cgraph" id="aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_a2b1144237116590ca0490b4f28b3b28b_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,261,47"/>
+<area shape="rect" href="class_abet_api_1_1_e_f_models_1_1_course_outcome.html#a21a0083ca65643c1871f78996ee6abe0" title=" " alt="" coords="309,5,543,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ab5ad1f68f583487f6c453a134dcc8900" name="ab5ad1f68f583487f6c453a134dcc8900"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5ad1f68f583487f6c453a134dcc8900">&#9670;&nbsp;</a></span>LinkToMajorOutcome()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">async Task&lt; IActionResult &gt; AbetApi.Controllers.CourseOutcomeController.LinkToMajorOutcome </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>term</em>, </td>
@@ -325,13 +315,19 @@ Here is the call graph for this function:</div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>courseOutcomeName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>majorName</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>outcomeName</em>&#160;</td>
+          <td class="paramname"><em>majorOutcomeName</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -343,10 +339,77 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_abet_api_1_1_controllers_1_1_course_outcome_controller_a49ddd256475c35d39fe34f5761294dcf_cgraph.png" border="0" usemap="#aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_a49ddd256475c35d39fe34f5761294dcf_cgraph" alt=""/></div>
-<map name="aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_a49ddd256475c35d39fe34f5761294dcf_cgraph" id="aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_a49ddd256475c35d39fe34f5761294dcf_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,271,47"/>
-<area shape="rect" href="class_abet_api_1_1_e_f_models_1_1_course_outcome.html#a674ab672e8e4b3c5f270665f4e635c51" title=" " alt="" coords="319,5,552,47"/>
+<div class="center"><img src="class_abet_api_1_1_controllers_1_1_course_outcome_controller_ab5ad1f68f583487f6c453a134dcc8900_cgraph.png" border="0" usemap="#aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_ab5ad1f68f583487f6c453a134dcc8900_cgraph" alt=""/></div>
+<map name="aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_ab5ad1f68f583487f6c453a134dcc8900_cgraph" id="aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_ab5ad1f68f583487f6c453a134dcc8900_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,263,47"/>
+<area shape="rect" href="class_abet_api_1_1_e_f_models_1_1_course_outcome.html#aa2c56ca908884ca23aaf03fbea744761" title=" " alt="" coords="311,5,544,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a6449837a9f8a52d91db80e77edd6f470" name="a6449837a9f8a52d91db80e77edd6f470"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6449837a9f8a52d91db80e77edd6f470">&#9670;&nbsp;</a></span>RemoveLinkToMajorOutcome()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">async Task&lt; IActionResult &gt; AbetApi.Controllers.CourseOutcomeController.RemoveLinkToMajorOutcome </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>term</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>year</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>classDepartment</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>courseNumber</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>courseOutcomeName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>majorName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>majorOutcomeName</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_abet_api_1_1_controllers_1_1_course_outcome_controller_a6449837a9f8a52d91db80e77edd6f470_cgraph.png" border="0" usemap="#aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_a6449837a9f8a52d91db80e77edd6f470_cgraph" alt=""/></div>
+<map name="aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_a6449837a9f8a52d91db80e77edd6f470_cgraph" id="aclass_abet_api_1_1_controllers_1_1_course_outcome_controller_a6449837a9f8a52d91db80e77edd6f470_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,224,61"/>
+<area shape="rect" href="class_abet_api_1_1_e_f_models_1_1_course_outcome.html#a76949986cabbae19e81aaefe54ba7568" title=" " alt="" coords="272,13,505,54"/>
 </map>
 </div>
 

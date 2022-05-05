@@ -8,6 +8,7 @@ var hierarchy =
       [ "AbetApi.Controllers.CourseController", "class_abet_api_1_1_controllers_1_1_course_controller.html", null ],
       [ "AbetApi.Controllers.CourseOutcomeController", "class_abet_api_1_1_controllers_1_1_course_outcome_controller.html", null ],
       [ "AbetApi.Controllers.CustomController", "class_abet_api_1_1_controllers_1_1_custom_controller.html", null ],
+      [ "AbetApi.Controllers.GradeController", "class_abet_api_1_1_controllers_1_1_grade_controller.html", null ],
       [ "AbetApi.Controllers.MajorController", "class_abet_api_1_1_controllers_1_1_major_controller.html", null ],
       [ "AbetApi.Controllers.MajorOutcomeController", "class_abet_api_1_1_controllers_1_1_major_outcome_controller.html", null ],
       [ "AbetApi.Controllers.RoleController", "class_abet_api_1_1_controllers_1_1_role_controller.html", null ],

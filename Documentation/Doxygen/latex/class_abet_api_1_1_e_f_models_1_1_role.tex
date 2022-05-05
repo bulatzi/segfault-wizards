@@ -1,0 +1,145 @@
+\hypertarget{class_abet_api_1_1_e_f_models_1_1_role}{}\doxysection{Abet\+Api.\+EFModels.\+Role Class Reference}
+\label{class_abet_api_1_1_e_f_models_1_1_role}\index{AbetApi.EFModels.Role@{AbetApi.EFModels.Role}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_role_a9b84b8fc6abecfc715f8191b8a42fe6c}{Role}} ()
+\item 
+\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_role_a0b125c44b622675b8586a0f2531b97fd}{Role}} (String \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_role_af805c310a02f27e352a371972f8fbed7}{Name}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static async Task \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_role_a611ba9c15828fb719bb0d22dc1975637}{Create\+Role}} (\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_role}{Role}} role)
+\item 
+static async Task \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_role_a18ea3789bc905908764da2c7f7f30bcd}{Add\+Role\+To\+User}} (string EUID, string role\+Name)
+\item 
+static async Task$<$ List$<$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_user}{User}} $>$ $>$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_role_ab06e056fa5f8e4802b9b0801792f2843}{Get\+Users\+By\+Role}} (string role\+Name)
+\item 
+static async Task \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_role_a3c3af491e09293165320ca1196a221ee}{Delete\+Role}} (string role\+Name)
+\item 
+static async Task \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_role_a84f22c92c9f809bb559d3316ef8dfba4}{Remove\+Role\+From\+User}} (string EUID, string role\+Name)
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_role_acc63c6b63f56626d2a65761d7caebba9}{Role\+Id}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+String \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_role_af805c310a02f27e352a371972f8fbed7}{Name}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+ICollection$<$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_user}{User}} $>$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_role_a54756051f54983183e6b2fe1fc990025}{Users}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_role_a9b84b8fc6abecfc715f8191b8a42fe6c}\label{class_abet_api_1_1_e_f_models_1_1_role_a9b84b8fc6abecfc715f8191b8a42fe6c}} 
+\index{AbetApi.EFModels.Role@{AbetApi.EFModels.Role}!Role@{Role}}
+\index{Role@{Role}!AbetApi.EFModels.Role@{AbetApi.EFModels.Role}}
+\doxysubsubsection{\texorpdfstring{Role()}{Role()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Abet\+Api.\+EFModels.\+Role.\+Role (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_role_a0b125c44b622675b8586a0f2531b97fd}\label{class_abet_api_1_1_e_f_models_1_1_role_a0b125c44b622675b8586a0f2531b97fd}} 
+\index{AbetApi.EFModels.Role@{AbetApi.EFModels.Role}!Role@{Role}}
+\index{Role@{Role}!AbetApi.EFModels.Role@{AbetApi.EFModels.Role}}
+\doxysubsubsection{\texorpdfstring{Role()}{Role()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Abet\+Api.\+EFModels.\+Role.\+Role (\begin{DoxyParamCaption}\item[{String}]{Name }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_role_a18ea3789bc905908764da2c7f7f30bcd}\label{class_abet_api_1_1_e_f_models_1_1_role_a18ea3789bc905908764da2c7f7f30bcd}} 
+\index{AbetApi.EFModels.Role@{AbetApi.EFModels.Role}!AddRoleToUser@{AddRoleToUser}}
+\index{AddRoleToUser@{AddRoleToUser}!AbetApi.EFModels.Role@{AbetApi.EFModels.Role}}
+\doxysubsubsection{\texorpdfstring{AddRoleToUser()}{AddRoleToUser()}}
+{\footnotesize\ttfamily static async Task Abet\+Api.\+EFModels.\+Role.\+Add\+Role\+To\+User (\begin{DoxyParamCaption}\item[{string}]{EUID,  }\item[{string}]{role\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_e_f_models_1_1_role_a18ea3789bc905908764da2c7f7f30bcd_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_role_a611ba9c15828fb719bb0d22dc1975637}\label{class_abet_api_1_1_e_f_models_1_1_role_a611ba9c15828fb719bb0d22dc1975637}} 
+\index{AbetApi.EFModels.Role@{AbetApi.EFModels.Role}!CreateRole@{CreateRole}}
+\index{CreateRole@{CreateRole}!AbetApi.EFModels.Role@{AbetApi.EFModels.Role}}
+\doxysubsubsection{\texorpdfstring{CreateRole()}{CreateRole()}}
+{\footnotesize\ttfamily static async Task Abet\+Api.\+EFModels.\+Role.\+Create\+Role (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_role}{Role}}}]{role }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_e_f_models_1_1_role_a611ba9c15828fb719bb0d22dc1975637_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_role_a3c3af491e09293165320ca1196a221ee}\label{class_abet_api_1_1_e_f_models_1_1_role_a3c3af491e09293165320ca1196a221ee}} 
+\index{AbetApi.EFModels.Role@{AbetApi.EFModels.Role}!DeleteRole@{DeleteRole}}
+\index{DeleteRole@{DeleteRole}!AbetApi.EFModels.Role@{AbetApi.EFModels.Role}}
+\doxysubsubsection{\texorpdfstring{DeleteRole()}{DeleteRole()}}
+{\footnotesize\ttfamily static async Task Abet\+Api.\+EFModels.\+Role.\+Delete\+Role (\begin{DoxyParamCaption}\item[{string}]{role\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_e_f_models_1_1_role_a3c3af491e09293165320ca1196a221ee_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_role_ab06e056fa5f8e4802b9b0801792f2843}\label{class_abet_api_1_1_e_f_models_1_1_role_ab06e056fa5f8e4802b9b0801792f2843}} 
+\index{AbetApi.EFModels.Role@{AbetApi.EFModels.Role}!GetUsersByRole@{GetUsersByRole}}
+\index{GetUsersByRole@{GetUsersByRole}!AbetApi.EFModels.Role@{AbetApi.EFModels.Role}}
+\doxysubsubsection{\texorpdfstring{GetUsersByRole()}{GetUsersByRole()}}
+{\footnotesize\ttfamily static async Task$<$ List$<$ \mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_user}{User}} $>$ $>$ Abet\+Api.\+EFModels.\+Role.\+Get\+Users\+By\+Role (\begin{DoxyParamCaption}\item[{string}]{role\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_e_f_models_1_1_role_ab06e056fa5f8e4802b9b0801792f2843_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_role_a84f22c92c9f809bb559d3316ef8dfba4}\label{class_abet_api_1_1_e_f_models_1_1_role_a84f22c92c9f809bb559d3316ef8dfba4}} 
+\index{AbetApi.EFModels.Role@{AbetApi.EFModels.Role}!RemoveRoleFromUser@{RemoveRoleFromUser}}
+\index{RemoveRoleFromUser@{RemoveRoleFromUser}!AbetApi.EFModels.Role@{AbetApi.EFModels.Role}}
+\doxysubsubsection{\texorpdfstring{RemoveRoleFromUser()}{RemoveRoleFromUser()}}
+{\footnotesize\ttfamily static async Task Abet\+Api.\+EFModels.\+Role.\+Remove\+Role\+From\+User (\begin{DoxyParamCaption}\item[{string}]{EUID,  }\item[{string}]{role\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_abet_api_1_1_e_f_models_1_1_role_a84f22c92c9f809bb559d3316ef8dfba4_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_role_af805c310a02f27e352a371972f8fbed7}\label{class_abet_api_1_1_e_f_models_1_1_role_af805c310a02f27e352a371972f8fbed7}} 
+\index{AbetApi.EFModels.Role@{AbetApi.EFModels.Role}!Name@{Name}}
+\index{Name@{Name}!AbetApi.EFModels.Role@{AbetApi.EFModels.Role}}
+\doxysubsubsection{\texorpdfstring{Name}{Name}}
+{\footnotesize\ttfamily String Abet\+Api.\+EFModels.\+Role.\+Name\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_role_acc63c6b63f56626d2a65761d7caebba9}\label{class_abet_api_1_1_e_f_models_1_1_role_acc63c6b63f56626d2a65761d7caebba9}} 
+\index{AbetApi.EFModels.Role@{AbetApi.EFModels.Role}!RoleId@{RoleId}}
+\index{RoleId@{RoleId}!AbetApi.EFModels.Role@{AbetApi.EFModels.Role}}
+\doxysubsubsection{\texorpdfstring{RoleId}{RoleId}}
+{\footnotesize\ttfamily int Abet\+Api.\+EFModels.\+Role.\+Role\+Id\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+\mbox{\Hypertarget{class_abet_api_1_1_e_f_models_1_1_role_a54756051f54983183e6b2fe1fc990025}\label{class_abet_api_1_1_e_f_models_1_1_role_a54756051f54983183e6b2fe1fc990025}} 
+\index{AbetApi.EFModels.Role@{AbetApi.EFModels.Role}!Users@{Users}}
+\index{Users@{Users}!AbetApi.EFModels.Role@{AbetApi.EFModels.Role}}
+\doxysubsubsection{\texorpdfstring{Users}{Users}}
+{\footnotesize\ttfamily ICollection$<$\mbox{\hyperlink{class_abet_api_1_1_e_f_models_1_1_user}{User}}$>$ Abet\+Api.\+EFModels.\+Role.\+Users\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Chet\+L/\+Documents/\+Git\+Hub\+Desktop/segfault-\/wizards/\+Abet\+Api/\+EFModels/\mbox{\hyperlink{_role_8cs}{Role.\+cs}}\end{DoxyCompactItemize}
