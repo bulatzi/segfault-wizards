@@ -1,10 +1,31 @@
 ﻿using System.Collections.Generic;
 using System;
 
+//! The EFModels namespace
+/*! 
+ * This namespace falls under the AbetAPI namespace, and is for EFModels.
+ * The EFModels are generally called from the Controllers namespace, to 
+ * provide the controllers functionality, ultimately giving endpoints/functionality
+ * for the UI elements
+ */
 namespace AbetApi.Models
 {
+    //! The StudentOutcomesCompleted Class
+    /*! 
+     * This class gets called by the StudentOutcomesCompletedController class
+     * and provides functions to get and return data
+     */
     public class StudentOutcomesCompleted
     {
+        //! The ConvertToModelStudentOutcomesCompleted function
+        /*! 
+         * This function converts data structures and data into a form usable my the StudentOutcomesCompleted in Model
+         * \param term The Term (Fall/Spring) for the given semester
+         * \param year The year for the given semester
+         * \param department Major department, such as CSCE or MEEN
+         * \param courseNumber Course identifier, such as 3600 for Systems Programming
+         * \param StudentOutcomesCompleted
+         */
         public static List<Dictionary<string, string>> ConvertToModelStudentOutcomesCompleted(string term, int year, string department, string courseNumber, List<AbetApi.EFModels.StudentOutcomesCompleted> studentOutcomesCompletedList)
         {
             List<Dictionary<string, string>> tempList = new List<Dictionary<string, string>>();
@@ -49,6 +70,16 @@ namespace AbetApi.Models
             return tempList;
         }
 
+        //! The ConvertEFToModelStudentOutcomesCompleted function
+        /*! 
+         * This function converts data structures and data into a form usable my the StudentOutcomesCompleted in EFModel
+         * \param term The Term (Fall/Spring) for the given semester
+         * \param year The year for the given semester
+         * \param department Major department, such as CSCE or MEEN
+         * \param courseNumber Course identifier, such as 3600 for Systems Programming
+         * \param sectionNumber Course section, such as 001 or 002
+         * \param studentOutcomesCompletedDictionary
+         */
         public static List<AbetApi.EFModels.StudentOutcomesCompleted> ConvertToEFModelStudentOutcomesCompleted(string term, int year, string department, string courseNumber, string sectionNumber, List<Dictionary<string, string>> studentOutcomesCompletedDictionaries)
         {
             //Get a list of existing majors
