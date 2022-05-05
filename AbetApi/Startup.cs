@@ -11,7 +11,6 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.OpenApi.Models;
-using AbetApi.Data;
 
 namespace AbetApi
 {
@@ -54,11 +53,8 @@ namespace AbetApi
                 o.MultipartBodyLengthLimit = int.MaxValue;
                 o.MemoryBufferThreshold = int.MaxValue;
             });
-            services.AddScoped<IMockAbetRepo, MockAbetRepo>();
             services.AddScoped<ILdap, Ldap>();
-            services.AddScoped<IAbetRepo, AbetRepo>();
             services.AddScoped<ITokenGenerator, TokenGenerator>();
-            services.AddScoped<IUploadManager, UploadManager>();
 
             //Adds swagger
             services.AddSwaggerGen(c =>

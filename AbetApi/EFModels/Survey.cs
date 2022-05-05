@@ -14,7 +14,7 @@ namespace AbetApi.EFModels
         public int SurveyId { get; set; }
         public string EUID { get; set; }
         public string term { get; set; } //e.g. Fall
-        public string year { get; set; } //e.g. 2022
+        public int year { get; set; } //e.g. 2022
         public string department { get; set; } //e.g. CSCE
         public string courseNumber { get; set; } //e.g. 3600
         public string sectionNumber { get; set; } //e.g. 003 or 250
@@ -41,7 +41,7 @@ namespace AbetApi.EFModels
             return list;
         }
 
-        public Survey(string EUID, string term, string year, string department, string courseNumber, string sectionNumber, List<int> answerList, string additionalComments)
+        public Survey(string EUID, string term, int year, string department, string courseNumber, string sectionNumber, List<int> answerList, string additionalComments)
         {
             this.EUID = EUID;
             this.term = term;
@@ -61,29 +61,69 @@ namespace AbetApi.EFModels
         //This function is called when a survey is submitted
         public async static Task PostSurvey(Survey survey)
         {
+            // Sets the survey id to be 0, so entity framework will give it a primary key
             survey.SurveyId = 0;
+
+            //Check if the term is null or empty
+            if (survey.term == null || survey.term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check if the year is before the establishment date of the university.
+            if (survey.year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Check if the department is null or empty.
+            if (survey.department == null || survey.department == "")
+            {
+                throw new ArgumentException("The department cannot be empty.");
+            }
+
+            //Check if the course number is null or empty.
+            if (survey.courseNumber == null || survey.courseNumber == "")
+            {
+                throw new ArgumentException("The course number cannot be empty.");
+            }
+
+            //Check if the section number is null or empty.
+            if (survey.sectionNumber == null || survey.sectionNumber == "")
+            {
+                throw new ArgumentException("The section number cannot be empty.");
+            }
+
+            //Check if the EUID is null or empty.
+            if (survey.EUID == null || survey.EUID == "")
+            {
+                throw new ArgumentException("The EUID cannot be empty.");
+            }
+
+            //Check if the answer string is null or empty.
+            if(survey.answerString == null || survey.answerString == "")
+            {
+                throw new ArgumentException("The answer list cannot be empty.");
+            }
+
+            //Format term and EUID to follow a standard.
+            survey.term = survey.term[0].ToString().ToUpper() + survey.term[1..].ToLower();
+            survey.department = survey.department.ToUpper();
+            survey.EUID = survey.EUID.ToLower();
 
             await using(var context = new ABETDBContext())
             {
-                //FIXME - Check if that EUID has already submitted a survey, and early out if it already exists
-                if (await ContainsSurvey(survey) == true)
-                    return;
+                //Try to find the survey to be submitted.
+                Survey result = context.Surveys.FirstOrDefault(s => s.EUID == survey.EUID && s.term == survey.term && s.year == survey.year && s.courseNumber == survey.courseNumber && s.department == survey.department);
+                
+                //If the survey to be submitted is already found, then throw an exception.
+                if (result != null)
+                {
+                    throw new ArgumentException("This EUID has already submit a survey.");
+                }
 
                 context.Surveys.Add(survey);
                 context.SaveChanges();
-            }
-        }
-
-        private async static Task<bool> ContainsSurvey(Survey survey)
-        {
-            await using(var context = new ABETDBContext())
-            {
-                Survey result = context.Surveys.FirstOrDefault(s => s.EUID == survey.EUID && s.term == survey.term && s.year == survey.year && s.courseNumber == survey.courseNumber && s.department == survey.department);
-
-                if (result == null)
-                    return false;
-                else
-                    return true;
             }
         }
     }

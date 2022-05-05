@@ -14,7 +14,6 @@ namespace AbetApi.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        // GIVES A 204 FOR BLANK INPUT
         // This function takes an EUID and returns the user information for that EUID.
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpGet("GetUser")]
@@ -30,7 +29,6 @@ namespace AbetApi.Controllers
             }
         } // GetUser
 
-        // THROWS AN INNER EXCEPTION THAT MIGHT NEED TO BE RETHROWN FOR DETAILS
         // This function creates a user with the provided information.
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("AddUser")]
@@ -82,7 +80,6 @@ namespace AbetApi.Controllers
             }
         } // EditUser
 
-        // THROWS AN INNER EXCEPTION THAT MIGHT NEED TO BE RETHROWN FOR DETAILS
         // This function creates a user with the provided information.
         [Authorize(Roles = RoleTypes.Admin)]
         [HttpPost("AddUserWithRoles")]
@@ -91,7 +88,7 @@ namespace AbetApi.Controllers
             try
             {
                 await EFModels.User.AddUser(userWithRoles.user);
-                foreach (var role in userWithRoles.roles)
+                foreach (string role in userWithRoles.roles)
                 {
                     try
                     {

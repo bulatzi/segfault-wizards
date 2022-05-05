@@ -28,6 +28,7 @@ namespace AbetApi.Data
                 context.Users.Clear();
                 context.Roles.Clear();
                 context.Surveys.Clear();
+                context.StudentOutcomesCompleted.Clear();
                 context.SaveChanges();
             }
         }
@@ -40,6 +41,125 @@ namespace AbetApi.Data
             }
         }
 
+        public void WIPDoStuff()
+        {
+            _= Semester.AddSemester(new Semester("Spring", 2022));
+            _= Course.AddCourse("Spring", 2022, new Course("bdm0121", "1030", "Something", "", false, "CSCE"));
+            _= Course.AddCourse("Spring", 2022, new Course("bdm0121", "1040", "Something", "", false, "CSCE"));
+            _= Course.AddCourse("Spring", 2022, new Course("bdm0121", "3600", "Whatever", "", false, "CSCE"));
+
+            _= Section.AddSection("Spring", 2022, "CSCE", "1030", new Section("bdm0121", false, "001", 12));
+            _= Section.AddSection("Spring", 2022, "CSCE", "1030", new Section("bdm0121", false, "002", 15));
+            _= Section.AddSection("Spring", 2022, "CSCE", "1030", new Section("bdm0121", false, "003", 29));
+
+            _= Section.AddSection("Spring", 2022, "CSCE", "1040", new Section("bdm0121", false, "001", 33));
+            _= Section.AddSection("Spring", 2022, "CSCE", "1040", new Section("bdm0121", false, "002", 13));
+            _= Section.AddSection("Spring", 2022, "CSCE", "1040", new Section("bdm0121", false, "003", 5));
+
+            _= Section.AddSection("Spring", 2022, "CSCE", "3600", new Section("bdm0121", false, "001", 150));
+            _= Section.AddSection("Spring", 2022, "CSCE", "3600", new Section("bdm0121", false, "002", 739));
+            _= Section.AddSection("Spring", 2022, "CSCE", "3600", new Section("bdm0121", false, "003", 42));
+
+            _= CourseOutcome.CreateCourseOutcome("Spring", 2022, "CSCE", "1030", new CourseOutcome("1", "Some description 1"));
+            _= CourseOutcome.CreateCourseOutcome("Spring", 2022, "CSCE", "1030", new CourseOutcome("2", "Some description 2"));
+            _= CourseOutcome.CreateCourseOutcome("Spring", 2022, "CSCE", "1030", new CourseOutcome("3", "Some description 3"));
+
+            _= CourseOutcome.CreateCourseOutcome("Spring", 2022, "CSCE", "1040", new CourseOutcome("1", "Some description 1"));
+            _= CourseOutcome.CreateCourseOutcome("Spring", 2022, "CSCE", "1040", new CourseOutcome("2", "Some description 2"));
+            _= CourseOutcome.CreateCourseOutcome("Spring", 2022, "CSCE", "1040", new CourseOutcome("3", "Some description 3"));
+
+            _= CourseOutcome.CreateCourseOutcome("Spring", 2022, "CSCE", "3600", new CourseOutcome("1", "Some description 1"));
+            _= CourseOutcome.CreateCourseOutcome("Spring", 2022, "CSCE", "3600", new CourseOutcome("2", "Some description 2"));
+            _= CourseOutcome.CreateCourseOutcome("Spring", 2022, "CSCE", "3600", new CourseOutcome("3", "Some description 3"));
+
+            _= Major.AddMajor("Spring", 2022, "CS");
+            _= Major.AddMajor("Spring", 2022, "IT");
+
+            _= MajorOutcome.AddMajorOutcome("Spring", 2022, "CS", new MajorOutcome("1", "Accomplishes gud at computers"));
+            _= MajorOutcome.AddMajorOutcome("Spring", 2022, "CS", new MajorOutcome("2", "Accomplishes making type fast"));
+            _= MajorOutcome.AddMajorOutcome("Spring", 2022, "CS", new MajorOutcome("3", "Accomplishes websites"));
+
+            _= MajorOutcome.AddMajorOutcome("Spring", 2022, "IT", new MajorOutcome("1", "IT MO #1"));
+            _= MajorOutcome.AddMajorOutcome("Spring", 2022, "IT", new MajorOutcome("2", "IT MO #2"));
+            _= MajorOutcome.AddMajorOutcome("Spring", 2022, "IT", new MajorOutcome("3", "IT MO #3"));
+
+            _= CourseOutcome.LinkToMajorOutcome("Spring", 2022, "CSCE", "1030", "1", "CS", "1");
+            _= CourseOutcome.LinkToMajorOutcome("Spring", 2022, "CSCE", "1030", "1", "CS", "2");
+            _= CourseOutcome.LinkToMajorOutcome("Spring", 2022, "CSCE", "1030", "2", "CS", "3");
+            _= CourseOutcome.LinkToMajorOutcome("Spring", 2022, "CSCE", "1030", "3", "CS", "3");
+
+            _= CourseOutcome.LinkToMajorOutcome("Spring", 2022, "CSCE", "1040", "1", "CS", "1");
+            _= CourseOutcome.LinkToMajorOutcome("Spring", 2022, "CSCE", "1040", "1", "CS", "2");
+            _= CourseOutcome.LinkToMajorOutcome("Spring", 2022, "CSCE", "1040", "2", "CS", "3");
+            _= CourseOutcome.LinkToMajorOutcome("Spring", 2022, "CSCE", "1040", "3", "CS", "3");
+
+            _= CourseOutcome.LinkToMajorOutcome("Spring", 2022, "CSCE", "3600", "1", "CS", "1");
+            _= CourseOutcome.LinkToMajorOutcome("Spring", 2022, "CSCE", "3600", "2", "CS", "2");
+            _= CourseOutcome.LinkToMajorOutcome("Spring", 2022, "CSCE", "1040", "2", "CS", "3");
+            _= CourseOutcome.LinkToMajorOutcome("Spring", 2022, "CSCE", "1040", "3", "CS", "3");
+
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1030", "001", "1", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1030", "002", "1", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1030", "003", "1", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1030", "001", "2", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1030", "002", "2", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1030", "003", "2", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1030", "001", "3", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1030", "002", "3", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1030", "003", "3", "CS", 10);
+
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1040", "001", "1", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1040", "002", "1", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1040", "003", "1", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1040", "001", "2", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1040", "002", "2", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1040", "003", "2", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1040", "001", "3", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1040", "002", "3", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1040", "003", "3", "CS", 10);
+
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "001", "1", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "002", "1", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "003", "1", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "001", "2", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "002", "2", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "003", "2", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "001", "3", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "002", "3", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "003", "3", "CS", 10);
+
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1030", "001", "1", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1030", "002", "1", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1030", "003", "1", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1030", "001", "2", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1030", "002", "2", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1030", "003", "2", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1030", "001", "3", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1030", "002", "3", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1030", "003", "3", "IT", 10);
+
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1040", "001", "1", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1040", "002", "1", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1040", "003", "1", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1040", "001", "2", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1040", "002", "2", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1040", "003", "2", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1040", "001", "3", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1040", "002", "3", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "1040", "003", "3", "IT", 10);
+
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "001", "1", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "002", "1", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "003", "1", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "001", "2", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "002", "2", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "003", "2", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "001", "3", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "002", "3", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "003", "3", "IT", 10);
+
+        }
+
         // This function is here to run arbitrary code from the database class
         // Currently, it's being used to test creating/editing data in the database
         public void DoStuff()
@@ -48,15 +168,15 @@ namespace AbetApi.Data
             WipeTables();
 
             //Adds Users
-            User.AddUser(new User("Bryan", "Morris", "bdm0121"));
-            User.AddUser(new User("Sean", "Boden", "slb0589"));
-            User.AddUser(new User("Stephen", "Bishop", "scb0231"));
-            User.AddUser(new User("Alex", "Lambert", "apl0075"));
-            User.AddUser(new User("Chet", "Lockwood", "cgl0021"));
+            _= User.AddUser(new User("Sean", "Boden", "slb0589"));
+            _= User.AddUser(new User("Stephen", "Bishop", "scb0231"));
+            _= User.AddUser(new User("Alex", "Lambert", "apl0075"));
+            _= User.AddUser(new User("Chet", "Lockwood", "cgl0021"));
+            _= User.AddUser(new User("Bryan", "Morris", "bdm0121"));
+            
+            _= User.EditUser("cgl0021", new User("Scrappy", "Eagle", "cgl0021"));
 
-            User.EditUser("cgl0021", new User("Scrappy", "Eagle", "cgl0021"));
-
-            User.DeleteUser("scb0231");
+            _= User.DeleteUser("scb0231");
 
             //NOTES: User Crud
             //User.AddUser(new User("Bryan", "Morris", "bdm0121"));
@@ -65,13 +185,13 @@ namespace AbetApi.Data
             //var result = User.GetUser("bdm0121").Result;
 
             //Creates default roles
-            Role.CreateRole("Admin");
-            Role.CreateRole("Coordinator");
-            Role.CreateRole("Instructor");
-            Role.CreateRole("Fellow");
-            Role.CreateRole("FullTime");
-            Role.CreateRole("Adjunct");
-            Role.CreateRole("Student");
+            _= Role.CreateRole(new Role("Admin"));
+            _= Role.CreateRole(new Role("Coordinator"));
+            _= Role.CreateRole(new Role("Instructor"));
+            _= Role.CreateRole(new Role("Fellow"));
+            _= Role.CreateRole(new Role("FullTime"));
+            _= Role.CreateRole(new Role("Adjunct"));
+            _= Role.CreateRole(new Role("Student"));
 
             //Gives admin access to:
             /*
@@ -81,14 +201,14 @@ namespace AbetApi.Data
                 Alex Lambert (apl0075)
                 Chet Lockwood (cgl0021)
              */
-            Role.AddRoleToUser("bdm0121", "Admin");
-            Role.AddRoleToUser("slb0589", "Admin");
+            _= Role.AddRoleToUser("bdm0121", "Admin");
+            _= Role.AddRoleToUser("slb0589", "Admin");
             //Role.AddRoleToUser("scb0231", "Admin");
-            Role.AddRoleToUser("apl0075", "Admin");
-            Role.AddRoleToUser("cgl0021", "Admin");
+            _= Role.AddRoleToUser("apl0075", "Admin");
+            _= Role.AddRoleToUser("cgl0021", "Admin");
 
-            Role.AddRoleToUser("slb0589", "Instructor");
-            Role.AddRoleToUser("bdm0121", "Instructor");
+            _= Role.AddRoleToUser("slb0589", "Instructor");
+            _= Role.AddRoleToUser("bdm0121", "Instructor");
 
             //this returns a list of users by the entered roll
             //var adminListTask = Role.GetUsersByRole("Admin");
@@ -99,17 +219,17 @@ namespace AbetApi.Data
             //Semester class testing
             /////////////////////////////////////////////////////////////////////////////////
             //Create
-            Semester.AddSemester(new Semester("Spring", 2022));
-            Semester.AddSemester(new Semester("Fall", 2022));
-            Semester.AddSemester(new Semester("Summer", 2022));
-            Semester.AddSemester(new Semester("Spring", 2023));
-            Semester.AddSemester(new Semester("Fall", 2023));
-            Semester.AddSemester(new Semester("Summer", 2023));
+            _= Semester.AddSemester(new Semester("Spring", 2022));
+            _= Semester.AddSemester(new Semester("Fall", 2022));
+            _= Semester.AddSemester(new Semester("Summer", 2022));
+            _= Semester.AddSemester(new Semester("Spring", 2023));
+            _= Semester.AddSemester(new Semester("Fall", 2023));
+            _= Semester.AddSemester(new Semester("Summer", 2023));
             //Read
             var springSemester = Semester.GetSemester("Spring", 2022);
             var fallSemester = Semester.GetSemester("Fall", 2022); // This won't work. It returns null when it can't find something
             //Update
-            Semester.EditSemester("Spring", 2022, new Semester("Winter", 2022));
+            _= Semester.EditSemester("Spring", 2022, new Semester("Winter", 2022));
             //Read (again)
             springSemester = Semester.GetSemester("Spring", 2022);
             fallSemester = Semester.GetSemester("Fall", 2022);
@@ -119,7 +239,9 @@ namespace AbetApi.Data
 
             //Major class testing
             /////////////////////////////////////////////////////////////////////////////////
-            Major.AddMajor("Fall", 2022, "CS");
+            _= Major.AddMajor("Fall", 2022, "CS");
+            _= Major.AddMajor("Fall", 2022, "IT");
+            _= Major.AddMajor("Fall", 2022, "CYS");
             //var temp = Major.GetMajor("Fall", 2022, "CS");
             //temp = Major.GetMajor("Fall", 2022, "CSE"); // return null
             //Major.EditMajor("Fall", 2022, "CS", new Major("IT"));
@@ -128,19 +250,19 @@ namespace AbetApi.Data
 
             //MajorOutcome class testing
             /////////////////////////////////////////////////////////////////////////////////
-            MajorOutcome.AddMajorOutcome("Fall", 2022, "CS", new MajorOutcome("1", "Accomplishes gud at computers"));
-            MajorOutcome.AddMajorOutcome("Fall", 2022, "CS", new MajorOutcome("2", "Accomplishes making type fast"));
-            MajorOutcome.AddMajorOutcome("Fall", 2022, "CS", new MajorOutcome("3", "Accomplishes websites"));
+            _= MajorOutcome.AddMajorOutcome("Fall", 2022, "CS", new MajorOutcome("1", "Accomplishes gud at computers"));
+            _= MajorOutcome.AddMajorOutcome("Fall", 2022, "CS", new MajorOutcome("2", "Accomplishes making type fast"));
+            _= MajorOutcome.AddMajorOutcome("Fall", 2022, "CS", new MajorOutcome("3", "Accomplishes websites"));
             var tempMajorOutcome =  MajorOutcome.GetMajorOutcome("Fall", 2022, "CS", "2");
-            MajorOutcome.EditMajorOutcome("Fall", 2022, "CS", "3", new MajorOutcome("3", "Gud at spelung"));
+            _= MajorOutcome.EditMajorOutcome("Fall", 2022, "CS", "3", new MajorOutcome("3", "Gud at spelung"));
             //MajorOutcome.DeleteMajorOutcome("Fall", 2022, "CS", "3");
 
             System.Console.WriteLine("");
 
             //Course class testing
             /////////////////////////////////////////////////////////////////////////////////
-            Course.AddCourse("Fall", 2022, new Course("bdm0121", "3600", "Whatever", "", false, "CSCE"));
-            Course.AddCourse("Fall", 2022, new Course("bdm0121", "1040", "Something", "", false, "CSCE"));
+            _= Course.AddCourse("Fall", 2022, new Course("bdm0121", "3600", "Whatever", "", false, "CSCE"));
+            _= Course.AddCourse("Fall", 2022, new Course("bdm0121", "1040", "Something", "", false, "CSCE"));
             //var course = Course.GetCourse("Fall", 2022, "CSCE", "3600"); // This is an example of a get function that loads one of the lists
             //var tempSemester = Semester.GetSemester("Fall", 2022); // This is a dumb get function, that only returns exactly what you ask for without the lists
 
@@ -153,32 +275,56 @@ namespace AbetApi.Data
 
             //Section class testing
             /////////////////////////////////////////////////////////////////////////////////
-            Section.AddSection("Fall", 2022, "CSCE", "3600", new Section("bdm0121", false, "001", 150));
-            Section.AddSection("Fall", 2022, "CSCE", "3600", new Section("bdm0121", false, "002", 739));
-            Section.AddSection("Fall", 2022, "CSCE", "3600", new Section("bdm0121", false, "003", 42));
+            _= Section.AddSection("Fall", 2022, "CSCE", "3600", new Section("bdm0121", false, "001", 150));
+            _= Section.AddSection("Fall", 2022, "CSCE", "3600", new Section("bdm0121", false, "002", 739));
+            _= Section.AddSection("Fall", 2022, "CSCE", "3600", new Section("bdm0121", false, "003", 42));
             //var temp = Course.GetSections("Fall", 2022, "CSCE", "3600");
             //var temp = Section.GetSection("Fall", 2022, "CSCE", "3600", "001");
-            Section.EditSection("Fall", 2022, "CSCE", "3600", "002", new Section("bdm0121", true, "002", 140));
-            Section.DeleteSection("Fall", 2022, "CSCE", "3600", "001");
+            _= Section.EditSection("Fall", 2022, "CSCE", "3600", "002", new Section("bdm0121", true, "002", 140));
+            _= Section.DeleteSection("Fall", 2022, "CSCE", "3600", "001");
 
 
             //CourseOutcome class testing
             /////////////////////////////////////////////////////////////////////////////////
-            CourseOutcome.CreateCourseOutcome("Fall", 2022, "CSCE", "3600", new CourseOutcome("CS"));
-            CourseOutcome.CreateCourseOutcome("Fall", 2022, "CSCE", "1040", new CourseOutcome("CS"));
+            _= CourseOutcome.CreateCourseOutcome("Fall", 2022, "CSCE", "3600", new CourseOutcome("1", "Some description 1"));
+            _= CourseOutcome.CreateCourseOutcome("Fall", 2022, "CSCE", "3600", new CourseOutcome("2", "Some description 2"));
+            _= CourseOutcome.CreateCourseOutcome("Fall", 2022, "CSCE", "1040", new CourseOutcome("1", "Some description 1"));
+            _= CourseOutcome.CreateCourseOutcome("Fall", 2022, "CSCE", "1040", new CourseOutcome("2", "Some description 2"));
+            _= CourseOutcome.CreateCourseOutcome("Fall", 2022, "CSCE", "1040", new CourseOutcome("2", "Some different description 2")); // This overwrites the other 2 for this course
 
             //CourseOutcome.AddMajorOutcome("Fall", 2022, "CSCE", "3600", "CS", "739");// These next 3 will not work
             //CourseOutcome.AddMajorOutcome("Fall", 2022, "CSCE", "3600", "CS", "22");
             //CourseOutcome.AddMajorOutcome("Fall", 2022, "CSCE", "1040", "CS", "42");
-            CourseOutcome.AddMajorOutcome("Fall", 2022, "CSCE", "1040", "CS", "2"); // This one should work
-            CourseOutcome.AddMajorOutcome("Fall", 2022, "CSCE", "1040", "CS", "1");
+            _= CourseOutcome.LinkToMajorOutcome("Fall", 2022, "CSCE", "1040","2", "CS", "1"); // This one should work
+            _= CourseOutcome.LinkToMajorOutcome("Fall", 2022, "CSCE", "1040", "1", "CS", "2");
+            _= CourseOutcome.LinkToMajorOutcome("Fall", 2022, "CSCE", "3600", "1", "CS", "1");
+            _= CourseOutcome.LinkToMajorOutcome("Fall", 2022, "CSCE", "3600", "2", "CS", "2");
 
             System.Console.WriteLine("");
 
-            CourseOutcome.DeleteCourseOutcome("Fall", 2022, "CSCE", "1040", "CS");
+            //CourseOutcome.DeleteCourseOutcome("Fall", 2022, "CSCE", "1040", "2");
 
-            //CourseOutcome.RemoveMajorOutcome("Fall", 2022, "CSCE", "1040", "CS", "2");
+            //CourseOutcome.RemoveLinkToMajorOutcome("Fall", 2022, "CSCE", "1040", "2", "CS", "2");
 
+            System.Console.WriteLine(""); //This is a placeholder for a debugger break point
+            //Testing for section grades in the section class
+            /////////////////////////////////////////////////////////////////////
+            //Grade.SetSectionGrade("Fall", 2022, "CSCE", "3600", "002", new Grade())
+            List<Grade> grades = new List<Grade>();
+            grades.Add(new Grade("CSCE", 1, 2, 3, 4, 5, 6, 7, 666));
+            grades.Add(new Grade("EENG", 8, 9, 10, 11, 12, 13, 14, 999));
+            _= Grade.SetGrades("Fall", 2022, "CSCE", "3600", "002", grades);
+
+
+            //Testing section for StudentOutcomesCompleted
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Fall", 2022, "CSCE", "3600", "002", "1", "CS", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Fall", 2022, "CSCE", "3600", "002", "2", "IT", 20);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Fall", 2022, "CSCE", "3600", "002", "1", "IT", 10);
+            _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Fall", 2022, "CSCE", "3600", "002", "2", "CS", 20);
+
+            var temp = StudentOutcomesCompleted.GetStudentOutcomesCompleted("Fall", 2022, "CSCE", "3600", "002");
+
+            //var eh = CourseOutcome.MapCourseOutcomeToMajorOutcome("Fall", 2022, "CSCE", "1040", "3", "CS").Result;
             System.Console.WriteLine(""); //This is a placeholder for a debugger break point
         }
     }

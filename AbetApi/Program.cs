@@ -20,7 +20,7 @@ namespace AbetApi
                 // Changes to the ABETDBContext class will not apply changes to the existing database.
                 // If you don't have real data in the database, pick up changes via dropping your database, and run the program again. It will auto generate.
                 ctx.Database.EnsureCreated();
-                AbetApi.Data.Database.WipeTables();
+                //AbetApi.Data.Database.WipeTables();
             }
             CreateHostBuilder(args).Build().Run();
         }

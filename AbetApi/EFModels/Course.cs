@@ -29,6 +29,7 @@ namespace AbetApi.EFModels
 
         public Course(string coordinator, string courseNumber, string displayName, string coordinatorComment, bool isCourseCompleted, string department) : this()
         {
+            this.CoordinatorEUID = coordinator;
             this.CourseNumber = courseNumber; // e.g. 2100
             this.DisplayName = displayName; // A human readable name. (Intro to networks)
             this.CoordinatorComment = coordinatorComment; // A miscellanious comment
@@ -46,225 +47,784 @@ namespace AbetApi.EFModels
 
         public async static Task AddCourse(string term, int year, Course course)
         {
+            //Sets the course id to be 0, so entity framework will give it a primary key
             course.CourseId = 0;
+
+            //Check if the term is null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check if the year is before the establishment date of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Check if the coordinator EUID is null or empty.
+            if (course.CoordinatorEUID == null || course.CoordinatorEUID == "")
+            {
+                throw new ArgumentException("The coordinator EUID cannot be empty.");
+            }
+
+            //Check if the course number is null or empty.
+            if (course.CourseNumber == null || course.CourseNumber == "")
+            {
+                throw new ArgumentException("The course number cannot be empty.");
+            }
+
+            //Check if the course name is null or empty.
+            if (course.DisplayName == null || course.DisplayName == "")
+            {
+                throw new ArgumentException("The course name cannot be empty.");
+            }
+
+            //Check if the department is null or empty.
+            if (course.Department == null || course.Department == "")
+            {
+                throw new ArgumentException("The department cannot be empty.");
+            }
+
+            //Format term, department, and coordinator EUID to follow a standard.
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            course.Department = course.Department.ToUpper();
+            course.CoordinatorEUID = course.CoordinatorEUID.ToLower();
 
             await using (var context = new ABETDBContext())
             {
-                //FIXME - This probably needs a null check, or it'll break here if they try to add a course to a null semester
-                //var semester = Semester.GetSemester(term, year);
+                //Try to find the specified semester in the database.
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+
+                //If it does not exist, throw an exception.
+                if (semester == null)
+                {
+                    throw new ArgumentException("The specified semester does not exist in the database.");
+                }
+
+                //Load the courses under the specified semester.
+                context.Entry(semester).Collection(semester => semester.Courses).Load();
+
+                //Try to find the course specified to protect against duplicates.
+                foreach (Course iteratorCourse in semester.Courses)
+                {
+                    if (iteratorCourse.CourseNumber == course.CourseNumber)
+                    {
+                        throw new ArgumentException("That course already exists in the database.");
+                    }
+                }
+
+                //If the entry doesn't exist, add it.
                 context.Courses.Add(course);
                 semester.Courses.Add(course);
                 context.SaveChanges();
-
-                return;
             }
         } // AddCourse
 
         public async static Task<Course> GetCourse(string term, int year, string department, string courseNumber)
         {
-            await using var context = new ABETDBContext();
+            //Check if the term is null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check if the year is before the establishment date of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Check if the course number is null or empty.
+            if (courseNumber == null || courseNumber == "")
+            {
+                throw new ArgumentException("The course number cannot be empty.");
+            }
+
+            //Check if the department is null or empty.
+            if (department == null || department == "")
+            {
+                throw new ArgumentException("The department cannot be empty.");
+            }
+
+            //Format term, department, and coordinator EUID to follow a standard.
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            department = department.ToUpper();
 
             //This code block finds the given semester, and then searches its courses for the provided course details
             //This search assumes there will only be one department/course number combo.
-            //FIXME - Add a null check
-            Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
-            context.Entry(semester).Collection(semester => semester.Courses).Load();
-            foreach (var course in semester.Courses)
+            await using (var context = new ABETDBContext())
             {
-                if (course.Department == department && course.CourseNumber == courseNumber)
+                //Try to find the specified semester in the database.
+                Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+
+                //If it does not exist, throw an exception.
+                if (semester == null)
                 {
-                    return course;
+                    throw new ArgumentException("The specified semester does not exist in the database.");
                 }
+
+                //Load the courses under the specified semester.
+                context.Entry(semester).Collection(semester => semester.Courses).Load();
+
+                //Check that the specified semester has courses under it.
+                if (semester.Courses.Count == 0)
+                {
+                    throw new ArgumentException("The specified semester has no courses.");
+                }
+
+                foreach (Course course in semester.Courses)
+                {
+                    if (course.Department == department && course.CourseNumber == courseNumber)
+                    {
+                        return course;
+                    }
+                }
+
+                throw new ArgumentException("The course specified does not exist in the database.");
             }
-            return null;
         } // GetCourse
 
         public async static Task EditCourse(string term, int year, string department, string courseNumber, Course NewValue)
         {
+            //Check if the term is null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check if the year is before the establishment date of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Check if the old department is null or empty.
+            if (department == null || department == "")
+            {
+                throw new ArgumentException("The old department cannot be empty.");
+            }
+
+            //Check if the old course number is null or empty.
+            if (courseNumber == null || courseNumber == "")
+            {
+                throw new ArgumentException("The old course number cannot be empty.");
+            }
+
+            //Check if the new coordinator EUID is null or empty.
+            if (NewValue.CoordinatorEUID == null || NewValue.CoordinatorEUID == "")
+            {
+                throw new ArgumentException("The new coordinator EUID cannot be empty.");
+            }
+
+            //Check if the new course number is null or empty.
+            if (NewValue.CourseNumber == null || NewValue.CourseNumber == "")
+            {
+                throw new ArgumentException("The new course number cannot be empty.");
+            }
+
+            //Check if the new course name is null or empty.
+            if (NewValue.DisplayName == null || NewValue.DisplayName == "")
+            {
+                throw new ArgumentException("The new course name cannot be empty.");
+            }
+
+            //Check if the new department is null or empty.
+            if (NewValue.Department == null || NewValue.Department == "")
+            {
+                throw new ArgumentException("The new department cannot be empty.");
+            }
+
+            //Format term, old department, new department and new coordinator EUID to follow a standard.
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            department = department.ToUpper();
+            NewValue.Department = NewValue.Department.ToUpper();
+            NewValue.CoordinatorEUID = NewValue.CoordinatorEUID.ToLower();
+
             await using (var context = new ABETDBContext())
             {
+                Course tempCourse = null;
+
+                //Try to find the specified semester in the database.
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
-                context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+
+                //If it does not exist, throw an exception.
+                if (semester == null)
                 {
+                    throw new ArgumentException("The specified semester does not exist in the database.");
+                }
+
+                //Load the courses under the specified semester.
+                context.Entry(semester).Collection(semester => semester.Courses).Load();
+
+                //Check that the specified semester has courses under it.
+                if (semester.Courses.Count == 0)
+                {
+                    throw new ArgumentException("The specified semester has no courses.");
+                }
+
+                //Try to find the course specified.
+                foreach (Course course in semester.Courses)
+                {
+                    //Check for duplicates.
+                    if (course.CourseNumber == NewValue.CourseNumber)
+                    {
+                        throw new ArgumentException("That course number already exists in the database.");
+                    }
+
                     if (course.Department == department && course.CourseNumber == courseNumber)
                     {
-                        //FIXME - make a copy constructor. Bad maintainability.
-                        course.CoordinatorEUID = NewValue.CoordinatorEUID;
-                        course.CourseNumber = NewValue.CourseNumber;
-                        course.DisplayName = NewValue.DisplayName;
-                        course.CoordinatorComment = NewValue.CoordinatorComment;
-                        course.IsCourseCompleted = NewValue.IsCourseCompleted;
-                        course.Department = NewValue.Department;
-                        course.CourseOutcomes = NewValue.CourseOutcomes;
-                        context.SaveChanges();
-                        return;
+                        tempCourse = course;
                     }
                 }
-                return;
+
+                //Check that the course specified was found.
+                if (tempCourse == null)
+                {
+                    throw new ArgumentException("The course specified to edit does not exist in the database.");
+                }
+
+                //Edit the course specified.
+                tempCourse.CoordinatorEUID = NewValue.CoordinatorEUID;
+                tempCourse.Department = NewValue.Department;
+                tempCourse.CourseNumber = NewValue.CourseNumber;
+                tempCourse.DisplayName = NewValue.DisplayName;
+                context.SaveChanges();
             }
         } // EditCourse
 
-        // THIS THREW THREE EXCEPTIONS ONE MISTAKEN INPUT, ONE FROM ENTITY and TWO FROM SYSTEM.PRIVATE.CORELIB. COULD USE MORE DETAIL FOR THROWN EXCEPTIONS
-        // MIGHT BE STANDARD, BUT MESSAGE WAS ALSO 'SEE INTERIOR EXCEPTION'
         public async static Task DeleteCourse(string term, int year, string department, string courseNumber)
         {
+            //Check if the term is null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check if the year is before the establishment date of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Check if the course number is null or empty.
+            if (courseNumber == null || courseNumber == "")
+            {
+                throw new ArgumentException("The course number cannot be empty.");
+            }
+
+            //Check if the department is null or empty.
+            if (department == null || department == "")
+            {
+                throw new ArgumentException("The department cannot be empty.");
+            }
+
+            //Format term and department to follow a standard.
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            department = department.ToUpper();
+
             await using (var context = new ABETDBContext())
             {
+                Course tempCourse = null;
+
+                //Try to find the specified semester in the database.
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+
+                //If it does not exist, throw an exception.
+                if (semester == null)
+                {
+                    throw new ArgumentException("The specified semester does not exist in the database.");
+                }
+
+                //Load the courses under the specified semester.
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+
+                //Check that the specified semester has courses under it.
+                if (semester.Courses.Count == 0)
+                {
+                    throw new ArgumentException("The specified semester has no courses.");
+                }
+
+                //Try to find the course specified.
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == department && course.CourseNumber == courseNumber)
                     {
-                        context.Remove(course);
-                        context.SaveChanges();
-                        return;
+                        tempCourse = course;
+                        break;
                     }
                 }
-                return;
+
+                //Check that the course specified was found.
+                if (tempCourse == null)
+                {
+                    throw new ArgumentException("The course specified does not exist in the database.");
+                }
+
+                //Delete the course specified.
+                context.Remove(tempCourse);
+                context.SaveChanges();
             }
         } // DeleteCourse
 
         // This function gets all the sections from the course specified by the input arguments
         public static async Task<List<Section>> GetSectionsByCourse(string term, int year, string department, string courseNumber)
         {
-            List<Section> list = new List<Section>();
+            //Check if the term is null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check if the year is before the establishment date of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Check if the course number is null or empty.
+            if (courseNumber == null || courseNumber == "")
+            {
+                throw new ArgumentException("The course number cannot be empty.");
+            }
+
+            //Check if the department is null or empty.
+            if (department == null || department == "")
+            {
+                throw new ArgumentException("The department cannot be empty.");
+            }
+
+            //Format term and department to follow a standard.
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            department = department.ToUpper();
 
             await using (var context = new ABETDBContext())
             {
-                //FIXME - Add null checking
+                //Try to find the specified semester in the database.
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+
+                //If it does not exist, throw an exception.
+                if (semester == null)
+                {
+                    throw new ArgumentException("The specified semester does not exist in the database.");
+                }
+
+                //Load the courses under the specified semester.
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+
+                //Check that the specified semester has courses under it.
+                if (semester.Courses.Count == 0)
+                {
+                    throw new ArgumentException("The specified semester has no courses.");
+                }
+
+                //Try to find the course specified.
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == department && course.CourseNumber == courseNumber)
                     {
+                        //Load the sections under that course.
                         context.Entry(course).Collection(course => course.Sections).Load();
-                        foreach (var section in course.Sections)
+
+                        //Check that the specified course has sections under it.
+                        if (course.Sections.Count == 0)
                         {
-                            list.Add(section);
+                            throw new ArgumentException("The specified course has no sections.");
                         }
 
+                        //Return list of sections.
+                        return course.Sections.ToList();
                     }
                 }
-                return list;
+
+                throw new ArgumentException("The course specified does not exist in the database.");
             }
         } // GetSections
 
         public static async Task<List<string>> getMajorsThatRequireCourse(string term, int year, string department, string courseNumber)
         {
-            List<string> list = new List<string>();
+            //Check if the term is null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check if the year is before the establishment date of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Check if the course number is null or empty.
+            if (courseNumber == null || courseNumber == "")
+            {
+                throw new ArgumentException("The course number cannot be empty.");
+            }
+
+            //Check if the department is null or empty.
+            if (department == null || department == "")
+            {
+                throw new ArgumentException("The department cannot be empty.");
+            }
+
+            //Format term and department to follow a standard.
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            department = department.ToUpper();
 
             await using (var context = new ABETDBContext())
             {
-                //FIXME - Add null checking
+                HashSet<string> majors = new HashSet<string>();
+
+                //Try to find the specified semester in the database.
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+
+                //If it does not exist, throw an exception.
+                if (semester == null)
+                {
+                    throw new ArgumentException("The specified semester does not exist in the database.");
+                }
+
+                //Load the courses under the specified semester.
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+
+                //Check that the specified semester has courses under it.
+                if (semester.Courses.Count == 0)
+                {
+                    throw new ArgumentException("The specified semester has no courses.");
+                }
+
+                //Try to find the course specified.
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == department && course.CourseNumber == courseNumber)
                     {
+                        //Load the course outcomes under the course specified.
                         context.Entry(course).Collection(course => course.CourseOutcomes).Load();
-                        foreach (var courseOutcomes in course.CourseOutcomes)
+
+                        //Check that the specified course has course outcomes under it.
+                        if (course.CourseOutcomes.Count == 0)
                         {
-                            list.Add(courseOutcomes.Major);
+                            throw new ArgumentException("The specified course has no course outcomes.");
                         }
 
+                        foreach (CourseOutcome courseOutcome in course.CourseOutcomes)
+                        {
+                            //Load the major outcomes linked to each course outcome.
+                            context.Entry(courseOutcome).Collection(courseOutcome => courseOutcome.MajorOutcomes).Load();
+
+                            foreach (MajorOutcome majorOutcome in courseOutcome.MajorOutcomes)
+                            {
+                                //Load the majors attached to each major outcome.
+                                context.Entry(majorOutcome).Collection(majorOutcome => majorOutcome.Majors).Load();
+
+                                foreach (Major major in majorOutcome.Majors)
+                                {
+                                    majors.Add(major.Name);
+                                }
+                            }
+                        }
+
+                        return majors.ToList();
                     }
                 }
-                return list;
+
+                throw new ArgumentException("The course specified does not exist in the database.");
             }
         } // getMajorsThatRequireCourse
-
 
         //this function returns a list of all courses in a given department for a given semester
         public static async Task<List<Course>> GetCoursesByDepartment(string term, int year, string department)
         {
-            List<Course> list = new List<Course>();
+            //Check if the term is null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check if the year is before the establishment date of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Check if the department is null or empty.
+            if (department == null || department == "")
+            {
+                throw new ArgumentException("The department cannot be empty.");
+            }
+
+            //Format term and department to follow a standard.
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            department = department.ToUpper();
+
             await using (var context = new ABETDBContext())
             {
+                List<Course> courses = new List<Course>();
+
+                //Try to find the specified semester in the database.
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+
+                //If it does not exist, throw an exception.
+                if (semester == null)
+                {
+                    throw new ArgumentException("The specified semester does not exist in the database.");
+                }
+
+                //Load the courses under the specified semester.
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+
+                //Check that the specified semester has courses under it.
+                if (semester.Courses.Count == 0)
+                {
+                    throw new ArgumentException("The specified semester has no courses.");
+                }
+
+                //Try to find the course specified.
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == department)
                     {
-                        list.Add(course);
+                        courses.Add(course);
                     }
                 }
+
+                return courses;
             }
-            return list;
         } // GetCoursesByDepartment
 
         //this function returns a list of all course names in a given department for a given semester
         public static async Task<List<string>> GetCourseNamesByDepartment(string term, int year, string department)
         {
-            List<string> list = new List<string>();
+            //Check if the term is null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check if the year is before the establishment date of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Check if the department is null or empty.
+            if (department == null || department == "")
+            {
+                throw new ArgumentException("The department cannot be empty.");
+            }
+
+            //Format term and department to follow a standard.
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            department = department.ToUpper();
+
             await using (var context = new ABETDBContext())
             {
+                List<string> courseNames = new List<string>();
+
+                //Try to find the specified semester in the database.
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+
+                //If it does not exist, throw an exception.
+                if (semester == null)
+                {
+                    throw new ArgumentException("The specified semester does not exist in the database.");
+                }
+
+                //Load the courses under the specified semester.
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+
+                //Check that the specified semester has courses under it.
+                if (semester.Courses.Count == 0)
+                {
+                    throw new ArgumentException("The specified semester has no courses.");
+                }
+
+                //Try to find the course specified.
+                foreach (Course course in semester.Courses)
                 {
                     if (course.Department == department)
                     {
-                        list.Add(course.DisplayName);
+                        courseNames.Add(course.DisplayName);
                     }
                 }
+
+                return courseNames;
             }
-            return list;
         } // GetCourseNamesByDepartment
 
         //this function returns a list of all departments that have courses for a given semester
         public static async Task<List<string>> GetDepartments(string term, int year)
         {
-            HashSet<string> list = new HashSet<string>();
+            //Check if the term is null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check if the year is before the establishment date of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Format term and department to follow a standard.
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+
             await using (var context = new ABETDBContext())
             {
-                Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
-                context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var courses in semester.Courses)
-                {
-                    list.Add(courses.Department);
+                HashSet<string> departments = new HashSet<string>();
 
+                //Try to find the specified semester in the database.
+                Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+
+                //If it does not exist, throw an exception.
+                if (semester == null)
+                {
+                    throw new ArgumentException("The specified semester does not exist in the database.");
                 }
-                return list.ToList();
+
+                //Load the courses under the specified semester.
+                context.Entry(semester).Collection(semester => semester.Courses).Load();
+
+                //Check that the specified semester has courses under it.
+                if (semester.Courses.Count == 0)
+                {
+                    throw new ArgumentException("The specified semester has no courses.");
+                }
+
+                //Try to find the course specified.
+                foreach (Course course in semester.Courses)
+                {
+                    departments.Add(course.Department);
+                }
+                return departments.ToList();
             }
         } // GetDepartments
 
         //gets all the courseoutcomes assigned to a course
         public static async Task<List<MajorOutcome>> GetMajorOutcomesSatisfied(string term, int year, string department, string courseNumber)
         {
-            List<MajorOutcome> majorOutcomes = new List<MajorOutcome>();
+            //Check if the term is null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check if the year is before the establishment date of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Check if the course number is null or empty.
+            if (courseNumber == null || courseNumber == "")
+            {
+                throw new ArgumentException("The course number cannot be empty.");
+            }
+
+            //Check if the department is null or empty.
+            if (department == null || department == "")
+            {
+                throw new ArgumentException("The department cannot be empty.");
+            }
+
+            //Format term and department to follow a standard.
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+            department = department.ToUpper();
 
             await using (var context = new ABETDBContext())
             {
+                HashSet<MajorOutcome> majorOutcomes = new HashSet<MajorOutcome>();
+                Course tempCourse = null;
+
+                //Try to find the specified semester in the database.
                 Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+
+                //If it does not exist, throw an exception.
+                if (semester == null)
+                {
+                    throw new ArgumentException("The specified semester does not exist in the database.");
+                }
+
+                //Load the courses under the specified semester.
                 context.Entry(semester).Collection(semester => semester.Courses).Load();
-                foreach (var course in semester.Courses)
+
+                //Check that the specified semester has courses under it.
+                if (semester.Courses.Count == 0)
+                {
+                    throw new ArgumentException("The specified semester has no courses.");
+                }
+
+                //Try to find the course specified.
+                foreach (Course course in semester.Courses)
                 {
                     if (course.CourseNumber == courseNumber && course.Department == department)
                     {
-                        context.Entry(course).Collection(course => course.CourseOutcomes).Load();
-                        foreach (var courseoutcome in course.CourseOutcomes)
-                        {
-                            context.Entry(courseoutcome).Collection(courseoutcome => courseoutcome.MajorOutcomes).Load();
-                            foreach (var majoroutcome in courseoutcome.MajorOutcomes)
-                            {
-                                majorOutcomes.Add(majoroutcome);
-                            }
-                        }
+                        tempCourse = course;
+                        break;
+                    }
+                }
+
+                //Load the course outcomes under the specified course
+                context.Entry(tempCourse).Collection(course => course.CourseOutcomes).Load();
+
+                foreach (CourseOutcome courseoutcome in tempCourse.CourseOutcomes)
+                {
+                    context.Entry(courseoutcome).Collection(courseoutcome => courseoutcome.MajorOutcomes).Load();
+                    foreach (MajorOutcome majoroutcome in courseoutcome.MajorOutcomes)
+                    {
+                        majorOutcomes.Add(majoroutcome);
                     }
                 }
 
                 return majorOutcomes.ToList();
             }
-            
-            
-
         }//GetCoursesCourseOutcomes
+
+        //Returns a list of all courses for a semester
+        public static async Task<List<Course>> GetCourses(string term, int year)
+        {
+            //Check if the term is null or empty.
+            if (term == null || term == "")
+            {
+                throw new ArgumentException("The term cannot be empty.");
+            }
+
+            //Check if the year is before the establishment date of the university.
+            if (year < 1890)
+            {
+                throw new ArgumentException("The year cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Format term and department to follow a standard.
+            term = term[0].ToString().ToUpper() + term[1..].ToLower();
+
+            await using (var context = new ABETDBContext())
+            {
+                //Try to find the specified semester in the database.
+                Semester semester = context.Semesters.FirstOrDefault(p => p.Term == term && p.Year == year);
+
+                //If it does not exist, throw an exception.
+                if (semester == null)
+                {
+                    throw new ArgumentException("The specified semester does not exist in the database.");
+                }
+
+                //Load the courses under the specified semester.
+                context.Entry(semester).Collection(semester => semester.Courses).Load();
+
+                //Check that the specified semester has courses under it.
+                if (semester.Courses.Count == 0)
+                {
+                    throw new ArgumentException("The specified semester has no courses.");
+                }
+
+                //Return the courses under the specified semester.
+                return semester.Courses.ToList();
+            }
+        } // GetCourses
+
+        //A function that returns a list of all the courses taught by a specific instructor
 
     } // Course
 }

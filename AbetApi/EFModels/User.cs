@@ -57,8 +57,8 @@ namespace AbetApi.EFModels
             }
 
             //Format first name, last name, and EUID to follow a standard.
-            User.FirstName = User.FirstName[0].ToString().ToUpper() + User.FirstName.Substring(1);
-            User.LastName = User.LastName[0].ToString().ToUpper() + User.LastName.Substring(1);
+            User.FirstName = User.FirstName[0].ToString().ToUpper() + User.FirstName[1..].ToLower();
+            User.LastName = User.LastName[0].ToString().ToUpper() + User.LastName[1..].ToLower();
             //When formatting EUID I want to ask Ludi if an EUID will always be three letters followed by 4 numbers, or if we don't care to check formatting that specifically.
             User.EUID = User.EUID.ToLower();
 
@@ -138,8 +138,8 @@ namespace AbetApi.EFModels
             }
 
             //Format first name, last name, and EUID of the new user information to follow a standard.
-            NewUserInfo.FirstName = NewUserInfo.FirstName[0].ToString().ToUpper() + NewUserInfo.FirstName.Substring(1);
-            NewUserInfo.LastName = NewUserInfo.LastName[0].ToString().ToUpper() + NewUserInfo.LastName.Substring(1);
+            NewUserInfo.FirstName = NewUserInfo.FirstName[0].ToString().ToUpper() + NewUserInfo.FirstName[1..].ToLower();
+            NewUserInfo.LastName = NewUserInfo.LastName[0].ToString().ToUpper() + NewUserInfo.LastName[1..].ToLower();
             NewUserInfo.EUID = NewUserInfo.EUID.ToLower();
 
             await using (var context = new ABETDBContext())
@@ -153,13 +153,17 @@ namespace AbetApi.EFModels
                     throw new ArgumentException("The user you wanted to edit does not exist in the database.");
                 }
 
-                //Try to find the specified user.
-                User duplicateUser = context.Users.FirstOrDefault(p => p.EUID == NewUserInfo.EUID);
-
-                //If the new user EUID already exists in the database, then that is a duplicate and we do not allow duplicates.
-                if (duplicateUser != null)
+                //If we are trying to change the EUID, then make sure that we aren't trying to duplicate an EUID.
+                if (EUID != NewUserInfo.EUID)
                 {
-                    throw new ArgumentException("The EUID to change to already exists in the database.");
+                    //Try to find the specified user.
+                    User duplicateUser = context.Users.FirstOrDefault(p => p.EUID == NewUserInfo.EUID);
+
+                    //If the new user already exists in the database, then that is a duplicate and we do not allow duplicates.
+                    if (duplicateUser != null)
+                    {
+                        throw new ArgumentException("The EUID to change to already exists in the database.");
+                    }
                 }
 
                 //Copy new values of user over to the user that's being edited
@@ -206,7 +210,7 @@ namespace AbetApi.EFModels
             //Check that the EUID of the user to find is not null or empty.
             if (EUID == null || EUID == "")
             {
-                throw new ArgumentException("The new EUID cannot be empty.");
+                throw new ArgumentException("The EUID cannot be empty.");
             }
 
             //Format EUID to follow a standard.
@@ -220,7 +224,7 @@ namespace AbetApi.EFModels
                 //Throw an exception if the user specified does not exist.
                 if (user == null)
                 {
-                    throw new ArgumentException("The user specified does not exist in the database.");
+                    return null;
                 }
 
                 //This uses explicit loading to tell the database we want Roles loaded
