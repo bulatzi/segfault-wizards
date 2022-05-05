@@ -29,23 +29,27 @@ namespace AbetApi.Controllers
             //A list used to store all of the roles given to the user logging in
             List<string> rolesToAdd = new List<string>();
 
-            //DELETEME - Development Bypass for login credentials //////////////////////////////////////////
+            //This is a login Bypass for user credentials //////////////////////////////////////////
             //For user, type the role in all lowercase
             //For password, just type something. It could be anything.
-            switch (EUID)
+            //This code only works when
+            if (System.Diagnostics.Debugger.IsAttached)
             {
-                case "admin":
-                    rolesToAdd.Add("Admin");
-                    break;
-                case "instructor":
-                    rolesToAdd.Add("Instructor");
-                    break;
-                case "coordinator":
-                    rolesToAdd.Add("Coordinator");
-                    break;
-                case "student":
-                    rolesToAdd.Add("Student");
-                    break;
+                switch (EUID)
+                {
+                    case "admin":
+                        rolesToAdd.Add("Admin");
+                        break;
+                    case "instructor":
+                        rolesToAdd.Add("Instructor");
+                        break;
+                    case "coordinator":
+                        rolesToAdd.Add("Coordinator");
+                        break;
+                    case "student":
+                        rolesToAdd.Add("Student");
+                        break;
+                }
             }
             if (rolesToAdd.Count > 0)
                 return Ok(new { token = tokenGenerator.GenerateToken(EUID, rolesToAdd) });
