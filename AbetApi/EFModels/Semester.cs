@@ -334,6 +334,132 @@ namespace AbetApi.EFModels
                 return semester.Courses.ToList();
             }
         }
+
+        //The deep copy function is for bringing over data from previous semesters, so that personnel entering data don't have to enter the same data for hundreds of courses/sections manually
+        //It should copy semesters, courses, sections, section outcomes, majors, major outcomes
+        //This function takes a new semester and reads old semester data in to it
+        //Any time you add something new to the overall data structure, you'll need to make sure this gets updated appropriately.
+
+        //FIXME - This is not done yet. Don't rely on it. It doesn't have an endpoint in a controller yet.
+        public static async Task DeepCopy(string newTerm, int newYear, string previousTerm, int previousYear)
+        {
+            //Semester error handling
+
+            //Check that the term of the semester is not null or empty..
+            if (newTerm == null || newTerm == "" || previousTerm == null || previousTerm == "")
+            {
+                throw new ArgumentException("The term for which semester's courses to display cannot be empty.");
+            }
+
+            //Check that the year is not before the establishment of the university.
+            if (newYear < 1890 || previousYear < 1890)
+            {
+                throw new ArgumentException("The year for which semester's courses to display cannot be empty, or less than the establishment date of UNT.");
+            }
+
+            //Format the term string to follow a standard.
+            newTerm = newTerm[0].ToString().ToUpper() + newTerm.Substring(1);
+            previousTerm = previousTerm[0].ToString().ToUpper() + previousTerm.Substring(1);
+
+            await using (var context = new ABETDBContext())
+            {
+                //Try to find the specified new  and old semesters.
+                Semester newSemester = context.Semesters.FirstOrDefault(p => p.Term == newTerm && p.Year == newYear);
+                Semester previousSemester = context.Semesters.FirstOrDefault(p => p.Term == previousTerm && p.Year == previousYear);
+
+                //Throw an exception if the semester specified does not exist.
+                if (newSemester == null || previousSemester == null)
+                {
+                    throw new ArgumentException("The semester specified does not exist in the database.");
+                }
+
+                //Moving forward, this function will assume that the new semester is completely empty
+                //It will copy all relevant data from the old semester.
+                //FIXME - will probably need error handling in case they did manually add something, but the deep copy tries to add a duplicate
+                //Note - There is a lot of re-scanning over things here, but I wrote it that way so it was easier to read and know what's going on. It doesn't need to be hyper-performant because it only happens once a semester.
+
+                //Load courses and majors
+                context.Entry(previousSemester).Collection(previousSemester => previousSemester.Courses).Load();
+                context.Entry(previousSemester).Collection(previousSemester => previousSemester.Majors).Load();
+
+                //copies all the courses
+                foreach (var course in previousSemester.Courses)
+                {
+                    Course tempCourse = new Course(course.CoordinatorEUID, course.CourseNumber, course.DisplayName, course.CoordinatorComment, course.IsCourseCompleted, course.Department);
+                    tempCourse.CourseId = 0;
+                    context.Courses.Add(tempCourse);
+                    newSemester.Courses.Add(tempCourse);
+                }
+
+                //Loads all sections
+                foreach(var course in previousSemester.Courses)
+                {
+                    context.Entry(course).Collection(course => course.Sections).Load();
+                }
+
+                //Copies all sections
+                foreach(var course in previousSemester.Courses)
+                {
+                    foreach(var section in course.Sections)
+                    {
+                        //This hard codes all section student totals to 0, because this data doesn't carry over to the next semester
+                        Section.AddSection(newTerm, newYear, course.Department, course.CourseNumber, new Section(section.InstructorEUID, section.IsSectionCompleted, section.SectionNumber, 0));
+                    }
+                }
+
+                //Copies all the majors
+                foreach (var major in previousSemester.Majors)
+                {
+                    Major tempMajor = new Major(major.Name);
+                    tempMajor.MajorId = 0;
+                    context.Majors.Add(tempMajor);
+                    newSemester.Majors.Add(tempMajor);
+                }
+
+                //Load all course outcomes and major outcomes
+                foreach (var course in previousSemester.Courses)
+                {
+                    context.Entry(course).Collection(course => course.CourseOutcomes).Load();
+                }
+                foreach (var major in previousSemester.Majors)
+                {
+                    context.Entry(major).Collection(major => major.MajorOutcomes).Load();
+                }
+
+                //Copies all major outcomes
+                foreach(var major in previousSemester.Majors)
+                {
+                    foreach(var majorOutcome in major.MajorOutcomes)
+                    {
+                        await MajorOutcome.AddMajorOutcome(newTerm, newYear, major.Name, new MajorOutcome(majorOutcome.Name, majorOutcome.Description));
+                    }
+                }
+
+                //Copies all course outcomes
+                foreach(var course in previousSemester.Courses)
+                {
+                    foreach(var courseOutcome in course.CourseOutcomes)
+                    {
+                        await CourseOutcome.CreateCourseOutcome(newTerm, newYear, course.Department, course.CourseNumber, new CourseOutcome(courseOutcome.Name, courseOutcome.Description));
+                    }
+                }
+                
+                //load the mapped majoroutcomes, link them
+
+                foreach(var course in previousSemester.Courses)
+                {
+                    foreach(var courseOutcome in course.CourseOutcomes)
+                    {
+                        //load the mapped major outcomes, link them
+                        System.Console.WriteLine("");
+                    }
+                }
+
+
+                context.SaveChanges();
+                return;
+            }
+        }
     }
     /*
         As of November 17th, 2021, the current semester catalogue is:

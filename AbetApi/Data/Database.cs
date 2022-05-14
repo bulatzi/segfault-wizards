@@ -44,21 +44,21 @@ namespace AbetApi.Data
         public void WIPDoStuff()
         {
             _= Semester.AddSemester(new Semester("Spring", 2022));
-            _= Course.AddCourse("Spring", 2022, new Course("bdm0121", "1030", "Something", "", false, "CSCE"));
-            _= Course.AddCourse("Spring", 2022, new Course("bdm0121", "1040", "Something", "", false, "CSCE"));
-            _= Course.AddCourse("Spring", 2022, new Course("bdm0121", "3600", "Whatever", "", false, "CSCE"));
+            _= Course.AddCourse("Spring", 2022, new Course("cas0231", "1030", "Something", "", false, "CSCE"));
+            _= Course.AddCourse("Spring", 2022, new Course("cas0231", "1040", "Something", "", false, "CSCE"));
+            _= Course.AddCourse("Spring", 2022, new Course("cas0231", "3600", "Whatever", "", false, "CSCE"));
 
-            _= Section.AddSection("Spring", 2022, "CSCE", "1030", new Section("bdm0121", false, "001", 12));
-            _= Section.AddSection("Spring", 2022, "CSCE", "1030", new Section("bdm0121", false, "002", 15));
-            _= Section.AddSection("Spring", 2022, "CSCE", "1030", new Section("bdm0121", false, "003", 29));
+            _= Section.AddSection("Spring", 2022, "CSCE", "1030", new Section("cas0231", false, "001", 12));
+            _= Section.AddSection("Spring", 2022, "CSCE", "1030", new Section("cas0231", false, "002", 15));
+            _= Section.AddSection("Spring", 2022, "CSCE", "1030", new Section("cas0231", false, "003", 29));
 
-            _= Section.AddSection("Spring", 2022, "CSCE", "1040", new Section("bdm0121", false, "001", 33));
-            _= Section.AddSection("Spring", 2022, "CSCE", "1040", new Section("bdm0121", false, "002", 13));
-            _= Section.AddSection("Spring", 2022, "CSCE", "1040", new Section("bdm0121", false, "003", 5));
+            _= Section.AddSection("Spring", 2022, "CSCE", "1040", new Section("cas0231", false, "001", 33));
+            _= Section.AddSection("Spring", 2022, "CSCE", "1040", new Section("cas0231", false, "002", 13));
+            _= Section.AddSection("Spring", 2022, "CSCE", "1040", new Section("cas0231", false, "003", 5));
 
-            _= Section.AddSection("Spring", 2022, "CSCE", "3600", new Section("bdm0121", false, "001", 150));
-            _= Section.AddSection("Spring", 2022, "CSCE", "3600", new Section("bdm0121", false, "002", 739));
-            _= Section.AddSection("Spring", 2022, "CSCE", "3600", new Section("bdm0121", false, "003", 42));
+            _= Section.AddSection("Spring", 2022, "CSCE", "3600", new Section("cas0231", false, "001", 150));
+            _= Section.AddSection("Spring", 2022, "CSCE", "3600", new Section("cas0231", false, "002", 739));
+            _= Section.AddSection("Spring", 2022, "CSCE", "3600", new Section("cas0231", false, "003", 42));
 
             _= CourseOutcome.CreateCourseOutcome("Spring", 2022, "CSCE", "1030", new CourseOutcome("1", "Some description 1"));
             _= CourseOutcome.CreateCourseOutcome("Spring", 2022, "CSCE", "1030", new CourseOutcome("2", "Some description 2"));
@@ -158,6 +158,9 @@ namespace AbetApi.Data
             _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "002", "3", "IT", 10);
             _= StudentOutcomesCompleted.SetStudentOutcomesCompleted("Spring", 2022, "CSCE", "3600", "003", "3", "IT", 10);
 
+            //For testing the deep copy.
+            //_ = Semester.AddSemester(new Semester("Fall", 2022));
+            //Semester.DeepCopy("Fall", 2022, "Spring", 2022);
         }
 
         // This function is here to run arbitrary code from the database class
@@ -168,21 +171,18 @@ namespace AbetApi.Data
             WipeTables();
 
             //Adds Users
-            _= User.AddUser(new User("Sean", "Boden", "slb0589"));
-            _= User.AddUser(new User("Stephen", "Bishop", "scb0231"));
-            _= User.AddUser(new User("Alex", "Lambert", "apl0075"));
-            _= User.AddUser(new User("Chet", "Lockwood", "cgl0021"));
-            _= User.AddUser(new User("Bryan", "Morris", "bdm0121"));
+            _= User.AddUser(new User("Frits", "Odell", "feo0589"));
+            _= User.AddUser(new User("Clemente", "Sergei", "cas0231"));
             
-            _= User.EditUser("cgl0021", new User("Scrappy", "Eagle", "cgl0021"));
+            _= User.EditUser("feo0589", new User("Scrappy", "Eagle", "feo0589"));
 
-            _= User.DeleteUser("scb0231");
+            _= User.DeleteUser("cas0231");
 
             //NOTES: User Crud
-            //User.AddUser(new User("Bryan", "Morris", "bdm0121"));
-            //User.EditUser("bdm0121", new User("Sponge", "Bob", "bdm0121"));
-            //User.DeleteUser("bdm0121");
-            //var result = User.GetUser("bdm0121").Result;
+            //User.AddUser(new User("Frits", "Odell", "cas0231"));
+            //User.EditUser("cas0231", new User("Sponge", "Bob", "cas0231"));
+            //User.DeleteUser("cas0231");
+            //var result = User.GetUser("cas0231").Result;
 
             //Creates default roles
             _= Role.CreateRole(new Role("Admin"));
@@ -194,27 +194,18 @@ namespace AbetApi.Data
             _= Role.CreateRole(new Role("Student"));
 
             //Gives admin access to:
-            /*
-                Bryan Morris (bdm0121)
-                Sean Boden (slb0589)
-                Stephen Cory Bishop (scb0231)
-                Alex Lambert (apl0075)
-                Chet Lockwood (cgl0021)
-             */
-            _= Role.AddRoleToUser("bdm0121", "Admin");
-            _= Role.AddRoleToUser("slb0589", "Admin");
-            //Role.AddRoleToUser("scb0231", "Admin");
-            _= Role.AddRoleToUser("apl0075", "Admin");
-            _= Role.AddRoleToUser("cgl0021", "Admin");
+            _= Role.AddRoleToUser("feo0589", "Admin");
+            _= Role.AddRoleToUser("cas0231", "Admin");
 
-            _= Role.AddRoleToUser("slb0589", "Instructor");
-            _= Role.AddRoleToUser("bdm0121", "Instructor");
+            //Gives instructor access to:
+            _= Role.AddRoleToUser("feo0589", "Instructor");
+            _= Role.AddRoleToUser("cas0231", "Instructor");
 
             //this returns a list of users by the entered roll
             //var adminListTask = Role.GetUsersByRole("Admin");
             //var adminList = adminListTask.Result;
 
-            //Role.RemoveRoleFromUser("bdm0121", "Admin");
+            //Role.RemoveRoleFromUser("cas0231", "Admin");
 
             //Semester class testing
             /////////////////////////////////////////////////////////////////////////////////
@@ -261,12 +252,12 @@ namespace AbetApi.Data
 
             //Course class testing
             /////////////////////////////////////////////////////////////////////////////////
-            _= Course.AddCourse("Fall", 2022, new Course("bdm0121", "3600", "Whatever", "", false, "CSCE"));
-            _= Course.AddCourse("Fall", 2022, new Course("bdm0121", "1040", "Something", "", false, "CSCE"));
+            _= Course.AddCourse("Fall", 2022, new Course("cas0231", "3600", "Whatever", "", false, "CSCE"));
+            _= Course.AddCourse("Fall", 2022, new Course("cas0231", "1040", "Something", "", false, "CSCE"));
             //var course = Course.GetCourse("Fall", 2022, "CSCE", "3600"); // This is an example of a get function that loads one of the lists
             //var tempSemester = Semester.GetSemester("Fall", 2022); // This is a dumb get function, that only returns exactly what you ask for without the lists
 
-            //Course.EditCourse("Fall", 2022, "CSCE", "3600", new Course("bdm0121", "2110", "It changed!", "", false, "CSCE"));
+            //Course.EditCourse("Fall", 2022, "CSCE", "3600", new Course("cas0231", "2110", "It changed!", "", false, "CSCE"));
             //var course = Course.GetCourse("Fall", 2022, "CSCE", "2110");
             //course = Course.GetCourse("Fall", 2022, "BLEGH", "2110");
             //Course.DeleteCourse("Fall", 2022, "CSCE", "2110");
@@ -275,12 +266,12 @@ namespace AbetApi.Data
 
             //Section class testing
             /////////////////////////////////////////////////////////////////////////////////
-            _= Section.AddSection("Fall", 2022, "CSCE", "3600", new Section("bdm0121", false, "001", 150));
-            _= Section.AddSection("Fall", 2022, "CSCE", "3600", new Section("bdm0121", false, "002", 739));
-            _= Section.AddSection("Fall", 2022, "CSCE", "3600", new Section("bdm0121", false, "003", 42));
+            _= Section.AddSection("Fall", 2022, "CSCE", "3600", new Section("cas0231", false, "001", 150));
+            _= Section.AddSection("Fall", 2022, "CSCE", "3600", new Section("cas0231", false, "002", 739));
+            _= Section.AddSection("Fall", 2022, "CSCE", "3600", new Section("cas0231", false, "003", 42));
             //var temp = Course.GetSections("Fall", 2022, "CSCE", "3600");
             //var temp = Section.GetSection("Fall", 2022, "CSCE", "3600", "001");
-            _= Section.EditSection("Fall", 2022, "CSCE", "3600", "002", new Section("bdm0121", true, "002", 140));
+            _= Section.EditSection("Fall", 2022, "CSCE", "3600", "002", new Section("cas0231", true, "002", 140));
             _= Section.DeleteSection("Fall", 2022, "CSCE", "3600", "001");
 
 
